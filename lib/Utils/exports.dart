@@ -1,3 +1,12 @@
 export 'package:flutter/material.dart';
 export 'dart:async';
 export 'dart:io';
+export '../Views/initial_screen.dart';
+export '../Views/splash_screen.dart';
+export '../Widgets/buttom_custom.dart';
+export '../Utils/colors.dart';
+export '../Utils/routes.dart';
+export 'package:auto_size_text/auto_size_text.dart';
+export 'package:brasil_fields/brasil_fields.dart';
+export 'package:font_awesome_flutter/font_awesome_flutter.dart';
+export 'dart:convert';
