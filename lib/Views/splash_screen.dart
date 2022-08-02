@@ -1,4 +1,3 @@
-import 'package:vistoria/Utils/colors.dart';
 import 'package:vistoria/Utils/exports.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -12,7 +11,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<bool> _mockCheckForSession()
   async{
-    await Future.delayed(Duration
+    await Future.delayed(const Duration
       (milliseconds: 5000),(){});
 
           return true;
@@ -25,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
         (status){
       if(status){
         Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder:(BuildContext context) => InitialScreen()
+            builder:(BuildContext context) => const InitialScreen()
 
         )
         );

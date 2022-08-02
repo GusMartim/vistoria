@@ -32,7 +32,7 @@ class _InitialScreenState extends State<InitialScreen> {
               child: ButtonCustom(
                 widthCustom:0.75,
                 heightCustom: 0.07,
-                onPressed: ()=> Navigator.pushNamed(context, '/definition'),
+                onPressed: ()=> Navigator.pushNamed(context, '/register'),
                 text:"Cadastrar",
                 size: 14,
                 colorButton: PaletteColors.primaryColor,

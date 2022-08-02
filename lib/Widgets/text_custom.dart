@@ -9,7 +9,7 @@ class TextCustom extends StatelessWidget {
   final textAlign;
   final maxLines;
 
-  TextCustom({
+  const TextCustom({
     required this.text,
     this.size = 16.0,
     required this.color,
@@ -22,7 +22,8 @@ class TextCustom extends StatelessWidget {
   Widget build(BuildContext context) {
     return AutoSizeText(text,
         textAlign: textAlign,
-        style: TextStyle(fontFamily: 'Nunito',color: color,fontSize: size,fontWeight: fontWeight,),
+        style: TextStyle(fontFamily: 'Nunito',color: color,fontSize: size,
+          fontWeight: fontWeight,),
         minFontSize: 10,
         maxLines: maxLines,
     );

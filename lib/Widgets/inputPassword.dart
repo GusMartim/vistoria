@@ -1,5 +1,4 @@
 import 'package:flutter/services.dart';
-import 'package:vistoria/Utils/colors.dart';
 import 'package:vistoria/Utils/exports.dart';
 
 class InputPassword extends StatelessWidget {
@@ -35,7 +34,7 @@ class InputPassword extends StatelessWidget {
 
     return Container(
       alignment: Alignment.topCenter,
-      width: this.width,
+      width: width,
       padding: EdgeInsets.symmetric(horizontal: 10),
       margin: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
       decoration: BoxDecoration(

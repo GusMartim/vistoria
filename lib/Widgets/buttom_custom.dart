@@ -10,8 +10,8 @@ class ButtonCustom extends StatelessWidget{
   final widthCustom;
   final heightCustom;
 
-  ButtonCustom(
-  {
+  const ButtonCustom(
+  {Key? key,
     required this.onPressed,
     required this.text,
     required this.size,
@@ -20,7 +20,7 @@ class ButtonCustom extends StatelessWidget{
     required this.colorBorder,
     this.widthCustom = 1.0,
     this.heightCustom = 1.0
-});
+}) : super(key: key);
   @override
   Widget build (BuildContext context) {
     double width =MediaQuery.of(context).size.width;
@@ -28,7 +28,7 @@ class ButtonCustom extends StatelessWidget{
 
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        primary: this.colorButton,
+        primary: colorButton,
         minimumSize: Size(width*widthCustom! , height*heightCustom!),
         side:  BorderSide(width: 3,color : colorBorder),
       ),

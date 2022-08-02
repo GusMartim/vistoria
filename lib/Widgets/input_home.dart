@@ -4,7 +4,7 @@ class InputHome extends StatelessWidget {
 
   final widget;
 
-  InputHome({required this.widget});
+  const InputHome({required this.widget});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,7 @@ class InputHome extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
 
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 5),
+      margin: const EdgeInsets.symmetric(vertical: 5),
       width: width*0.8,
       height: 35,
       decoration: BoxDecoration(
