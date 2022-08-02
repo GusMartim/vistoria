@@ -43,8 +43,8 @@ class _SplashScreenState extends State<SplashScreen> {
       backgroundColor: PaletteColors.bgColor,
       body: Center(
         child: SizedBox(
-          height: height*0.5,
-          width: height * 0.5,
+          height: height*0.4,
+          width: height * 0.4,
           child: Image.asset("assets/image/TEIA.png"),
         ),
       ),

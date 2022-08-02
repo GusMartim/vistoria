@@ -1,12 +1,12 @@
 import 'package:vistoria/Utils/exports.dart';
-import 'package:vistoria/Views/created_popup.dart';
+
 import 'package:vistoria/Views/register_screen.dart';
 
 
 
 class Routes {
   static Route<dynamic>? generateRoute(RouteSettings settings){
-    //final args = settings.arguments;
+    final args = settings.arguments;
 
     switch(settings.name){
       case "/splash":
@@ -19,12 +19,12 @@ class Routes {
         );
       case "/register" :
         return MaterialPageRoute(
-            builder: (_) =>const RegisterScreen()
+            builder: (_) => RegisterScreen()
         );
-      case "/created":
+      /*case "/login":
         return MaterialPageRoute(
-            builder: (_) =>const PopUp()
-        );
+            builder: (_) =>const LoginScreen()
+        );*/
       default :
         _erroRota();
     }
