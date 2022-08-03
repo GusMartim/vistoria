@@ -180,8 +180,31 @@ class _MenuScreenState extends State<MenuScreen> {
               ),
 
             ],
-          )
+          ),
           Row(
+            children: [
+              Container(
+                margin: EdgeInsets.symmetric(
+                  vertical: 5.0,
+                  horizontal: 22.0
+                ),
+                height: height *0.18,
+                width: height * 0.24,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: PaletteColors.greyInput,
+                  boxShadow: [
+                    BoxShadow(
+                      color: PaletteColors.lightGrey,
+                      offset: Offset(-2.0, 2.0),
+                      blurRadius: 2.0,
+                    )
+                  ],
+                ),
+                child: Icon(Icons.comment_rounded,color: PaletteColors.lightGrey,
+                size: 40.0,),
+              )
+            ],
 
           )
 
