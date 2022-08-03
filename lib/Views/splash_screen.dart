@@ -1,6 +1,7 @@
 import 'package:vistoria/Utils/exports.dart';
 import 'package:vistoria/Views/main_menu.dart';
 
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
 

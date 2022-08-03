@@ -69,57 +69,88 @@ class _MenuScreenState extends State<MenuScreen> {
           ),
           SizedBox(height:  height * 0.03),
 
+
           Row(
 
             children: [
-               Container(
-                margin: EdgeInsets.symmetric(
+              Container(margin: EdgeInsets.symmetric(
                   vertical: 5.0,
                   horizontal: 22.0
-                ),
-
+              ),
                 height: height * 0.18,
                 width: height * 0.24,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
+                child: Card(
+                  elevation: 4,
                   color: PaletteColors.greyInput,
-                  boxShadow: [
-                    BoxShadow(
-                      color: PaletteColors.lightGrey,
-                      offset: Offset(-2.0, 2.0), //(x,y)
-                      blurRadius: 2.0,
-                    ),
-                  ],
+                  shadowColor: PaletteColors.grey,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
+
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+
+                      Icon(Icons.add_location_rounded, color: PaletteColors.lightGrey,
+                        size: 40.0,),
+                      SizedBox(height: 3.0,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          TextCustom(
+                            text:"Demandas",
+                            color: PaletteColors.grey,
+                            size: 14.0,
+                            fontWeight: FontWeight.bold,
+                            textAlign: TextAlign.center,
+                          )
+                        ],
+                      )
+                    ],
+                  ),
 
                 ),
-                child: Icon(Icons.add_location_rounded, color: PaletteColors.lightGrey,
-                size: 40.0,),
-                 
-
-
-
               ),
+
               Container(
                 margin: EdgeInsets.zero,
                 height: height * 0.18,
                 width: height * 0.24,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
+                child: Card(
+                  elevation: 4,
                   color: PaletteColors.greyInput,
-                  boxShadow: [
-                    BoxShadow(
-                      color: PaletteColors.lightGrey,
-                      offset: Offset(-2.0, 2.0), //(x,y)
-                      blurRadius: 2.0,
-                    ),
-                  ],
+                  shadowColor: PaletteColors.grey,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
+
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+
+                      Icon(Icons.list_alt_rounded, color: PaletteColors.lightGrey,
+                        size: 40.0,),
+                      SizedBox(height: 3.0,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          TextCustom(
+                            text:"Nova Vistoria",
+                            color: PaletteColors.grey,
+                            size: 14.0,
+                            fontWeight: FontWeight.bold,
+                            textAlign: TextAlign.center,
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+
                 ),
-                child: Icon(Icons.list_alt_rounded, color: PaletteColors.lightGrey,
-                  size: 40.0,),
-
-
-
-
               ),
 
             ],
@@ -135,53 +166,84 @@ class _MenuScreenState extends State<MenuScreen> {
 
                 height: height * 0.18,
                 width: height * 0.24,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
+                child: Card(
+                  elevation: 4,
                   color: PaletteColors.greyInput,
-                  boxShadow: [
-                    BoxShadow(
-                      color: PaletteColors.lightGrey,
-                      offset: Offset(-2.0, 2.0), //(x,y)
-                      blurRadius: 2.0,
-                    ),
-                  ],
+                  shadowColor: PaletteColors.grey,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
+
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+
+                      Icon(Icons.window_outlined, color: PaletteColors.lightGrey,
+                        size: 40.0,),
+                      SizedBox(height: 3.0,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          TextCustom(
+                            text:"Historico",
+                            color: PaletteColors.grey,
+                            size: 14.0,
+                            fontWeight: FontWeight.bold,
+                            textAlign: TextAlign.center,
+                          )
+                        ],
+                      )
+                    ],
+                  ),
 
                 ),
-                child: Icon(Icons.window_outlined, color: PaletteColors.lightGrey,
-                  size: 40.0,),
-
-
-
-
               ),
               Container(
                 margin: EdgeInsets.zero,
                 height: height * 0.18,
                 width: height * 0.24,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
+                child: Card(
+                  elevation: 4,
                   color: PaletteColors.greyInput,
-                  boxShadow: [
-                    BoxShadow(
-                      color: PaletteColors.lightGrey,
-                      offset: Offset(-2.0, 2.0), //(x,y)
-                      blurRadius: 2.0,
-                    ),
-                  ],
+                  shadowColor: PaletteColors.grey,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
+
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+
+                      Icon(Icons.branding_watermark_rounded, color: PaletteColors.lightGrey,
+                        size: 40.0,),
+                      SizedBox(height: 3.0,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          TextCustom(
+                            text:"Tutorial",
+                            color: PaletteColors.grey,
+                            size: 14.0,
+                            fontWeight: FontWeight.bold,
+                            textAlign: TextAlign.center,
+                          )
+                        ],
+                      )
+                    ],
+                  ),
 
                 ),
-
-                child: Icon(Icons.branding_watermark_rounded, color: PaletteColors.lightGrey,
-                  size: 40.0,),
-
-
-
-
               ),
 
             ],
           ),
+
           Row(
+
             children: [
               Container(
                 margin: EdgeInsets.symmetric(
@@ -190,19 +252,39 @@ class _MenuScreenState extends State<MenuScreen> {
                 ),
                 height: height *0.18,
                 width: height * 0.24,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
+                child: Card(
+                  elevation: 4,
                   color: PaletteColors.greyInput,
-                  boxShadow: [
-                    BoxShadow(
-                      color: PaletteColors.lightGrey,
-                      offset: Offset(-2.0, 2.0),
-                      blurRadius: 2.0,
-                    )
-                  ],
+                  shadowColor: PaletteColors.grey,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
+
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+
+                      Icon(Icons.comment_rounded, color: PaletteColors.lightGrey,
+                        size: 40.0,),
+                      SizedBox(height: 3.0,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          TextCustom(
+                            text:"Enviar Feedback",
+                            color: PaletteColors.grey,
+                            size: 14.0,
+                            fontWeight: FontWeight.bold,
+                            textAlign: TextAlign.center,
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+
                 ),
-                child: Icon(Icons.comment_rounded,color: PaletteColors.lightGrey,
-                size: 40.0,),
               )
             ],
 
@@ -211,7 +293,7 @@ class _MenuScreenState extends State<MenuScreen> {
 
         ]
 
-        
+
       ),
       
       );
