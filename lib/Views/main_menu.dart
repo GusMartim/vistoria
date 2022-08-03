@@ -1,5 +1,6 @@
 import 'package:vistoria/Widgets/text_custom.dart';
 
+
 import '../Utils/exports.dart';
 
 
@@ -35,19 +36,11 @@ class _MenuScreenState extends State<MenuScreen> {
                 size: 24.0,
                 fontWeight: FontWeight.bold,
                 textAlign: TextAlign.center,
-
-
             ),
-
           ],
-
         )
-
-
-
       ),
       body: Column(
-
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
@@ -64,243 +57,47 @@ class _MenuScreenState extends State<MenuScreen> {
               fontWeight: FontWeight.normal,
               textAlign: TextAlign.start,
             ),
-
-
           ),
           SizedBox(height:  height * 0.03),
-
-
           Row(
-
             children: [
-              Container(margin: EdgeInsets.symmetric(
-                  vertical: 5.0,
-                  horizontal: 22.0
+              CustomCard(
+                text:"Demandas",
+                icon: Icons.add_location_rounded,
+                page: '',
               ),
-                height: height * 0.18,
-                width: height * 0.24,
-                child: Card(
-                  elevation: 4,
-                  color: PaletteColors.greyInput,
-                  shadowColor: PaletteColors.grey,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.0),
-                  ),
-
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-
-                      Icon(Icons.add_location_rounded, color: PaletteColors.lightGrey,
-                        size: 40.0,),
-                      SizedBox(height: 3.0,),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          TextCustom(
-                            text:"Demandas",
-                            color: PaletteColors.grey,
-                            size: 14.0,
-                            fontWeight: FontWeight.bold,
-                            textAlign: TextAlign.center,
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-
-                ),
+              CustomCard(
+                text: "Nova Vistoria",
+                icon: Icons.list_rounded,
+                page: '',
               ),
-
-              Container(
-                margin: EdgeInsets.zero,
-                height: height * 0.18,
-                width: height * 0.24,
-                child: Card(
-                  elevation: 4,
-                  color: PaletteColors.greyInput,
-                  shadowColor: PaletteColors.grey,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.0),
-                  ),
-
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-
-                      Icon(Icons.list_alt_rounded, color: PaletteColors.lightGrey,
-                        size: 40.0,),
-                      SizedBox(height: 3.0,),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          TextCustom(
-                            text:"Nova Vistoria",
-                            color: PaletteColors.grey,
-                            size: 14.0,
-                            fontWeight: FontWeight.bold,
-                            textAlign: TextAlign.center,
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-
-                ),
-              ),
-
             ],
           ),
           Row(
-
             children: [
-              Container(
-                margin: EdgeInsets.symmetric(
-                    vertical: 5.0,
-                    horizontal: 22.0
-                ),
-
-                height: height * 0.18,
-                width: height * 0.24,
-                child: Card(
-                  elevation: 4,
-                  color: PaletteColors.greyInput,
-                  shadowColor: PaletteColors.grey,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.0),
-                  ),
-
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-
-                      Icon(Icons.window_outlined, color: PaletteColors.lightGrey,
-                        size: 40.0,),
-                      SizedBox(height: 3.0,),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          TextCustom(
-                            text:"Historico",
-                            color: PaletteColors.grey,
-                            size: 14.0,
-                            fontWeight: FontWeight.bold,
-                            textAlign: TextAlign.center,
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-
-                ),
+              CustomCard(
+                text: "Historico",
+                icon: Icons.window_outlined,
+                page: '',
               ),
-              Container(
-                margin: EdgeInsets.zero,
-                height: height * 0.18,
-                width: height * 0.24,
-                child: Card(
-                  elevation: 4,
-                  color: PaletteColors.greyInput,
-                  shadowColor: PaletteColors.grey,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.0),
-                  ),
-
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-
-                      Icon(Icons.branding_watermark_rounded, color: PaletteColors.lightGrey,
-                        size: 40.0,),
-                      SizedBox(height: 3.0,),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          TextCustom(
-                            text:"Tutorial",
-                            color: PaletteColors.grey,
-                            size: 14.0,
-                            fontWeight: FontWeight.bold,
-                            textAlign: TextAlign.center,
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-
-                ),
+              CustomCard(
+                text: "Tutorial",
+                icon: Icons.branding_watermark_rounded,
+                page: '',
               ),
-
             ],
           ),
-
           Row(
-
             children: [
-              Container(
-                margin: EdgeInsets.symmetric(
-                  vertical: 5.0,
-                  horizontal: 22.0
-                ),
-                height: height *0.18,
-                width: height * 0.24,
-                child: Card(
-                  elevation: 4,
-                  color: PaletteColors.greyInput,
-                  shadowColor: PaletteColors.grey,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.0),
-                  ),
-
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-
-                      Icon(Icons.comment_rounded, color: PaletteColors.lightGrey,
-                        size: 40.0,),
-                      SizedBox(height: 3.0,),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          TextCustom(
-                            text:"Enviar Feedback",
-                            color: PaletteColors.grey,
-                            size: 14.0,
-                            fontWeight: FontWeight.bold,
-                            textAlign: TextAlign.center,
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-
-                ),
-              )
+              CustomCard(
+                text: "Enviar Feedback",
+                icon: Icons.comment_rounded,
+                page: '',
+              ),
             ],
-
           )
-
-
         ]
-
-
       ),
-      
-      );
-      
-
-
-
-    
+   );
   }
 }

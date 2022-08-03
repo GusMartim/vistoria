@@ -5,6 +5,7 @@ export '../Views/initial_screen.dart';
 export '../Views/splash_screen.dart';
 export '../Widgets/buttom_custom.dart';
 export '../Widgets/show_dialog_alert.dart';
+export '../Widgets/card_custom.dart';
 export '../Utils/colors.dart';
 export '../Utils/routes.dart';
 export '../Models/alert_model.dart';
