@@ -1,4 +1,5 @@
 import 'package:vistoria/Utils/exports.dart';
+import 'package:vistoria/Views/login_screen.dart';
 
 import 'package:vistoria/Views/register_screen.dart';
 
@@ -21,10 +22,10 @@ class Routes {
         return MaterialPageRoute(
             builder: (_) => RegisterScreen()
         );
-      /*case "/login":
+      case "/login":
         return MaterialPageRoute(
             builder: (_) =>const LoginScreen()
-        );*/
+        );
       default :
         _erroRota();
     }

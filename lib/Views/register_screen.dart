@@ -30,8 +30,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
       key: _scaffoldKey,
       backgroundColor: PaletteColors.white,
       appBar: AppBar(
-        iconTheme: const IconThemeData(
-          color: PaletteColors.bgColor,
+        backgroundColor: PaletteColors.bgColor,
+        iconTheme:  IconThemeData(
+          color: PaletteColors.white,
           ),
           elevation: 0,
           title: TextCustom(
@@ -41,7 +42,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       body: Center(
           child: SingleChildScrollView(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -51,10 +52,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         horizontal: 10,
                     ),
                     child: TextCustom(
-                        text: "Olá,crie sua conta!",
+                        text: "Olá, crie sua conta!",
                         size: 14.0,
                         color:PaletteColors.grey,
-                        fontWeight: FontWeight.bold,textAlign: TextAlign.center,
+                        fontWeight: FontWeight.bold,textAlign: TextAlign.left,
 
                     ),
                 ),
@@ -163,27 +164,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Padding(
                     padding: const EdgeInsets.all(8.0),
                 child: ButtonCustom(
-                  widthCustom: 0.05,
-                  heightCustom: 0.05,
-                  onPressed:() => AlertModel().alert(
-                      'Conta criada \n com sucesso',
+                  widthCustom: 0.80,
+                  heightCustom: 0.08,
+                  onPressed:() { AlertModel().alert(
+                      '  Conta cadastrada \n   com sucesso!  ',
                       '',
                       PaletteColors.white,
                       PaletteColors.white,
                       context,
                   [
-                    ButtonCustom(
-                        widthCustom: 0.05,
-                        heightCustom: 0.05,
-                        onPressed: () =>Navigator.pushNamed(context, '/login'),
-                        text: "ir para tela de login",
-                        size: 12.0,
-                        colorButton: PaletteColors.bgColor,
-                        colorText: PaletteColors.white,
-                        colorBorder: PaletteColors.white
-                   ),
+
                   ]
-                  ),
+                  );
+                    Future.delayed(Duration(seconds: 3),(){
+                      Navigator.pushNamed(context, '/login');
+                    });
+                    },
                   text: "Crie sua conta",
                   size: 14.0,
                   colorButton: PaletteColors.primaryColor,

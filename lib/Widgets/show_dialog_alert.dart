@@ -32,14 +32,14 @@ class ShowDialogAlert extends StatelessWidget {
         children: [
           Container(
             alignment: Alignment.center,
-            width: width*0.2,
-            height: height*0.15,
+            width: width*0.5,
+            height: height*0.2,
 
-            child: TextCustom(text: title,color: colorTextTitle,size: 50.0,fontWeight: FontWeight.bold,)
+            child: TextCustom(text: title,color: colorTextTitle,size: 20.0,fontWeight: FontWeight.bold,)
           ),
         ],
       ),
-      titleTextStyle: TextStyle(color: PaletteColors.white,fontSize: 20.0),
+      titleTextStyle: TextStyle(color: PaletteColors.white,fontSize: 25),
       content: Column(
 
 
@@ -47,15 +47,15 @@ class ShowDialogAlert extends StatelessWidget {
         children: [
           Container(
             alignment: Alignment.center,
-            width: width*0.1,
-            height: height*0.1,
+            width: width*0.25,
+            height: height*0.04,
 
             child: TextCustom(
-              textAlign: TextAlign.center,
+              textAlign: TextAlign.justify,
               text: content,
               color: colorTextContent,
-              maxLines: 4,
-              size: 66.0,
+              maxLines: 10,
+              size: 30.0,
             ),
           ),
           Column(
@@ -66,7 +66,7 @@ class ShowDialogAlert extends StatelessWidget {
         ],
       ),
       actionsAlignment: MainAxisAlignment.center,
-      contentPadding: EdgeInsets.symmetric(horizontal: 5,vertical: 5),
+      contentPadding: EdgeInsets.symmetric(horizontal: 2,vertical: 2),
       // actions: listActions,
     );
   }
