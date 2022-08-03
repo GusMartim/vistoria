@@ -1,4 +1,5 @@
 import 'package:vistoria/Utils/exports.dart';
+import 'package:vistoria/Widgets/inputPassword.dart';
 import 'package:vistoria/Widgets/inputRegister.dart';
 import 'package:vistoria/Widgets/text_custom.dart';
 
@@ -19,6 +20,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _controllerPassword = TextEditingController();
   final TextEditingController _controllerPasswordConfirm = TextEditingController();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  bool visiblePassword = false;
 
 
   @override
@@ -130,16 +132,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     fontWeight: FontWeight.normal,textAlign: TextAlign.center,
                     ),
                 ),
-                InputRegister(
-                  icons: Icons.height,
-                  sizeIcon: 0.0,
-                  width: width * 0.8,
-                  controller: _controllerPassword,
+                InputPassword(
+                  controller:_controllerPassword,
                   hint: "**********",
                   fonts: 14.0,
-                  keyboardType: TextInputType.text,
-                  colorBorder: PaletteColors.greyInput,
-                  background: PaletteColors.greyInput,
+                  keyboardType: TextInputType.visiblePassword,
+                  obscure: visiblePassword,
+                  width: width * 0.8,
+                  colorIcon: PaletteColors.primaryColor,
+                  icons: Icons.height,
+                  showPassword: visiblePassword,
+                  onPressed: (){
+                    setState(() {
+                      if(visiblePassword==false){
+                        visiblePassword=true;
+                      }else{
+                        visiblePassword=false;
+                      }
+                    });
+                  },
                 ),
                 Padding(
                     padding: const EdgeInsets.symmetric(
@@ -150,16 +161,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     color: PaletteColors.primaryColor,
                     fontWeight: FontWeight.normal,textAlign: TextAlign.center,),
                 ),
-                InputRegister(
-                  icons: Icons.height,
-                  sizeIcon: 0.0,
-                  width: width * 0.8,
-                  controller: _controllerPasswordConfirm,
+                InputPassword(
+                  controller:_controllerPasswordConfirm,
                   hint: "**********",
                   fonts: 14.0,
-                  keyboardType: TextInputType.text,
-                  colorBorder: PaletteColors.greyInput,
-                  background: PaletteColors.greyInput,
+                  keyboardType: TextInputType.visiblePassword,
+                  obscure: visiblePassword,
+                  width: width * 0.8,
+                  colorIcon: PaletteColors.primaryColor,
+                  icons: Icons.height,
+                  showPassword: visiblePassword,
+                  onPressed: (){
+                    setState(() {
+                      if(visiblePassword==false){
+                        visiblePassword=true;
+                      }else{
+                        visiblePassword=false;
+                      }
+                    });
+                  },
                 ),
                 Padding(
                     padding: const EdgeInsets.all(8.0),

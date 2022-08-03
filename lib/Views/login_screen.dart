@@ -102,6 +102,21 @@ class _LoginScreenState extends State<LoginScreen> {
                   fontWeight: FontWeight.normal,
                   textAlign: TextAlign.center,
                 ),
+              ),
+              SizedBox(height:  height * 0.04),
+              Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ButtonCustom(
+                    widthCustom: 0.75,
+                    heightCustom: 0.07,
+                    onPressed: ()=> Navigator.pushNamed(context, '/main'),
+                    text: "Entrar",
+                    size: 14.0,
+                    colorButton: PaletteColors.primaryColor,
+                    colorText: PaletteColors.white,
+                    colorBorder: PaletteColors.primaryColor,
+                  ),
+
               )
             ],
           ),
