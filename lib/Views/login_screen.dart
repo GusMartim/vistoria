@@ -33,13 +33,13 @@ class _LoginScreenState extends State<LoginScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              SizedBox(height: height * 0.03),
+              SizedBox(height: height * 0.02),
               SizedBox(
                 height: height * 0.4,
                 width: height * 0.4,
                 child: Image.asset("assets/image/TEIA.png"),
               ),
-              SizedBox(height: height * 0.2),
+              SizedBox(height: height * 0.03),
               Container(
                 alignment: Alignment.centerLeft,
                 width: width * 0.8,
@@ -60,7 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   icons: Icons.height,
                   colorBorder: PaletteColors.greyInput,
                   background: PaletteColors.greyInput),
-              SizedBox(height: height * 0.2),
+              SizedBox(height: height * 0.02),
               Container(
                 alignment: Alignment.centerLeft,
                 width: width * 0.8,
@@ -91,19 +91,20 @@ class _LoginScreenState extends State<LoginScreen> {
                     });
                   },
               ),
-              SizedBox(height: height*0.02,),
+              SizedBox(height: height*0.01,),
               Container(
-                alignment: Alignment.centerRight,
-                width: width * 0.05,
+                alignment: Alignment.topRight,
+
+                width: width * 0.7,
                 child: TextCustom(
-                  text: "Esqueci a senha/resetar",
+                  text: "    Esqueci a senha/resetar",
                   color: PaletteColors.primaryColor,
                   size: 12.0,
                   fontWeight: FontWeight.normal,
-                  textAlign: TextAlign.center,
+                  textAlign: TextAlign.end,
                 ),
               ),
-              SizedBox(height:  height * 0.04),
+              SizedBox(height:  height * 0.03),
               Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ButtonCustom(

@@ -28,10 +28,10 @@ class _InitialScreenState extends State<InitialScreen> {
               child: Image.asset("assets/image/TEIA.png"),
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(9.5),
               child: ButtonCustom(
-                widthCustom:0.75,
-                heightCustom: 0.07,
+                widthCustom:0.78,
+                heightCustom: 0.08,
                 onPressed: ()=> Navigator.pushNamed(context, '/register'),
                 text:"Cadastrar",
                 size: 14,
@@ -41,16 +41,17 @@ class _InitialScreenState extends State<InitialScreen> {
               ),
             ),
             Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(9.0),
                 child: ButtonCustom(
-                  widthCustom: 0.75,
-                  heightCustom: 0.07,
+                  widthCustom: 0.78,
+                  heightCustom: 0.08,
                   onPressed: ()=> Navigator.pushNamed(context,'/login'),
                   text: "Entrar",
                   size: 14,
                   colorButton: PaletteColors.white,
                   colorText: PaletteColors.primaryColor,
                   colorBorder: PaletteColors.primaryColor,
+
                 ),
             )
           ],

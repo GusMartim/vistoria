@@ -1,4 +1,5 @@
 import 'package:vistoria/Utils/exports.dart';
+import 'package:vistoria/Views/main_menu.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -24,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
         (status){
       if(status){
         Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder:(BuildContext context) => const InitialScreen()
+            builder:(BuildContext context) => const MenuScreen()
 
         )
         );
