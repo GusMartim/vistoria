@@ -29,9 +29,9 @@ class CustomCard extends StatelessWidget {
             vertical: vertical,
             horizontal: horizontal,
         ),*/
-        margin: EdgeInsets.all(13.5) ,
+        margin: EdgeInsets.all(8.0) ,
         height: height * 0.18,
-        width: height * 0.24,
+        width: height * 0.22,
 
         child: GestureDetector(
           onTap: ()=> Navigator.pushNamed(context, page),

@@ -19,7 +19,7 @@ class _MenuScreenState extends State<MenuScreen> {
   Widget build(BuildContext context) {
 
     double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
+
 
     return Scaffold(
       backgroundColor: PaletteColors.white,
@@ -48,7 +48,7 @@ class _MenuScreenState extends State<MenuScreen> {
           Padding(
               padding: const EdgeInsets.symmetric(
                 vertical: 5.0,
-                horizontal: 26,
+                horizontal: 20,
               ),
             child: TextCustom(
               text: "Olá,Lucas",
@@ -58,7 +58,7 @@ class _MenuScreenState extends State<MenuScreen> {
               textAlign: TextAlign.start,
             ),
           ),
-          SizedBox(height:  height * 0.03),
+          SizedBox(height:  height * 0.07),
           Row(
             children: [
               CustomCard(

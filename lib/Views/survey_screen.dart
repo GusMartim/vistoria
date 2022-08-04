@@ -277,37 +277,35 @@ class _SurveyscreenState extends State<Surveyscreen> {
                   children: [
                     Row(children: [
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0,
-                            vertical: 5.0),
+                        padding: const EdgeInsets.all(8.0),
                         child: TextCustom(
                           text: "Coordenadas",
-                          size:14.0,
+                          size:12.0,
                           color: PaletteColors.grey,
                           fontWeight: FontWeight.bold,textAlign: TextAlign.left,),
                       ),Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0,
-                            vertical: 5.0),
+                        padding: const EdgeInsets.all(8.0),
                         child: TextCustom(
                           text: "Graus",
-                          size:14.0,
+                          size:12.0,
                           color: PaletteColors.grey,
                           fontWeight: FontWeight.bold,textAlign: TextAlign.left,),
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0,
-                            vertical: 5.0),
+                        padding: const EdgeInsets.symmetric(vertical: 8.0,
+                            horizontal: 40.0),
                         child: TextCustom(
                           text: "Min",
-                          size:14.0,
+                          size:12.0,
                           color: PaletteColors.grey,
                           fontWeight: FontWeight.bold,textAlign: TextAlign.left,),
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0,
-                            vertical: 2.0),
+                        padding: const EdgeInsets.symmetric(vertical: 8.0,
+                        horizontal: 40.0),
                         child: TextCustom(
                           text: "Seg",
-                          size:14.0,
+                          size:12.0,
                           color: PaletteColors.grey,
                           fontWeight: FontWeight.bold,textAlign: TextAlign.left,),
                       ),
@@ -324,18 +322,17 @@ class _SurveyscreenState extends State<Surveyscreen> {
                     Row(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10.0,
-                              vertical: 2.0),
+                          padding: const EdgeInsets.all(8.0),
                           child: TextCustom(
                             text: "Latitude",
-                            size:14.0,
+                            size:12.0,
                             color: PaletteColors.grey,
                             fontWeight: FontWeight.bold,textAlign: TextAlign.left,),
                         ),
                          InputRegister(
                           icons: Icons.height,
                           sizeIcon: 0.0,
-                          width: width * 0.2,
+                          width: width * 0.18,
                           controller: _controllerLatG,
                           hint: "-15,00",
                           fonts: 14.0,
@@ -346,7 +343,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                         InputRegister(
                           icons: Icons.height,
                           sizeIcon: 0.0,
-                          width: width * 0.2,
+                          width: width * 0.18,
                           controller: _controllerLatMin,
                           hint: "46,00",
                           fonts: 14.0,
@@ -357,7 +354,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                         InputRegister(
                           icons: Icons.height,
                           sizeIcon: 0.0,
-                          width: width * 0.2,
+                          width: width * 0.18,
                           controller: _controllerLatSeg,
                           hint: "28,37",
                           fonts: 14.0,
@@ -365,7 +362,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                           colorBorder: PaletteColors.greyInput,
                           background: PaletteColors.greyInput,
                         ),
-                        Padding(padding: EdgeInsets.all(2.0)),
+
 
                       ],
                     ),
