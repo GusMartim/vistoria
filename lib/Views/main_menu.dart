@@ -64,12 +64,12 @@ class _MenuScreenState extends State<MenuScreen> {
               CustomCard(
                 text:"Demandas",
                 icon: Icons.add_location_rounded,
-                page: '',
+                page: '/demandas',
               ),
               CustomCard(
                 text: "Nova Vistoria",
                 icon: Icons.list_rounded,
-                page: '',
+                page: '/vistoria',
               ),
             ],
           ),

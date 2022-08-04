@@ -3,6 +3,9 @@ import 'package:vistoria/Views/login_screen.dart';
 import 'package:vistoria/Views/main_menu.dart';
 
 import 'package:vistoria/Views/register_screen.dart';
+import 'package:vistoria/Views/request_screen.dart';
+import 'package:vistoria/Views/survey_screen.dart';
+import 'package:vistoria/Views/teste.dart';
 
 
 
@@ -27,10 +30,27 @@ class Routes {
         return MaterialPageRoute(
             builder: (_) =>const LoginScreen()
         );
-      case "/main":
+      case "/demandas":
+        return MaterialPageRoute(
+            builder: (_) =>const RequestScreen()
+        );
+      case "/vistoria":
+        return MaterialPageRoute(
+            builder: (_) =>const Surveyscreen()
+        );
+      case "/historico":
         return MaterialPageRoute(
             builder: (_) =>const MenuScreen()
         );
+      case "/tutorial":
+        return MaterialPageRoute(
+            builder: (_) =>const MenuScreen()
+        );
+      case "/feedback":
+        return MaterialPageRoute(
+            builder: (_) =>const MenuScreen()
+        );
+
       default :
         _erroRota();
     }
