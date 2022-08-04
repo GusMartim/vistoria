@@ -1,4 +1,5 @@
 import 'package:vistoria/Utils/exports.dart';
+import 'package:vistoria/Views/data_request_screen.dart';
 import 'package:vistoria/Views/login_screen.dart';
 import 'package:vistoria/Views/main_menu.dart';
 
@@ -34,10 +35,15 @@ class Routes {
         return MaterialPageRoute(
             builder: (_) =>const RequestScreen()
         );
+      case "/demanda":
+        return MaterialPageRoute(
+            builder: (_) =>const DataRequest()
+        );
       case "/vistoria":
         return MaterialPageRoute(
             builder: (_) =>const Surveyscreen()
         );
+
       case "/historico":
         return MaterialPageRoute(
             builder: (_) =>const MenuScreen()

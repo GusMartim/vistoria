@@ -76,10 +76,14 @@ class _RequestScreenState extends State<RequestScreen> {
                           padding: const EdgeInsets.symmetric(vertical: 2.0,horizontal: 10.0),
                           itemCount: items.length,
                           itemBuilder: (context, index) {
-                            return Column(
+                            return GestureDetector(
+                              onTap: ()=> Navigator.pushNamed(context, '/demanda'),
+                             child: Column(
+
 
                               children: <Widget>[
                                 ListTile(
+
 
                                     title: Text(items[index])
 
@@ -87,7 +91,9 @@ class _RequestScreenState extends State<RequestScreen> {
                                 ),
                                 Divider(), //                           <-- Divider
                               ],
+                            )
                             );
+
                           },
                         ),
                       ],

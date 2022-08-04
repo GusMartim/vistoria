@@ -32,6 +32,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
   Widget build(BuildContext context) {
 
     double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
 
     return Scaffold(
       backgroundColor: PaletteColors.white,
@@ -49,34 +50,329 @@ class _SurveyscreenState extends State<Surveyscreen> {
       ),
       body: Center(
         child: SingleChildScrollView(
-          child: Column(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0,
+                vertical: 3.0),
+                  child: TextCustom(
+                    text: "Endereço",
+                    size: 14.0,
+                    color:PaletteColors.grey,
+                    fontWeight: FontWeight.bold,textAlign: TextAlign.left,
+
+                  ),
+                ),
+                InputRegister(controller: _controllerAdress,
+                    hint: 'Rua Antonio Lopes',
+                    fonts: 14.0,
+                    keyboardType: TextInputType.text,
+                    width: width * 0.8,
+                    sizeIcon: 0.0,
+                    icons: Icons.height,
+                    colorBorder: PaletteColors.greyInput,
+                    background: PaletteColors.greyInput),
+
+                Row(children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0,
+                vertical: 3.0),
+                      child: TextCustom(
+                        text: "Número",
+                        size:14.0,
+                        color: PaletteColors.grey,
+                        fontWeight: FontWeight.bold,textAlign: TextAlign.left,),
+                    ),
+                    InputRegister(
+                      icons: Icons.height,
+                      sizeIcon: 0.0,
+                      width: width * 0.2,
+                      controller: _controllerNumber,
+                      hint: "325",
+                      fonts: 14.0,
+                      keyboardType: TextInputType.number,
+                      colorBorder: PaletteColors.greyInput,
+                      background: PaletteColors.greyInput,
+                    ),
+                  ],),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0,
+                vertical: 3.0),
+                    child: TextCustom(
+                      text: "Complemento",
+                      size:14.0,
+                      color: PaletteColors.grey,
+                      fontWeight: FontWeight.bold,textAlign: TextAlign.left,),
+                  ),
+                    InputRegister(
+                      icons: Icons.height,
+                      sizeIcon: 0.0,
+                      width: width * 0.53,
+                      controller: _controllerComplement,
+                      hint: "Ex. Casa",
+                      fonts: 14.0,
+                      keyboardType: TextInputType.number,
+                      colorBorder: PaletteColors.greyInput,
+                      background: PaletteColors.greyInput,
+                    ),
+
+                  ],)
+                ],),
+        Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 8.0,
-                  horizontal: 8.0,
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: 10.0,
+                vertical: 3.0),
                 child: TextCustom(
-                  text: "Endereço",
+                  text: "Bairro",
                   size: 14.0,
                   color:PaletteColors.grey,
                   fontWeight: FontWeight.bold,textAlign: TextAlign.left,
 
                 ),
               ),
-              InputRegister(controller: _controllerAdress,
-                  hint: 'Rua Antonio Lopes',
+              InputRegister(controller: _controllerDistrict,
+                  hint: 'Vila Santa Isabel',
                   fonts: 14.0,
                   keyboardType: TextInputType.text,
                   width: width * 0.8,
                   sizeIcon: 0.0,
                   icons: Icons.height,
                   colorBorder: PaletteColors.greyInput,
-                  background: PaletteColors.greyInput)
-            ],
+                  background: PaletteColors.greyInput),
+              ],
+            ),
+                Row(children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0,
+                vertical: 3.0),
+                        child: TextCustom(
+                          text: "Cidade",
+                          size:14.0,
+                          color: PaletteColors.grey,
+                          fontWeight: FontWeight.bold,textAlign: TextAlign.left,),
+                      ),
+                      InputRegister(
+                        icons: Icons.height,
+                        sizeIcon: 0.0,
+                        width: width * 0.53,
+                        controller: _controllerCity,
+                        hint: "São Paulo",
+                        fonts: 14.0,
+                        keyboardType: TextInputType.number,
+                        colorBorder: PaletteColors.greyInput,
+                        background: PaletteColors.greyInput,
+                      ),
+                    ],),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0,
+                vertical: 3.0),
+                        child: TextCustom(
+                          text: "Estado",
+                          size:14.0,
+                          color: PaletteColors.grey,
+                          fontWeight: FontWeight.bold,textAlign: TextAlign.left,),
+                      ),
+                      InputRegister(
+                        icons: Icons.height,
+                        sizeIcon: 0.0,
+                        width: width * 0.2,
+                        controller: _controllerState,
+                        hint: "SP",
+                        fonts: 14.0,
+                        keyboardType: TextInputType.number,
+                        colorBorder: PaletteColors.greyInput,
+                        background: PaletteColors.greyInput,
+                      ),
+
+                    ],)
+                ],),
+                Row(children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0,
+                            vertical: 3.0),
+                        child: TextCustom(
+                          text: "CEP",
+                          size:14.0,
+                          color: PaletteColors.grey,
+                          fontWeight: FontWeight.bold,textAlign: TextAlign.left,),
+                      ),
+                      InputRegister(
+                        icons: Icons.height,
+                        sizeIcon: 0.0,
+                        width: width * 0.28,
+                        controller: _controllerCEP,
+                        hint: "15000-000",
+                        fonts: 14.0,
+                        keyboardType: TextInputType.number,
+                        colorBorder: PaletteColors.greyInput,
+                        background: PaletteColors.greyInput,
+                      ),
+                    ],),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0,
+                            vertical: 3.0),
+                        child: TextCustom(
+                          text: "Tipo de imóvel",
+                          size:14.0,
+                          color: PaletteColors.grey,
+                          fontWeight: FontWeight.bold,textAlign: TextAlign.left,),
+                      ),
+                      InputRegister(
+                        icons: Icons.height,
+                        sizeIcon: 0.0,
+                        width: width * 0.45,
+                        controller: _controllerState,
+                        hint: "Casa",
+                        fonts: 14.0,
+                        keyboardType: TextInputType.number,
+                        colorBorder: PaletteColors.greyInput,
+                        background: PaletteColors.greyInput,
+                      ),
+
+                    ],)
+                ],),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Row(children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0,
+                            vertical: 5.0),
+                        child: TextCustom(
+                          text: "Coordenadas",
+                          size:14.0,
+                          color: PaletteColors.grey,
+                          fontWeight: FontWeight.bold,textAlign: TextAlign.left,),
+                      ),Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0,
+                            vertical: 5.0),
+                        child: TextCustom(
+                          text: "Graus",
+                          size:14.0,
+                          color: PaletteColors.grey,
+                          fontWeight: FontWeight.bold,textAlign: TextAlign.left,),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0,
+                            vertical: 5.0),
+                        child: TextCustom(
+                          text: "Min",
+                          size:14.0,
+                          color: PaletteColors.grey,
+                          fontWeight: FontWeight.bold,textAlign: TextAlign.left,),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0,
+                            vertical: 2.0),
+                        child: TextCustom(
+                          text: "Seg",
+                          size:14.0,
+                          color: PaletteColors.grey,
+                          fontWeight: FontWeight.bold,textAlign: TextAlign.left,),
+                      ),
+
+                      ],
+                    ),
+                  ],
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10.0,
+                              vertical: 2.0),
+                          child: TextCustom(
+                            text: "Latitude",
+                            size:14.0,
+                            color: PaletteColors.grey,
+                            fontWeight: FontWeight.bold,textAlign: TextAlign.left,),
+                        ),
+                         InputRegister(
+                          icons: Icons.height,
+                          sizeIcon: 0.0,
+                          width: width * 0.2,
+                          controller: _controllerLatG,
+                          hint: "-15,00",
+                          fonts: 14.0,
+                          keyboardType: TextInputType.number,
+                          colorBorder: PaletteColors.greyInput,
+                          background: PaletteColors.greyInput,
+                        ),
+                        InputRegister(
+                          icons: Icons.height,
+                          sizeIcon: 0.0,
+                          width: width * 0.2,
+                          controller: _controllerLatMin,
+                          hint: "46,00",
+                          fonts: 14.0,
+                          keyboardType: TextInputType.number,
+                          colorBorder: PaletteColors.greyInput,
+                          background: PaletteColors.greyInput,
+                        ),
+                        InputRegister(
+                          icons: Icons.height,
+                          sizeIcon: 0.0,
+                          width: width * 0.2,
+                          controller: _controllerLatSeg,
+                          hint: "28,37",
+                          fonts: 14.0,
+                          keyboardType: TextInputType.number,
+                          colorBorder: PaletteColors.greyInput,
+                          background: PaletteColors.greyInput,
+                        ),
+                        Padding(padding: EdgeInsets.all(2.0)),
+
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
