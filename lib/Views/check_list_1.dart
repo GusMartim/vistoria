@@ -344,7 +344,7 @@ class _CheckList1State extends State<CheckList1> {
                       child: ButtonCustom(
                       widthCustom: 0.3,
                       heightCustom: 0.055,
-                      onPressed:() => Navigator.pushNamed(context, 'initial'),
+                      onPressed:() => Navigator.pushNamed(context, '/vistoria'),
                       text: "Voltar",
                       size: 14.0,
                       colorButton: PaletteColors.white,
