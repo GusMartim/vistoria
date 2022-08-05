@@ -1,4 +1,5 @@
 import 'package:vistoria/Utils/exports.dart';
+import 'package:vistoria/Views/check_list_1.dart';
 import 'package:vistoria/Views/main_menu.dart';
 
 
@@ -26,7 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
         (status){
       if(status){
         Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder:(BuildContext context) => const MenuScreen()
+            builder:(BuildContext context) => const CheckList1()
 
         )
         );

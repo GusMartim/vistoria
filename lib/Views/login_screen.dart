@@ -33,13 +33,13 @@ class _LoginScreenState extends State<LoginScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              SizedBox(height: height * 0.02),
+              SizedBox(height: height * 0.01),
               SizedBox(
-                height: height * 0.4,
-                width: height * 0.4,
+                height: height * 0.25,
+                width: height * 0.25,
                 child: Image.asset("assets/image/TEIA.png"),
               ),
-              SizedBox(height: height * 0.03),
+              SizedBox(height: height * 0.02),
               Container(
                 alignment: Alignment.centerLeft,
                 width: width * 0.8,
@@ -109,7 +109,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   padding: const EdgeInsets.all(8.0),
                   child: ButtonCustom(
                     widthCustom: 0.75,
-                    heightCustom: 0.07,
+                    heightCustom: 0.055,
                     onPressed: ()=> Navigator.pushNamed(context, '/main'),
                     text: "Entrar",
                     size: 14.0,

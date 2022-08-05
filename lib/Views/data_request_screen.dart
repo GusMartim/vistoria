@@ -64,7 +64,7 @@ class _DataRequestState extends State<DataRequest> {
                             Padding(padding:
                             const EdgeInsets.symmetric(
                               horizontal: 2.0,
-                              vertical: 2.0,
+                              vertical: 1.0,
                             )),
                             ListTile(
 
@@ -74,7 +74,7 @@ class _DataRequestState extends State<DataRequest> {
 
 
                             ),
-                            Divider(color: PaletteColors.grey,
+                            Divider(
                             ), //                           <-- Divider
                           ],
                         );
@@ -83,6 +83,7 @@ class _DataRequestState extends State<DataRequest> {
                     ),
                   ],
                 ),
+                SizedBox(height: 2.0,width: 0.0,),
 
 
                 Column(
@@ -91,10 +92,10 @@ class _DataRequestState extends State<DataRequest> {
                   mainAxisSize: MainAxisSize.min,
 
                   children: [
-                  Padding(padding: const EdgeInsets.all(8.0),
+                  Padding(padding: const EdgeInsets.all(10.0),
                     child: ButtonCustom(
                       widthCustom: 0.85,
-                      heightCustom: 0.07,
+                      heightCustom: 0.055,
                       onPressed: ()=> Navigator.pushNamed(context, '/main'),
                       text: "Vistoriar",
                       size: 14.0,
@@ -102,10 +103,10 @@ class _DataRequestState extends State<DataRequest> {
                       colorText: PaletteColors.white,
                       colorBorder: PaletteColors.primaryColor,
                     ),),
-                  Padding(padding: const EdgeInsets.all(8.0),
+                  Padding(padding: const EdgeInsets.all(10.0),
                     child: ButtonCustom(
                       widthCustom: 0.85,
-                      heightCustom: 0.07,
+                      heightCustom: 0.055,
                       onPressed: ()=> Navigator.pushNamed(context, '/main'),
                       text: "Recusar",
                       size: 14.0,

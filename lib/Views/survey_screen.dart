@@ -51,7 +51,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
       body: Center(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(11.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -367,6 +367,74 @@ class _SurveyscreenState extends State<Surveyscreen> {
                       ],
                     ),
                   ],
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextCustom(
+                            text: "Longitude",
+                            size:12.0,
+                            color: PaletteColors.grey,
+                            fontWeight: FontWeight.bold,textAlign: TextAlign.left,),
+                        ),
+                        InputRegister(
+                          icons: Icons.height,
+                          sizeIcon: 0.0,
+                          width: width * 0.18,
+                          controller: _controllerLatG,
+                          hint: "-48,00",
+                          fonts: 14.0,
+                          keyboardType: TextInputType.number,
+                          colorBorder: PaletteColors.greyInput,
+                          background: PaletteColors.greyInput,
+                        ),
+                        InputRegister(
+                          icons: Icons.height,
+                          sizeIcon: 0.0,
+                          width: width * 0.18,
+                          controller: _controllerLatMin,
+                          hint: "17,00",
+                          fonts: 14.0,
+                          keyboardType: TextInputType.number,
+                          colorBorder: PaletteColors.greyInput,
+                          background: PaletteColors.greyInput,
+                        ),
+                        InputRegister(
+                          icons: Icons.height,
+                          sizeIcon: 0.0,
+                          width: width * 0.18,
+                          controller: _controllerLatSeg,
+                          hint: "36,88",
+                          fonts: 14.0,
+                          keyboardType: TextInputType.number,
+                          colorBorder: PaletteColors.greyInput,
+                          background: PaletteColors.greyInput,
+                        ),
+
+
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(height: 3.0,width: 0.0,),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: ButtonCustom(
+                    widthCustom: 0.80,
+                    heightCustom: 0.055,
+                    onPressed:() => Navigator.pushNamed(context, 'initial'),
+                    text: "Prosseguir",
+                    size: 14.0,
+                    colorButton: PaletteColors.primaryColor,
+                    colorText: PaletteColors.white,
+                    colorBorder: PaletteColors.primaryColor,
+                  ),
                 ),
               ],
             ),

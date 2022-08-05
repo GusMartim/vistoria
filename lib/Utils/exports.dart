@@ -9,6 +9,7 @@ export '../Widgets/card_custom.dart';
 export '../Utils/colors.dart';
 export '../Utils/routes.dart';
 export '../Models/alert_model.dart';
+export '../Models/check_box_model.dart';
 export 'package:auto_size_text/auto_size_text.dart';
 export 'package:brasil_fields/brasil_fields.dart';
 export 'package:font_awesome_flutter/font_awesome_flutter.dart';

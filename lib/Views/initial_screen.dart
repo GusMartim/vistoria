@@ -31,7 +31,7 @@ class _InitialScreenState extends State<InitialScreen> {
               padding: const EdgeInsets.all(9.5),
               child: ButtonCustom(
                 widthCustom:0.78,
-                heightCustom: 0.08,
+                heightCustom: 0.055,
                 onPressed: ()=> Navigator.pushNamed(context, '/register'),
                 text:"Cadastrar",
                 size: 14,
@@ -40,11 +40,12 @@ class _InitialScreenState extends State<InitialScreen> {
                 colorBorder:PaletteColors.primaryColor,
               ),
             ),
+            SizedBox(height: 2.0,width: 0.0,),
             Padding(
                 padding: const EdgeInsets.all(9.0),
                 child: ButtonCustom(
                   widthCustom: 0.78,
-                  heightCustom: 0.08,
+                  heightCustom: 0.055,
                   onPressed: ()=> Navigator.pushNamed(context,'/login'),
                   text: "Entrar",
                   size: 14,

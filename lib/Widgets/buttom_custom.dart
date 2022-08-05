@@ -30,7 +30,9 @@ class ButtonCustom extends StatelessWidget{
       style: ElevatedButton.styleFrom(
         primary: colorButton,
         minimumSize: Size(width*widthCustom! , height*heightCustom!),
-        side:  BorderSide(width: 3,color : colorBorder),
+        side:  BorderSide(width: 2,color : colorBorder,),
+
+
       ),
       onPressed: onPressed,
       child: Text(text,

@@ -50,7 +50,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               children: [
                 Padding(
                     padding: const EdgeInsets.symmetric(
-                        vertical: 10,
+                        vertical: 4,
                         horizontal: 10,
                     ),
                     child: TextCustom(
@@ -181,11 +181,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     });
                   },
                 ),
+
                 Padding(
-                    padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 12,
+                    horizontal: 8,
+                  ),
                 child: ButtonCustom(
                   widthCustom: 0.80,
-                  heightCustom: 0.08,
+                  heightCustom: 0.055,
                   onPressed:() { AlertModel().alert(
                       '  Conta cadastrada \n   com sucesso!  ',
                       '',
