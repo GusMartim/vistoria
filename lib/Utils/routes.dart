@@ -1,5 +1,4 @@
 import 'package:vistoria/Utils/exports.dart';
-import 'package:vistoria/Views/check_list_1.dart';
 import 'package:vistoria/Views/data_request_screen.dart';
 import 'package:vistoria/Views/login_screen.dart';
 import 'package:vistoria/Views/main_menu.dart';
@@ -52,6 +51,15 @@ class Routes {
         return MaterialPageRoute(
             builder: (_) =>const CheckList1()
         );
+      case "/check2":
+        return MaterialPageRoute(
+            builder: (_) =>const CheckList2()
+        );
+      case "/check3":
+        return MaterialPageRoute(
+            builder: (_) =>const CheckList3()
+        );
+
 
       case "/historico":
         return MaterialPageRoute(

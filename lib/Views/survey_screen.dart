@@ -428,7 +428,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                   child: ButtonCustom(
                     widthCustom: 0.80,
                     heightCustom: 0.055,
-                    onPressed:() => Navigator.pushNamed(context, 'initial'),
+                    onPressed:() => Navigator.pushNamed(context, '/check1'),
                     text: "Prosseguir",
                     size: 14.0,
                     colorButton: PaletteColors.primaryColor,

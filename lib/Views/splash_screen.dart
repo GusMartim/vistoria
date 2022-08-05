@@ -27,7 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
         (status){
       if(status){
         Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder:(BuildContext context) => const CheckList1()
+            builder:(BuildContext context) => const InitialScreen()
 
         )
         );

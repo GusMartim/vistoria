@@ -219,7 +219,7 @@ class _CheckList1State extends State<CheckList1> {
                     ...quota.map(buildSingleCheckbox).toList(),
                   ],
                 ), //Cota /Greide
-                InputRegister(controller: _controllerType,
+                InputRegister(controller: _controllerQuota,
                     hint: 'Especificar',
                     fonts: 14.0,
                     keyboardType: TextInputType.text,
@@ -246,7 +246,7 @@ class _CheckList1State extends State<CheckList1> {
                     ...position.map(buildSingleCheckbox).toList(),
                   ],
                 ), // Posição da Unidade
-                InputRegister(controller: _controllerType,
+                InputRegister(controller: _controllerPosition,
                     hint: 'Especificar',
                     fonts: 14.0,
                     keyboardType: TextInputType.text,
@@ -273,7 +273,7 @@ class _CheckList1State extends State<CheckList1> {
                     ...roof.map(buildSingleCheckbox).toList(),
                   ],
                 ), // Telhado
-                InputRegister(controller: _controllerType,
+                InputRegister(controller: _controllerRoof,
                     hint: 'Especificar',
                     fonts: 14.0,
                     keyboardType: TextInputType.text,
@@ -300,7 +300,7 @@ class _CheckList1State extends State<CheckList1> {
                     ...wall.map(buildSingleCheckbox).toList(),
                   ],
                 ), // Muro
-                InputRegister(controller: _controllerType,
+                InputRegister(controller: _controllerWall,
                     hint: 'Especificar',
                     fonts: 14.0,
                     keyboardType: TextInputType.text,
@@ -327,7 +327,7 @@ class _CheckList1State extends State<CheckList1> {
                     ...paint.map(buildSingleCheckbox).toList(),
                   ],
                 ), // Pintura
-                InputRegister(controller: _controllerType,
+                InputRegister(controller: _controllerPaint,
                     hint: 'Especificar',
                     fonts: 14.0,
                     keyboardType: TextInputType.text,
@@ -340,7 +340,7 @@ class _CheckList1State extends State<CheckList1> {
                 Row(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(16.0),
+                      padding: EdgeInsets.symmetric(vertical:0.1 ,horizontal:26.0 ),
                       child: ButtonCustom(
                       widthCustom: 0.3,
                       heightCustom: 0.055,
@@ -353,11 +353,11 @@ class _CheckList1State extends State<CheckList1> {
                   ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(16.0),
+                      padding: EdgeInsets.symmetric(vertical:0.1 ,horizontal:26.0 ),
                       child: ButtonCustom(
                       widthCustom: 0.3,
                       heightCustom: 0.055,
-                      onPressed:() => Navigator.pushNamed(context, 'initial'),
+                      onPressed:() => Navigator.pushNamed(context, '/check2'),
                       text: "Próximo",
                       size: 14.0,
                       colorButton: PaletteColors.primaryColor,
