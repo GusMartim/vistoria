@@ -59,6 +59,10 @@ class Routes {
         return MaterialPageRoute(
             builder: (_) =>const CheckList3()
         );
+      case "/check4":
+        return MaterialPageRoute(
+            builder: (_) =>const CheckList4()
+        );
 
 
       case "/historico":

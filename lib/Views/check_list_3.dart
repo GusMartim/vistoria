@@ -95,6 +95,7 @@ class _CheckList3State extends State<CheckList3> {
         appBar: AppBar(
           backgroundColor: PaletteColors.bgColor,
           iconTheme:  IconThemeData(
+
             color: PaletteColors.white,
 
           ),

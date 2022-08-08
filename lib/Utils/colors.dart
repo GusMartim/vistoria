@@ -8,4 +8,5 @@ class PaletteColors{
   static const Color grey = Color (0xff5F5F5F);
   static const Color greyInput = Color (0xffF4F4F4);
   static const Color lightGrey = Color(0xffD0D0D0);
+  static const Color midGrey = Color(0xffC4C4C4);
 }
