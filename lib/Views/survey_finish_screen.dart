@@ -127,6 +127,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                           ),
                         ),
                         SizedBox(width: 10,),
+
                         TextCustom(
                           text: "Salvar Documento",
                           size: 16.0,
@@ -179,7 +180,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                       child: ButtonCustom(
                         widthCustom: 0.8,
                         heightCustom: 0.055,
-                        onPressed:() => Navigator.pushNamed(context, '/check2'),
+                        onPressed:() => Navigator.popAndPushNamed(context, '/main'),
                         text: "Finalizar",
                         size: 14.0,
                         colorButton: PaletteColors.primaryColor,

@@ -101,8 +101,31 @@ class _CheckList3State extends State<CheckList3> {
           ),
           elevation: 0,
           title: TextCustom(
-            text: 'CheckList 1/4',size: 20.0,color: PaletteColors.white,
+            text: 'CheckList 3/4',size: 20.0,color: PaletteColors.white,
             fontWeight: FontWeight.bold,textAlign: TextAlign.center,),
+          actions: <Widget>[
+            Ink(
+              decoration: ShapeDecoration(
+                color:  PaletteColors.white,
+                shape: CircleBorder(),
+
+
+
+              ),
+              child: IconButton(icon: Icon(
+                Icons.camera_alt,
+                color: PaletteColors.primaryColor,
+              ),
+                constraints: BoxConstraints(minHeight: 28,
+                    minWidth: 28,
+                    maxHeight: 28,
+                    maxWidth: 28),
+                iconSize: 24.0,
+                padding: EdgeInsets.all(3.0),
+                onPressed: () {},
+              ),
+            ),
+          ],
         ),
 
         body: Padding(
@@ -286,7 +309,7 @@ class _CheckList3State extends State<CheckList3> {
                         child: ButtonCustom(
                           widthCustom: 0.3,
                           heightCustom: 0.055,
-                          onPressed:() => Navigator.pushNamed(context, '/check2'),
+                          onPressed:() =>  Navigator.pop(context),
                           text: "Voltar",
                           size: 14.0,
                           colorButton: PaletteColors.white,
@@ -299,7 +322,7 @@ class _CheckList3State extends State<CheckList3> {
                         child: ButtonCustom(
                           widthCustom: 0.3,
                           heightCustom: 0.055,
-                          onPressed:() => Navigator.pushNamed(context, 'initial'),
+                          onPressed:() => Navigator.pushNamed(context, '/check4'),
                           text: "Próximo",
                           size: 14.0,
                           colorButton: PaletteColors.primaryColor,

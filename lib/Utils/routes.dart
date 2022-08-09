@@ -1,10 +1,12 @@
 import 'package:vistoria/Utils/exports.dart';
 import 'package:vistoria/Views/data_request_screen.dart';
+import 'package:vistoria/Views/history_screen.dart';
 import 'package:vistoria/Views/login_screen.dart';
 import 'package:vistoria/Views/main_menu.dart';
 
 import 'package:vistoria/Views/register_screen.dart';
 import 'package:vistoria/Views/request_screen.dart';
+import 'package:vistoria/Views/survey_finish_screen.dart';
 import 'package:vistoria/Views/survey_screen.dart';
 import 'package:vistoria/Views/teste.dart';
 
@@ -63,11 +65,13 @@ class Routes {
         return MaterialPageRoute(
             builder: (_) =>const CheckList4()
         );
-
-
-      case "/historico":
+      case "/finished":
         return MaterialPageRoute(
-            builder: (_) =>const MenuScreen()
+            builder: (_) =>const SurveyFinishScreen()
+        );
+      case "/history":
+        return MaterialPageRoute(
+            builder: (_) =>const HistoryScreen()
         );
       case "/tutorial":
         return MaterialPageRoute(

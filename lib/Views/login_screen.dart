@@ -1,6 +1,6 @@
 import 'package:vistoria/Widgets/inputPassword.dart';
 import 'package:vistoria/Widgets/inputRegister.dart';
-import 'package:vistoria/Widgets/text_custom.dart';
+
 
 import '../Utils/exports.dart';
 class LoginScreen extends StatefulWidget {
@@ -110,7 +110,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: ButtonCustom(
                     widthCustom: 0.75,
                     heightCustom: 0.055,
-                    onPressed: ()=> Navigator.pushNamed(context, '/main'),
+                    onPressed: ()=> Navigator.popAndPushNamed(context, '/main'),
                     text: "Entrar",
                     size: 14.0,
                     colorButton: PaletteColors.primaryColor,

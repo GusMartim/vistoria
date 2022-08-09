@@ -46,6 +46,42 @@ class _SurveyscreenState extends State<Surveyscreen> {
         title: TextCustom(
           text: 'NOVA VISTORIA',size: 20.0,color: PaletteColors.white,
           fontWeight: FontWeight.bold,textAlign: TextAlign.center,),
+        actions: <Widget>[
+          Ink(
+            decoration: ShapeDecoration(
+              color:  PaletteColors.white,
+              shape: CircleBorder(),
+            ),
+            child: IconButton(icon: Icon(
+              Icons.camera_alt,
+              color: PaletteColors.primaryColor,
+            ),
+              constraints: BoxConstraints(minHeight: 28,
+                  minWidth: 28,
+                  maxHeight: 28,
+                  maxWidth: 28),
+              iconSize: 16.0,
+              padding: EdgeInsets.zero,
+              onPressed: () {},
+            ),
+          ),
+          Ink(decoration: ShapeDecoration(
+            color:  PaletteColors.white,
+            shape: CircleBorder(),
+          ),
+            child: IconButton(icon: Icon(
+              Icons.location_on,
+              color: PaletteColors.primaryColor,
+            ),
+              constraints: BoxConstraints(minHeight: 28,
+                  minWidth: 28,
+                  maxHeight: 28,
+                  maxWidth: 28),
+              iconSize: 16.0,
+              padding: EdgeInsets.zero,
+              onPressed: () {},
+            ),)
+        ],
 
       ),
       body: Center(

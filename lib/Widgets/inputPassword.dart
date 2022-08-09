@@ -35,15 +35,15 @@ class InputPassword extends StatelessWidget {
     return Container(
       alignment: Alignment.topCenter,
       width: width,
-      padding: EdgeInsets.symmetric(horizontal: 10),
-      margin: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+      padding: EdgeInsets.symmetric(horizontal: 8),
+      margin: EdgeInsets.symmetric(horizontal: 10,vertical: 6),
       decoration: BoxDecoration(
         color: PaletteColors.greyInput,
         // border: Border.all(
         //   color: Colors.black26, //                   <--- border color
         //   width: 2.0,
         // ),
-        borderRadius: BorderRadius.circular(10)
+        borderRadius: BorderRadius.circular(6)
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

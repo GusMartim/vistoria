@@ -32,7 +32,7 @@ class _InitialScreenState extends State<InitialScreen> {
               child: ButtonCustom(
                 widthCustom:0.78,
                 heightCustom: 0.055,
-                onPressed: ()=> Navigator.pushNamed(context, '/register'),
+                onPressed: ()=> Navigator.popAndPushNamed(context, '/register'),
                 text:"Cadastrar",
                 size: 14,
                 colorButton: PaletteColors.primaryColor,
@@ -46,7 +46,7 @@ class _InitialScreenState extends State<InitialScreen> {
                 child: ButtonCustom(
                   widthCustom: 0.78,
                   heightCustom: 0.055,
-                  onPressed: ()=> Navigator.pushNamed(context,'/login'),
+                  onPressed: ()=> Navigator.popAndPushNamed(context,'/login'),
                   text: "Entrar",
                   size: 14,
                   colorButton: PaletteColors.white,

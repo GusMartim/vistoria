@@ -1,5 +1,6 @@
 import 'package:vistoria/Utils/exports.dart';
 import 'package:vistoria/Views/check_list_1.dart';
+import 'package:vistoria/Views/history_screen.dart';
 import 'package:vistoria/Views/main_menu.dart';
 import 'package:vistoria/Views/survey_finish_screen.dart';
 
@@ -28,7 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
         (status){
       if(status){
         Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder:(BuildContext context) => const SurveyFinishScreen()
+            builder:(BuildContext context) => const InitialScreen()
 
         )
         );

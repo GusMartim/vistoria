@@ -65,6 +65,7 @@ class _RequestScreenState extends State<RequestScreen> {
                       colorBorder: PaletteColors.greyInput,
                       background: PaletteColors.greyInput),
                 ),
+                SizedBox(height: 22),
                 SingleChildScrollView(
                     child: Column(
 
@@ -83,13 +84,15 @@ class _RequestScreenState extends State<RequestScreen> {
 
                               children: <Widget>[
                                 ListTile(
-
-
-                                    title: Text(items[index])
-
-
+                                    title:
+                                    TextCustom(
+                                      text:items[index],
+                                      color: PaletteColors.grey,
+                                      fontWeight: FontWeight.normal,
+                                      size: 14.0,
+                                    )
                                 ),
-                                Divider(), //                           <-- Divider
+                                Divider(thickness: 1), //                           <-- Divider
                               ],
                             )
                             );

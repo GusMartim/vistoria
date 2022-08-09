@@ -11,18 +11,11 @@ class DataRequest extends StatefulWidget {
 
 class _DataRequestState extends State<DataRequest> {
 
-  String place ="";
-  String type = "";
-  String anex = "";
-  final items = [
-    'Local: Rua Washington Carvalho, 2541, Centro - São Paulo/SP\nTipo: Casa',
-    'Anexos',
-    'Ver mapa'
 
-  ];
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Scaffold(
 
         backgroundColor: PaletteColors.white,
@@ -36,99 +29,202 @@ class _DataRequestState extends State<DataRequest> {
             text: 'DEMANDA',size: 20.0,color: PaletteColors.white,
             fontWeight: FontWeight.bold,textAlign: TextAlign.center,),
         ),
-        body: Center(
-          child: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            physics: ScrollPhysics(),
-
+        body: Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Center(
             child: Column(
 
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [
-
-                Column(
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: items.length,
-                      itemBuilder: (context, index) {
-                        return Column(
-
-
-                          children: <Widget>[
-
-                            Padding(padding:
-                            const EdgeInsets.symmetric(
-                              horizontal: 2.0,
-                              vertical: 1.0,
-                            )),
-                            ListTile(
-
-
-
-                                title: Text(items[index])
-
-
-                            ),
-                            Divider(
-                            ), //                           <-- Divider
-                          ],
-                        );
-
-                      },
+                    TextCustom(
+                      text: "Local:  ",
+                      color: PaletteColors.grey,
+                      
+                      fontWeight: FontWeight.bold,
+                      textAlign: TextAlign.start,
                     ),
+                    TextCustom(
+                      text: "Rua Washington Carvalho, 2541, Centro",
+                      color: PaletteColors.grey,
+                      
+                      fontWeight: FontWeight.normal,
+                      textAlign: TextAlign.start,
+                    ),
+
+
                   ],
                 ),
-                SizedBox(height: 2.0,width: 0.0,),
-
-
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.min,
+                  children: [
+
+                  TextCustom(
+                    text: " - São Paulo/SP",
+                    color: PaletteColors.grey,
+                    
+                    fontWeight: FontWeight.normal,
+                    textAlign: TextAlign.start,
+                  ),
+
+
+                ],),
+                SizedBox(height: 3),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                  TextCustom(
+                    text: "Tipo:",
+                    color: PaletteColors.grey,
+                    
+                    fontWeight: FontWeight.bold,
+                    textAlign: TextAlign.start,
+                  ),
+                  TextCustom(
+                    text: "Casa",
+                    color: PaletteColors.grey,
+                    
+                    fontWeight: FontWeight.normal,
+                    textAlign: TextAlign.start,
+                  ),
+
+                ],),
+                Divider(thickness: 1,),
+                SizedBox(height: 10),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                  TextCustom(
+                    text: "Anexos",
+                    color: PaletteColors.grey,
+                    
+                    fontWeight: FontWeight.bold,
+                    textAlign: TextAlign.start,
+                  ),
+
+
+                ],),
+                SizedBox(height: 6),
+
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                  Text(
+                    'arquivo123.pdf ',
+                    style: TextStyle(
+                      fontWeight: FontWeight.normal,
+                      color: PaletteColors.grey,
+                      decorationColor: PaletteColors.grey,
+                      decoration: TextDecoration.underline
+
+                    ),
+                  ),
+
+
+                ],),
+                SizedBox(height: 6),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                  Text('imagem2546212.jpg',
+                    style: TextStyle(
+                        color: PaletteColors.grey,
+                        fontWeight: FontWeight.normal,
+                        decorationColor: PaletteColors.grey,
+                        decoration: TextDecoration.underline,
+
+                    ),
+                  ),
+                ],),
+
+                Divider(thickness: 1,),
+
+                Row(
 
                   children: [
-                  Padding(padding: const EdgeInsets.all(10.0),
-                    child: ButtonCustom(
-                      widthCustom: 0.85,
-                      heightCustom: 0.055,
-                      onPressed: ()=> Navigator.pushNamed(context, '/main'),
-                      text: "Vistoriar",
-                      size: 14.0,
-                      colorButton: PaletteColors.primaryColor,
-                      colorText: PaletteColors.white,
-                      colorBorder: PaletteColors.primaryColor,
-                    ),),
-                  Padding(padding: const EdgeInsets.all(10.0),
-                    child: ButtonCustom(
-                      widthCustom: 0.85,
-                      heightCustom: 0.055,
-                      onPressed: ()=> Navigator.pushNamed(context, '/main'),
-                      text: "Recusar",
-                      size: 14.0,
-                      colorButton: PaletteColors.bgColor,
-                      colorText: PaletteColors.white,
-                      colorBorder: PaletteColors.bgColor,
-                    ),)
-                ],
-                    
+                  TextCustom(text: "Ver Mapa", color: PaletteColors.grey,
+                    fontWeight: FontWeight.bold,textAlign: TextAlign.start,
+                  ),
+                  SizedBox(width: 6),
+                  Ink(
+                    decoration: ShapeDecoration(
+                      color:  PaletteColors.greyInput,
+                      shape: CircleBorder(),
 
-                    )
-                  
-                
+
+
+                    ),
+                    child: IconButton(icon: Icon(
+                      Icons.location_on,
+                      color: PaletteColors.primaryColor,
+                    ),
+                      constraints: BoxConstraints(minHeight: 45,
+                          minWidth: 45,
+                          maxHeight: 45,
+                          maxWidth: 45),
+                      iconSize: 35.0,
+                      padding: EdgeInsets.zero,
+                      onPressed: () {},
+                    ),
+                  ),
+                ],),
+
+
+                SizedBox(height: 160),
+
+
+                Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: ButtonCustom(
+                    widthCustom: 0.85,
+                    heightCustom: 0.055,
+                    onPressed: ()=> Navigator.pushNamed(context, '/main'),
+                    text: "Vistoriar",
+                    size: 14.0,
+                    colorButton: PaletteColors.primaryColor,
+                    colorText: PaletteColors.white,
+                    colorBorder: PaletteColors.primaryColor,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: ButtonCustom(
+                    widthCustom: 0.85,
+                    heightCustom: 0.055,
+                    onPressed: ()=> Navigator.pushNamed(context, '/main'),
+                    text: "Recusar",
+                    size: 14.0,
+                    colorButton: PaletteColors.bgColor,
+                    colorText: PaletteColors.white,
+                    colorBorder: PaletteColors.bgColor,
+                  ),
+                )
+
+
 
                     ],
                   ),
 
-                ),
 
 
-
-            ),
+              ),
+        ),
 
           );
 

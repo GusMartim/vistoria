@@ -38,7 +38,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           ),
           elevation: 0,
           title: TextCustom(
-            text: 'Cadastro',size: 20.0,color: PaletteColors.white,
+            text: 'CADASTRO',size: 20.0,color: PaletteColors.white,
             fontWeight: FontWeight.bold,textAlign: TextAlign.center,),
       ),
       body: Center(
@@ -48,22 +48,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 4,
-                        horizontal: 10,
-                    ),
-                    child: TextCustom(
-                        text: "Olá, crie sua conta!",
-                        size: 14.0,
-                        color:PaletteColors.grey,
-                        fontWeight: FontWeight.bold,textAlign: TextAlign.left,
+                TextCustom(
+                    text: "Olá, crie sua conta!",
+                    size: 16.0,
+                    color:PaletteColors.grey,
+                    fontWeight: FontWeight.bold,textAlign: TextAlign.left,
 
-                    ),
                 ),
+                SizedBox(height:40),
                 Padding(
                   padding: const EdgeInsets.symmetric(
-                    horizontal: 10),
+                    horizontal: 10, vertical:4.2),
                   child: TextCustom(
                     text: "Nome",
                     size: 14.0,
@@ -74,6 +69,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   icons: Icons.height,
                   sizeIcon: 0.0,
                   width: width * 0.8,
+
                   controller: _controllerName,
                   hint: 'Nome Completo',
                   fonts: 14.0,
@@ -83,7 +79,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 Padding(
                     padding: const EdgeInsets.symmetric(
-                      horizontal: 10),
+                      horizontal: 10, vertical:4.2),
                   child: TextCustom(
                     text: "E-mail",
                     size: 14.0,
@@ -95,7 +91,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   sizeIcon: 0.0,
                   width: width * 0.8,
                   controller: _controllerEmail,
-                  hint: "email@email.com",
+                  hint: "E-mail",
                   fonts: 14.0,
                   keyboardType: TextInputType.text,
                   colorBorder: PaletteColors.greyInput,
@@ -104,7 +100,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 Padding(
                     padding: const EdgeInsets.symmetric(
-                      horizontal: 10),
+                      horizontal: 10, vertical:4.2),
                   child: TextCustom(
                     text: "Telefone",
                     size:14.0,
@@ -124,7 +120,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 Padding(
                     padding: const EdgeInsets.symmetric(
-                      horizontal: 10),
+                      horizontal: 10, vertical:4.2),
                   child: TextCustom(
                     text: "Senha",
                     size: 14.0,
@@ -154,7 +150,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 Padding(
                     padding: const EdgeInsets.symmetric(
-                      horizontal: 10),
+                      horizontal: 10, vertical:4.2),
                   child: TextCustom(
                     text: "Confirmar Senha",
                     size: 14.0,
@@ -181,6 +177,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     });
                   },
                 ),
+                SizedBox(height:22),
 
                 Padding(
                   padding: const EdgeInsets.symmetric(
@@ -201,7 +198,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ]
                   );
                     Future.delayed(Duration(seconds: 3),(){
-                      Navigator.pushNamed(context, '/login');
+                      Navigator.popAndPushNamed(context, '/login');
                     });
                     },
                   text: "Crie sua conta",

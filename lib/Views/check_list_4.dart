@@ -1,7 +1,7 @@
 import 'package:vistoria/Utils/exports.dart';
 import 'package:vistoria/Widgets/inputRegister.dart';
 import 'package:vistoria/Widgets/text_custom.dart';
-import 'package:vistoria/Views/check_list_3.dart';
+
 
 class CheckList4 extends StatefulWidget {
   const CheckList4({Key? key}) : super(key: key);
@@ -73,8 +73,8 @@ class _CheckList4State extends State<CheckList4> {
                     minWidth: 28,
                     maxHeight: 28,
                     maxWidth: 28),
-                iconSize: 16.0,
-                padding: EdgeInsets.zero,
+                iconSize: 24.0,
+                padding: EdgeInsets.all(3.0),
                 onPressed: () {},
               ),
             ),
@@ -1385,7 +1385,7 @@ class _CheckList4State extends State<CheckList4> {
                       child: ButtonCustom(
                         widthCustom: 0.3,
                         heightCustom: 0.055,
-                        onPressed:() => Navigator.pushNamed(context, '/check2'),
+                        onPressed:() =>  Navigator.pop(context),
                         text: "Voltar",
                         size: 14.0,
                         colorButton: PaletteColors.white,
@@ -1398,7 +1398,7 @@ class _CheckList4State extends State<CheckList4> {
                       child: ButtonCustom(
                         widthCustom: 0.3,
                         heightCustom: 0.055,
-                        onPressed:() => Navigator.pushNamed(context, 'initial'),
+                        onPressed:() => Navigator.pushNamed(context, '/finished'),
                         text: "Concluir",
                         size: 14.0,
                         colorButton: PaletteColors.primaryColor,
