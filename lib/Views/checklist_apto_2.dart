@@ -5,14 +5,14 @@ import 'package:vistoria/Widgets/inputRegister.dart';
 import 'package:vistoria/Widgets/text_custom.dart';
 
 
-class CheckList2 extends StatefulWidget {
-  const CheckList2({Key? key}) : super(key: key);
+class CheckListApto2 extends StatefulWidget {
+  const CheckListApto2({Key? key}) : super(key: key);
 
   @override
-  State<CheckList2> createState() => _CheckList2State();
+  State<CheckListApto2> createState() => _CheckListApto2State();
 }
 
-class _CheckList2State extends State<CheckList2> {
+class _CheckListApto2State extends State<CheckListApto2> {
 
   final TextEditingController _controllerAge= TextEditingController();
   final TextEditingController _controllerPrice = TextEditingController();
@@ -102,7 +102,7 @@ class _CheckList2State extends State<CheckList2> {
           ),
           elevation: 0,
           title: TextCustom(
-            text: 'CheckList 2/5',size: 20.0,color: PaletteColors.white,
+            text: 'CheckList 2/4',size: 20.0,color: PaletteColors.white,
             fontWeight: FontWeight.bold,textAlign: TextAlign.center,),
           actions: <Widget>[
             Ink(
@@ -405,7 +405,7 @@ class _CheckList2State extends State<CheckList2> {
                         child: ButtonCustom(
                           widthCustom: 0.3,
                           heightCustom: 0.055,
-                          onPressed:() => Navigator.pushNamed(context, '/check3'),
+                          onPressed:() => Navigator.pushNamed(context, '/checkapto3'),
                           text: "Próximo",
                           size: 14.0,
                           colorButton: PaletteColors.primaryColor,

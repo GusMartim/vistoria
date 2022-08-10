@@ -1,26 +1,23 @@
-
-
 import 'package:vistoria/Utils/exports.dart';
-import 'package:vistoria/Widgets/inputRegister.dart';
-import 'package:vistoria/Widgets/text_custom.dart';
 
 
-class CheckList1 extends StatefulWidget {
-  const CheckList1({Key? key}) : super(key: key);
+
+
+class CheckListApto1 extends StatefulWidget {
+  const CheckListApto1({Key? key}) : super(key: key);
 
   @override
-  State<CheckList1> createState() => _CheckList1State();
+  State<CheckListApto1> createState() => _CheckListApto1State();
 }
 
-class _CheckList1State extends State<CheckList1> {
-
+class _CheckListApto1State extends State<CheckListApto1> {
 
   final type = [
     CheckBoxModel(title: 'Residencial'),
     CheckBoxModel(title: 'Comercial'),
     CheckBoxModel(title: 'Misto'),
     CheckBoxModel(title: 'Outro:'),
-    ];
+  ];
   final TextEditingController _controllerType = TextEditingController();
 
   final infra = [
@@ -90,8 +87,10 @@ class _CheckList1State extends State<CheckList1> {
 
 
 
+
   @override
   Widget build(BuildContext context) {
+
 
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
@@ -106,7 +105,7 @@ class _CheckList1State extends State<CheckList1> {
         ),
         elevation: 0,
         title: TextCustom(
-          text: 'CheckList 1/4',size: 20.0,color: PaletteColors.white,
+          text: 'CheckList 1/5',size: 20.0,color: PaletteColors.white,
           fontWeight: FontWeight.bold,textAlign: TextAlign.center,),
         actions: <Widget>[
           Ink(
@@ -133,7 +132,6 @@ class _CheckList1State extends State<CheckList1> {
         ],
 
       ),
-
       body: Padding(
         padding: EdgeInsets.symmetric(vertical:24 ,horizontal:24 ),
         child: Center(
@@ -366,28 +364,28 @@ class _CheckList1State extends State<CheckList1> {
                     Padding(
                       padding: EdgeInsets.symmetric(vertical:0.1 ,horizontal:26.0 ),
                       child: ButtonCustom(
-                      widthCustom: 0.3,
-                      heightCustom: 0.055,
-                      onPressed:() => Navigator.pop(context),
-                      text: "Voltar",
-                      size: 14.0,
-                      colorButton: PaletteColors.white,
-                      colorText: PaletteColors.primaryColor,
-                      colorBorder: PaletteColors.primaryColor,
-                  ),
+                        widthCustom: 0.3,
+                        heightCustom: 0.055,
+                        onPressed:() => Navigator.pop(context),
+                        text: "Voltar",
+                        size: 14.0,
+                        colorButton: PaletteColors.white,
+                        colorText: PaletteColors.primaryColor,
+                        colorBorder: PaletteColors.primaryColor,
+                      ),
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(vertical:0.1 ,horizontal:26.0 ),
                       child: ButtonCustom(
-                      widthCustom: 0.3,
-                      heightCustom: 0.055,
-                        onPressed:() => Navigator.pushNamed(context, '/check2'),
-                      text: "Próximo",
-                      size: 14.0,
-                      colorButton: PaletteColors.primaryColor,
-                      colorText: PaletteColors.white,
-                      colorBorder: PaletteColors.primaryColor,
-                  ),
+                        widthCustom: 0.3,
+                        heightCustom: 0.055,
+                        onPressed:() => Navigator.pushNamed(context, '/checkapto2'),
+                        text: "Próximo",
+                        size: 14.0,
+                        colorButton: PaletteColors.primaryColor,
+                        colorText: PaletteColors.white,
+                        colorBorder: PaletteColors.primaryColor,
+                      ),
                     ),],
                 )
               ],
@@ -397,26 +395,19 @@ class _CheckList1State extends State<CheckList1> {
           ),
         ),
       ),
+
+
+
     );
-
-
-
-            }
+  }
   Widget buildSingleCheckbox(CheckBoxModel checkBoxModel)=> CheckboxListTile(
     title: TextCustom(text:checkBoxModel.title,
-    color: PaletteColors.grey,
-      fontWeight: FontWeight.normal,size: 16.0),
+        color: PaletteColors.grey,
+        fontWeight: FontWeight.normal,size: 16.0),
     value: checkBoxModel.value,
     onChanged: (value) => setState(() =>
     checkBoxModel.value = value!),
     activeColor: PaletteColors.primaryColor,
     checkColor: PaletteColors.white,
   );
-
-
-
-
-
-
-  }
-
+}

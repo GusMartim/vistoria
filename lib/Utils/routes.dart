@@ -1,4 +1,9 @@
 import 'package:vistoria/Utils/exports.dart';
+import 'package:vistoria/Views/checklist_apto_1.dart';
+import 'package:vistoria/Views/checklist_apto_2.dart';
+import 'package:vistoria/Views/checklist_apto_3.dart';
+import 'package:vistoria/Views/checklist_apto_4.dart';
+import 'package:vistoria/Views/checklist_apto_5.dart';
 import 'package:vistoria/Views/data_request_screen.dart';
 import 'package:vistoria/Views/history_screen.dart';
 import 'package:vistoria/Views/login_screen.dart';
@@ -8,7 +13,7 @@ import 'package:vistoria/Views/register_screen.dart';
 import 'package:vistoria/Views/request_screen.dart';
 import 'package:vistoria/Views/survey_finish_screen.dart';
 import 'package:vistoria/Views/survey_screen.dart';
-import 'package:vistoria/Views/teste.dart';
+
 
 
 
@@ -64,6 +69,26 @@ class Routes {
       case "/check4":
         return MaterialPageRoute(
             builder: (_) =>const CheckList4()
+        );
+      case "/checkapto1":
+        return MaterialPageRoute(
+            builder: (_) =>const CheckListApto1()
+        );
+      case "/checkapto2":
+        return MaterialPageRoute(
+            builder: (_) =>const CheckListApto2()
+        );
+      case "/checkapto3":
+        return MaterialPageRoute(
+            builder: (_) =>const CheckListApto3()
+        );
+      case "/checkapto4":
+        return MaterialPageRoute(
+            builder: (_) =>const CheckListApto4()
+        );
+      case "/checkapto5":
+        return MaterialPageRoute(
+            builder: (_) =>const CheckListApto5()
         );
       case "/finished":
         return MaterialPageRoute(

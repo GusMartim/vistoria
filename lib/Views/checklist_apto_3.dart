@@ -1,84 +1,80 @@
-
-
 import 'package:vistoria/Utils/exports.dart';
 import 'package:vistoria/Widgets/inputRegister.dart';
 import 'package:vistoria/Widgets/text_custom.dart';
 
 
-class CheckList2 extends StatefulWidget {
-  const CheckList2({Key? key}) : super(key: key);
+class CheckListApto3 extends StatefulWidget {
+  const CheckListApto3({Key? key}) : super(key: key);
 
   @override
-  State<CheckList2> createState() => _CheckList2State();
+  State<CheckListApto3> createState() => _CheckListApto3State();
 }
 
-class _CheckList2State extends State<CheckList2> {
-
-  final TextEditingController _controllerAge= TextEditingController();
-  final TextEditingController _controllerPrice = TextEditingController();
+class _CheckListApto3State extends State<CheckListApto3> {
 
 
-  final extern = [
-    CheckBoxModel(title: 'Madeira'),
-    CheckBoxModel(title: 'Blindex'),
-    CheckBoxModel(title: 'Aço'),
-    CheckBoxModel(title: 'Outro:'),
-  ];
-  final TextEditingController _controllerExtern = TextEditingController();
-
-  final floor = [
-    CheckBoxModel(title: 'Cerâmico'),
-    CheckBoxModel(title: 'Porcelanato'),
-    CheckBoxModel(title: 'Cimento liso'),
-    CheckBoxModel(title: 'Outro:'),
-  ];
-  final TextEditingController _controllerFloor = TextEditingController();
-
-  final Intern = [
-    CheckBoxModel(title: 'Madeira'),
-    CheckBoxModel(title: 'Blindex'),
-    CheckBoxModel(title: 'Aço'),
-    CheckBoxModel(title: 'Outro:'),
-  ];
-  final TextEditingController _controllerIntern = TextEditingController();
-
-  final Windows = [
-    CheckBoxModel(title: 'Madeira'),
-    CheckBoxModel(title: 'Blindex'),
-    CheckBoxModel(title: 'Aço'),
-    CheckBoxModel(title: 'Outro:'),
-  ];
-  final TextEditingController _controllerWindows = TextEditingController();
-
-  final InternPaint = [
-    CheckBoxModel(title: 'PVA'),
-    CheckBoxModel(title: 'Acrílica'),
-    CheckBoxModel(title: 'Latex'),
-    CheckBoxModel(title: 'Textura'),
-    CheckBoxModel(title: 'Nenhuma'),
-    CheckBoxModel(title: 'Outro:'),
-  ];
-  final TextEditingController _controllerInternPaint = TextEditingController();
-
-  final balcony = [
-    CheckBoxModel(title: 'Granito'),
-    CheckBoxModel(title: 'Mármore'),
-    CheckBoxModel(title: 'Ardósia'),
-    CheckBoxModel(title: 'Sintético'),
-    CheckBoxModel(title: 'Outro:'),
-  ];
-  final TextEditingController _controllerBalcony = TextEditingController();
-
-  final switchboard = [
-    CheckBoxModel(title: '2 Disjuntores'),
-    CheckBoxModel(title: '3 Disjuntores'),
-    CheckBoxModel(title: '4 Disjuntores'),
-    CheckBoxModel(title: '4+ Disjuntores'),
+  final kitchen = [
+    CheckBoxModel(title: 'Ceramico'),
+    CheckBoxModel(title: 'Barra lisa'),
+    CheckBoxModel(title: '1/2 altura'),
+    CheckBoxModel(title: 'Piso a teto'),
     CheckBoxModel(title: 'Nenhum'),
     CheckBoxModel(title: 'Outro:'),
   ];
-  final TextEditingController _controllerSwitchBoard = TextEditingController();
+  final TextEditingController _controllerKitchen = TextEditingController();
 
+  final bathroom= [
+    CheckBoxModel(title: 'Ceramico'),
+    CheckBoxModel(title: 'Barra lisa'),
+    CheckBoxModel(title: '1/2 altura'),
+    CheckBoxModel(title: 'Piso a teto'),
+    CheckBoxModel(title: 'Nenhum'),
+    CheckBoxModel(title: 'Outro:'),
+  ];
+  final TextEditingController _controllerBathroom = TextEditingController();
+
+  final tank = [
+    CheckBoxModel(title: 'Ceramico'),
+    CheckBoxModel(title: 'Barra lisa'),
+    CheckBoxModel(title: '1/2 altura'),
+    CheckBoxModel(title: 'Piso a teto'),
+    CheckBoxModel(title: 'Nenhum'),
+    CheckBoxModel(title: 'Outro:'),
+  ];
+  final TextEditingController _controllerTank = TextEditingController();
+
+  final pattern = [
+    CheckBoxModel(title: 'Luxo'),
+    CheckBoxModel(title: 'Alto'),
+    CheckBoxModel(title: 'Normal/Alto'),
+    CheckBoxModel(title: 'Normal'),
+    CheckBoxModel(title: 'Normal/Baixo'),
+    CheckBoxModel(title: 'Baixo'),
+    CheckBoxModel(title: 'Mínimo'),
+    CheckBoxModel(title: 'Outro:'),
+  ];
+  final TextEditingController _controllerPattern = TextEditingController();
+
+  final state = [
+    CheckBoxModel(title: 'Novo'),
+    CheckBoxModel(title: 'Bom'),
+    CheckBoxModel(title: 'Regular'),
+    CheckBoxModel(title: 'Reparos simples'),
+    CheckBoxModel(title: 'Reparos importantes'),
+    CheckBoxModel(title: 'Ruim'),
+    CheckBoxModel(title: 'Outro:'),
+  ];
+  final TextEditingController _controllerState = TextEditingController();
+
+  final Unityroof = [
+    CheckBoxModel(title: 'Forro PVC'),
+    CheckBoxModel(title: 'Forro Gesso'),
+    CheckBoxModel(title: 'Forro Paulista'),
+    CheckBoxModel(title: 'Laje'),
+    CheckBoxModel(title: 'Telhado aparente'),
+    CheckBoxModel(title: 'Outro:'),
+  ];
+  final TextEditingController _controllerUnityRoof = TextEditingController();
 
 
 
@@ -97,12 +93,13 @@ class _CheckList2State extends State<CheckList2> {
         appBar: AppBar(
           backgroundColor: PaletteColors.bgColor,
           iconTheme:  IconThemeData(
+
             color: PaletteColors.white,
 
           ),
           elevation: 0,
           title: TextCustom(
-            text: 'CheckList 2/5',size: 20.0,color: PaletteColors.white,
+            text: 'CheckList 3/5',size: 20.0,color: PaletteColors.white,
             fontWeight: FontWeight.bold,textAlign: TextAlign.center,),
           actions: <Widget>[
             Ink(
@@ -140,79 +137,24 @@ class _CheckList2State extends State<CheckList2> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Row(children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10.0,
-                              vertical: 3.0),
-                          child: TextCustom(
-                            text: "Idade",
-                            size:14.0,
-                            color: PaletteColors.grey,
-                            fontWeight: FontWeight.bold,textAlign: TextAlign.left,),
-                        ),
-                        InputRegister(
-                          icons: Icons.height,
-                          sizeIcon: 0.0,
-                          width: width * 0.2,
-                          controller: _controllerAge,
-                          hint: "00",
-                          fonts: 14.0,
-                          keyboardType: TextInputType.number,
-                          colorBorder: PaletteColors.greyInput,
-                          background: PaletteColors.greyInput,
-                        ),
-                      ],),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10.0,
-                              vertical: 3.0),
-                          child: TextCustom(
-                            text: "Valor",
-                            size:14.0,
-                            color: PaletteColors.grey,
-                            fontWeight: FontWeight.bold,textAlign: TextAlign.left,),
-                        ),
-                        InputRegister(
-                          icons: Icons.height,
-                          sizeIcon: 0.0,
-                          width: width * 0.53,
-                          controller: _controllerPrice,
-                          hint: 'R\$100.000.00',
-                          fonts: 14.0,
-                          keyboardType: TextInputType.number,
-                          colorBorder: PaletteColors.greyInput,
-                          background: PaletteColors.greyInput,
-                        ),
-
-                      ],)
-                  ],),
                   TextCustom(
-                    text: "Portas Externas",
+                    text: "Revestimento da Cozinha",
                     size: 16.0,
                     color: PaletteColors.grey,
                     fontWeight: FontWeight.bold,
                     textAlign: TextAlign.start,
 
-                  ), //Portas Externas
+                  ),
                   ListView(
                     scrollDirection: Axis.vertical,
                     physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
 
                     children: [
-                      ...extern.map(buildSingleCheckbox).toList(),
+                      ...kitchen.map(buildSingleCheckbox).toList(),
                     ],
-                  ),
-                  InputRegister(controller: _controllerExtern,
+                  ), //Revestimento da Cozinha
+                  InputRegister(controller: _controllerKitchen,
                       hint: 'Especificar',
                       fonts: 14.0,
                       keyboardType: TextInputType.text,
@@ -223,23 +165,23 @@ class _CheckList2State extends State<CheckList2> {
                       background: PaletteColors.greyInput),
                   Divider(thickness: 1.0,),
                   TextCustom(
-                    text: "Piso",
+                    text: "Revestimento do Banheiro",
                     size: 16.0,
                     color: PaletteColors.grey,
                     fontWeight: FontWeight.bold,
                     textAlign: TextAlign.start,
 
-                  ), //Piso
+                  ),
                   ListView(
                     scrollDirection: Axis.vertical,
                     physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
 
                     children: [
-                      ...floor.map(buildSingleCheckbox).toList(),
+                      ...bathroom.map(buildSingleCheckbox).toList(),
                     ],
-                  ),
-                  InputRegister(controller: _controllerFloor,
+                  ), //Revestimento do Banheiro
+                  InputRegister(controller: _controllerBathroom,
                       hint: 'Especificar',
                       fonts: 14.0,
                       keyboardType: TextInputType.text,
@@ -250,23 +192,23 @@ class _CheckList2State extends State<CheckList2> {
                       background: PaletteColors.greyInput),
                   Divider(thickness: 1.0,),
                   TextCustom(
-                    text: "Portas Internas",
+                    text: "Revestimento do Tanque",
                     size: 16.0,
                     color: PaletteColors.grey,
                     fontWeight: FontWeight.bold,
                     textAlign: TextAlign.start,
 
-                  ), //Portas Internas
+                  ),
                   ListView(
                     scrollDirection: Axis.vertical,
                     physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
 
                     children: [
-                      ...Intern.map(buildSingleCheckbox).toList(),
+                      ...tank.map(buildSingleCheckbox).toList(),
                     ],
-                  ),
-                  InputRegister(controller: _controllerIntern,
+                  ), //Revestimento do Tanque
+                  InputRegister(controller: _controllerTank,
                       hint: 'Especificar',
                       fonts: 14.0,
                       keyboardType: TextInputType.text,
@@ -277,23 +219,23 @@ class _CheckList2State extends State<CheckList2> {
                       background: PaletteColors.greyInput),
                   Divider(thickness: 1.0,),
                   TextCustom(
-                    text: "Janelas",
+                    text: "Padrão de Acabamento",
                     size: 16.0,
                     color: PaletteColors.grey,
                     fontWeight: FontWeight.bold,
                     textAlign: TextAlign.start,
 
-                  ), //Janelas
+                  ),
                   ListView(
                     scrollDirection: Axis.vertical,
                     physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
 
                     children: [
-                      ...Windows.map(buildSingleCheckbox).toList(),
+                      ...pattern.map(buildSingleCheckbox).toList(),
                     ],
-                  ),
-                  InputRegister(controller: _controllerWindows,
+                  ), //Padrão de Acabamento
+                  InputRegister(controller: _controllerPattern,
                       hint: 'Especificar',
                       fonts: 14.0,
                       keyboardType: TextInputType.text,
@@ -304,7 +246,7 @@ class _CheckList2State extends State<CheckList2> {
                       background: PaletteColors.greyInput),
                   Divider(thickness: 1.0,),
                   TextCustom(
-                    text: "Pintura Interna",
+                    text: "Estado de Conservação",
                     size: 16.0,
                     color: PaletteColors.grey,
                     fontWeight: FontWeight.bold,
@@ -317,10 +259,10 @@ class _CheckList2State extends State<CheckList2> {
                     shrinkWrap: true,
 
                     children: [
-                      ...InternPaint.map(buildSingleCheckbox).toList(),
+                      ...state.map(buildSingleCheckbox).toList(),
                     ],
-                  ), // Posição da Unidade
-                  InputRegister(controller: _controllerInternPaint,
+                  ), //Estado de Conservação
+                  InputRegister(controller: _controllerState,
                       hint: 'Especificar',
                       fonts: 14.0,
                       keyboardType: TextInputType.text,
@@ -331,50 +273,23 @@ class _CheckList2State extends State<CheckList2> {
                       background: PaletteColors.greyInput),
                   Divider(thickness: 1.0,),
                   TextCustom(
-                    text: "Bancada",
+                    text: "Teto da Unidade",
                     size: 16.0,
                     color: PaletteColors.grey,
                     fontWeight: FontWeight.bold,
                     textAlign: TextAlign.start,
 
-                  ), //Bancada
+                  ),
                   ListView(
                     scrollDirection: Axis.vertical,
                     physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
 
                     children: [
-                      ...balcony.map(buildSingleCheckbox).toList(),
+                      ...Unityroof.map(buildSingleCheckbox).toList(),
                     ],
-                  ),
-                  InputRegister(controller: _controllerBalcony,
-                      hint: 'Especificar',
-                      fonts: 14.0,
-                      keyboardType: TextInputType.text,
-                      width: width * 0.5,
-                      sizeIcon: 0.0,
-                      icons: Icons.height,
-                      colorBorder: PaletteColors.greyInput,
-                      background: PaletteColors.greyInput),
-                  Divider(thickness: 1.0,),
-                  TextCustom(
-                    text: "Quadro Elétrico",
-                    size: 16.0,
-                    color: PaletteColors.grey,
-                    fontWeight: FontWeight.bold,
-                    textAlign: TextAlign.start,
-
-                  ), //Quadro Elétrico
-                  ListView(
-                    scrollDirection: Axis.vertical,
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-
-                    children: [
-                      ...switchboard.map(buildSingleCheckbox).toList(),
-                    ],
-                  ),
-                  InputRegister(controller: _controllerSwitchBoard,
+                  ), //Teto da Unidade
+                  InputRegister(controller: _controllerUnityRoof,
                       hint: 'Especificar',
                       fonts: 14.0,
                       keyboardType: TextInputType.text,
@@ -392,7 +307,7 @@ class _CheckList2State extends State<CheckList2> {
                         child: ButtonCustom(
                           widthCustom: 0.3,
                           heightCustom: 0.055,
-                          onPressed:() => Navigator.pop(context),
+                          onPressed:() =>  Navigator.pop(context),
                           text: "Voltar",
                           size: 14.0,
                           colorButton: PaletteColors.white,
@@ -405,7 +320,7 @@ class _CheckList2State extends State<CheckList2> {
                         child: ButtonCustom(
                           widthCustom: 0.3,
                           heightCustom: 0.055,
-                          onPressed:() => Navigator.pushNamed(context, '/check3'),
+                          onPressed:() => Navigator.pushNamed(context, '/checkapto4'),
                           text: "Próximo",
                           size: 14.0,
                           colorButton: PaletteColors.primaryColor,
