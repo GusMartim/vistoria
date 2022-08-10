@@ -692,7 +692,7 @@ class _CheckListApto4State extends State<CheckListApto4> {
                       child: ButtonCustom(
                         widthCustom: 0.3,
                         heightCustom: 0.055,
-                        onPressed:() => Navigator.pushNamed(context, '/check2'),
+                        onPressed:() => Navigator.pushNamed(context, '/checkapto5'),
                         text: "Próximo",
                         size: 14.0,
                         colorButton: PaletteColors.primaryColor,

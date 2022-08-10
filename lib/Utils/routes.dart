@@ -90,6 +90,23 @@ class Routes {
         return MaterialPageRoute(
             builder: (_) =>const CheckListApto5()
         );
+      case "/checklote1":
+        return MaterialPageRoute(
+            builder: (_) =>const CheckListLote1()
+        );
+      case "/checklote2":
+        return MaterialPageRoute(
+            builder: (_) =>const CheckListLote2()
+        );
+      case "/checklote3":
+        return MaterialPageRoute(
+            builder: (_) =>const CheckListLote3()
+        );
+      case "/checklote4":
+        return MaterialPageRoute(
+            builder: (_) =>const CheckListLote4()
+        );
+
       case "/finished":
         return MaterialPageRoute(
             builder: (_) =>const SurveyFinishScreen()

@@ -54,7 +54,7 @@ class _CheckListApto5State extends State<CheckListApto5> {
     ),
     elevation: 0,
     title: TextCustom(
-    text: 'CheckList 4/4',size: 20.0,color: PaletteColors.white,
+    text: 'CheckList 5/5',size: 20.0,color: PaletteColors.white,
     fontWeight: FontWeight.bold,textAlign: TextAlign.center,),
           actions: <Widget>[
             Ink(
