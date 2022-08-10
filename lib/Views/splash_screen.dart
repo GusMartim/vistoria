@@ -1,5 +1,6 @@
 import 'package:vistoria/Utils/exports.dart';
 import 'package:vistoria/Views/checklist_apto_1.dart';
+import 'package:vistoria/Views/checklist_lote_3.dart';
 
 
 
@@ -27,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
         (status){
       if(status){
         Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder:(BuildContext context) => const CheckListApto1()
+            builder:(BuildContext context) => const CheckListLote3()
 
         )
         );
