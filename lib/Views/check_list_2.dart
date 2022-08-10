@@ -102,7 +102,7 @@ class _CheckList2State extends State<CheckList2> {
           ),
           elevation: 0,
           title: TextCustom(
-            text: 'CheckList 2/5',size: 20.0,color: PaletteColors.white,
+            text: 'CheckList 2/4',size: 20.0,color: PaletteColors.white,
             fontWeight: FontWeight.bold,textAlign: TextAlign.center,),
           actions: <Widget>[
             Ink(

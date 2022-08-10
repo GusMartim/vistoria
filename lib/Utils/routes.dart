@@ -7,6 +7,8 @@ import 'package:vistoria/Views/checklist_apto_5.dart';
 import 'package:vistoria/Views/checklist_lote_1.dart';
 import 'package:vistoria/Views/checklist_lote_2.dart';
 import 'package:vistoria/Views/checklist_lote_3.dart';
+import 'package:vistoria/Views/checklist_lote_4.dart';
+import 'package:vistoria/Views/construction_step.dart';
 import 'package:vistoria/Views/data_request_screen.dart';
 import 'package:vistoria/Views/history_screen.dart';
 import 'package:vistoria/Views/login_screen.dart';
@@ -107,7 +109,11 @@ class Routes {
         );
       case "/checklote4":
         return MaterialPageRoute(
-            builder: (_) =>const CheckListLote1()
+            builder: (_) =>const CheckListLote4()
+        );
+      case "/construction":
+        return MaterialPageRoute(
+            builder: (_) =>const ConstructionStep()
         );
 
       case "/finished":

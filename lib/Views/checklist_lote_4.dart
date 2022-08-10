@@ -1,93 +1,44 @@
-
-
 import 'package:vistoria/Utils/exports.dart';
 import 'package:vistoria/Widgets/inputRegister.dart';
 import 'package:vistoria/Widgets/text_custom.dart';
 
 
-class CheckList1 extends StatefulWidget {
-  const CheckList1({Key? key}) : super(key: key);
+class CheckListLote4 extends StatefulWidget {
+  const CheckListLote4({Key? key}) : super(key: key);
 
   @override
-  State<CheckList1> createState() => _CheckList1State();
+  State<CheckListLote4> createState() => _CheckListLote4State();
 }
 
-class _CheckList1State extends State<CheckList1> {
+class _CheckListLote4State extends State<CheckListLote4> {
 
 
-  final type = [
-    CheckBoxModel(title: 'Residencial'),
-    CheckBoxModel(title: 'Comercial'),
-    CheckBoxModel(title: 'Misto'),
-    CheckBoxModel(title: 'Outro:'),
-    ];
-  final TextEditingController _controllerType = TextEditingController();
-
-  final infra = [
-    CheckBoxModel(title: 'Rede de Água'),
-    CheckBoxModel(title: 'Iluminação Pública'),
-    CheckBoxModel(title: 'Pavimentação'),
-    CheckBoxModel(title: 'Rede de Água Pluvial'),
-    CheckBoxModel(title: 'Rede de Esgoto'),
-    CheckBoxModel(title: 'Fossa Séptica'),
-    CheckBoxModel(title: 'Semidouro'),
-    CheckBoxModel(title: 'Cisterna'),
+  final natural = [
+    CheckBoxModel(title: 'Risco de deslizamento'),
+    CheckBoxModel(title: 'Risco de alagamento'),
+    CheckBoxModel(title: 'Risco de Erosão'),
     CheckBoxModel(title: 'Outro:'),
   ];
-  final TextEditingController _controllerInfra = TextEditingController();
-
-  final situation = [
-    CheckBoxModel(title: 'Meio de Quadra'),
-    CheckBoxModel(title: 'Esquina'),
-    CheckBoxModel(title: 'Quadra Inteira'),
+  final TextEditingController _controllerNatural = TextEditingController();
+  final social = [
+    CheckBoxModel(title: 'Favela'),
+    CheckBoxModel(title: 'Penitenciária'),
+    CheckBoxModel(title: 'Indústria poluente'),
+    CheckBoxModel(title: 'Usina de lixo'),
+    CheckBoxModel(title: 'Matadouro'),
+    CheckBoxModel(title: 'Via expressa'),
+    CheckBoxModel(title: 'Viaduto'),
+    CheckBoxModel(title: 'Cemitério'),
+    CheckBoxModel(title: 'Hospital'),
+    CheckBoxModel(title: 'Clube noturno'),
+    CheckBoxModel(title: 'Feira livre'),
+    CheckBoxModel(title: 'Oficinas'),
     CheckBoxModel(title: 'Outro:'),
   ];
-  final TextEditingController _controllerSituation = TextEditingController();
-  final quota = [
-    CheckBoxModel(title: 'Abaixo'),
-    CheckBoxModel(title: 'Mesmo Nivel'),
-    CheckBoxModel(title: 'Acima'),
-    CheckBoxModel(title: 'Outro:'),
-  ];
-  final TextEditingController _controllerQuota = TextEditingController();
-  final position = [
-    CheckBoxModel(title: 'Isolada'),
-    CheckBoxModel(title: 'Junto a uma Lateral'),
-    CheckBoxModel(title: 'Junto as Laterais'),
-    CheckBoxModel(title: 'Geminada'),
-    CheckBoxModel(title: 'Ocupa todo terreno'),
-    CheckBoxModel(title: 'Outro:'),
-  ];
-  final TextEditingController _controllerPosition = TextEditingController();
-  final roof = [
-    CheckBoxModel(title: 'Concreto'),
-    CheckBoxModel(title: 'Plan'),
-    CheckBoxModel(title: 'Americana'),
-    CheckBoxModel(title: 'Fibrocimento'),
-    CheckBoxModel(title: 'Outro:'),
-  ];
-  final TextEditingController _controllerRoof = TextEditingController();
-  final wall = [
-    CheckBoxModel(title: 'Alvenaria'),
-    CheckBoxModel(title: 'Placa'),
-    CheckBoxModel(title: 'Nenhum'),
-    CheckBoxModel(title: 'Outro:'),
-  ];
-  final TextEditingController _controllerWall = TextEditingController();
-  final paint = [
-    CheckBoxModel(title: 'PVA'),
-    CheckBoxModel(title: 'Acrílica'),
-    CheckBoxModel(title: 'Latex'),
-    CheckBoxModel(title: 'Textura'),
-    CheckBoxModel(title: 'Nenhuma'),
-    CheckBoxModel(title: 'Outro:'),
+  final TextEditingController _controllerSocial = TextEditingController();
 
-  ];
-  final TextEditingController _controllerPaint = TextEditingController();
-
-
-
-
+  final TextEditingController _controllerPrice = TextEditingController();
+  final TextEditingController _controllerBlock = TextEditingController();
 
 
   @override
@@ -96,17 +47,20 @@ class _CheckList1State extends State<CheckList1> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
+
+
     return Scaffold(
       backgroundColor: PaletteColors.white,
       appBar: AppBar(
         backgroundColor: PaletteColors.bgColor,
         iconTheme:  IconThemeData(
+
           color: PaletteColors.white,
 
         ),
         elevation: 0,
         title: TextCustom(
-          text: 'CheckList 1/4',size: 20.0,color: PaletteColors.white,
+          text: 'CheckList 4/4',size: 20.0,color: PaletteColors.white,
           fontWeight: FontWeight.bold,textAlign: TextAlign.center,),
         actions: <Widget>[
           Ink(
@@ -131,292 +85,181 @@ class _CheckList1State extends State<CheckList1> {
             ),
           ),
         ],
-
       ),
-
       body: Padding(
         padding: EdgeInsets.symmetric(vertical:24 ,horizontal:24 ),
-        child: Center(
-          child: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            physics: ScrollPhysics(),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextCustom(
-                  text: "Tipo de Imóvel",
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          physics: ScrollPhysics(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextCustom(
+                text: "Fatores desvalorizantes na região",
+                size: 16.0,
+                color: PaletteColors.grey,
+                fontWeight: FontWeight.bold,
+                textAlign: TextAlign.start,
+
+              ),
+              Container(
+                child: TextCustom(
+                  text: "Há no entorno da unidade atividades e/ou características incompatíveis com o uso ou que possam provocar risco ou situação de insalubridade nas edificações, com consequente comprometimento do retorno da operação? Em caso afirmativo assinale abaixo:",
                   size: 16.0,
+                  maxLines: 7,
                   color: PaletteColors.grey,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.normal,
                   textAlign: TextAlign.start,
 
                 ),
-                ListView(
-                  scrollDirection: Axis.vertical,
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
+              ),
+              TextCustom(
+                text: "Fatores Naturais",
+                size: 16.0,
+                color: PaletteColors.grey,
+                fontWeight: FontWeight.bold,
+                textAlign: TextAlign.start,
 
-                  children: [
-                    ...type.map(buildSingleCheckbox).toList(),
-                  ],
-                ), //Tipo de imovel
-                InputRegister(controller: _controllerType,
-                    hint: 'Especificar',
+              ),
+              ListView(
+                padding: EdgeInsets.zero,
+                scrollDirection: Axis.vertical,
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+
+
+
+                children: [
+
+                  ...natural.map(buildSingleCheckbox).toList(),
+                ],
+              ),
+              InputRegister(controller: _controllerNatural,
+                  hint: 'Especificar',
+                  fonts: 14.0,
+                  keyboardType: TextInputType.text,
+                  width: width * 0.5,
+                  sizeIcon: 0.0,
+                  icons: Icons.height,
+                  colorBorder: PaletteColors.greyInput,
+                  background: PaletteColors.greyInput),
+
+              SizedBox(height: 12),
+
+              ListView(
+                padding: EdgeInsets.zero,
+                scrollDirection: Axis.vertical,
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+
+
+
+                children: [
+
+                  ...social.map(buildSingleCheckbox).toList(),
+                ],
+              ),
+              InputRegister(controller: _controllerSocial,
+                  hint: 'Especificar',
+                  fonts: 14.0,
+                  keyboardType: TextInputType.text,
+                  width: width * 0.5,
+                  sizeIcon: 0.0,
+                  icons: Icons.height,
+                  colorBorder: PaletteColors.greyInput,
+                  background: PaletteColors.greyInput),
+              Divider(thickness: 1),
+              TextCustom(
+            text: "Valor",
+            size:14.0,
+            color: PaletteColors.grey,
+            fontWeight: FontWeight.bold,textAlign: TextAlign.left,),
+              InputRegister(
+          icons: Icons.height,
+          sizeIcon: 0.0,
+          width: width * 0.53,
+          controller: _controllerPrice,
+          hint: 'R\$000.000.00',
+          fonts: 14.0,
+          keyboardType: TextInputType.number,
+          colorBorder: PaletteColors.greyInput,
+          background: PaletteColors.greyInput,
+        ),
+              SizedBox(height: 6),
+              TextCustom(
+                text: "Observações",
+                size: 16.0,
+                color: PaletteColors.grey,
+                fontWeight: FontWeight.bold,
+                textAlign: TextAlign.start,
+
+              ),
+              SizedBox(
+                height: height * 0.16,
+                width:  width * 0.9,
+                child:
+                InputRegister(controller: _controllerBlock,
+                    hint: 'Nulla Lorem mollit cupidatat irure.\n Laborum magna \n nulla duis ullamco cillum dolor. \n Voluptate exercitation\n incididunt aliquip deserunt reprehenderit elit laborum. ',
                     fonts: 14.0,
                     keyboardType: TextInputType.text,
                     width: width * 0.5,
                     sizeIcon: 0.0,
                     icons: Icons.height,
                     colorBorder: PaletteColors.greyInput,
-                    background: PaletteColors.greyInput),
-                Divider(thickness: 1.0,),
-                TextCustom(
-                  text: "Infraestrutura",
-                  size: 16.0,
-                  color: PaletteColors.grey,
-                  fontWeight: FontWeight.bold,
-                  textAlign: TextAlign.start,
+                    background: PaletteColors.greyInput),),
 
-                ),
-                ListView(
-                  scrollDirection: Axis.vertical,
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
 
-                  children: [
-                    ...infra.map(buildSingleCheckbox).toList(),
-                  ],
-                ), //Infraestrutura
-                InputRegister(controller: _controllerInfra,
-                    hint: 'Especificar',
-                    fonts: 14.0,
-                    keyboardType: TextInputType.text,
-                    width: width * 0.5,
-                    sizeIcon: 0.0,
-                    icons: Icons.height,
-                    colorBorder: PaletteColors.greyInput,
-                    background: PaletteColors.greyInput),
-                Divider(thickness: 1.0,),
-                TextCustom(
-                  text: "Situação",
-                  size: 16.0,
-                  color: PaletteColors.grey,
-                  fontWeight: FontWeight.bold,
-                  textAlign: TextAlign.start,
 
-                ),
-                ListView(
-                  scrollDirection: Axis.vertical,
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
 
-                  children: [
-                    ...situation.map(buildSingleCheckbox).toList(),
-                  ],
-                ), //Situação
-                InputRegister(controller: _controllerSituation,
-                    hint: 'Especificar',
-                    fonts: 14.0,
-                    keyboardType: TextInputType.text,
-                    width: width * 0.5,
-                    sizeIcon: 0.0,
-                    icons: Icons.height,
-                    colorBorder: PaletteColors.greyInput,
-                    background: PaletteColors.greyInput),
-                Divider(thickness: 1.0,),
-                TextCustom(
-                  text: "Cota /Greide",
-                  size: 16.0,
-                  color: PaletteColors.grey,
-                  fontWeight: FontWeight.bold,
-                  textAlign: TextAlign.start,
-
-                ),
-                ListView(
-                  scrollDirection: Axis.vertical,
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-
-                  children: [
-                    ...quota.map(buildSingleCheckbox).toList(),
-                  ],
-                ), //Cota /Greide
-                InputRegister(controller: _controllerQuota,
-                    hint: 'Especificar',
-                    fonts: 14.0,
-                    keyboardType: TextInputType.text,
-                    width: width * 0.5,
-                    sizeIcon: 0.0,
-                    icons: Icons.height,
-                    colorBorder: PaletteColors.greyInput,
-                    background: PaletteColors.greyInput),
-                Divider(thickness: 1.0,),
-                TextCustom(
-                  text: "Posição da Unidade",
-                  size: 16.0,
-                  color: PaletteColors.grey,
-                  fontWeight: FontWeight.bold,
-                  textAlign: TextAlign.start,
-
-                ),
-                ListView(
-                  scrollDirection: Axis.vertical,
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-
-                  children: [
-                    ...position.map(buildSingleCheckbox).toList(),
-                  ],
-                ), // Posição da Unidade
-                InputRegister(controller: _controllerPosition,
-                    hint: 'Especificar',
-                    fonts: 14.0,
-                    keyboardType: TextInputType.text,
-                    width: width * 0.5,
-                    sizeIcon: 0.0,
-                    icons: Icons.height,
-                    colorBorder: PaletteColors.greyInput,
-                    background: PaletteColors.greyInput),
-                Divider(thickness: 1.0,),
-                TextCustom(
-                  text: "Telhado",
-                  size: 16.0,
-                  color: PaletteColors.grey,
-                  fontWeight: FontWeight.bold,
-                  textAlign: TextAlign.start,
-
-                ),
-                ListView(
-                  scrollDirection: Axis.vertical,
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-
-                  children: [
-                    ...roof.map(buildSingleCheckbox).toList(),
-                  ],
-                ), // Telhado
-                InputRegister(controller: _controllerRoof,
-                    hint: 'Especificar',
-                    fonts: 14.0,
-                    keyboardType: TextInputType.text,
-                    width: width * 0.5,
-                    sizeIcon: 0.0,
-                    icons: Icons.height,
-                    colorBorder: PaletteColors.greyInput,
-                    background: PaletteColors.greyInput),
-                Divider(thickness: 1.0,),
-                TextCustom(
-                  text: "Muro",
-                  size: 16.0,
-                  color: PaletteColors.grey,
-                  fontWeight: FontWeight.bold,
-                  textAlign: TextAlign.start,
-
-                ),
-                ListView(
-                  scrollDirection: Axis.vertical,
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-
-                  children: [
-                    ...wall.map(buildSingleCheckbox).toList(),
-                  ],
-                ), // Muro
-                InputRegister(controller: _controllerWall,
-                    hint: 'Especificar',
-                    fonts: 14.0,
-                    keyboardType: TextInputType.text,
-                    width: width * 0.5,
-                    sizeIcon: 0.0,
-                    icons: Icons.height,
-                    colorBorder: PaletteColors.greyInput,
-                    background: PaletteColors.greyInput),
-                Divider(thickness: 1.0,),
-                TextCustom(
-                  text: "Pintura",
-                  size: 16.0,
-                  color: PaletteColors.grey,
-                  fontWeight: FontWeight.bold,
-                  textAlign: TextAlign.start,
-
-                ),
-                ListView(
-                  scrollDirection: Axis.vertical,
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-
-                  children: [
-                    ...paint.map(buildSingleCheckbox).toList(),
-                  ],
-                ), // Pintura
-                InputRegister(controller: _controllerPaint,
-                    hint: 'Especificar',
-                    fonts: 14.0,
-                    keyboardType: TextInputType.text,
-                    width: width * 0.5,
-                    sizeIcon: 0.0,
-                    icons: Icons.height,
-                    colorBorder: PaletteColors.greyInput,
-                    background: PaletteColors.greyInput),
-                Divider(thickness: 1.0,),
-                Row(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical:0.1 ,horizontal:26.0 ),
-                      child: ButtonCustom(
+              Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical:12 ,horizontal:26.0 ),
+                    child: ButtonCustom(
                       widthCustom: 0.3,
                       heightCustom: 0.055,
-                      onPressed:() => Navigator.pop(context),
+                      onPressed:() =>  Navigator.pop(context),
                       text: "Voltar",
                       size: 14.0,
                       colorButton: PaletteColors.white,
                       colorText: PaletteColors.primaryColor,
                       colorBorder: PaletteColors.primaryColor,
-                  ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical:0.1 ,horizontal:26.0 ),
-                      child: ButtonCustom(
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical:12 ,horizontal:26.0 ),
+                    child: ButtonCustom(
                       widthCustom: 0.3,
                       heightCustom: 0.055,
-                        onPressed:() => Navigator.pushNamed(context, '/check2'),
-                      text: "Próximo",
+                      onPressed:() => Navigator.pushNamed(context, '/finished'),
+                      text: "Concluir",
                       size: 14.0,
                       colorButton: PaletteColors.primaryColor,
                       colorText: PaletteColors.white,
                       colorBorder: PaletteColors.primaryColor,
-                  ),
-                    ),],
-                )
-              ],
-            ),
-
-
+                    ),
+                  ),],
+              )
+            ],
           ),
+
+
+
         ),
       ),
+
     );
-
-
-
-            }
+  }
   Widget buildSingleCheckbox(CheckBoxModel checkBoxModel)=> CheckboxListTile(
     title: TextCustom(text:checkBoxModel.title,
-    color: PaletteColors.grey,
-      fontWeight: FontWeight.normal,size: 16.0),
+        color: PaletteColors.grey,
+        fontWeight: FontWeight.normal,size: 16.0),
     value: checkBoxModel.value,
     onChanged: (value) => setState(() =>
     checkBoxModel.value = value!),
     activeColor: PaletteColors.primaryColor,
     checkColor: PaletteColors.white,
   );
-
-
-
-
-
-
-  }
-
+}

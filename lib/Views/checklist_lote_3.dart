@@ -44,7 +44,7 @@ class _CheckListLote3State extends State<CheckListLote3> {
         ),
         elevation: 0,
         title: TextCustom(
-          text: 'CheckList 4/4',size: 20.0,color: PaletteColors.white,
+          text: 'CheckList 3/4',size: 20.0,color: PaletteColors.white,
           fontWeight: FontWeight.normal,textAlign: TextAlign.center,),
         actions: <Widget>[
           Ink(
@@ -403,7 +403,7 @@ class _CheckListLote3State extends State<CheckListLote3> {
                       child: ButtonCustom(
                         widthCustom: 0.3,
                         heightCustom: 0.055,
-                        onPressed:() => Navigator.pushNamed(context, '/check2'),
+                        onPressed:() => Navigator.pushNamed(context, '/checklote4'),
                         text: "Próximo",
                         size: 14.0,
                         colorButton: PaletteColors.primaryColor,

@@ -320,7 +320,7 @@ class _CheckListLote2State extends State<CheckListLote2> {
                       child: ButtonCustom(
                         widthCustom: 0.3,
                         heightCustom: 0.055,
-                        onPressed:() => Navigator.pushNamed(context, '/checklote2'),
+                        onPressed:() => Navigator.pushNamed(context, '/checklote3'),
                         text: "Próximo",
                         size: 14.0,
                         colorButton: PaletteColors.primaryColor,

@@ -1362,6 +1362,14 @@ class _CheckListApto5State extends State<CheckListApto5> {
                     colorBorder: PaletteColors.greyInput,
                     background: PaletteColors.greyInput),
                 Divider(thickness: 1.0,),
+                TextCustom(
+                  text: "Observações",
+                  size: 16.0,
+                  color: PaletteColors.grey,
+                  fontWeight: FontWeight.bold,
+                  textAlign: TextAlign.start,
+
+                ),
                 SizedBox(
                   height: height * 0.16,
                   width:  width * 0.9,
