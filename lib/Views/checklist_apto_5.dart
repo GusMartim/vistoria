@@ -1363,7 +1363,7 @@ class _CheckListApto5State extends State<CheckListApto5> {
                     background: PaletteColors.greyInput),
                 Divider(thickness: 1.0,),
                 TextCustom(
-                  text: "Observações",
+                  text: "Observações:",
                   size: 16.0,
                   color: PaletteColors.grey,
                   fontWeight: FontWeight.bold,

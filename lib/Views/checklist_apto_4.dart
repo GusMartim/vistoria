@@ -616,13 +616,16 @@ class _CheckListApto4State extends State<CheckListApto4> {
                     colorBorder: PaletteColors.greyInput,
                     background: PaletteColors.greyInput),
                 Divider(thickness: 1.0,),
-                TextCustom(
-                  text: "Valor do Condomínio",
-                  size: 16.0,
-                  color: PaletteColors.grey,
-                  fontWeight: FontWeight.bold,
-                  textAlign: TextAlign.start,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextCustom(
+                    text: "Valor do Condomínio",
+                    size: 16.0,
+                    color: PaletteColors.grey,
+                    fontWeight: FontWeight.bold,
+                    textAlign: TextAlign.start,
 
+                  ),
                 ),//Valor do Condomínio
                 InputRegister(controller: _controllerPrice,
                     hint: 'R\$ 000.00',
@@ -634,13 +637,16 @@ class _CheckListApto4State extends State<CheckListApto4> {
                     colorBorder: PaletteColors.greyInput,
                     background: PaletteColors.greyInput),
                 SizedBox(height: 5.0),
-                TextCustom(
-                  text: "Administrador",
-                  size: 16.0,
-                  color: PaletteColors.grey,
-                  fontWeight: FontWeight.bold,
-                  textAlign: TextAlign.start,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextCustom(
+                    text: "Administrador",
+                    size: 16.0,
+                    color: PaletteColors.grey,
+                    fontWeight: FontWeight.bold,
+                    textAlign: TextAlign.start,
 
+                  ),
                 ),
                 InputRegister(controller: _controllerPrice,
                     hint: 'Nome do administrador',
@@ -652,13 +658,16 @@ class _CheckListApto4State extends State<CheckListApto4> {
                     colorBorder: PaletteColors.greyInput,
                     background: PaletteColors.greyInput),
                 SizedBox(height: 5.0),
-                TextCustom(
-                  text: "Telefone",
-                  size: 16.0,
-                  color: PaletteColors.grey,
-                  fontWeight: FontWeight.bold,
-                  textAlign: TextAlign.start,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextCustom(
+                    text: "Telefone",
+                    size: 16.0,
+                    color: PaletteColors.grey,
+                    fontWeight: FontWeight.bold,
+                    textAlign: TextAlign.start,
 
+                  ),
                 ),
                 InputRegister(controller: _controllerPrice,
                     hint: '(00) 00000-0000',

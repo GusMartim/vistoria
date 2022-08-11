@@ -126,11 +126,11 @@ class Routes {
         );
       case "/tutorial":
         return MaterialPageRoute(
-            builder: (_) =>const MenuScreen()
+            builder: (_) =>const CheckListLote1()
         );
       case "/feedback":
         return MaterialPageRoute(
-            builder: (_) =>const MenuScreen()
+            builder: (_) =>const CheckListApto1()
         );
 
       default :

@@ -52,7 +52,7 @@ class _RequestScreenState extends State<RequestScreen> {
               children: [
 
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 24),
                   child: InputRegister(
 
                       controller: _controllerAdress,

@@ -48,12 +48,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [
-                TextCustom(
-                    text: "Olá, crie sua conta!",
-                    size: 16.0,
-                    color:PaletteColors.grey,
-                    fontWeight: FontWeight.bold,textAlign: TextAlign.left,
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: TextCustom(
+                      text: "Olá, crie sua conta!",
+                      size: 16.0,
+                      color:PaletteColors.grey,
+                      fontWeight: FontWeight.bold,textAlign: TextAlign.left,
 
+                  ),
                 ),
                 SizedBox(height:40),
                 Padding(
@@ -188,7 +191,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   widthCustom: 0.80,
                   heightCustom: 0.055,
                   onPressed:() { AlertModel().alert(
-                      '  Conta cadastrada \n   com sucesso!  ',
+                      'Conta cadastrada \n   com sucesso!  ',
                       '',
                       PaletteColors.white,
                       PaletteColors.white,

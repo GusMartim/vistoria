@@ -84,7 +84,7 @@ class _MenuScreenState extends State<MenuScreen> {
                 CustomCard(
                   text: "Tutorial",
                   icon: Icons.branding_watermark_rounded,
-                  page: '',
+                  page: '/tutorial',
                 ),
               ],
             ),
@@ -93,7 +93,7 @@ class _MenuScreenState extends State<MenuScreen> {
                 CustomCard(
                   text: "Enviar Feedback",
                   icon: Icons.comment_rounded,
-                  page: '',
+                  page: '/feedback',
                 ),
               ],
             )

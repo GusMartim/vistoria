@@ -26,6 +26,10 @@ class _SurveyscreenState extends State<Surveyscreen> {
   final TextEditingController _controllerLongG = TextEditingController();
   final TextEditingController _controllerLongMin = TextEditingController();
   final TextEditingController _controllerLongSeg = TextEditingController();
+  List<String> states = ['SP', 'RJ','PR','MG'];
+  String? selectedState = 'SP';
+  List<String> type = [ 'Casa', 'Apartamento', 'Lote', 'Obra'];
+  String? selectedType = 'Casa';
 
 
   @override
@@ -108,7 +112,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                     hint: 'Rua Antonio Lopes',
                     fonts: 14.0,
                     keyboardType: TextInputType.text,
-                    width: width * 0.8,
+                    width: width * 0.83,
                     sizeIcon: 0.0,
                     icons: Icons.height,
                     colorBorder: PaletteColors.greyInput,
@@ -132,7 +136,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                     InputRegister(
                       icons: Icons.height,
                       sizeIcon: 0.0,
-                      width: width * 0.2,
+                      width: width * 0.17,
                       controller: _controllerNumber,
                       hint: "325",
                       fonts: 14.0,
@@ -158,7 +162,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                     InputRegister(
                       icons: Icons.height,
                       sizeIcon: 0.0,
-                      width: width * 0.53,
+                      width: width * 0.61,
                       controller: _controllerComplement,
                       hint: "Ex. Casa",
                       fonts: 14.0,
@@ -189,7 +193,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                   hint: 'Vila Santa Isabel',
                   fonts: 14.0,
                   keyboardType: TextInputType.text,
-                  width: width * 0.8,
+                  width: width * 0.83,
                   sizeIcon: 0.0,
                   icons: Icons.height,
                   colorBorder: PaletteColors.greyInput,
@@ -214,7 +218,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                       InputRegister(
                         icons: Icons.height,
                         sizeIcon: 0.0,
-                        width: width * 0.53,
+                        width: width * 0.63,
                         controller: _controllerCity,
                         hint: "São Paulo",
                         fonts: 14.0,
@@ -237,17 +241,37 @@ class _SurveyscreenState extends State<Surveyscreen> {
                           color: PaletteColors.grey,
                           fontWeight: FontWeight.bold,textAlign: TextAlign.left,),
                       ),
-                      InputRegister(
-                        icons: Icons.height,
-                        sizeIcon: 0.0,
-                        width: width * 0.2,
-                        controller: _controllerState,
-                        hint: "SP",
-                        fonts: 14.0,
-                        keyboardType: TextInputType.number,
-                        colorBorder: PaletteColors.greyInput,
-                        background: PaletteColors.greyInput,
+                      SizedBox(
+                        height: 50,
+                        width: 70,
+
+
+                        child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 10.0),
+
+
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: PaletteColors.greyInput
+                          ),
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton<String>(
+
+
+
+                                items: states.map((states) => DropdownMenuItem<String>(
+                                value:  states,
+                                child:  TextCustom(text: states,color: PaletteColors.grey,)
+                                )).toList(),
+
+                                value: selectedState,
+                                onChanged: (states) => setState(() => selectedState = states),
+                            ),
+                          ),
+                        ),
                       ),
+
+
 
                     ],)
                 ],),
@@ -292,16 +316,37 @@ class _SurveyscreenState extends State<Surveyscreen> {
                           color: PaletteColors.grey,
                           fontWeight: FontWeight.bold,textAlign: TextAlign.left,),
                       ),
-                      InputRegister(
-                        icons: Icons.height,
-                        sizeIcon: 0.0,
-                        width: width * 0.45,
-                        controller: _controllerState,
-                        hint: "Casa",
-                        fonts: 14.0,
-                        keyboardType: TextInputType.number,
-                        colorBorder: PaletteColors.greyInput,
-                        background: PaletteColors.greyInput,
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SizedBox(
+                          height: 50,
+                          width: 200,
+
+
+                          child: Container(
+                            padding: EdgeInsets.symmetric(horizontal: 10.0),
+
+
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: PaletteColors.greyInput
+                            ),
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton<String>(
+
+
+
+                                items: type.map((type) => DropdownMenuItem<String>(
+                                    value:  type,
+                                    child:  TextCustom(text: type,color: PaletteColors.grey,)
+                                )).toList(),
+
+                                value: selectedType,
+                                onChanged: (type) => setState(() => selectedType = type),
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
 
                     ],)
@@ -316,14 +361,14 @@ class _SurveyscreenState extends State<Surveyscreen> {
                         padding: const EdgeInsets.all(8.0),
                         child: TextCustom(
                           text: "Coordenadas",
-                          size:12.0,
+                          size:14.0,
                           color: PaletteColors.grey,
                           fontWeight: FontWeight.bold,textAlign: TextAlign.left,),
                       ),Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: TextCustom(
                           text: "Graus",
-                          size:12.0,
+                          size:14.0,
                           color: PaletteColors.grey,
                           fontWeight: FontWeight.bold,textAlign: TextAlign.left,),
                       ),
@@ -332,7 +377,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                             horizontal: 40.0),
                         child: TextCustom(
                           text: "Min",
-                          size:12.0,
+                          size:14.0,
                           color: PaletteColors.grey,
                           fontWeight: FontWeight.bold,textAlign: TextAlign.left,),
                       ),
@@ -341,7 +386,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                         horizontal: 40.0),
                         child: TextCustom(
                           text: "Seg",
-                          size:12.0,
+                          size:14.0,
                           color: PaletteColors.grey,
                           fontWeight: FontWeight.bold,textAlign: TextAlign.left,),
                       ),
@@ -361,10 +406,11 @@ class _SurveyscreenState extends State<Surveyscreen> {
                           padding: const EdgeInsets.all(8.0),
                           child: TextCustom(
                             text: "Latitude",
-                            size:12.0,
+                            size:14.0,
                             color: PaletteColors.grey,
                             fontWeight: FontWeight.bold,textAlign: TextAlign.left,),
                         ),
+                         SizedBox(width: 11) ,
                          InputRegister(
                           icons: Icons.height,
                           sizeIcon: 0.0,
@@ -415,7 +461,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                           padding: const EdgeInsets.all(8.0),
                           child: TextCustom(
                             text: "Longitude",
-                            size:12.0,
+                            size:14.0,
                             color: PaletteColors.grey,
                             fontWeight: FontWeight.bold,textAlign: TextAlign.left,),
                         ),
@@ -423,7 +469,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                           icons: Icons.height,
                           sizeIcon: 0.0,
                           width: width * 0.18,
-                          controller: _controllerLatG,
+                          controller: _controllerLongG,
                           hint: "-48,00",
                           fonts: 14.0,
                           keyboardType: TextInputType.number,
@@ -434,7 +480,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                           icons: Icons.height,
                           sizeIcon: 0.0,
                           width: width * 0.18,
-                          controller: _controllerLatMin,
+                          controller: _controllerLongMin,
                           hint: "17,00",
                           fonts: 14.0,
                           keyboardType: TextInputType.number,
@@ -445,7 +491,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                           icons: Icons.height,
                           sizeIcon: 0.0,
                           width: width * 0.18,
-                          controller: _controllerLatSeg,
+                          controller: _controllerLongSeg,
                           hint: "36,88",
                           fonts: 14.0,
                           keyboardType: TextInputType.number,

@@ -121,13 +121,16 @@ class _CheckListLote1State extends State<CheckListLote1> {
               mainAxisAlignment: MainAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                TextCustom(
-                  text: "TERRENO",
-                  size: 20.0,
-                  color: PaletteColors.grey,
-                  fontWeight: FontWeight.bold,
-                  textAlign: TextAlign.start,
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 14.0),
+                  child: TextCustom(
+                    text: "TERRENO",
+                    size: 20.0,
+                    color: PaletteColors.grey,
+                    fontWeight: FontWeight.bold,
+                    textAlign: TextAlign.start,
 
+                  ),
                 ),
                 SizedBox(height: 8),
                 TextCustom(
@@ -238,13 +241,16 @@ class _CheckListLote1State extends State<CheckListLote1> {
                     colorBorder: PaletteColors.greyInput,
                     background: PaletteColors.greyInput),
                 Divider(thickness: 1.0,),
-                TextCustom(
-                  text: "BENFEITORIAS EXISTENTES",
-                  size: 20.0,
-                  color: PaletteColors.grey,
-                  fontWeight: FontWeight.bold,
-                  textAlign: TextAlign.start,
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 14.0),
+                  child: TextCustom(
+                    text: "BENFEITORIAS EXISTENTES",
+                    size: 20.0,
+                    color: PaletteColors.grey,
+                    fontWeight: FontWeight.bold,
+                    textAlign: TextAlign.start,
 
+                  ),
                 ),
                 SizedBox(height: 8),
                 TextCustom(

@@ -115,13 +115,16 @@ class _CheckListLote4State extends State<CheckListLote4> {
 
                 ),
               ),
-              TextCustom(
-                text: "Fatores Naturais",
-                size: 16.0,
-                color: PaletteColors.grey,
-                fontWeight: FontWeight.bold,
-                textAlign: TextAlign.start,
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: TextCustom(
+                  text: "Fatores Naturais",
+                  size: 16.0,
+                  color: PaletteColors.grey,
+                  fontWeight: FontWeight.bold,
+                  textAlign: TextAlign.start,
 
+                ),
               ),
               ListView(
                 padding: EdgeInsets.zero,
@@ -147,7 +150,17 @@ class _CheckListLote4State extends State<CheckListLote4> {
                   background: PaletteColors.greyInput),
 
               SizedBox(height: 12),
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: TextCustom(
+                  text: "Fatores ambientais e sociais",
+                  size: 16.0,
+                  color: PaletteColors.grey,
+                  fontWeight: FontWeight.bold,
+                  textAlign: TextAlign.start,
 
+                ),
+              ),
               ListView(
                 padding: EdgeInsets.zero,
                 scrollDirection: Axis.vertical,
@@ -179,7 +192,7 @@ class _CheckListLote4State extends State<CheckListLote4> {
               InputRegister(
           icons: Icons.height,
           sizeIcon: 0.0,
-          width: width * 0.53,
+          width: width * 0.50,
           controller: _controllerPrice,
           hint: 'R\$000.000.00',
           fonts: 14.0,
@@ -189,7 +202,7 @@ class _CheckListLote4State extends State<CheckListLote4> {
         ),
               SizedBox(height: 6),
               TextCustom(
-                text: "Observações",
+                text: "Observações:",
                 size: 16.0,
                 color: PaletteColors.grey,
                 fontWeight: FontWeight.bold,

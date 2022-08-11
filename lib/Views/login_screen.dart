@@ -1,8 +1,7 @@
-import 'package:vistoria/Widgets/inputPassword.dart';
-import 'package:vistoria/Widgets/inputRegister.dart';
-
-
 import '../Utils/exports.dart';
+
+
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -47,7 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   text: "E-mail",
                   size: 14.0,
                   color: PaletteColors.grey,
-                  fontWeight: FontWeight.normal,
+                  fontWeight: FontWeight.bold,
                   textAlign: TextAlign.center,),
               ),
               InputRegister(
@@ -68,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   text: "Senha",
                   color: PaletteColors.grey,
                   size: 14.0,
-                  fontWeight: FontWeight.normal,
+                  fontWeight: FontWeight.bold,
                   textAlign: TextAlign.center,),
               ),
               InputPassword(

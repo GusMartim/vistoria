@@ -158,7 +158,7 @@ class _CheckListApto2State extends State<CheckListApto2> {
                         InputRegister(
                           icons: Icons.height,
                           sizeIcon: 0.0,
-                          width: width * 0.2,
+                          width: width * 0.3,
                           controller: _controllerAge,
                           hint: "00",
                           fonts: 14.0,
@@ -184,7 +184,7 @@ class _CheckListApto2State extends State<CheckListApto2> {
                         InputRegister(
                           icons: Icons.height,
                           sizeIcon: 0.0,
-                          width: width * 0.53,
+                          width: width * 0.6,
                           controller: _controllerPrice,
                           hint: 'R\$100.000.00',
                           fonts: 14.0,
@@ -195,6 +195,7 @@ class _CheckListApto2State extends State<CheckListApto2> {
 
                       ],)
                   ],),
+                  Divider(),
                   TextCustom(
                     text: "Portas Externas",
                     size: 16.0,

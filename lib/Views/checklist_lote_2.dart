@@ -126,13 +126,16 @@ class _CheckListLote2State extends State<CheckListLote2> {
               mainAxisAlignment: MainAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                TextCustom(
-                  text: "CARACTERÍSTICAS DA REGIÃO",
-                  size: 20.0,
-                  color: PaletteColors.grey,
-                  fontWeight: FontWeight.bold,
-                  textAlign: TextAlign.start,
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 14.0),
+                  child: TextCustom(
+                    text: "CARACTERÍSTICAS DA REGIÃO",
+                    size: 20.0,
+                    color: PaletteColors.grey,
+                    fontWeight: FontWeight.bold,
+                    textAlign: TextAlign.start,
 
+                  ),
                 ),
                 SizedBox(height: 8),
                 TextCustom(
