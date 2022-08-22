@@ -1,8 +1,5 @@
 import 'package:vistoria/Utils/exports.dart';
 
-
-
-
 class CheckListApto1 extends StatefulWidget {
   const CheckListApto1({Key? key}) : super(key: key);
 
@@ -11,7 +8,6 @@ class CheckListApto1 extends StatefulWidget {
 }
 
 class _CheckListApto1State extends State<CheckListApto1> {
-
   final type = [
     CheckBoxModel(title: 'Residencial'),
     CheckBoxModel(title: 'Comercial'),
@@ -78,20 +74,11 @@ class _CheckListApto1State extends State<CheckListApto1> {
     CheckBoxModel(title: 'Textura'),
     CheckBoxModel(title: 'Nenhuma'),
     CheckBoxModel(title: 'Outro:'),
-
   ];
   final TextEditingController _controllerPaint = TextEditingController();
 
-
-
-
-
-
-
   @override
   Widget build(BuildContext context) {
-
-
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
@@ -99,41 +86,40 @@ class _CheckListApto1State extends State<CheckListApto1> {
       backgroundColor: PaletteColors.white,
       appBar: AppBar(
         backgroundColor: PaletteColors.bgColor,
-        iconTheme:  IconThemeData(
+        iconTheme: IconThemeData(
           color: PaletteColors.white,
-
         ),
         elevation: 0,
         title: TextCustom(
-          text: 'CheckList 1/5',size: 20.0,color: PaletteColors.white,
-          fontWeight: FontWeight.bold,textAlign: TextAlign.center,),
+          text: 'CheckList 1/5',
+          size: 20.0,
+          color: PaletteColors.white,
+          fontWeight: FontWeight.bold,
+          textAlign: TextAlign.center,
+        ),
         actions: <Widget>[
           Ink(
             decoration: ShapeDecoration(
-              color:  PaletteColors.white,
+              color: PaletteColors.white,
               shape: CircleBorder(),
-
-
-
             ),
-            child: IconButton(icon: Icon(
-              Icons.camera_alt,
-              color: PaletteColors.primaryColor,
-            ),
-              constraints: BoxConstraints(minHeight: 28,
-                  minWidth: 28,
-                  maxHeight: 28,
-                  maxWidth: 28),
+            child: IconButton(
+              icon: Icon(
+                Icons.camera_alt,
+                color: PaletteColors.primaryColor,
+              ),
+              constraints: BoxConstraints(
+                  minHeight: 28, minWidth: 28, maxHeight: 28, maxWidth: 28),
               iconSize: 24.0,
               padding: EdgeInsets.all(3.0),
               onPressed: () {},
             ),
           ),
+          SizedBox(width: width * 0.04),
         ],
-
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(vertical:24 ,horizontal:24 ),
+        padding: EdgeInsets.symmetric(vertical: 24, horizontal: 24),
         child: Center(
           child: SingleChildScrollView(
             scrollDirection: Axis.vertical,
@@ -149,18 +135,17 @@ class _CheckListApto1State extends State<CheckListApto1> {
                   color: PaletteColors.grey,
                   fontWeight: FontWeight.bold,
                   textAlign: TextAlign.start,
-
                 ),
                 ListView(
                   scrollDirection: Axis.vertical,
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-
                   children: [
                     ...type.map(buildSingleCheckbox).toList(),
                   ],
                 ), //Tipo de imovel
-                InputRegister(controller: _controllerType,
+                InputRegister(
+                    controller: _controllerType,
                     hint: 'Especificar',
                     fonts: 14.0,
                     keyboardType: TextInputType.text,
@@ -169,25 +154,26 @@ class _CheckListApto1State extends State<CheckListApto1> {
                     icons: Icons.height,
                     colorBorder: PaletteColors.greyInput,
                     background: PaletteColors.greyInput),
-                Divider(thickness: 1.0,),
+                Divider(
+                  thickness: 1.0,
+                ),
                 TextCustom(
                   text: "Infraestrutura",
                   size: 16.0,
                   color: PaletteColors.grey,
                   fontWeight: FontWeight.bold,
                   textAlign: TextAlign.start,
-
                 ),
                 ListView(
                   scrollDirection: Axis.vertical,
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-
                   children: [
                     ...infra.map(buildSingleCheckbox).toList(),
                   ],
                 ), //Infraestrutura
-                InputRegister(controller: _controllerInfra,
+                InputRegister(
+                    controller: _controllerInfra,
                     hint: 'Especificar',
                     fonts: 14.0,
                     keyboardType: TextInputType.text,
@@ -196,25 +182,26 @@ class _CheckListApto1State extends State<CheckListApto1> {
                     icons: Icons.height,
                     colorBorder: PaletteColors.greyInput,
                     background: PaletteColors.greyInput),
-                Divider(thickness: 1.0,),
+                Divider(
+                  thickness: 1.0,
+                ),
                 TextCustom(
                   text: "Situação",
                   size: 16.0,
                   color: PaletteColors.grey,
                   fontWeight: FontWeight.bold,
                   textAlign: TextAlign.start,
-
                 ),
                 ListView(
                   scrollDirection: Axis.vertical,
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-
                   children: [
                     ...situation.map(buildSingleCheckbox).toList(),
                   ],
                 ), //Situação
-                InputRegister(controller: _controllerSituation,
+                InputRegister(
+                    controller: _controllerSituation,
                     hint: 'Especificar',
                     fonts: 14.0,
                     keyboardType: TextInputType.text,
@@ -223,25 +210,26 @@ class _CheckListApto1State extends State<CheckListApto1> {
                     icons: Icons.height,
                     colorBorder: PaletteColors.greyInput,
                     background: PaletteColors.greyInput),
-                Divider(thickness: 1.0,),
+                Divider(
+                  thickness: 1.0,
+                ),
                 TextCustom(
                   text: "Cota /Greide",
                   size: 16.0,
                   color: PaletteColors.grey,
                   fontWeight: FontWeight.bold,
                   textAlign: TextAlign.start,
-
                 ),
                 ListView(
                   scrollDirection: Axis.vertical,
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-
                   children: [
                     ...quota.map(buildSingleCheckbox).toList(),
                   ],
                 ), //Cota /Greide
-                InputRegister(controller: _controllerQuota,
+                InputRegister(
+                    controller: _controllerQuota,
                     hint: 'Especificar',
                     fonts: 14.0,
                     keyboardType: TextInputType.text,
@@ -250,25 +238,26 @@ class _CheckListApto1State extends State<CheckListApto1> {
                     icons: Icons.height,
                     colorBorder: PaletteColors.greyInput,
                     background: PaletteColors.greyInput),
-                Divider(thickness: 1.0,),
+                Divider(
+                  thickness: 1.0,
+                ),
                 TextCustom(
                   text: "Posição da Unidade",
                   size: 16.0,
                   color: PaletteColors.grey,
                   fontWeight: FontWeight.bold,
                   textAlign: TextAlign.start,
-
                 ),
                 ListView(
                   scrollDirection: Axis.vertical,
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-
                   children: [
                     ...position.map(buildSingleCheckbox).toList(),
                   ],
                 ), // Posição da Unidade
-                InputRegister(controller: _controllerPosition,
+                InputRegister(
+                    controller: _controllerPosition,
                     hint: 'Especificar',
                     fonts: 14.0,
                     keyboardType: TextInputType.text,
@@ -277,25 +266,26 @@ class _CheckListApto1State extends State<CheckListApto1> {
                     icons: Icons.height,
                     colorBorder: PaletteColors.greyInput,
                     background: PaletteColors.greyInput),
-                Divider(thickness: 1.0,),
+                Divider(
+                  thickness: 1.0,
+                ),
                 TextCustom(
                   text: "Telhado",
                   size: 16.0,
                   color: PaletteColors.grey,
                   fontWeight: FontWeight.bold,
                   textAlign: TextAlign.start,
-
                 ),
                 ListView(
                   scrollDirection: Axis.vertical,
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-
                   children: [
                     ...roof.map(buildSingleCheckbox).toList(),
                   ],
                 ), // Telhado
-                InputRegister(controller: _controllerRoof,
+                InputRegister(
+                    controller: _controllerRoof,
                     hint: 'Especificar',
                     fonts: 14.0,
                     keyboardType: TextInputType.text,
@@ -304,25 +294,26 @@ class _CheckListApto1State extends State<CheckListApto1> {
                     icons: Icons.height,
                     colorBorder: PaletteColors.greyInput,
                     background: PaletteColors.greyInput),
-                Divider(thickness: 1.0,),
+                Divider(
+                  thickness: 1.0,
+                ),
                 TextCustom(
                   text: "Muro",
                   size: 16.0,
                   color: PaletteColors.grey,
                   fontWeight: FontWeight.bold,
                   textAlign: TextAlign.start,
-
                 ),
                 ListView(
                   scrollDirection: Axis.vertical,
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-
                   children: [
                     ...wall.map(buildSingleCheckbox).toList(),
                   ],
                 ), // Muro
-                InputRegister(controller: _controllerWall,
+                InputRegister(
+                    controller: _controllerWall,
                     hint: 'Especificar',
                     fonts: 14.0,
                     keyboardType: TextInputType.text,
@@ -331,25 +322,26 @@ class _CheckListApto1State extends State<CheckListApto1> {
                     icons: Icons.height,
                     colorBorder: PaletteColors.greyInput,
                     background: PaletteColors.greyInput),
-                Divider(thickness: 1.0,),
+                Divider(
+                  thickness: 1.0,
+                ),
                 TextCustom(
                   text: "Pintura",
                   size: 16.0,
                   color: PaletteColors.grey,
                   fontWeight: FontWeight.bold,
                   textAlign: TextAlign.start,
-
                 ),
                 ListView(
                   scrollDirection: Axis.vertical,
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-
                   children: [
                     ...paint.map(buildSingleCheckbox).toList(),
                   ],
                 ), // Pintura
-                InputRegister(controller: _controllerPaint,
+                InputRegister(
+                    controller: _controllerPaint,
                     hint: 'Especificar',
                     fonts: 14.0,
                     keyboardType: TextInputType.text,
@@ -358,15 +350,17 @@ class _CheckListApto1State extends State<CheckListApto1> {
                     icons: Icons.height,
                     colorBorder: PaletteColors.greyInput,
                     background: PaletteColors.greyInput),
-                Divider(thickness: 1.0,),
+                Divider(
+                  thickness: 1.0,
+                ),
                 Row(
                   children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical:0.1 ,horizontal:26.0 ),
+                    Container(
+                      width: width * 0.35,
                       child: ButtonCustom(
                         widthCustom: 0.3,
-                        heightCustom: 0.055,
-                        onPressed:() => Navigator.pop(context),
+                        heightCustom: 0.070,
+                        onPressed: () => Navigator.pop(context),
                         text: "Voltar",
                         size: 14.0,
                         colorButton: PaletteColors.white,
@@ -374,40 +368,40 @@ class _CheckListApto1State extends State<CheckListApto1> {
                         colorBorder: PaletteColors.primaryColor,
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical:0.1 ,horizontal:26.0 ),
+                    SizedBox(width: width * 0.15),
+                    Container(
+                      width: width * 0.35,
                       child: ButtonCustom(
                         widthCustom: 0.3,
-                        heightCustom: 0.055,
-                        onPressed:() => Navigator.pushNamed(context, '/checkapto2'),
+                        heightCustom: 0.070,
+                        onPressed: () =>
+                            Navigator.pushNamed(context, '/checkapto2'),
                         text: "Próximo",
                         size: 14.0,
                         colorButton: PaletteColors.primaryColor,
                         colorText: PaletteColors.white,
                         colorBorder: PaletteColors.primaryColor,
                       ),
-                    ),],
+                    ),
+                  ],
                 )
               ],
             ),
-
-
           ),
         ),
       ),
-
-
-
     );
   }
-  Widget buildSingleCheckbox(CheckBoxModel checkBoxModel)=> CheckboxListTile(
-    title: TextCustom(text:checkBoxModel.title,
-        color: PaletteColors.grey,
-        fontWeight: FontWeight.normal,size: 16.0),
-    value: checkBoxModel.value,
-    onChanged: (value) => setState(() =>
-    checkBoxModel.value = value!),
-    activeColor: PaletteColors.primaryColor,
-    checkColor: PaletteColors.white,
-  );
+
+  Widget buildSingleCheckbox(CheckBoxModel checkBoxModel) => CheckboxListTile(
+        title: TextCustom(
+            text: checkBoxModel.title,
+            color: PaletteColors.grey,
+            fontWeight: FontWeight.normal,
+            size: 16.0),
+        value: checkBoxModel.value,
+        onChanged: (value) => setState(() => checkBoxModel.value = value!),
+        activeColor: PaletteColors.primaryColor,
+        checkColor: PaletteColors.white,
+      );
 }

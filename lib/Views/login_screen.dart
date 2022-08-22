@@ -1,7 +1,5 @@
 import '../Utils/exports.dart';
 
-
-
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -10,18 +8,13 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-
   final _controllerEmail = TextEditingController();
   final _controllerPassword = TextEditingController();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   bool visiblePassword = false;
 
-
-
-
   @override
   Widget build(BuildContext context) {
-
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
@@ -47,7 +40,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   size: 14.0,
                   color: PaletteColors.grey,
                   fontWeight: FontWeight.bold,
-                  textAlign: TextAlign.center,),
+                  textAlign: TextAlign.center,
+                ),
               ),
               InputRegister(
                   controller: _controllerEmail,
@@ -68,32 +62,34 @@ class _LoginScreenState extends State<LoginScreen> {
                   color: PaletteColors.grey,
                   size: 14.0,
                   fontWeight: FontWeight.bold,
-                  textAlign: TextAlign.center,),
+                  textAlign: TextAlign.center,
+                ),
               ),
               InputPassword(
-                  controller:_controllerPassword,
-                  hint: "**********",
-                  fonts: 14.0,
-                  keyboardType: TextInputType.visiblePassword,
-                  obscure: visiblePassword,
-                  width: width * 0.8,
-                  colorIcon: PaletteColors.primaryColor,
-                  icons: Icons.height,
-                  showPassword: visiblePassword,
-                  onPressed: (){
-                    setState(() {
-                      if(visiblePassword==false){
-                        visiblePassword=true;
-                      }else{
-                        visiblePassword=false;
-                      }
-                    });
-                  },
+                controller: _controllerPassword,
+                hint: "**********",
+                fonts: 14.0,
+                keyboardType: TextInputType.visiblePassword,
+                obscure: visiblePassword,
+                width: width * 0.8,
+                colorIcon: PaletteColors.primaryColor,
+                icons: Icons.height,
+                showPassword: visiblePassword,
+                onPressed: () {
+                  setState(() {
+                    if (visiblePassword == false) {
+                      visiblePassword = true;
+                    } else {
+                      visiblePassword = false;
+                    }
+                  });
+                },
               ),
-              SizedBox(height: height*0.01,),
+              SizedBox(
+                height: height * 0.01,
+              ),
               Container(
                 alignment: Alignment.topRight,
-
                 width: width * 0.7,
                 child: TextCustom(
                   text: "    Esqueci a senha/resetar",
@@ -103,20 +99,19 @@ class _LoginScreenState extends State<LoginScreen> {
                   textAlign: TextAlign.end,
                 ),
               ),
-              SizedBox(height:  height * 0.03),
+              SizedBox(height: height * 0.03),
               Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ButtonCustom(
-                    widthCustom: 0.75,
-                    heightCustom: 0.055,
-                    onPressed: ()=> Navigator.popAndPushNamed(context, '/main'),
-                    text: "Entrar",
-                    size: 14.0,
-                    colorButton: PaletteColors.primaryColor,
-                    colorText: PaletteColors.white,
-                    colorBorder: PaletteColors.primaryColor,
-                  ),
-
+                padding: const EdgeInsets.all(8.0),
+                child: ButtonCustom(
+                  widthCustom: 0.75,
+                  heightCustom: 0.070,
+                  onPressed: () => Navigator.popAndPushNamed(context, '/main'),
+                  text: "Entrar",
+                  size: 14.0,
+                  colorButton: PaletteColors.primaryColor,
+                  colorText: PaletteColors.white,
+                  colorBorder: PaletteColors.primaryColor,
+                ),
               )
             ],
           ),

@@ -1,9 +1,6 @@
-
-
 import 'package:vistoria/Utils/exports.dart';
 import 'package:vistoria/Widgets/inputRegister.dart';
 import 'package:vistoria/Widgets/text_custom.dart';
-
 
 class CheckListLote2 extends StatefulWidget {
   const CheckListLote2({Key? key}) : super(key: key);
@@ -13,8 +10,6 @@ class CheckListLote2 extends StatefulWidget {
 }
 
 class _CheckListLote2State extends State<CheckListLote2> {
-
-
   final location = [
     CheckBoxModel(title: 'Inserida na malha urbana'),
     CheckBoxModel(title: 'Periferia em área de expansão'),
@@ -65,15 +60,8 @@ class _CheckListLote2State extends State<CheckListLote2> {
   ];
   final TextEditingController _controllerTransport = TextEditingController();
 
-
-
-
-
-
-
   @override
   Widget build(BuildContext context) {
-
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
@@ -81,42 +69,40 @@ class _CheckListLote2State extends State<CheckListLote2> {
       backgroundColor: PaletteColors.white,
       appBar: AppBar(
         backgroundColor: PaletteColors.bgColor,
-        iconTheme:  IconThemeData(
+        iconTheme: IconThemeData(
           color: PaletteColors.white,
-
         ),
         elevation: 0,
         title: TextCustom(
-          text: 'CheckList 1/4',size: 20.0,color: PaletteColors.white,
-          fontWeight: FontWeight.bold,textAlign: TextAlign.center,),
+          text: 'CheckList 2/4',
+          size: 20.0,
+          color: PaletteColors.white,
+          fontWeight: FontWeight.bold,
+          textAlign: TextAlign.center,
+        ),
         actions: <Widget>[
           Ink(
             decoration: ShapeDecoration(
-              color:  PaletteColors.white,
+              color: PaletteColors.white,
               shape: CircleBorder(),
-
-
-
             ),
-            child: IconButton(icon: Icon(
-              Icons.camera_alt,
-              color: PaletteColors.primaryColor,
-            ),
-              constraints: BoxConstraints(minHeight: 28,
-                  minWidth: 28,
-                  maxHeight: 28,
-                  maxWidth: 28),
+            child: IconButton(
+              icon: Icon(
+                Icons.camera_alt,
+                color: PaletteColors.primaryColor,
+              ),
+              constraints: BoxConstraints(
+                  minHeight: 28, minWidth: 28, maxHeight: 28, maxWidth: 28),
               iconSize: 24.0,
               padding: EdgeInsets.all(3.0),
               onPressed: () {},
             ),
           ),
+          SizedBox(width: width * 0.04)
         ],
-
       ),
-
       body: Padding(
-        padding: EdgeInsets.symmetric(vertical:24 ,horizontal:24 ),
+        padding: EdgeInsets.symmetric(vertical: 24, horizontal: 24),
         child: Center(
           child: SingleChildScrollView(
             scrollDirection: Axis.vertical,
@@ -134,7 +120,6 @@ class _CheckListLote2State extends State<CheckListLote2> {
                     color: PaletteColors.grey,
                     fontWeight: FontWeight.bold,
                     textAlign: TextAlign.start,
-
                   ),
                 ),
                 SizedBox(height: 8),
@@ -144,18 +129,17 @@ class _CheckListLote2State extends State<CheckListLote2> {
                   color: PaletteColors.grey,
                   fontWeight: FontWeight.bold,
                   textAlign: TextAlign.start,
-
                 ), //Localização da Unidade
                 ListView(
                   scrollDirection: Axis.vertical,
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-
                   children: [
                     ...location.map(buildSingleCheckbox).toList(),
                   ],
                 ),
-                InputRegister(controller: _controllerLocation,
+                InputRegister(
+                    controller: _controllerLocation,
                     hint: 'Especificar',
                     fonts: 14.0,
                     keyboardType: TextInputType.text,
@@ -164,25 +148,26 @@ class _CheckListLote2State extends State<CheckListLote2> {
                     icons: Icons.height,
                     colorBorder: PaletteColors.greyInput,
                     background: PaletteColors.greyInput),
-                Divider(thickness: 1.0,),
+                Divider(
+                  thickness: 1.0,
+                ),
                 TextCustom(
                   text: "Uso predominante",
                   size: 16.0,
                   color: PaletteColors.grey,
                   fontWeight: FontWeight.bold,
                   textAlign: TextAlign.start,
-
                 ), //Uso predominante
                 ListView(
                   scrollDirection: Axis.vertical,
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-
                   children: [
                     ...use.map(buildSingleCheckbox).toList(),
                   ],
                 ), //Infraestrutura
-                InputRegister(controller: _controllerUse,
+                InputRegister(
+                    controller: _controllerUse,
                     hint: 'Especificar',
                     fonts: 14.0,
                     keyboardType: TextInputType.text,
@@ -191,25 +176,26 @@ class _CheckListLote2State extends State<CheckListLote2> {
                     icons: Icons.height,
                     colorBorder: PaletteColors.greyInput,
                     background: PaletteColors.greyInput),
-                Divider(thickness: 1.0,),
+                Divider(
+                  thickness: 1.0,
+                ),
                 TextCustom(
                   text: "Padrão usual de acabamento",
                   size: 16.0,
                   color: PaletteColors.grey,
                   fontWeight: FontWeight.bold,
                   textAlign: TextAlign.start,
-
                 ), //Padrão usual de acabamento
                 ListView(
                   scrollDirection: Axis.vertical,
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-
                   children: [
                     ...pattern.map(buildSingleCheckbox).toList(),
                   ],
                 ),
-                InputRegister(controller: _controllerPattern,
+                InputRegister(
+                    controller: _controllerPattern,
                     hint: 'Especificar',
                     fonts: 14.0,
                     keyboardType: TextInputType.text,
@@ -218,25 +204,26 @@ class _CheckListLote2State extends State<CheckListLote2> {
                     icons: Icons.height,
                     colorBorder: PaletteColors.greyInput,
                     background: PaletteColors.greyInput),
-                Divider(thickness: 1.0,),
+                Divider(
+                  thickness: 1.0,
+                ),
                 TextCustom(
                   text: "Avaliação da Localização",
                   size: 16.0,
                   color: PaletteColors.grey,
                   fontWeight: FontWeight.bold,
                   textAlign: TextAlign.start,
-
                 ), //Avaliação da Localização
                 ListView(
                   scrollDirection: Axis.vertical,
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-
                   children: [
                     ...evaluation.map(buildSingleCheckbox).toList(),
                   ],
                 ),
-                InputRegister(controller: _controllerEvaluation,
+                InputRegister(
+                    controller: _controllerEvaluation,
                     hint: 'Especificar',
                     fonts: 14.0,
                     keyboardType: TextInputType.text,
@@ -245,25 +232,26 @@ class _CheckListLote2State extends State<CheckListLote2> {
                     icons: Icons.height,
                     colorBorder: PaletteColors.greyInput,
                     background: PaletteColors.greyInput),
-                Divider(thickness: 1.0,),
+                Divider(
+                  thickness: 1.0,
+                ),
                 TextCustom(
                   text: "Densidade de ocupação",
                   size: 16.0,
                   color: PaletteColors.grey,
                   fontWeight: FontWeight.bold,
                   textAlign: TextAlign.start,
-
                 ), //Densidade de ocupação
                 ListView(
                   scrollDirection: Axis.vertical,
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-
                   children: [
                     ...density.map(buildSingleCheckbox).toList(),
                   ],
                 ),
-                InputRegister(controller: _controllerDensity,
+                InputRegister(
+                    controller: _controllerDensity,
                     hint: 'Especificar',
                     fonts: 14.0,
                     keyboardType: TextInputType.text,
@@ -272,25 +260,26 @@ class _CheckListLote2State extends State<CheckListLote2> {
                     icons: Icons.height,
                     colorBorder: PaletteColors.greyInput,
                     background: PaletteColors.greyInput),
-                Divider(thickness: 1.0,),
+                Divider(
+                  thickness: 1.0,
+                ),
                 TextCustom(
                   text: "Transporte coletivo",
                   size: 16.0,
                   color: PaletteColors.grey,
                   fontWeight: FontWeight.bold,
                   textAlign: TextAlign.start,
-
                 ), //Transporte coletivo
                 ListView(
                   scrollDirection: Axis.vertical,
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-
                   children: [
                     ...transport.map(buildSingleCheckbox).toList(),
                   ],
                 ),
-                InputRegister(controller: _controllerTransport,
+                InputRegister(
+                    controller: _controllerTransport,
                     hint: 'Especificar',
                     fonts: 14.0,
                     keyboardType: TextInputType.text,
@@ -299,18 +288,18 @@ class _CheckListLote2State extends State<CheckListLote2> {
                     icons: Icons.height,
                     colorBorder: PaletteColors.greyInput,
                     background: PaletteColors.greyInput),
-                Divider(thickness: 1.0,),
-
-
+                Divider(
+                  thickness: 1.0,
+                ),
 
                 Row(
                   children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical:0.1 ,horizontal:26.0 ),
+                    Container(
+                      width: width * 0.35,
                       child: ButtonCustom(
                         widthCustom: 0.3,
-                        heightCustom: 0.055,
-                        onPressed:() => Navigator.pop(context),
+                        heightCustom: 0.070,
+                        onPressed: () => Navigator.pop(context),
                         text: "Voltar",
                         size: 14.0,
                         colorButton: PaletteColors.white,
@@ -318,47 +307,40 @@ class _CheckListLote2State extends State<CheckListLote2> {
                         colorBorder: PaletteColors.primaryColor,
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical:0.1 ,horizontal:26.0 ),
+                    SizedBox(width: width * 0.15),
+                    Container(
+                      width: width * 0.35,
                       child: ButtonCustom(
                         widthCustom: 0.3,
-                        heightCustom: 0.055,
-                        onPressed:() => Navigator.pushNamed(context, '/checklote3'),
+                        heightCustom: 0.070,
+                        onPressed: () =>
+                            Navigator.pushNamed(context, '/checklote3'),
                         text: "Próximo",
                         size: 14.0,
                         colorButton: PaletteColors.primaryColor,
                         colorText: PaletteColors.white,
                         colorBorder: PaletteColors.primaryColor,
                       ),
-                    ),],
+                    ),
+                  ],
                 )
               ],
             ),
-
-
           ),
         ),
       ),
     );
-
-
-
   }
-  Widget buildSingleCheckbox(CheckBoxModel checkBoxModel)=> CheckboxListTile(
-    title: TextCustom(text:checkBoxModel.title,
-        color: PaletteColors.grey,
-        fontWeight: FontWeight.normal,size: 16.0),
-    value: checkBoxModel.value,
-    onChanged: (value) => setState(() =>
-    checkBoxModel.value = value!),
-    activeColor: PaletteColors.primaryColor,
-    checkColor: PaletteColors.white,
-  );
 
-
-
-
-
-
+  Widget buildSingleCheckbox(CheckBoxModel checkBoxModel) => CheckboxListTile(
+        title: TextCustom(
+            text: checkBoxModel.title,
+            color: PaletteColors.grey,
+            fontWeight: FontWeight.normal,
+            size: 16.0),
+        value: checkBoxModel.value,
+        onChanged: (value) => setState(() => checkBoxModel.value = value!),
+        activeColor: PaletteColors.primaryColor,
+        checkColor: PaletteColors.white,
+      );
 }
-

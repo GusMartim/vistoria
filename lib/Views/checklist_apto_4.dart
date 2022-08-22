@@ -1,9 +1,6 @@
-
-
 import 'package:vistoria/Utils/exports.dart';
 import 'package:vistoria/Widgets/inputRegister.dart';
 import 'package:vistoria/Widgets/text_custom.dart';
-
 
 class CheckListApto4 extends StatefulWidget {
   const CheckListApto4({Key? key}) : super(key: key);
@@ -13,15 +10,12 @@ class CheckListApto4 extends StatefulWidget {
 }
 
 class _CheckListApto4State extends State<CheckListApto4> {
-
-
   final unity = [
     CheckBoxModel(title: 'Andar'),
     CheckBoxModel(title: 'Apto de cobertura'),
     CheckBoxModel(title: 'Outro:'),
   ];
   final TextEditingController _controllerUnity = TextEditingController();
-
 
   final edPosition = [
     CheckBoxModel(title: 'Isolado/ Frente do terreno'),
@@ -46,22 +40,13 @@ class _CheckListApto4State extends State<CheckListApto4> {
   ];
   final TextEditingController _controllerPosition = TextEditingController();
 
-
-
-
   final TextEditingController _controllerPrice = TextEditingController();
   final TextEditingController _controllerAdminName = TextEditingController();
   final TextEditingController _controllerPhone = TextEditingController();
   final TextEditingController _controllerNumber = TextEditingController();
 
-
-
-
-
-
   @override
   Widget build(BuildContext context) {
-
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
@@ -69,42 +54,40 @@ class _CheckListApto4State extends State<CheckListApto4> {
       backgroundColor: PaletteColors.white,
       appBar: AppBar(
         backgroundColor: PaletteColors.bgColor,
-        iconTheme:  IconThemeData(
+        iconTheme: IconThemeData(
           color: PaletteColors.white,
-
         ),
         elevation: 0,
         title: TextCustom(
-          text: 'CheckList 4/5',size: 20.0,color: PaletteColors.white,
-          fontWeight: FontWeight.bold,textAlign: TextAlign.center,),
+          text: 'CheckList 4/5',
+          size: 20.0,
+          color: PaletteColors.white,
+          fontWeight: FontWeight.bold,
+          textAlign: TextAlign.center,
+        ),
         actions: <Widget>[
           Ink(
             decoration: ShapeDecoration(
-              color:  PaletteColors.white,
+              color: PaletteColors.white,
               shape: CircleBorder(),
-
-
-
             ),
-            child: IconButton(icon: Icon(
-              Icons.camera_alt,
-              color: PaletteColors.primaryColor,
-            ),
-              constraints: BoxConstraints(minHeight: 28,
-                  minWidth: 28,
-                  maxHeight: 28,
-                  maxWidth: 28),
+            child: IconButton(
+              icon: Icon(
+                Icons.camera_alt,
+                color: PaletteColors.primaryColor,
+              ),
+              constraints: BoxConstraints(
+                  minHeight: 28, minWidth: 28, maxHeight: 28, maxWidth: 28),
               iconSize: 24.0,
               padding: EdgeInsets.all(3.0),
               onPressed: () {},
             ),
           ),
+          SizedBox(width: width * 0.04),
         ],
-
       ),
-
       body: Padding(
-        padding: EdgeInsets.symmetric(vertical:24 ,horizontal:24 ),
+        padding: EdgeInsets.symmetric(vertical: 24, horizontal: 24),
         child: Center(
           child: SingleChildScrollView(
             scrollDirection: Axis.vertical,
@@ -120,18 +103,17 @@ class _CheckListApto4State extends State<CheckListApto4> {
                   color: PaletteColors.grey,
                   fontWeight: FontWeight.bold,
                   textAlign: TextAlign.start,
-
-                ),//Unidade
+                ), //Unidade
                 ListView(
                   scrollDirection: Axis.vertical,
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-
                   children: [
                     ...unity.map(buildSingleCheckbox).toList(),
                   ],
                 ),
-                InputRegister(controller: _controllerUnity,
+                InputRegister(
+                    controller: _controllerUnity,
                     hint: 'Especificar',
                     fonts: 14.0,
                     keyboardType: TextInputType.text,
@@ -140,17 +122,17 @@ class _CheckListApto4State extends State<CheckListApto4> {
                     icons: Icons.height,
                     colorBorder: PaletteColors.greyInput,
                     background: PaletteColors.greyInput),
-                Divider(thickness: 1.0,),
+                Divider(
+                  thickness: 1.0,
+                ),
                 TextCustom(
                   text: "Bloco/ Prédio",
                   size: 16.0,
                   color: PaletteColors.grey,
                   fontWeight: FontWeight.bold,
                   textAlign: TextAlign.start,
-
                 ),
                 Row(
-
                   children: [
                     TextCustom(
                       text: "Nº de pavimentos",
@@ -158,25 +140,23 @@ class _CheckListApto4State extends State<CheckListApto4> {
                       color: PaletteColors.grey,
                       fontWeight: FontWeight.normal,
                       textAlign: TextAlign.start,
-
                     ),
                     Spacer(),
                     Ink(
                       decoration: ShapeDecoration(
-                        color:  PaletteColors.midGrey,
+                        color: PaletteColors.midGrey,
                         shape: RoundedRectangleBorder(
-                            borderRadius:
-                            BorderRadius.only(
+                            borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(10),
-                                bottomLeft:Radius.circular(10) )),
-
-
+                                bottomLeft: Radius.circular(10))),
                       ),
-                      child: IconButton(icon: Icon(
-                        Icons.remove,
-                        color: PaletteColors.grey,
-                      ),
-                        constraints: BoxConstraints(minHeight: 28,
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.remove,
+                          color: PaletteColors.grey,
+                        ),
+                        constraints: BoxConstraints(
+                            minHeight: 28,
                             minWidth: 28,
                             maxHeight: 28,
                             maxWidth: 28),
@@ -185,10 +165,11 @@ class _CheckListApto4State extends State<CheckListApto4> {
                         onPressed: () {},
                       ),
                     ),
-                    SizedBox(
-
-                      height: 38,
-                      child: InputRegister(controller: _controllerNumber,
+                    Container(
+                      height: 40,
+                      width: width * 0.18,
+                      child: InputRegister(
+                        controller: _controllerNumber,
                         hint: '01',
                         fonts: 14.0,
                         keyboardType: TextInputType.number,
@@ -196,25 +177,24 @@ class _CheckListApto4State extends State<CheckListApto4> {
                         sizeIcon: 0.0,
                         icons: Icons.height,
                         colorBorder: PaletteColors.greyInput,
-                        background: PaletteColors.greyInput,),
+                        background: PaletteColors.greyInput,
+                      ),
                     ),
-
                     Ink(
                       decoration: ShapeDecoration(
-                        color:  PaletteColors.midGrey,
+                        color: PaletteColors.midGrey,
                         shape: RoundedRectangleBorder(
-                            borderRadius:
-                            BorderRadius.only(
+                            borderRadius: BorderRadius.only(
                                 topRight: Radius.circular(10),
-                                bottomRight:Radius.circular(10) )),
-
-
+                                bottomRight: Radius.circular(10))),
                       ),
-                      child: IconButton(icon: Icon(
-                        Icons.add,
-                        color: PaletteColors.grey,
-                      ),
-                        constraints: BoxConstraints(minHeight: 28,
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.add,
+                          color: PaletteColors.grey,
+                        ),
+                        constraints: BoxConstraints(
+                            minHeight: 28,
                             minWidth: 28,
                             maxHeight: 28,
                             maxWidth: 28),
@@ -223,37 +203,37 @@ class _CheckListApto4State extends State<CheckListApto4> {
                         onPressed: () {},
                       ),
                     ),
-
                   ],
                 ),
                 Row(
-
                   children: [
-                    TextCustom(
-                      text: "Quantidade de elevadores",
-                      size: 16.0,
-                      color: PaletteColors.grey,
-                      fontWeight: FontWeight.normal,
-                      textAlign: TextAlign.start,
-
+                    Container(
+                      height: 40,
+                      width: width * 0.4,
+                      child: TextCustom(
+                        text: "Quantidade de elevadores",
+                        size: 16.0,
+                        color: PaletteColors.grey,
+                        fontWeight: FontWeight.normal,
+                        textAlign: TextAlign.start,
+                      ),
                     ),
                     Spacer(),
                     Ink(
                       decoration: ShapeDecoration(
-                        color:  PaletteColors.midGrey,
+                        color: PaletteColors.midGrey,
                         shape: RoundedRectangleBorder(
-                            borderRadius:
-                            BorderRadius.only(
+                            borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(10),
-                                bottomLeft:Radius.circular(10) )),
-
-
+                                bottomLeft: Radius.circular(10))),
                       ),
-                      child: IconButton(icon: Icon(
-                        Icons.remove,
-                        color: PaletteColors.grey,
-                      ),
-                        constraints: BoxConstraints(minHeight: 28,
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.remove,
+                          color: PaletteColors.grey,
+                        ),
+                        constraints: BoxConstraints(
+                            minHeight: 28,
                             minWidth: 28,
                             maxHeight: 28,
                             maxWidth: 28),
@@ -262,10 +242,11 @@ class _CheckListApto4State extends State<CheckListApto4> {
                         onPressed: () {},
                       ),
                     ),
-                    SizedBox(
-
-                      height: 38,
-                      child: InputRegister(controller: _controllerNumber,
+                    Container(
+                      height: 40,
+                      width: width * 0.18,
+                      child: InputRegister(
+                        controller: _controllerNumber,
                         hint: '01',
                         fonts: 14.0,
                         keyboardType: TextInputType.number,
@@ -273,25 +254,24 @@ class _CheckListApto4State extends State<CheckListApto4> {
                         sizeIcon: 0.0,
                         icons: Icons.height,
                         colorBorder: PaletteColors.greyInput,
-                        background: PaletteColors.greyInput,),
+                        background: PaletteColors.greyInput,
+                      ),
                     ),
-
                     Ink(
                       decoration: ShapeDecoration(
-                        color:  PaletteColors.midGrey,
+                        color: PaletteColors.midGrey,
                         shape: RoundedRectangleBorder(
-                            borderRadius:
-                            BorderRadius.only(
+                            borderRadius: BorderRadius.only(
                                 topRight: Radius.circular(10),
-                                bottomRight:Radius.circular(10) )),
-
-
+                                bottomRight: Radius.circular(10))),
                       ),
-                      child: IconButton(icon: Icon(
-                        Icons.add,
-                        color: PaletteColors.grey,
-                      ),
-                        constraints: BoxConstraints(minHeight: 28,
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.add,
+                          color: PaletteColors.grey,
+                        ),
+                        constraints: BoxConstraints(
+                            minHeight: 28,
                             minWidth: 28,
                             maxHeight: 28,
                             maxWidth: 28),
@@ -300,11 +280,9 @@ class _CheckListApto4State extends State<CheckListApto4> {
                         onPressed: () {},
                       ),
                     ),
-
                   ],
                 ),
                 Row(
-
                   children: [
                     TextCustom(
                       text: "Idade estimada",
@@ -312,25 +290,23 @@ class _CheckListApto4State extends State<CheckListApto4> {
                       color: PaletteColors.grey,
                       fontWeight: FontWeight.normal,
                       textAlign: TextAlign.start,
-
                     ),
                     Spacer(),
                     Ink(
                       decoration: ShapeDecoration(
-                        color:  PaletteColors.midGrey,
+                        color: PaletteColors.midGrey,
                         shape: RoundedRectangleBorder(
-                            borderRadius:
-                            BorderRadius.only(
+                            borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(10),
-                                bottomLeft:Radius.circular(10) )),
-
-
+                                bottomLeft: Radius.circular(10))),
                       ),
-                      child: IconButton(icon: Icon(
-                        Icons.remove,
-                        color: PaletteColors.grey,
-                      ),
-                        constraints: BoxConstraints(minHeight: 28,
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.remove,
+                          color: PaletteColors.grey,
+                        ),
+                        constraints: BoxConstraints(
+                            minHeight: 28,
                             minWidth: 28,
                             maxHeight: 28,
                             maxWidth: 28),
@@ -339,10 +315,11 @@ class _CheckListApto4State extends State<CheckListApto4> {
                         onPressed: () {},
                       ),
                     ),
-                    SizedBox(
-
-                      height: 38,
-                      child: InputRegister(controller: _controllerNumber,
+                    Container(
+                      height: 40,
+                      width: width * 0.18,
+                      child: InputRegister(
+                        controller: _controllerNumber,
                         hint: '01',
                         fonts: 14.0,
                         keyboardType: TextInputType.number,
@@ -350,25 +327,24 @@ class _CheckListApto4State extends State<CheckListApto4> {
                         sizeIcon: 0.0,
                         icons: Icons.height,
                         colorBorder: PaletteColors.greyInput,
-                        background: PaletteColors.greyInput,),
+                        background: PaletteColors.greyInput,
+                      ),
                     ),
-
                     Ink(
                       decoration: ShapeDecoration(
-                        color:  PaletteColors.midGrey,
+                        color: PaletteColors.midGrey,
                         shape: RoundedRectangleBorder(
-                            borderRadius:
-                            BorderRadius.only(
+                            borderRadius: BorderRadius.only(
                                 topRight: Radius.circular(10),
-                                bottomRight:Radius.circular(10) )),
-
-
+                                bottomRight: Radius.circular(10))),
                       ),
-                      child: IconButton(icon: Icon(
-                        Icons.add,
-                        color: PaletteColors.grey,
-                      ),
-                        constraints: BoxConstraints(minHeight: 28,
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.add,
+                          color: PaletteColors.grey,
+                        ),
+                        constraints: BoxConstraints(
+                            minHeight: 28,
                             minWidth: 28,
                             maxHeight: 28,
                             maxWidth: 28),
@@ -377,11 +353,9 @@ class _CheckListApto4State extends State<CheckListApto4> {
                         onPressed: () {},
                       ),
                     ),
-
                   ],
                 ),
                 Row(
-
                   children: [
                     TextCustom(
                       text: "Nº de aptos/ pavtos",
@@ -389,25 +363,23 @@ class _CheckListApto4State extends State<CheckListApto4> {
                       color: PaletteColors.grey,
                       fontWeight: FontWeight.normal,
                       textAlign: TextAlign.start,
-
                     ),
                     Spacer(),
                     Ink(
                       decoration: ShapeDecoration(
-                        color:  PaletteColors.midGrey,
+                        color: PaletteColors.midGrey,
                         shape: RoundedRectangleBorder(
-                            borderRadius:
-                            BorderRadius.only(
+                            borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(10),
-                                bottomLeft:Radius.circular(10) )),
-
-
+                                bottomLeft: Radius.circular(10))),
                       ),
-                      child: IconButton(icon: Icon(
-                        Icons.remove,
-                        color: PaletteColors.grey,
-                      ),
-                        constraints: BoxConstraints(minHeight: 28,
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.remove,
+                          color: PaletteColors.grey,
+                        ),
+                        constraints: BoxConstraints(
+                            minHeight: 28,
                             minWidth: 28,
                             maxHeight: 28,
                             maxWidth: 28),
@@ -416,10 +388,11 @@ class _CheckListApto4State extends State<CheckListApto4> {
                         onPressed: () {},
                       ),
                     ),
-                    SizedBox(
-
-                      height: 38,
-                      child: InputRegister(controller: _controllerNumber,
+                    Container(
+                      height: 40,
+                      width: width * 0.18,
+                      child: InputRegister(
+                        controller: _controllerNumber,
                         hint: '01',
                         fonts: 14.0,
                         keyboardType: TextInputType.number,
@@ -427,25 +400,24 @@ class _CheckListApto4State extends State<CheckListApto4> {
                         sizeIcon: 0.0,
                         icons: Icons.height,
                         colorBorder: PaletteColors.greyInput,
-                        background: PaletteColors.greyInput,),
+                        background: PaletteColors.greyInput,
+                      ),
                     ),
-
                     Ink(
                       decoration: ShapeDecoration(
-                        color:  PaletteColors.midGrey,
+                        color: PaletteColors.midGrey,
                         shape: RoundedRectangleBorder(
-                            borderRadius:
-                            BorderRadius.only(
+                            borderRadius: BorderRadius.only(
                                 topRight: Radius.circular(10),
-                                bottomRight:Radius.circular(10) )),
-
-
+                                bottomRight: Radius.circular(10))),
                       ),
-                      child: IconButton(icon: Icon(
-                        Icons.add,
-                        color: PaletteColors.grey,
-                      ),
-                        constraints: BoxConstraints(minHeight: 28,
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.add,
+                          color: PaletteColors.grey,
+                        ),
+                        constraints: BoxConstraints(
+                            minHeight: 28,
                             minWidth: 28,
                             maxHeight: 28,
                             maxWidth: 28),
@@ -454,37 +426,36 @@ class _CheckListApto4State extends State<CheckListApto4> {
                         onPressed: () {},
                       ),
                     ),
-
                   ],
                 ),
                 Row(
-
                   children: [
-                    TextCustom(
-                      text: "Nº de unidades no prédio",
-                      size: 16.0,
-                      color: PaletteColors.grey,
-                      fontWeight: FontWeight.normal,
-                      textAlign: TextAlign.start,
-
+                    Container(
+                      width: width * 0.4,
+                      child: TextCustom(
+                        text: "Nº de unidades no prédio",
+                        size: 16.0,
+                        color: PaletteColors.grey,
+                        fontWeight: FontWeight.normal,
+                        textAlign: TextAlign.start,
+                      ),
                     ),
                     Spacer(),
                     Ink(
                       decoration: ShapeDecoration(
-                        color:  PaletteColors.midGrey,
+                        color: PaletteColors.midGrey,
                         shape: RoundedRectangleBorder(
-                            borderRadius:
-                            BorderRadius.only(
+                            borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(10),
-                                bottomLeft:Radius.circular(10) )),
-
-
+                                bottomLeft: Radius.circular(10))),
                       ),
-                      child: IconButton(icon: Icon(
-                        Icons.remove,
-                        color: PaletteColors.grey,
-                      ),
-                        constraints: BoxConstraints(minHeight: 28,
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.remove,
+                          color: PaletteColors.grey,
+                        ),
+                        constraints: BoxConstraints(
+                            minHeight: 28,
                             minWidth: 28,
                             maxHeight: 28,
                             maxWidth: 28),
@@ -493,10 +464,11 @@ class _CheckListApto4State extends State<CheckListApto4> {
                         onPressed: () {},
                       ),
                     ),
-                    SizedBox(
-
-                      height: 38,
-                      child: InputRegister(controller: _controllerNumber,
+                    Container(
+                      height: 40,
+                      width: width * 0.18,
+                      child: InputRegister(
+                        controller: _controllerNumber,
                         hint: '01',
                         fonts: 14.0,
                         keyboardType: TextInputType.number,
@@ -504,25 +476,24 @@ class _CheckListApto4State extends State<CheckListApto4> {
                         sizeIcon: 0.0,
                         icons: Icons.height,
                         colorBorder: PaletteColors.greyInput,
-                        background: PaletteColors.greyInput,),
+                        background: PaletteColors.greyInput,
+                      ),
                     ),
-
                     Ink(
                       decoration: ShapeDecoration(
-                        color:  PaletteColors.midGrey,
+                        color: PaletteColors.midGrey,
                         shape: RoundedRectangleBorder(
-                            borderRadius:
-                            BorderRadius.only(
+                            borderRadius: BorderRadius.only(
                                 topRight: Radius.circular(10),
-                                bottomRight:Radius.circular(10) )),
-
-
+                                bottomRight: Radius.circular(10))),
                       ),
-                      child: IconButton(icon: Icon(
-                        Icons.add,
-                        color: PaletteColors.grey,
-                      ),
-                        constraints: BoxConstraints(minHeight: 28,
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.add,
+                          color: PaletteColors.grey,
+                        ),
+                        constraints: BoxConstraints(
+                            minHeight: 28,
                             minWidth: 28,
                             maxHeight: 28,
                             maxWidth: 28),
@@ -531,28 +502,28 @@ class _CheckListApto4State extends State<CheckListApto4> {
                         onPressed: () {},
                       ),
                     ),
-
                   ],
                 ),
-                Divider(thickness: 1.0,),
+                Divider(
+                  thickness: 1.0,
+                ),
                 TextCustom(
                   text: "Posição da Edificação",
                   size: 16.0,
                   color: PaletteColors.grey,
                   fontWeight: FontWeight.bold,
                   textAlign: TextAlign.start,
-
-                ),//Posição da Edificação
+                ), //Posição da Edificação
                 ListView(
                   scrollDirection: Axis.vertical,
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-
                   children: [
                     ...edPosition.map(buildSingleCheckbox).toList(),
                   ],
                 ),
-                InputRegister(controller: _controllerEdPosition,
+                InputRegister(
+                    controller: _controllerEdPosition,
                     hint: 'Especificar',
                     fonts: 14.0,
                     keyboardType: TextInputType.text,
@@ -561,25 +532,26 @@ class _CheckListApto4State extends State<CheckListApto4> {
                     icons: Icons.height,
                     colorBorder: PaletteColors.greyInput,
                     background: PaletteColors.greyInput),
-                Divider(thickness: 1.0,),
+                Divider(
+                  thickness: 1.0,
+                ),
                 TextCustom(
                   text: "Vista Panorâmica",
                   size: 16.0,
                   color: PaletteColors.grey,
                   fontWeight: FontWeight.bold,
                   textAlign: TextAlign.start,
-
-                ),//Vista Panorâmica
+                ), //Vista Panorâmica
                 ListView(
                   scrollDirection: Axis.vertical,
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-
                   children: [
                     ...view.map(buildSingleCheckbox).toList(),
                   ],
                 ),
-                InputRegister(controller: _controllerView,
+                InputRegister(
+                    controller: _controllerView,
                     hint: 'Especificar',
                     fonts: 14.0,
                     keyboardType: TextInputType.text,
@@ -588,25 +560,26 @@ class _CheckListApto4State extends State<CheckListApto4> {
                     icons: Icons.height,
                     colorBorder: PaletteColors.greyInput,
                     background: PaletteColors.greyInput),
-                Divider(thickness: 1.0,),
+                Divider(
+                  thickness: 1.0,
+                ),
                 TextCustom(
                   text: "Posição da unidade no prédio",
                   size: 16.0,
                   color: PaletteColors.grey,
                   fontWeight: FontWeight.bold,
                   textAlign: TextAlign.start,
-
-                ),//Posição da unidade no prédio
+                ), //Posição da unidade no prédio
                 ListView(
                   scrollDirection: Axis.vertical,
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-
                   children: [
                     ...position.map(buildSingleCheckbox).toList(),
                   ],
                 ),
-                InputRegister(controller: _controllerPosition,
+                InputRegister(
+                    controller: _controllerPosition,
                     hint: 'Especificar',
                     fonts: 14.0,
                     keyboardType: TextInputType.text,
@@ -615,7 +588,9 @@ class _CheckListApto4State extends State<CheckListApto4> {
                     icons: Icons.height,
                     colorBorder: PaletteColors.greyInput,
                     background: PaletteColors.greyInput),
-                Divider(thickness: 1.0,),
+                Divider(
+                  thickness: 1.0,
+                ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextCustom(
@@ -624,10 +599,10 @@ class _CheckListApto4State extends State<CheckListApto4> {
                     color: PaletteColors.grey,
                     fontWeight: FontWeight.bold,
                     textAlign: TextAlign.start,
-
                   ),
-                ),//Valor do Condomínio
-                InputRegister(controller: _controllerPrice,
+                ), //Valor do Condomínio
+                InputRegister(
+                    controller: _controllerPrice,
                     hint: 'R\$ 000.00',
                     fonts: 14.0,
                     keyboardType: TextInputType.text,
@@ -645,10 +620,10 @@ class _CheckListApto4State extends State<CheckListApto4> {
                     color: PaletteColors.grey,
                     fontWeight: FontWeight.bold,
                     textAlign: TextAlign.start,
-
                   ),
                 ),
-                InputRegister(controller: _controllerPrice,
+                InputRegister(
+                    controller: _controllerPrice,
                     hint: 'Nome do administrador',
                     fonts: 14.0,
                     keyboardType: TextInputType.text,
@@ -666,10 +641,10 @@ class _CheckListApto4State extends State<CheckListApto4> {
                     color: PaletteColors.grey,
                     fontWeight: FontWeight.bold,
                     textAlign: TextAlign.start,
-
                   ),
                 ),
-                InputRegister(controller: _controllerPrice,
+                InputRegister(
+                    controller: _controllerPrice,
                     hint: '(00) 00000-0000',
                     fonts: 14.0,
                     keyboardType: TextInputType.text,
@@ -680,15 +655,17 @@ class _CheckListApto4State extends State<CheckListApto4> {
                     background: PaletteColors.greyInput),
                 SizedBox(height: 5.0),
 
-                Divider(thickness: 1.0,),
+                Divider(
+                  thickness: 1.0,
+                ),
                 Row(
                   children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical:0.1 ,horizontal:26.0 ),
+                    Container(
+                      width: width * 0.35,
                       child: ButtonCustom(
                         widthCustom: 0.3,
-                        heightCustom: 0.055,
-                        onPressed:() => Navigator.pop(context),
+                        heightCustom: 0.070,
+                        onPressed: () => Navigator.pop(context),
                         text: "Voltar",
                         size: 14.0,
                         colorButton: PaletteColors.white,
@@ -696,47 +673,40 @@ class _CheckListApto4State extends State<CheckListApto4> {
                         colorBorder: PaletteColors.primaryColor,
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical:0.1 ,horizontal:26.0 ),
+                    SizedBox(width: width * 0.15),
+                    Container(
+                      width: width * 0.35,
                       child: ButtonCustom(
                         widthCustom: 0.3,
-                        heightCustom: 0.055,
-                        onPressed:() => Navigator.pushNamed(context, '/checkapto5'),
+                        heightCustom: 0.070,
+                        onPressed: () =>
+                            Navigator.pushNamed(context, '/checkapto5'),
                         text: "Próximo",
                         size: 14.0,
                         colorButton: PaletteColors.primaryColor,
                         colorText: PaletteColors.white,
                         colorBorder: PaletteColors.primaryColor,
                       ),
-                    ),],
+                    ),
+                  ],
                 )
               ],
             ),
-
-
           ),
         ),
       ),
     );
-
-
-
   }
-  Widget buildSingleCheckbox(CheckBoxModel checkBoxModel)=> CheckboxListTile(
-    title: TextCustom(text:checkBoxModel.title,
-        color: PaletteColors.grey,
-        fontWeight: FontWeight.normal,size: 16.0),
-    value: checkBoxModel.value,
-    onChanged: (value) => setState(() =>
-    checkBoxModel.value = value!),
-    activeColor: PaletteColors.primaryColor,
-    checkColor: PaletteColors.white,
-  );
 
-
-
-
-
-
+  Widget buildSingleCheckbox(CheckBoxModel checkBoxModel) => CheckboxListTile(
+        title: TextCustom(
+            text: checkBoxModel.title,
+            color: PaletteColors.grey,
+            fontWeight: FontWeight.normal,
+            size: 16.0),
+        value: checkBoxModel.value,
+        onChanged: (value) => setState(() => checkBoxModel.value = value!),
+        activeColor: PaletteColors.primaryColor,
+        checkColor: PaletteColors.white,
+      );
 }
-

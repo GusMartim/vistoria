@@ -65,7 +65,8 @@ class ListTileCustom extends StatelessWidget {
                         maxWidth: 46),
                     iconSize: 32.0,
                     padding: EdgeInsets.zero,
-                    onPressed: () {},
+                    onPressed: () =>
+                        Navigator.pushNamed(context, '/vistoria'),
                   ),
                 ),
                 SizedBox(width: 10),

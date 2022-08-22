@@ -1,6 +1,5 @@
 import 'package:vistoria/Utils/exports.dart';
 
-
 class FeedbackScreen extends StatefulWidget {
   const FeedbackScreen({Key? key}) : super(key: key);
 
