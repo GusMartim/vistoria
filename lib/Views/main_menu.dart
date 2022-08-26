@@ -49,48 +49,61 @@ class _MenuScreenState extends State<MenuScreen> {
                   textAlign: TextAlign.start,
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  CustomCard(
-                    text: "Demandas",
-                    icon: Icons.add_location_rounded,
-                    page: '/demandas',
-                  ),
-                  CustomCard(
-                    text: "Nova Vistoria",
-                    icon: Icons.list_rounded,
-                    page: '/vistoria',
-                  ),
-                ],
+              Container(
+                alignment: Alignment.center,
+                width: width * 1.5,
+
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    CustomCard(
+                      text: "Demandas",
+                      icon: Icons.add_location_rounded,
+                      page: '/demandas',
+                    ),
+                    CustomCard(
+                      text: "Nova Vistoria",
+                      icon: Icons.list_rounded,
+                      page: '/vistoria',
+                    ),
+                  ],
+                ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  CustomCard(
-                    text: "Historico",
-                    icon: Icons.window_outlined,
-                    page: '/history',
-                  ),
-                  CustomCard(
-                    text: "Tutorial",
-                    icon: Icons.branding_watermark_rounded,
-                    page: '/tutorial',
-                  ),
-                ],
+              Container(
+                alignment: Alignment.center,
+                width: width * 1.5,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    CustomCard(
+                      text: "Historico",
+                      icon: Icons.window_outlined,
+                      page: '/history',
+                    ),
+                    CustomCard(
+                      text: "Tutorial",
+                      icon: Icons.branding_watermark_rounded,
+                      page: '/tutorial',
+                    ),
+                  ],
+                ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  CustomCard(
-                    text: "Enviar Feedback",
-                    icon: Icons.comment_rounded,
-                    page: '/feedback',
-                  ),
-                ],
+              Container(
+                alignment: Alignment.center,
+                width: width * 1.5,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    CustomCard(
+                      text: "Enviar Feedback",
+                      icon: Icons.comment_rounded,
+                      page: '/feedback',
+                    ),
+                  ],
+                ),
               )
             ]),
       ),

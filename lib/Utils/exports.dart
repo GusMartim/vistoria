@@ -4,14 +4,7 @@ export 'dart:io';
 export '../Views/initial_screen.dart';
 export '../Views/splash_screen.dart';
 export '../Views/check_list_1.dart';
-export '../Views/check_list_2.dart';
-export '../Views/check_list_3.dart';
-export '../Views/check_list_4.dart';
 export '../Views/checklist_apto_1.dart';
-export '../Views/checklist_apto_2.dart';
-export '../Views/checklist_apto_3.dart';
-export '../Views/checklist_apto_4.dart';
-export '../Views/checklist_apto_5.dart';
 export '../Views/register_screen.dart';
 export '../Views/request_screen.dart';
 export '../Views/data_request_screen.dart';
@@ -38,8 +31,3 @@ export 'package:auto_size_text/auto_size_text.dart';
 export 'package:brasil_fields/brasil_fields.dart';
 export 'package:font_awesome_flutter/font_awesome_flutter.dart';
 export 'dart:convert';
-
-
-
-
-

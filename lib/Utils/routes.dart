@@ -1,13 +1,6 @@
 import 'package:vistoria/Utils/exports.dart';
 import 'package:vistoria/Views/checklist_apto_1.dart';
-import 'package:vistoria/Views/checklist_apto_2.dart';
-import 'package:vistoria/Views/checklist_apto_3.dart';
-import 'package:vistoria/Views/checklist_apto_4.dart';
-import 'package:vistoria/Views/checklist_apto_5.dart';
 import 'package:vistoria/Views/checklist_lote_1.dart';
-import 'package:vistoria/Views/checklist_lote_2.dart';
-import 'package:vistoria/Views/checklist_lote_3.dart';
-import 'package:vistoria/Views/checklist_lote_4.dart';
 import 'package:vistoria/Views/construction_step.dart';
 import 'package:vistoria/Views/data_request_screen.dart';
 import 'package:vistoria/Views/history_screen.dart';
@@ -63,59 +56,18 @@ class Routes {
         return MaterialPageRoute(
             builder: (_) =>const CheckList1()
         );
-      case "/check2":
-        return MaterialPageRoute(
-            builder: (_) =>const CheckList2()
-        );
-      case "/check3":
-        return MaterialPageRoute(
-            builder: (_) =>const CheckList3()
-        );
-      case "/check4":
-        return MaterialPageRoute(
-            builder: (_) =>const CheckList4()
-        );
       case "/checkapto1":
         return MaterialPageRoute(
             builder: (_) =>const CheckListApto1()
-        );
-      case "/checkapto2":
-        return MaterialPageRoute(
-            builder: (_) =>const CheckListApto2()
-        );
-      case "/checkapto3":
-        return MaterialPageRoute(
-            builder: (_) =>const CheckListApto3()
-        );
-      case "/checkapto4":
-        return MaterialPageRoute(
-            builder: (_) =>const CheckListApto4()
-        );
-      case "/checkapto5":
-        return MaterialPageRoute(
-            builder: (_) =>const CheckListApto5()
         );
       case "/checklote1":
         return MaterialPageRoute(
             builder: (_) =>const CheckListLote1()
         );
-      case "/checklote2":
-        return MaterialPageRoute(
-            builder: (_) =>const CheckListLote2()
-        );
-      case "/checklote3":
-        return MaterialPageRoute(
-            builder: (_) =>const CheckListLote3()
-        );
-      case "/checklote4":
-        return MaterialPageRoute(
-            builder: (_) =>const CheckListLote4()
-        );
       case "/construction":
         return MaterialPageRoute(
             builder: (_) =>const ConstructionStep()
         );
-
       case "/finished":
         return MaterialPageRoute(
             builder: (_) =>const SurveyFinishScreen()
@@ -124,14 +76,7 @@ class Routes {
         return MaterialPageRoute(
             builder: (_) =>const HistoryScreen()
         );
-      case "/tutorial":
-        return MaterialPageRoute(
-            builder: (_) =>const CheckListLote1()
-        );
-      case "/feedback":
-        return MaterialPageRoute(
-            builder: (_) =>const CheckListApto1()
-        );
+
 
       default :
         _erroRota();
