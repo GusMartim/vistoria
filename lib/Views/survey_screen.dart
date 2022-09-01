@@ -1,5 +1,8 @@
+import 'dart:collection';
+
 import 'package:vistoria/Utils/exports.dart';
 import 'package:vistoria/Widgets/inputRegister.dart';
+import 'package:vistoria/Widgets/snackBars.dart';
 import 'package:vistoria/Widgets/text_custom.dart';
 
 class Surveyscreen extends StatefulWidget {
@@ -15,9 +18,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
   final TextEditingController _controllerComplement = TextEditingController();
   final TextEditingController _controllerDistrict = TextEditingController();
   final TextEditingController _controllerCity = TextEditingController();
-  final TextEditingController _controllerState = TextEditingController();
   final TextEditingController _controllerCEP = TextEditingController();
-  final TextEditingController _controllerType = TextEditingController();
   final TextEditingController _controllerLatG = TextEditingController();
   final TextEditingController _controllerLatMin = TextEditingController();
   final TextEditingController _controllerLatSeg = TextEditingController();
@@ -28,6 +29,107 @@ class _SurveyscreenState extends State<Surveyscreen> {
   String? selectedState = 'SP';
   List<String> type = ['Casa', 'Apartamento', 'Lote', 'Obra'];
   String? selectedType = 'Casa';
+  FirebaseFirestore db = FirebaseFirestore.instance;
+  final Map<String, dynamic> data = HashMap();
+  SurveyModel _surveyModel = SurveyModel();
+  String _error = '';
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  _saveData(SurveyModel surveyModel) async {
+    db
+        .collection('surveys')
+        .doc(_surveyModel.idSurvey)
+        .set(surveyModel.toMap())
+        .then((_) => _surveyType(_surveyModel.idSurvey));
+  }
+
+  _createData() async {
+    if (_controllerAdress.text.isNotEmpty) {
+      if (_controllerNumber.text.isNotEmpty) {
+        if (_controllerDistrict.text.isNotEmpty) {
+          if (_controllerCity.text.isNotEmpty) {
+            if (_controllerCEP.text.isNotEmpty) {
+              if (_controllerLatG.text.isNotEmpty) {
+                if (_controllerLatMin.text.isNotEmpty) {
+                  if (_controllerLatSeg.text.isNotEmpty) {
+                    if (_controllerLongG.text.isNotEmpty) {
+                      if (_controllerLongMin.text.isNotEmpty) {
+                        if (_controllerLongSeg.text.isNotEmpty) {
+                          setState(() {
+                            _error = '';
+                          });
+                          _createTable();
+                        } else {
+                          _error = 'Confira os dados de Longitude';
+                          showSnackBar(context, _error, _scaffoldKey);
+                        }
+                      } else {
+                        _error = 'Confira os dados de Longitude';
+                        showSnackBar(context, _error, _scaffoldKey);
+                      }
+                    } else {
+                      _error = 'Confira os dados de Longitude';
+                      showSnackBar(context, _error, _scaffoldKey);
+                    }
+                  } else {
+                    _error = 'Confira os dados de Latitude';
+                    showSnackBar(context, _error, _scaffoldKey);
+                  }
+                } else {
+                  _error = 'Confira os dados de Latitude';
+                  showSnackBar(context, _error, _scaffoldKey);
+                }
+              } else {
+                _error = 'Confira os dados de Latitude';
+                showSnackBar(context, _error, _scaffoldKey);
+              }
+            } else {
+              _error = 'CEP inválido!';
+              showSnackBar(context, _error, _scaffoldKey);
+            }
+          } else {
+            _error = 'Cidade inválida!';
+            showSnackBar(context, _error, _scaffoldKey);
+          }
+        } else {
+          _error = 'Bairro inválido!';
+          showSnackBar(context, _error, _scaffoldKey);
+        }
+      } else {
+        _error = 'Numero inválido!';
+        showSnackBar(context, _error, _scaffoldKey);
+      }
+    } else {
+      _error = 'Endereço inválido!';
+      showSnackBar(context, _error, _scaffoldKey);
+    }
+  }
+
+  _createTable() async {
+    _surveyModel.adress = _controllerAdress.text;
+    _surveyModel.number = _controllerNumber.text;
+    _surveyModel.complement = _controllerComplement.text;
+    _surveyModel.district = _controllerDistrict.text;
+    _surveyModel.city = _controllerDistrict.text;
+    _surveyModel.state = selectedState.toString();
+    _surveyModel.type = selectedType.toString();
+    _surveyModel.cep = _controllerCEP.text;
+    _surveyModel.latG = _controllerLatG.text;
+    _surveyModel.latMin = _controllerLatMin.text;
+    _surveyModel.latSeg = _controllerLatSeg.text;
+    _surveyModel.longG = _controllerLongG.text;
+    _surveyModel.longMin = _controllerLongMin.text;
+    _surveyModel.longSeg = _controllerLongSeg.text;
+    _surveyModel.hourRequest = DateTime.now().toString();
+    _surveyModel.idUser = FirebaseAuth.instance.currentUser!.uid;
+    _saveData(_surveyModel);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _surveyModel = SurveyModel.createId();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +137,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
     double height = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: PaletteColors.white,
       appBar: AppBar(
         backgroundColor: PaletteColors.bgColor,
@@ -596,20 +699,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                 child: ButtonCustom(
                   widthCustom: 0.80,
                   heightCustom: 0.070,
-                  onPressed: () {
-                    if (selectedType == type[0]) {
-                      Navigator.pushNamed(context, '/check1');
-                    }
-                    if (selectedType == type[1]) {
-                      Navigator.pushNamed(context, '/checkapto1');
-                    }
-                    if (selectedType == type[2]) {
-                      Navigator.pushNamed(context, '/checklote1');
-                    }
-                    if (selectedType == type[3]) {
-                      Navigator.pushNamed(context, '/construction');
-                    }
-                  },
+                  onPressed: () => _createData(),
                   text: "Prosseguir",
                   size: 14.0,
                   colorButton: PaletteColors.primaryColor,
@@ -622,5 +712,20 @@ class _SurveyscreenState extends State<Surveyscreen> {
         ),
       ),
     );
+  }
+
+  void _surveyType(String id) {
+    if (selectedType == type[0]) {
+      Navigator.pushNamed(context, '/check1',arguments: id );
+    }
+    if (selectedType == type[1]) {
+      Navigator.pushNamed(context, '/checkapto1');
+    }
+    if (selectedType == type[2]) {
+      Navigator.pushNamed(context, '/checklote1');
+    }
+    if (selectedType == type[3]) {
+      Navigator.pushNamed(context, '/construction');
+    }
   }
 }

@@ -54,7 +54,7 @@ class Routes {
         );
       case "/check1":
         return MaterialPageRoute(
-            builder: (_) =>const CheckList1()
+            builder: (_) =>CheckList1(idSurvey: args as String)
         );
       case "/checkapto1":
         return MaterialPageRoute(

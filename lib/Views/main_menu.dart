@@ -8,6 +8,10 @@ class MenuScreen extends StatefulWidget {
 }
 
 class _MenuScreenState extends State<MenuScreen> {
+
+  FirebaseFirestore db = FirebaseFirestore.instance;
+
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -42,7 +46,7 @@ class _MenuScreenState extends State<MenuScreen> {
                   horizontal: 30,
                 ),
                 child: TextCustom(
-                  text: "Olá,Lucas",
+                  text: 'Olá, ' + FirebaseAuth.instance.currentUser!.displayName!+'!',
                   size: 14.0,
                   color: PaletteColors.grey,
                   fontWeight: FontWeight.bold,

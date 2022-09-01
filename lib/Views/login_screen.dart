@@ -1,4 +1,5 @@
 import '../Utils/exports.dart';
+import '../Widgets/snackBars.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -12,6 +13,48 @@ class _LoginScreenState extends State<LoginScreen> {
   final _controllerPassword = TextEditingController();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   bool visiblePassword = false;
+  FirebaseAuth _auth = FirebaseAuth.instance;
+  String _error =  "";
+
+  _signFirebase()async{
+    if (_controllerEmail.text.isNotEmpty) {
+      setState(() {
+        _error = "";
+      });
+
+      try{
+        await _auth.signInWithEmailAndPassword(
+            email: _controllerEmail.text.trim(),
+            password: _controllerPassword.text.trim()
+        ).then((auth)async{
+          Navigator.pushReplacementNamed(context, "/main");
+        });
+      }on FirebaseAuthException catch (e) {
+        if(e.code =="unknown"){
+          setState(() {
+            _error = "A senha está vazia!";
+            showSnackBar(context, _error,_scaffoldKey);
+          });
+        }else if(e.code =="invalid-email"){
+          setState(() {
+            _error = "Digite um e-mail válido!";
+            showSnackBar(context, _error,_scaffoldKey);
+          });
+        }else{
+          setState(() {
+            _error = e.code;
+            showSnackBar(context, _error,_scaffoldKey);
+          });
+        }
+      }
+    } else {
+      setState(() {
+        _error = "Preencha seu email";
+        showSnackBar(context, _error,_scaffoldKey);
+      });
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +148,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: ButtonCustom(
                   widthCustom: 0.75,
                   heightCustom: 0.070,
-                  onPressed: () => Navigator.popAndPushNamed(context, '/main'),
+                  onPressed: () =>_signFirebase(),
                   text: "Entrar",
                   size: 14.0,
                   colorButton: PaletteColors.primaryColor,

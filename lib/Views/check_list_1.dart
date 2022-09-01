@@ -3,7 +3,8 @@ import 'package:vistoria/Widgets/inputRegister.dart';
 import 'package:vistoria/Widgets/text_custom.dart';
 
 class CheckList1 extends StatefulWidget {
-  const CheckList1({Key? key}) : super(key: key);
+  final String idSurvey;
+  const CheckList1({required this.idSurvey});
 
   @override
   State<CheckList1> createState() => _CheckList1State();
@@ -11,6 +12,240 @@ class CheckList1 extends StatefulWidget {
 
 class _CheckList1State extends State<CheckList1> {
 
+  int nRoom = 0; String SRoom = '0';
+  int nSocialBathroom = 0; String SSocialBathroom = '0';
+  int nPrivateBathroom = 0; String SPrivateBathroom = '0';
+  int nLav = 0; String SLav = '0';
+  int nServiceBathroom = 0; String SServiceBathroom = '0';
+  int nMaidRoom = 0; String SMaidRoom = '0';
+  int nBalcony = 0; String SBalcony = '0';
+  int nCompleteCabinets = 0; String SCompleteCabinets = '0';
+  int nKitchen = 0; String SKitchen = '0';
+  int nRestRoom = 0; String SRestRoom = '0';
+  int nServiceAreaRoofed = 0; String SServiceAreaRoofed = '0';
+  int nServiceAreaUnroofed = 0; String SServiceAreaUnroofed = '0';
+  int nOpenGarage = 0; String SOpenGarage = '0';
+  int nClosedGarage= 0; String SClosedGarage = '0';
+  int nAc=  0; String SAc = '0';
+  int nPool = 0; String SPool = '0';
+  final TextEditingController _controllerNumberRoom = TextEditingController();
+  final TextEditingController _controllerNumberSocialBathroom = TextEditingController();
+  final TextEditingController _controllerNumberPrivateBathroom = TextEditingController();
+  final TextEditingController _controllerNumberLav = TextEditingController();
+  final TextEditingController _controllerNumberServiceBathroom = TextEditingController();
+  final TextEditingController _controllerNumberMaidRoom = TextEditingController();
+  final TextEditingController _controllerNumberBalcony = TextEditingController();
+  final TextEditingController _controllerNumberCompleteCabinets = TextEditingController();
+  final TextEditingController _controllerNumberKitchen = TextEditingController();
+  final TextEditingController _controllerNumberRestRoom = TextEditingController();
+  final TextEditingController _controllerNumberServiceAreaR = TextEditingController();
+  final TextEditingController _controllerNumberServiceAreaUnR = TextEditingController();
+  final TextEditingController _controllerNumberOpenGarage = TextEditingController();
+  final TextEditingController _controllerNumberClosedGarage = TextEditingController();
+  final TextEditingController _controllerNumberAc = TextEditingController();
+  final TextEditingController _controllerNumberPool = TextEditingController();
+
+
+
+
+  InputsModel _inputsModel = InputsModel();
+  FirebaseFirestore db = FirebaseFirestore.instance;
+  _saveCheck() {
+    saveBlock.clear();
+    for (var i = 0; i < block.length; i++) {
+      if (block[i].value != false) {
+        saveBlock.add(block[i].title + '#' + block[i].value.toString() +
+            _controllerBlock.text);
+      }
+    }
+      saveKitchen.clear();
+      for (var i = 0; i < kitchen.length; i++) {
+        if (kitchen[i].value != false) {
+          saveKitchen.add(kitchen[i].title + '#' + kitchen[i].value.toString() +
+              _controllerKitchen.text);
+        }
+      }
+        saveBathroom.clear();
+        for (var i = 0; i < bathroom.length; i++) {
+          if (bathroom[i].value != false) {
+            saveBathroom
+                .add(bathroom[i].title + '#' + bathroom[i].value.toString()+ _controllerBathroom.text);
+          }
+        }
+          saveTank.clear();
+          for (var i = 0; i < tank.length; i++) {
+            if (tank[i].value != false) {
+              saveTank.add(tank[i].title + '#' + tank[i].value.toString()+ _controllerTank.text);
+            }
+          }
+            savePattern.clear();
+            for (var i = 0; i < pattern.length; i++) {
+              if (pattern[i].value != false) {
+                savePattern
+                    .add(pattern[i].title + '#' + pattern[i].value.toString()+ _controllerPattern.text);
+              }
+            }
+              saveState.clear();
+              for (var i = 0; i < state.length; i++) {
+                if (state[i].value != false) {
+                  saveState
+                      .add(state[i].title + '#' + state[i].value.toString()+ _controllerState.text);
+                }
+              }
+                saveUnityroof.clear();
+                for (var i = 0; i < unityroof.length; i++) {
+                  if (unityroof[i].value != false) {
+                    saveUnityroof.add(
+                        unityroof[i].title + '#' +unityroof[i].value.toString()+ _controllerUnityRoof.text);
+                  }
+                }
+                  saveExtern.clear();
+                  for (var i = 0; i < extern.length; i++) {
+                    if (extern[i].value != false) {
+                      saveExtern.add(
+                          extern[i].title + '#' + extern[i].value.toString()+ _controllerExtern.text);
+                    }
+                  }
+                    saveFloor.clear();
+                    for (var i = 0; i < floor.length; i++) {
+                      if (floor[i].value != false) {
+                        saveFloor.add(
+                            floor[i].title + '#' + floor[i].value.toString()+ _controllerFloor.text);
+                      }
+                    }
+                    saveIntern.clear();
+                    for (var i = 0; i < Intern.length; i++) {
+                      if (Intern[i].value != false) {
+                        saveIntern.add(
+                            Intern[i].title + '#' + Intern[i].value.toString()+ _controllerIntern.text);
+                      }
+                    }
+                    saveWindowns.clear();
+                    for (var i = 0; i < Windows.length; i++) {
+                      if (Windows[i].value != false) {
+                        saveWindowns.add(
+                            Windows[i].title + '#' + Windows[i].value.toString()+ _controllerWindows.text);
+                      }
+                    }
+                    saveInternPaint.clear();
+                    for (var i = 0; i < InternPaint.length; i++) {
+                      if (InternPaint[i].value != false) {
+                        saveInternPaint.add(
+                            InternPaint[i].title + '#' + InternPaint[i].value.toString()+ _controllerInternPaint.text);
+                      }
+                    }
+                    saveBalcony.clear();
+                    for (var i = 0; i < balcony.length; i++) {
+                      if (balcony[i].value != false) {
+                        saveBalcony.add(
+                            balcony[i].title + '#' + balcony[i].value.toString()+ _controllerBalcony.text);
+                      }
+                    }
+                    saveSwitchBoard.clear();
+                    for (var i = 0; i < switchboard.length; i++) {
+                      if (switchboard[i].value != false) {
+                        saveSwitchBoard.add(
+                            switchboard[i].title + '#' + switchboard[i].value.toString()+ _controllerSwitchBoard.text);
+                      }
+                    }
+                    saveType.clear();
+                    for (var i = 0; i < type.length; i++) {
+                      if (type[i].value != false) {
+                        saveType.add(
+                            type[i].title + '#' + type[i].value.toString()+ _controllerType.text);
+                      }
+                    }
+                    saveInfra.clear();
+                    for (var i = 0; i < infra.length; i++) {
+                      if (infra[i].value != false) {
+                        saveInfra.add(
+                            infra[i].title + '#' + infra[i].value.toString()+ _controllerInfra.text);
+                      }
+                    }
+                    saveSituation.clear();
+                    for (var i = 0; i < situation.length; i++) {
+                      if (situation[i].value != false) {
+                        saveSituation.add(
+                            situation[i].title + '#' + situation[i].value.toString()+ _controllerSituation.text);
+                      }
+                    }
+                    saveQuota.clear();
+                    for (var i = 0; i < quota.length; i++) {
+                      if (quota[i].value != false) {
+                        saveQuota.add(
+                            quota[i].title + '#' + quota[i].value.toString()+ _controllerQuota.text);
+                      }
+                    }
+                    savePosition.clear();
+                    for (var i = 0; i < position.length; i++) {
+                      if (position[i].value != false) {
+                        savePosition.add(
+                            position[i].title + '#' + position[i].value.toString()+ _controllerPosition.text);
+                      }
+                    }
+                    saveRoof.clear();
+                    for (var i = 0; i < roof.length; i++) {
+                      if (roof[i].value != false) {
+                        saveRoof.add(
+                            roof[i].title + '#' + roof[i].value.toString()+ _controllerRoof.text);
+                      }
+                    }
+                    saveWall.clear();
+                    for (var i = 0; i < wall.length; i++) {
+                      if (wall[i].value != false) {
+                        saveWall.add(
+                            wall[i].title + '#' + wall[i].value.toString() + _controllerWall.text);
+                      }
+                    }
+                    savePaint.clear();
+                    for (var i = 0; i < paint.length; i++) {
+                      if (paint[i].value != false) {
+                        savePaint.add(
+                            paint[i].title + '#' + paint[i].value.toString()+ _controllerPaint.text);
+                      }
+                    }
+    db.collection('surveys').doc(widget.idSurvey).update({
+      "Tipo de Imóvel": saveType.toSet().toList(),
+      "Infraestrutura": saveInfra.toSet().toList(),
+      "Situação": saveSituation.toSet().toList(),
+      "Cota Greide": saveQuota.toSet().toList(),
+      "Posição da Unidade": savePosition.toSet().toList(),
+      "Telhado": saveRoof.toSet().toList(),
+      "Muro": saveWall.toSet().toList(),
+      "Pintura": savePaint.toSet().toList(),
+      "Portas externas": saveExtern.toSet().toList(),
+      "Piso": saveFloor.toSet().toList(),
+      "Portas Internas": saveIntern.toSet().toList(),
+      "Janelas": saveWindowns.toSet().toList(),
+      "Pintura Interna": saveInternPaint.toSet().toList(),
+      "Bancada": saveBalcony.toSet().toList(),
+      "Quadro Elétrico": saveSwitchBoard.toSet().toList(),
+      "Revestimento da Cozinha": saveKitchen.toSet().toList(),
+      "Revestimento do Banheiro": saveBathroom.toSet().toList(),
+      "Revestimento do Tanque": saveTank.toSet().toList(),
+      "Padrão de Acabamento": savePattern.toSet().toList(),
+      "Estado de Conservação": saveState.toSet().toList(),
+      "Teto da Unidade": saveUnityroof.toSet().toList(),
+      "Condominio Bloco": saveBlock.toSet().toList(),
+
+    });
+    _saveInputs(_inputsModel);
+
+  }
+  _nextPage(InputsModel inputsModel) async{
+    db.collection('survey')
+        .doc(widget.idSurvey)
+        .update(inputsModel.toMap());
+  }
+  _saveInputs(InputsModel inputsModel) async {
+    _inputsModel.age = _controllerAge.text;
+    _inputsModel.price = _controllerPrice.text;
+    _inputsModel.obs = _controllerObs.text;
+
+    _nextPage(_inputsModel);
+
+  }
+  final TextEditingController _controllerObs = TextEditingController();
   final block = [
     CheckBoxModel(title: 'Portaria/Guarita'),
     CheckBoxModel(title: 'Equipe de Segurança'),
@@ -48,7 +283,6 @@ class _CheckList1State extends State<CheckList1> {
     CheckBoxModel(title: 'Outro:'),
   ];
   final TextEditingController _controllerBathroom = TextEditingController();
-
   final tank = [
     CheckBoxModel(title: 'Ceramico'),
     CheckBoxModel(title: 'Barra lisa'),
@@ -82,7 +316,7 @@ class _CheckList1State extends State<CheckList1> {
   ];
   final TextEditingController _controllerState = TextEditingController();
 
-  final Unityroof = [
+  final unityroof = [
     CheckBoxModel(title: 'Forro PVC'),
     CheckBoxModel(title: 'Forro Gesso'),
     CheckBoxModel(title: 'Forro Paulista'),
@@ -163,7 +397,7 @@ class _CheckList1State extends State<CheckList1> {
     CheckBoxModel(title: 'Outro:'),
   ];
   final TextEditingController _controllerType = TextEditingController();
-  final TextEditingController _controllerNumber = TextEditingController();
+
   final infra = [
     CheckBoxModel(title: 'Rede de Água'),
     CheckBoxModel(title: 'Iluminação Pública'),
@@ -224,6 +458,29 @@ class _CheckList1State extends State<CheckList1> {
     CheckBoxModel(title: 'Outro:'),
   ];
   final TextEditingController _controllerPaint = TextEditingController();
+
+  List saveBlock = [];
+  List saveKitchen = [];
+  List saveBathroom = [];
+  List saveTank = [];
+  List savePattern = [];
+  List saveState = [];
+  List saveUnityroof = [];
+  List saveExtern = [];
+  List saveFloor = [];
+  List saveIntern = [];
+  List saveWindowns = [];
+  List saveInternPaint = [];
+  List saveBalcony = [];
+  List saveSwitchBoard = [];
+  List saveType = [];
+  List saveInfra = [];
+  List saveSituation = [];
+  List saveQuota = [];
+  List savePosition = [];
+  List saveRoof = [];
+  List saveWall = [];
+  List savePaint = [];
 
   @override
   Widget build(BuildContext context) {
@@ -777,8 +1034,6 @@ class _CheckList1State extends State<CheckList1> {
                     Divider(
                       thickness: 1.0,
                     ),
-
-
                   ],
                 ),
                 Column(
@@ -938,7 +1193,7 @@ class _CheckList1State extends State<CheckList1> {
                       physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       children: [
-                        ...Unityroof.map(buildSingleCheckbox).toList(),
+                        ...unityroof.map(buildSingleCheckbox).toList(),
                       ],
                     ), //Teto da Unidade
                     InputRegister(
@@ -954,8 +1209,6 @@ class _CheckList1State extends State<CheckList1> {
                     Divider(
                       thickness: 1.0,
                     ),
-
-
                   ],
                 ),
                 Column(
@@ -1000,23 +1253,30 @@ class _CheckList1State extends State<CheckList1> {
                                 maxWidth: 28),
                             iconSize: 16.0,
                             padding: EdgeInsets.zero,
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                if(nRoom >0){
+                                  nRoom = nRoom -1;
+
+                                  SRoom = "$nRoom";
+                                }
+                              });
+                            },
                           ),
                         ),
                         Container(
-                          width: width * 0.18,
-                          height: 40,
-                          child: InputRegister(
-                            controller: _controllerNumber,
-                            hint: '01',
-                            fonts: 14.0,
-                            keyboardType: TextInputType.number,
-                            width: width * 0.10,
-                            sizeIcon: 0.0,
-                            icons: Icons.height,
-                            colorBorder: PaletteColors.greyInput,
-                            background: PaletteColors.greyInput,
-                          ),
+                            alignment: Alignment.center,
+                            width: width * 0.12,
+                            height: 30,
+                            decoration: BoxDecoration(
+
+                                borderRadius: BorderRadius.circular(2.0)
+                            ),
+                            child: TextCustom(
+                              text: SRoom,
+                              color: PaletteColors.grey,
+                              textAlign: TextAlign.center,
+                            )
                         ),
                         Ink(
                           decoration: ShapeDecoration(
@@ -1038,11 +1298,21 @@ class _CheckList1State extends State<CheckList1> {
                                 maxWidth: 28),
                             iconSize: 16.0,
                             padding: EdgeInsets.zero,
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                if(nRoom >=0){
+                                  nRoom = nRoom +1;
+                                  SRoom = "$nRoom";
+                                }
+                              });
+                            },
                           ),
                         ),
                       ],
                     ), //Quartos
+                    SizedBox(
+                      height: height * 0.01,
+                    ),
                     Row(
                       children: [
                         TextCustom(
@@ -1073,23 +1343,29 @@ class _CheckList1State extends State<CheckList1> {
                                 maxWidth: 28),
                             iconSize: 16.0,
                             padding: EdgeInsets.zero,
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                if(nSocialBathroom >0){
+                                  nSocialBathroom = nSocialBathroom -1;
+                                  SSocialBathroom = "$nSocialBathroom";
+                                }
+                              });
+                            },
                           ),
                         ),
                         Container(
-                          width: width * 0.18,
-                          height: 40,
-                          child: InputRegister(
-                            controller: _controllerNumber,
-                            hint: '01',
-                            fonts: 14.0,
-                            keyboardType: TextInputType.number,
-                            width: width * 0.10,
-                            sizeIcon: 0.0,
-                            icons: Icons.height,
-                            colorBorder: PaletteColors.greyInput,
-                            background: PaletteColors.greyInput,
-                          ),
+                            alignment: Alignment.center,
+                            width: width * 0.12,
+                            height: 30,
+                            decoration: BoxDecoration(
+
+                                borderRadius: BorderRadius.circular(2.0)
+                            ),
+                            child: TextCustom(
+                              text: SSocialBathroom,
+                              color: PaletteColors.grey,
+                              textAlign: TextAlign.center,
+                            )
                         ),
                         Ink(
                           decoration: ShapeDecoration(
@@ -1111,11 +1387,21 @@ class _CheckList1State extends State<CheckList1> {
                                 maxWidth: 28),
                             iconSize: 16.0,
                             padding: EdgeInsets.zero,
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                if(nSocialBathroom >= 0){
+                                  nSocialBathroom = nSocialBathroom +1;
+                                  SSocialBathroom = "$nSocialBathroom";
+                                }
+                              });
+                            },
                           ),
                         ),
                       ],
-                    ), //Banheiros sociais
+                    ),
+                    SizedBox(
+                      height: height * 0.01,
+                    ),//Banheiros sociais
                     Row(
                       children: [
                         TextCustom(
@@ -1146,23 +1432,29 @@ class _CheckList1State extends State<CheckList1> {
                                 maxWidth: 28),
                             iconSize: 16.0,
                             padding: EdgeInsets.zero,
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                if(nPrivateBathroom > 0){
+                                  nPrivateBathroom = nPrivateBathroom -1;
+                                  SPrivateBathroom = "$nPrivateBathroom";
+                                }
+                              });
+                            },
                           ),
                         ),
                         Container(
-                          width: width * 0.18,
-                          height: 40,
-                          child: InputRegister(
-                            controller: _controllerNumber,
-                            hint: '01',
-                            fonts: 14.0,
-                            keyboardType: TextInputType.number,
-                            width: width * 0.10,
-                            sizeIcon: 0.0,
-                            icons: Icons.height,
-                            colorBorder: PaletteColors.greyInput,
-                            background: PaletteColors.greyInput,
-                          ),
+                            alignment: Alignment.center,
+                            width: width * 0.12,
+                            height: 30,
+                            decoration: BoxDecoration(
+
+                                borderRadius: BorderRadius.circular(2.0)
+                            ),
+                            child: TextCustom(
+                              text: SPrivateBathroom,
+                              color: PaletteColors.grey,
+                              textAlign: TextAlign.center,
+                            )
                         ),
                         Ink(
                           decoration: ShapeDecoration(
@@ -1184,11 +1476,22 @@ class _CheckList1State extends State<CheckList1> {
                                 maxWidth: 28),
                             iconSize: 16.0,
                             padding: EdgeInsets.zero,
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                if(nPrivateBathroom >= 0){
+                                  nPrivateBathroom =nPrivateBathroom +1;
+
+                                  SPrivateBathroom = "$nPrivateBathroom";
+                                }
+                              });
+                            },
                           ),
                         ),
                       ],
-                    ), //Banheiros privativos
+                    ),
+                    SizedBox(
+                      height: height * 0.01,
+                    ),//Banheiros privativos
                     Row(
                       children: [
                         TextCustom(
@@ -1219,23 +1522,30 @@ class _CheckList1State extends State<CheckList1> {
                                 maxWidth: 28),
                             iconSize: 16.0,
                             padding: EdgeInsets.zero,
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                if(nLav >0){
+                                  nLav = nLav -1;
+                                  SLav = "$nLav";
+                                }
+                              });
+
+                            },
                           ),
                         ),
                         Container(
-                          width: width * 0.18,
-                          height: 40,
-                          child: InputRegister(
-                            controller: _controllerNumber,
-                            hint: '01',
-                            fonts: 14.0,
-                            keyboardType: TextInputType.number,
-                            width: width * 0.10,
-                            sizeIcon: 0.0,
-                            icons: Icons.height,
-                            colorBorder: PaletteColors.greyInput,
-                            background: PaletteColors.greyInput,
-                          ),
+                            alignment: Alignment.center,
+                            width: width * 0.12,
+                            height: 30,
+                            decoration: BoxDecoration(
+
+                                borderRadius: BorderRadius.circular(2.0)
+                            ),
+                            child: TextCustom(
+                              text: SLav,
+                              color: PaletteColors.grey,
+                              textAlign: TextAlign.center,
+                            )
                         ),
                         Ink(
                           decoration: ShapeDecoration(
@@ -1257,11 +1567,21 @@ class _CheckList1State extends State<CheckList1> {
                                 maxWidth: 28),
                             iconSize: 16.0,
                             padding: EdgeInsets.zero,
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                if(nLav >=0){
+                                  nLav = nLav +1;
+                                  SLav = "$nLav";
+                                }
+                              });
+                            },
                           ),
                         ),
                       ],
-                    ), //Lavabos
+                    ),
+                    SizedBox(
+                      height: height * 0.01,
+                    ),//Lavabos
                     Row(
                       children: [
                         TextCustom(
@@ -1292,23 +1612,29 @@ class _CheckList1State extends State<CheckList1> {
                                 maxWidth: 28),
                             iconSize: 16.0,
                             padding: EdgeInsets.zero,
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                if(nServiceBathroom > 0){
+                                  nServiceBathroom = nServiceBathroom -1;
+                                  SServiceBathroom = '$nServiceBathroom';
+                                }
+                              });
+                            },
                           ),
                         ),
                         Container(
-                          width: width * 0.18,
-                          height: 40,
-                          child: InputRegister(
-                            controller: _controllerNumber,
-                            hint: '01',
-                            fonts: 14.0,
-                            keyboardType: TextInputType.number,
-                            width: width * 0.10,
-                            sizeIcon: 0.0,
-                            icons: Icons.height,
-                            colorBorder: PaletteColors.greyInput,
-                            background: PaletteColors.greyInput,
-                          ),
+                            alignment: Alignment.center,
+                            width: width * 0.12,
+                            height: 30,
+                            decoration: BoxDecoration(
+
+                                borderRadius: BorderRadius.circular(2.0)
+                            ),
+                            child: TextCustom(
+                              text: SServiceBathroom,
+                              color: PaletteColors.grey,
+                              textAlign: TextAlign.center,
+                            )
                         ),
                         Ink(
                           decoration: ShapeDecoration(
@@ -1330,11 +1656,21 @@ class _CheckList1State extends State<CheckList1> {
                                 maxWidth: 28),
                             iconSize: 16.0,
                             padding: EdgeInsets.zero,
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                if(nServiceBathroom >=0){
+                                  nServiceBathroom = nServiceBathroom +1;
+                                  SServiceBathroom = '$nServiceBathroom';
+                                }
+                              });
+                            },
                           ),
                         ),
                       ],
-                    ), //Banheiro de serviço
+                    ),
+                    SizedBox(
+                      height: height * 0.01,
+                    ),//Banheiro de serviço
                     Row(
                       children: [
                         TextCustom(
@@ -1365,23 +1701,29 @@ class _CheckList1State extends State<CheckList1> {
                                 maxWidth: 28),
                             iconSize: 16.0,
                             padding: EdgeInsets.zero,
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                if(nMaidRoom >0){
+                                  nMaidRoom = nMaidRoom -1;
+                                  SMaidRoom = "$nMaidRoom";
+                                }
+                              });
+                            },
                           ),
                         ),
                         Container(
-                          width: width * 0.18,
-                          height: 40,
-                          child: InputRegister(
-                            controller: _controllerNumber,
-                            hint: '01',
-                            fonts: 14.0,
-                            keyboardType: TextInputType.number,
-                            width: width * 0.10,
-                            sizeIcon: 0.0,
-                            icons: Icons.height,
-                            colorBorder: PaletteColors.greyInput,
-                            background: PaletteColors.greyInput,
-                          ),
+                            alignment: Alignment.center,
+                            width: width * 0.12,
+                            height: 30,
+                            decoration: BoxDecoration(
+
+                                borderRadius: BorderRadius.circular(2.0)
+                            ),
+                            child: TextCustom(
+                              text: SMaidRoom,
+                              color: PaletteColors.grey,
+                              textAlign: TextAlign.center,
+                            )
                         ),
                         Ink(
                           decoration: ShapeDecoration(
@@ -1403,11 +1745,21 @@ class _CheckList1State extends State<CheckList1> {
                                 maxWidth: 28),
                             iconSize: 16.0,
                             padding: EdgeInsets.zero,
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                if(nMaidRoom >=0){
+                                  nMaidRoom = nMaidRoom +1;
+                                  SMaidRoom = '$nMaidRoom';
+                                }
+                              });
+                            },
                           ),
                         ),
                       ],
-                    ), //Quarto de empregada
+                    ),
+                    SizedBox(
+                      height: height * 0.01,
+                    ),//Quarto de empregada
                     Row(
                       children: [
                         TextCustom(
@@ -1438,23 +1790,29 @@ class _CheckList1State extends State<CheckList1> {
                                 maxWidth: 28),
                             iconSize: 16.0,
                             padding: EdgeInsets.zero,
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                if(nBalcony >0){
+                                  nBalcony = nBalcony -1;
+                                  SBalcony = "$nBalcony";
+                                }
+                              });
+                            },
                           ),
                         ),
                         Container(
-                          width: width * 0.18,
-                          height: 40,
-                          child: InputRegister(
-                            controller: _controllerNumber,
-                            hint: '01',
-                            fonts: 14.0,
-                            keyboardType: TextInputType.number,
-                            width: width * 0.10,
-                            sizeIcon: 0.0,
-                            icons: Icons.height,
-                            colorBorder: PaletteColors.greyInput,
-                            background: PaletteColors.greyInput,
-                          ),
+                            alignment: Alignment.center,
+                            width: width * 0.12,
+                            height: 30,
+                            decoration: BoxDecoration(
+
+                                borderRadius: BorderRadius.circular(2.0)
+                            ),
+                            child: TextCustom(
+                              text: SBalcony,
+                              color: PaletteColors.grey,
+                              textAlign: TextAlign.center,
+                            )
                         ),
                         Ink(
                           decoration: ShapeDecoration(
@@ -1476,11 +1834,21 @@ class _CheckList1State extends State<CheckList1> {
                                 maxWidth: 28),
                             iconSize: 16.0,
                             padding: EdgeInsets.zero,
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                if(nBalcony >=0){
+                                  nBalcony = nBalcony +1;
+                                  SBalcony = "$nBalcony";
+                                }
+                              });
+                            },
                           ),
                         ),
                       ],
-                    ), //Varanda/sacada
+                    ),
+                    SizedBox(
+                      height: height * 0.01,
+                    ),//Varanda/sacada
                     Row(
                       children: [
                         Container(
@@ -1514,23 +1882,29 @@ class _CheckList1State extends State<CheckList1> {
                                 maxWidth: 28),
                             iconSize: 16.0,
                             padding: EdgeInsets.zero,
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                if(nCompleteCabinets >0){
+                                  nCompleteCabinets = nCompleteCabinets -1;
+                                  SCompleteCabinets = "$nCompleteCabinets";
+                                }
+                              });
+                            },
                           ),
                         ),
                         Container(
-                          width: width * 0.18,
-                          height: 40,
-                          child: InputRegister(
-                            controller: _controllerNumber,
-                            hint: '01',
-                            fonts: 14.0,
-                            keyboardType: TextInputType.number,
-                            width: width * 0.10,
-                            sizeIcon: 0.0,
-                            icons: Icons.height,
-                            colorBorder: PaletteColors.greyInput,
-                            background: PaletteColors.greyInput,
-                          ),
+                            alignment: Alignment.center,
+                            width: width * 0.12,
+                            height: 30,
+                            decoration: BoxDecoration(
+
+                                borderRadius: BorderRadius.circular(2.0)
+                            ),
+                            child: TextCustom(
+                              text: SCompleteCabinets,
+                              color: PaletteColors.grey,
+                              textAlign: TextAlign.center,
+                            )
                         ),
                         Ink(
                           decoration: ShapeDecoration(
@@ -1552,11 +1926,21 @@ class _CheckList1State extends State<CheckList1> {
                                 maxWidth: 28),
                             iconSize: 16.0,
                             padding: EdgeInsets.zero,
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                if(nCompleteCabinets >=0){
+                                  nCompleteCabinets = nCompleteCabinets +1;
+                                  SCompleteCabinets = "$nCompleteCabinets";
+                                }
+                              });
+                            },
                           ),
                         ),
                       ],
-                    ), //Numero de armarios completos
+                    ),
+                    SizedBox(
+                      height: height * 0.01,
+                    ),//Numero de armarios completos
                     Row(
                       children: [
                         TextCustom(
@@ -1587,23 +1971,29 @@ class _CheckList1State extends State<CheckList1> {
                                 maxWidth: 28),
                             iconSize: 16.0,
                             padding: EdgeInsets.zero,
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                if(nKitchen >0){
+                                  nKitchen = nKitchen -1;
+                                  SKitchen = "$nKitchen";
+                                }
+                              });
+                            },
                           ),
                         ),
                         Container(
-                          width: width * 0.18,
-                          height: 40,
-                          child: InputRegister(
-                            controller: _controllerNumber,
-                            hint: '01',
-                            fonts: 14.0,
-                            keyboardType: TextInputType.number,
-                            width: width * 0.10,
-                            sizeIcon: 0.0,
-                            icons: Icons.height,
-                            colorBorder: PaletteColors.greyInput,
-                            background: PaletteColors.greyInput,
-                          ),
+                            alignment: Alignment.center,
+                            width: width * 0.12,
+                            height: 30,
+                            decoration: BoxDecoration(
+
+                                borderRadius: BorderRadius.circular(2.0)
+                            ),
+                            child: TextCustom(
+                              text: SKitchen,
+                              color: PaletteColors.grey,
+                              textAlign: TextAlign.center,
+                            )
                         ),
                         Ink(
                           decoration: ShapeDecoration(
@@ -1625,11 +2015,21 @@ class _CheckList1State extends State<CheckList1> {
                                 maxWidth: 28),
                             iconSize: 16.0,
                             padding: EdgeInsets.zero,
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                if(nKitchen >=0){
+                                  nKitchen = nKitchen +1;
+                                  SKitchen = "$nKitchen";
+                                }
+                              });
+                            },
                           ),
                         ),
                       ],
-                    ), //Cozinha
+                    ),
+                    SizedBox(
+                      height: height * 0.01,
+                    ),//Cozinha
                     Row(
                       children: [
                         TextCustom(
@@ -1660,23 +2060,29 @@ class _CheckList1State extends State<CheckList1> {
                                 maxWidth: 28),
                             iconSize: 16.0,
                             padding: EdgeInsets.zero,
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                if(nRestRoom >0){
+                                  nRestRoom = nRestRoom -1;
+                                  SRestRoom = "$nRestRoom";
+                                }
+                              });
+                            },
                           ),
                         ),
                         Container(
-                          width: width * 0.18,
-                          height: 40,
-                          child: InputRegister(
-                            controller: _controllerNumber,
-                            hint: '01',
-                            fonts: 14.0,
-                            keyboardType: TextInputType.number,
-                            width: width * 0.10,
-                            sizeIcon: 0.0,
-                            icons: Icons.height,
-                            colorBorder: PaletteColors.greyInput,
-                            background: PaletteColors.greyInput,
-                          ),
+                            alignment: Alignment.center,
+                            width: width * 0.12,
+                            height: 30,
+                            decoration: BoxDecoration(
+
+                                borderRadius: BorderRadius.circular(2.0)
+                            ),
+                            child: TextCustom(
+                              text: SRestRoom,
+                              color: PaletteColors.grey,
+                              textAlign: TextAlign.center,
+                            )
                         ),
                         Ink(
                           decoration: ShapeDecoration(
@@ -1698,11 +2104,21 @@ class _CheckList1State extends State<CheckList1> {
                                 maxWidth: 28),
                             iconSize: 16.0,
                             padding: EdgeInsets.zero,
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                if(nRestRoom >=0){
+                                  nRestRoom = nRestRoom +1;
+                                  SRestRoom = "$nRestRoom";
+                                }
+                              });
+                            },
                           ),
                         ),
                       ],
-                    ), //Sala
+                    ),
+                    SizedBox(
+                      height: height * 0.01,
+                    ),//Sala
                     Row(
                       children: [
                         Container(
@@ -1736,23 +2152,29 @@ class _CheckList1State extends State<CheckList1> {
                                 maxWidth: 28),
                             iconSize: 16.0,
                             padding: EdgeInsets.zero,
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                if(nServiceAreaRoofed >0){
+                                  nServiceAreaRoofed = nServiceAreaRoofed -1;
+                                  SServiceAreaRoofed = "$nServiceAreaRoofed";
+                                }
+                              });
+                            },
                           ),
                         ),
                         Container(
-                          width: width * 0.18,
-                          height: 40,
-                          child: InputRegister(
-                            controller: _controllerNumber,
-                            hint: '01',
-                            fonts: 14.0,
-                            keyboardType: TextInputType.number,
-                            width: width * 0.10,
-                            sizeIcon: 0.0,
-                            icons: Icons.height,
-                            colorBorder: PaletteColors.greyInput,
-                            background: PaletteColors.greyInput,
-                          ),
+                            alignment: Alignment.center,
+                            width: width * 0.12,
+                            height: 30,
+                            decoration: BoxDecoration(
+
+                                borderRadius: BorderRadius.circular(2.0)
+                            ),
+                            child: TextCustom(
+                              text: SServiceAreaRoofed,
+                              color: PaletteColors.grey,
+                              textAlign: TextAlign.center,
+                            )
                         ),
                         Ink(
                           decoration: ShapeDecoration(
@@ -1774,17 +2196,27 @@ class _CheckList1State extends State<CheckList1> {
                                 maxWidth: 28),
                             iconSize: 16.0,
                             padding: EdgeInsets.zero,
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                if(nServiceAreaRoofed >= 0){
+                                  nServiceAreaRoofed = nServiceAreaRoofed +1;
+                                  SServiceAreaRoofed = "$nServiceAreaRoofed";
+                                }
+                              });
+                            },
                           ),
                         ),
                       ],
-                    ), //Area de serviço coberto
+                    ),
+                    SizedBox(
+                      height: height * 0.01,
+                    ),//Area de serviço coberto
                     Row(
                       children: [
                         Container(
                           width: width * 0.4,
                           child: TextCustom(
-                            text: "Área de serviço descoberto",
+                            text: "Área de serviço descoberta",
                             size: 16.0,
                             color: PaletteColors.grey,
                             fontWeight: FontWeight.normal,
@@ -1812,23 +2244,29 @@ class _CheckList1State extends State<CheckList1> {
                                 maxWidth: 28),
                             iconSize: 16.0,
                             padding: EdgeInsets.zero,
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                if(nServiceAreaUnroofed >0){
+                                  nServiceAreaUnroofed = nServiceAreaUnroofed -1;
+                                  SServiceAreaUnroofed = "$nServiceAreaUnroofed";
+                                }
+                              });
+                            },
                           ),
                         ),
                         Container(
-                          width: width * 0.18,
-                          height: 40,
-                          child: InputRegister(
-                            controller: _controllerNumber,
-                            hint: '01',
-                            fonts: 14.0,
-                            keyboardType: TextInputType.number,
-                            width: width * 0.10,
-                            sizeIcon: 0.0,
-                            icons: Icons.height,
-                            colorBorder: PaletteColors.greyInput,
-                            background: PaletteColors.greyInput,
-                          ),
+                            alignment: Alignment.center,
+                            width: width * 0.12,
+                            height: 30,
+                            decoration: BoxDecoration(
+
+                                borderRadius: BorderRadius.circular(2.0)
+                            ),
+                            child: TextCustom(
+                              text: SServiceAreaUnroofed,
+                              color: PaletteColors.grey,
+                              textAlign: TextAlign.center,
+                            )
                         ),
                         Ink(
                           decoration: ShapeDecoration(
@@ -1850,19 +2288,32 @@ class _CheckList1State extends State<CheckList1> {
                                 maxWidth: 28),
                             iconSize: 16.0,
                             padding: EdgeInsets.zero,
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                if(nServiceAreaUnroofed >=0){
+                                  nServiceAreaUnroofed = nServiceAreaUnroofed +1;
+                                  SServiceAreaUnroofed = "$nServiceAreaUnroofed";
+                                }
+                              });
+                            },
                           ),
                         ),
                       ],
-                    ), //Area de serviço descoberto
+                    ),
+                    SizedBox(
+                      height: height * 0.01,
+                    ),//Area de serviço descoberto
                     Row(
                       children: [
-                        TextCustom(
-                          text: "Garagem coberta",
-                          size: 16.0,
-                          color: PaletteColors.grey,
-                          fontWeight: FontWeight.normal,
-                          textAlign: TextAlign.start,
+                        Container(
+                          width: width * 0.4,
+                          child: TextCustom(
+                            text: "Garagem coberta",
+                            size: 16.0,
+                            color: PaletteColors.grey,
+                            fontWeight: FontWeight.normal,
+                            textAlign: TextAlign.start,
+                          ),
                         ),
                         Spacer(),
                         Ink(
@@ -1885,23 +2336,29 @@ class _CheckList1State extends State<CheckList1> {
                                 maxWidth: 28),
                             iconSize: 16.0,
                             padding: EdgeInsets.zero,
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                if(nOpenGarage >0){
+                                  nOpenGarage = nOpenGarage -1;
+                                  SOpenGarage = "$nOpenGarage";
+                                }
+                              });
+                            },
                           ),
                         ),
                         Container(
-                          width: width * 0.18,
-                          height: 40,
-                          child: InputRegister(
-                            controller: _controllerNumber,
-                            hint: '01',
-                            fonts: 14.0,
-                            keyboardType: TextInputType.number,
-                            width: width * 0.10,
-                            sizeIcon: 0.0,
-                            icons: Icons.height,
-                            colorBorder: PaletteColors.greyInput,
-                            background: PaletteColors.greyInput,
-                          ),
+                            alignment: Alignment.center,
+                            width: width * 0.12,
+                            height: 30,
+                            decoration: BoxDecoration(
+
+                                borderRadius: BorderRadius.circular(2.0)
+                            ),
+                            child: TextCustom(
+                              text: SOpenGarage,
+                              color: PaletteColors.grey,
+                              textAlign: TextAlign.center,
+                            )
                         ),
                         Ink(
                           decoration: ShapeDecoration(
@@ -1923,11 +2380,21 @@ class _CheckList1State extends State<CheckList1> {
                                 maxWidth: 28),
                             iconSize: 16.0,
                             padding: EdgeInsets.zero,
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                if(nOpenGarage >=0){
+                                  nOpenGarage = nOpenGarage +1;
+                                  SOpenGarage = "$nOpenGarage";
+                                }
+                              });
+                            },
                           ),
                         ),
                       ],
-                    ), //Garagem Coberta
+                    ),
+                    SizedBox(
+                      height: height * 0.01,
+                    ),//Garagem Coberta
                     Row(
                       children: [
                         TextCustom(
@@ -1958,23 +2425,29 @@ class _CheckList1State extends State<CheckList1> {
                                 maxWidth: 28),
                             iconSize: 16.0,
                             padding: EdgeInsets.zero,
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                if(nClosedGarage >0){
+                                  nClosedGarage = nClosedGarage -1;
+                                  SClosedGarage = "$nClosedGarage";
+                                }
+                              });
+                            },
                           ),
                         ),
                         Container(
-                          width: width * 0.18,
-                          height: 40,
-                          child: InputRegister(
-                            controller: _controllerNumber,
-                            hint: '01',
-                            fonts: 14.0,
-                            keyboardType: TextInputType.number,
-                            width: width * 0.10,
-                            sizeIcon: 0.0,
-                            icons: Icons.height,
-                            colorBorder: PaletteColors.greyInput,
-                            background: PaletteColors.greyInput,
-                          ),
+                            alignment: Alignment.center,
+                            width: width * 0.12,
+                            height: 30,
+                            decoration: BoxDecoration(
+
+                                borderRadius: BorderRadius.circular(2.0)
+                            ),
+                            child: TextCustom(
+                              text: SClosedGarage,
+                              color: PaletteColors.grey,
+                              textAlign: TextAlign.center,
+                            )
                         ),
                         Ink(
                           decoration: ShapeDecoration(
@@ -1996,11 +2469,21 @@ class _CheckList1State extends State<CheckList1> {
                                 maxWidth: 28),
                             iconSize: 16.0,
                             padding: EdgeInsets.zero,
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                if(nClosedGarage >=0){
+                                  nClosedGarage = nClosedGarage +1;
+                                  SClosedGarage = "$nClosedGarage";
+                                }
+                              });
+                            },
                           ),
                         ),
                       ],
-                    ), //Garagem Descoberta
+                    ),
+                    SizedBox(
+                      height: height * 0.01,
+                    ),//Garagem Descoberta
                     Row(
                       children: [
                         TextCustom(
@@ -2031,23 +2514,29 @@ class _CheckList1State extends State<CheckList1> {
                                 maxWidth: 28),
                             iconSize: 16.0,
                             padding: EdgeInsets.zero,
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                if(nAc >0){
+                                  nAc = nAc -1;
+                                  SAc = "$nAc";
+                                }
+                              });
+                            },
                           ),
                         ),
                         Container(
-                          width: width * 0.18,
-                          height: 40,
-                          child: InputRegister(
-                            controller: _controllerNumber,
-                            hint: '01',
-                            fonts: 14.0,
-                            keyboardType: TextInputType.number,
-                            width: width * 0.10,
-                            sizeIcon: 0.0,
-                            icons: Icons.height,
-                            colorBorder: PaletteColors.greyInput,
-                            background: PaletteColors.greyInput,
-                          ),
+                            alignment: Alignment.center,
+                            width: width * 0.12,
+                            height: 30,
+                            decoration: BoxDecoration(
+
+                                borderRadius: BorderRadius.circular(2.0)
+                            ),
+                            child: TextCustom(
+                              text: SAc,
+                              color: PaletteColors.grey,
+                              textAlign: TextAlign.center,
+                            )
                         ),
                         Ink(
                           decoration: ShapeDecoration(
@@ -2069,11 +2558,21 @@ class _CheckList1State extends State<CheckList1> {
                                 maxWidth: 28),
                             iconSize: 16.0,
                             padding: EdgeInsets.zero,
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                if(nAc >=0){
+                                  nAc = nAc +1;
+                                  SAc = "$nAc";
+                                }
+                              });
+                            },
                           ),
                         ),
                       ],
-                    ), //Ar condicionado
+                    ),
+                    SizedBox(
+                      height: height * 0.01,
+                    ),//Ar condicionado
                     Row(
                       children: [
                         TextCustom(
@@ -2104,23 +2603,29 @@ class _CheckList1State extends State<CheckList1> {
                                 maxWidth: 28),
                             iconSize: 16.0,
                             padding: EdgeInsets.zero,
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                if(nPool >0){
+                                  nPool = nPool -1;
+                                  SPool = "$nPool";
+                                }
+                              });
+                            },
                           ),
                         ),
                         Container(
-                          width: width * 0.18,
-                          height: 40,
-                          child: InputRegister(
-                            controller: _controllerNumber,
-                            hint: '01',
-                            fonts: 14.0,
-                            keyboardType: TextInputType.number,
-                            width: width * 0.10,
-                            sizeIcon: 0.0,
-                            icons: Icons.height,
-                            colorBorder: PaletteColors.greyInput,
-                            background: PaletteColors.greyInput,
-                          ),
+                            alignment: Alignment.center,
+                            width: width * 0.12,
+                            height: 30,
+                            decoration: BoxDecoration(
+
+                                borderRadius: BorderRadius.circular(2.0)
+                            ),
+                            child: TextCustom(
+                              text: SPool,
+                              color: PaletteColors.grey,
+                              textAlign: TextAlign.center,
+                            )
                         ),
                         Ink(
                           decoration: ShapeDecoration(
@@ -2142,7 +2647,14 @@ class _CheckList1State extends State<CheckList1> {
                                 maxWidth: 28),
                             iconSize: 16.0,
                             padding: EdgeInsets.zero,
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                if(nPool >=0){
+                                  nPool = nPool +1;
+                                  SPool = "$nPool";
+                                }
+                              });
+                            },
                           ),
                         ),
                       ],
@@ -2190,12 +2702,8 @@ class _CheckList1State extends State<CheckList1> {
                       width: width * 0.8,
                       height: height * 0.2,
                       child: InputRegister(
-                          controller: _controllerBlock,
-                          hint: '''
-                      \n Nulla Lorem mollit cupidatat irure.
-                      \n Laborum magna 
-                      \n nulla duis ullamco cillum dolor. 
-                       ''',
+                          controller: _controllerObs,
+                          hint: ' ',
                           fonts: 14.0,
                           keyboardType: TextInputType.text,
                           width: width * 0.5,
@@ -2227,8 +2735,7 @@ class _CheckList1State extends State<CheckList1> {
                           child: ButtonCustom(
                             widthCustom: 0.3,
                             heightCustom: 0.070,
-                            onPressed: () =>
-                                Navigator.pushNamed(context, '/finished'),
+                            onPressed: () => _saveCheck(),
                             text: "Concluir",
                             size: 14.0,
                             colorButton: PaletteColors.primaryColor,
@@ -2240,8 +2747,6 @@ class _CheckList1State extends State<CheckList1> {
                     )
                   ],
                 ),
-
-
               ],
             ),
           ),
@@ -2257,7 +2762,9 @@ class _CheckList1State extends State<CheckList1> {
             fontWeight: FontWeight.normal,
             size: 16.0),
         value: checkBoxModel.value,
-        onChanged: (value) => setState(() => checkBoxModel.value = value!),
+        onChanged: (value) => setState(() {
+          checkBoxModel.value = value!;
+        }),
         activeColor: PaletteColors.primaryColor,
         checkColor: PaletteColors.white,
       );

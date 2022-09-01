@@ -1,6 +1,7 @@
 import 'package:vistoria/Utils/exports.dart';
 import 'package:vistoria/Widgets/inputPassword.dart';
 import 'package:vistoria/Widgets/inputRegister.dart';
+import 'package:vistoria/Widgets/snackBars.dart';
 import 'package:vistoria/Widgets/text_custom.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -15,10 +16,89 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _controllerPhone = TextEditingController();
   final TextEditingController _controllerEmail = TextEditingController();
   final TextEditingController _controllerPassword = TextEditingController();
-  final TextEditingController _controllerPasswordConfirm =
-      TextEditingController();
+  final TextEditingController _controllerPasswordConfirm = TextEditingController();
+  FirebaseAuth _auth = FirebaseAuth.instance;
+  FirebaseFirestore db = FirebaseFirestore.instance;
+  UserModel _userModel= UserModel();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   bool visiblePassword = false;
+  String _error='';
+  var result;
+  
+  _saveData(UserModel userModel){
+    db.collection('users').doc(userModel.idUser).set(_userModel.toMap()).then((_)=>
+    Navigator.pushReplacementNamed(context, '/login'));
+  }
+
+  _createUser()async {
+    if (_controllerName.text.isNotEmpty) {
+      if (_controllerEmail.text.isNotEmpty) {
+        if (_controllerPhone.text.isNotEmpty) {
+          if (_controllerPassword.text == _controllerPasswordConfirm.text &&
+              _controllerPassword.text.isNotEmpty) {
+            setState(() {
+              _error = '';
+            });
+
+            try {
+              await _auth.createUserWithEmailAndPassword(
+                  email: _controllerEmail.text,
+                  password: _controllerPassword.text
+              ).then((auth) async {
+                User user = FirebaseAuth.instance.currentUser!;
+                user.updateDisplayName(_controllerName.text);
+
+                _userModel.idUser = user.uid;
+                _userModel.name = _controllerName.text;
+                _userModel.phone = _controllerPhone.text;
+                _userModel.email = _controllerEmail.text;
+                _userModel.password = _controllerPassword.text;
+                _userModel.confirmPassword = _controllerPasswordConfirm.text;
+                _saveData(_userModel);
+              });
+            } on FirebaseAuthException catch (e) {
+              if (e.code == "weak-password") {
+                setState(() {
+                  _error = "Digite uma senha mais forte!";
+                  showSnackBar(context, _error, _scaffoldKey);
+                });
+              } else if (e.code == "unknown") {
+                setState(() {
+                  _error = "A senha está vazia";
+                  showSnackBar(context, _error, _scaffoldKey);
+                });
+              } else if (e.code == "invalid-email") {
+                setState(() {
+                  _error = "Digite um e-mail válido";
+                  showSnackBar(context, _error, _scaffoldKey);
+                });
+              } else if (e.code == "email-already-in-use") {
+                setState(() {
+                  _error = "Esse e-mail já está cadastrado!";
+                  showSnackBar(context, _error, _scaffoldKey);
+                });
+              } else {
+                setState(() {
+                  _error = e.code;
+                });
+              }
+            }
+          } else {
+            setState(() {
+              _error = 'Senhas diferentes';
+              showSnackBar(context, _error, _scaffoldKey);
+            });
+          }
+        } else {
+          setState(() {
+            _error = 'Confira o número do telefone';
+            showSnackBar(context, _error, _scaffoldKey);
+          });
+        }
+      }
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -196,13 +276,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               child: ButtonCustom(
                 widthCustom: 0.80,
                 heightCustom: 0.070,
-                onPressed: () {
-                  AlertModel().alert('Conta cadastrada \n   com sucesso!  ', '',
-                      PaletteColors.white, PaletteColors.white, context, []);
-                  Future.delayed(Duration(seconds: 3), () {
-                    Navigator.popAndPushNamed(context, '/login');
-                  });
-                },
+                onPressed: () => _createUser(),
                 text: "Crie sua conta",
                 size: 14.0,
                 colorButton: PaletteColors.primaryColor,
