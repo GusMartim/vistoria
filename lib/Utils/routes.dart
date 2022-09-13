@@ -1,4 +1,5 @@
 import 'package:vistoria/Utils/exports.dart';
+import 'package:vistoria/Views/check_list_data.dart';
 import 'package:vistoria/Views/checklist_apto_1.dart';
 import 'package:vistoria/Views/checklist_lote_1.dart';
 import 'package:vistoria/Views/construction_step.dart';
@@ -38,19 +39,12 @@ class Routes {
         );
       case "/main":
         return MaterialPageRoute(
-            builder: (_) =>const MenuScreen()
+            builder: (_) =>MenuScreen()
         );
-      case "/demandas":
-        return MaterialPageRoute(
-            builder: (_) =>const RequestScreen()
-        );
+
       case "/demanda":
         return MaterialPageRoute(
             builder: (_) =>const DataRequest()
-        );
-      case "/vistoria":
-        return MaterialPageRoute(
-            builder: (_) =>const Surveyscreen()
         );
       case "/check1":
         return MaterialPageRoute(
@@ -58,23 +52,27 @@ class Routes {
         );
       case "/checkapto1":
         return MaterialPageRoute(
-            builder: (_) =>const CheckListApto1()
+            builder: (_) => CheckListApto1(idSurvey: args as String)
         );
       case "/checklote1":
         return MaterialPageRoute(
-            builder: (_) =>const CheckListLote1()
+            builder: (_) => CheckListLote1(idSurvey: args as String)
         );
       case "/construction":
         return MaterialPageRoute(
-            builder: (_) =>const ConstructionStep()
+            builder: (_) => ConstructionStep(idSurvey: args as String)
+        );
+      case "/data":
+        return MaterialPageRoute(
+            builder: (_) => CheckListData(idSurvey: args as String)
+        );
+      case "/inviability":
+        return MaterialPageRoute(
+            builder: (_) => ConstructionStep(idSurvey: args as String)
         );
       case "/finished":
         return MaterialPageRoute(
             builder: (_) =>const SurveyFinishScreen()
-        );
-      case "/history":
-        return MaterialPageRoute(
-            builder: (_) =>const HistoryScreen()
         );
 
 

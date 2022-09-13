@@ -3,6 +3,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
 
+
 void main ()async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -13,9 +14,9 @@ void main ()async{
 
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    home: CheckList1(idSurvey: ''),
-    //initialRoute:route,
-    //onGenerateRoute: Routes.generateRoute,
+    //home: Surveyscreen(),
+    initialRoute: route,
+    onGenerateRoute: Routes.generateRoute,
 
   ));
 

@@ -12,7 +12,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _controllerEmail = TextEditingController();
   final _controllerPassword = TextEditingController();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  bool visiblePassword = false;
+  bool visiblePassword = true;
   FirebaseAuth _auth = FirebaseAuth.instance;
   String _error =  "";
 
@@ -27,7 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
             email: _controllerEmail.text.trim(),
             password: _controllerPassword.text.trim()
         ).then((auth)async{
-          Navigator.pushReplacementNamed(context, "/main");
+          Navigator.popAndPushNamed(context, "/main");
         });
       }on FirebaseAuthException catch (e) {
         if(e.code =="unknown"){

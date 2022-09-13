@@ -3,15 +3,90 @@ import 'package:vistoria/Widgets/inputRegister.dart';
 import 'package:vistoria/Widgets/text_custom.dart';
 
 class ConstructionStep extends StatefulWidget {
-  const ConstructionStep({Key? key}) : super(key: key);
+  final String idSurvey;
+  ConstructionStep({required this.idSurvey}) ;
 
   @override
   State<ConstructionStep> createState() => _ConstructionStepState();
 }
 
 class _ConstructionStepState extends State<ConstructionStep> {
-  final TextEditingController _controllerNumber = TextEditingController();
 
+  int nServices = 0;
+  String SServices = '0';
+  int nInfra = 0;
+  String SInfra = '0';
+  int nSupra = 0;
+  String SSupra = '0';
+  int nWalls = 0;
+  String SWalls = '0';
+  int nFrames = 0;
+  String SFrames = '0';
+  int nGlasses = 0;
+  String SGlasses = '0';
+  int nCeiling = 0;
+  String SCeiling = '0';
+  int nWaterProof = 0;
+  String SWaterProof = '0';
+  int nIntern = 0;
+  String SIntern = '0';
+  int nLinings = 0;
+  String SLinings = '0';
+  int nExtern = 0;
+  String SExtern = '0';
+  int nPaint = 0;
+  String SPaint = '0';
+  int nFloors = 0;
+  String SFloors = '0';
+  int nFinishes = 0;
+  String SFinishes = '0';
+  int nEletric = 0;
+  String SEletric = '0';
+  int nHidro = 0;
+  String SHidro = '0';
+  int nSewer = 0;
+  String SSewer = '0';
+  int nSlabs = 0;
+  String SSlabs = '0';
+  int nComplements = 0;
+  String SComplements = '0';
+  int nOthers = 0;
+  String SOthers = '0';
+  _saveConstruction(ConstructionModel constructionModel) async{
+    db
+        .collection('surveys')
+        .doc(widget.idSurvey)
+        .update(constructionModel.toMap())
+        .then((_) => Navigator.pushReplacementNamed(context, '/finished'));
+  }
+  _tableConstruction() async{
+    _constructionModel.services = SServices;
+    _constructionModel.infra = SInfra;
+    _constructionModel.supra = SSupra;
+    _constructionModel.walls = SWalls;
+    _constructionModel.frames = SFrames;
+    _constructionModel.glasses = SGlasses;
+    _constructionModel.ceiling = SCeiling;
+    _constructionModel.waterproof = SWaterProof;
+    _constructionModel.intern = SIntern;
+    _constructionModel.linings = SLinings;
+    _constructionModel.extern = SExtern;
+    _constructionModel.paints = SPaint;
+    _constructionModel.floors = SFloors;
+    _constructionModel.finishes = SFinishes;
+    _constructionModel.electric = SEletric;
+    _constructionModel.hidro = SHidro;
+    _constructionModel.sewer = SSewer;
+    _constructionModel.slabs = SSlabs;
+    _constructionModel.complements = SComplements;
+    _constructionModel.others = SOthers;
+
+    _saveConstruction(_constructionModel);
+
+  }
+
+  ConstructionModel _constructionModel = ConstructionModel();
+  FirebaseFirestore db = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -80,8 +155,11 @@ class _ConstructionStepState extends State<ConstructionStep> {
                     fontWeight: FontWeight.bold,
                     textAlign: TextAlign.end,
                   ),
-                  SizedBox(width: width * 0.15),
+                  SizedBox(width: width * 0.12),
                 ],
+              ),
+              SizedBox(
+                height: height * 0.01,
               ),
               Row(
                 children: [
@@ -116,23 +194,27 @@ class _ConstructionStepState extends State<ConstructionStep> {
                           maxWidth: 28),
                       iconSize: 16.0,
                       padding: EdgeInsets.zero,
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          if (nServices > 0) {
+                            nServices = nServices - 5;
+                            SServices = "$nServices";
+                          }
+                        });
+                      },
                     ),
                   ),
                   Container(
-                      height: 40,
-                      width: width * 0.18,
-                    child: InputRegister(
-                      controller: _controllerNumber,
-                      hint: '01',
-                      fonts: 14.0,
-                      keyboardType: TextInputType.number,
-                      width: width * 0.09,
-                      sizeIcon: 0.0,
-                      icons: Icons.height,
-                      colorBorder: PaletteColors.greyInput,
-                      background: PaletteColors.greyInput,
-                    ),
+                      alignment: Alignment.center,
+                      width: width * 0.12,
+                      height: 30,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(2.0)),
+                      child: TextCustom(
+                        text: SServices,
+                        color: PaletteColors.grey,
+                        textAlign: TextAlign.center,
+                      )
                   ),
                   Ink(
                     decoration: ShapeDecoration(
@@ -154,11 +236,21 @@ class _ConstructionStepState extends State<ConstructionStep> {
                           maxWidth: 28),
                       iconSize: 16.0,
                       padding: EdgeInsets.zero,
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          if (nServices >= 0) {
+                            nServices = nServices + 5;
+                            SServices = "$nServices";
+                          }
+                        });
+                      },
                     ),
                   ),
                 ],
-              ), //Serviços Preliminares e Gerais
+              ),
+              SizedBox(
+                height: height * 0.01,
+              ),
               Row(
                 children: [
                   TextCustom(
@@ -189,24 +281,27 @@ class _ConstructionStepState extends State<ConstructionStep> {
                           maxWidth: 28),
                       iconSize: 16.0,
                       padding: EdgeInsets.zero,
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          if (nInfra > 0) {
+                            nInfra = nInfra - 5;
+                            SInfra = "$nInfra";
+                          }
+                        });
+                      },
                     ),
                   ),
                   Container(
-                      height: 40,
-                      width: width * 0.18,
-                    child: InputRegister(
-                      controller: _controllerNumber,
-                      hint: '01',
-                      fonts: 14.0,
-                      keyboardType: TextInputType.number,
-                      width: width * 0.09,
-                      sizeIcon: 0.0,
-                      icons: Icons.height,
-                      colorBorder: PaletteColors.greyInput,
-                      background: PaletteColors.greyInput,
-                    ),
-                  ),
+                      alignment: Alignment.center,
+                      width: width * 0.12,
+                      height: 30,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(2.0)),
+                      child: TextCustom(
+                        text: SInfra,
+                        color: PaletteColors.grey,
+                        textAlign: TextAlign.center,
+                      )),
                   Ink(
                     decoration: ShapeDecoration(
                       color: PaletteColors.midGrey,
@@ -227,15 +322,26 @@ class _ConstructionStepState extends State<ConstructionStep> {
                           maxWidth: 28),
                       iconSize: 16.0,
                       padding: EdgeInsets.zero,
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          if (nInfra >= 0) {
+                            nInfra = nInfra + 5;
+
+                            SInfra = "$nInfra";
+                          }
+                        });
+                      },
                     ),
                   ),
                 ],
-              ), //Infraestrutura
+              ),
+              SizedBox(
+                height: height * 0.01,
+              ),
               Row(
                 children: [
                   TextCustom(
-                    text: "Supra estrutura",
+                    text: "Supra-estrutura",
                     size: 16.0,
                     color: PaletteColors.grey,
                     fontWeight: FontWeight.normal,
@@ -262,24 +368,27 @@ class _ConstructionStepState extends State<ConstructionStep> {
                           maxWidth: 28),
                       iconSize: 16.0,
                       padding: EdgeInsets.zero,
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          if (nSupra > 0) {
+                            nSupra = nSupra - 5;
+                            SSupra = "$nSupra";
+                          }
+                        });
+                      },
                     ),
                   ),
                   Container(
-                      height: 40,
-                      width: width * 0.18,
-                    child: InputRegister(
-                      controller: _controllerNumber,
-                      hint: '01',
-                      fonts: 14.0,
-                      keyboardType: TextInputType.number,
-                      width: width * 0.09,
-                      sizeIcon: 0.0,
-                      icons: Icons.height,
-                      colorBorder: PaletteColors.greyInput,
-                      background: PaletteColors.greyInput,
-                    ),
-                  ),
+                      alignment: Alignment.center,
+                      width: width * 0.12,
+                      height: 30,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(2.0)),
+                      child: TextCustom(
+                        text: SSupra,
+                        color: PaletteColors.grey,
+                        textAlign: TextAlign.center,
+                      )),
                   Ink(
                     decoration: ShapeDecoration(
                       color: PaletteColors.midGrey,
@@ -300,11 +409,21 @@ class _ConstructionStepState extends State<ConstructionStep> {
                           maxWidth: 28),
                       iconSize: 16.0,
                       padding: EdgeInsets.zero,
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          if (nSupra >= 0) {
+                            nSupra = nSupra + 5;
+                            SSupra = "$nSupra";
+                          }
+                        });
+                      },
                     ),
                   ),
                 ],
-              ), //Supra estrutura
+              ),
+              SizedBox(
+                height: height * 0.01,
+              ),
               Row(
                 children: [
                   TextCustom(
@@ -335,24 +454,27 @@ class _ConstructionStepState extends State<ConstructionStep> {
                           maxWidth: 28),
                       iconSize: 16.0,
                       padding: EdgeInsets.zero,
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          if (nWalls > 0) {
+                            nWalls = nWalls - 5;
+                            SWalls = '$nWalls';
+                          }
+                        });
+                      },
                     ),
                   ),
                   Container(
-                      height: 40,
-                      width: width * 0.18,
-                    child: InputRegister(
-                      controller: _controllerNumber,
-                      hint: '01',
-                      fonts: 14.0,
-                      keyboardType: TextInputType.number,
-                      width: width * 0.09,
-                      sizeIcon: 0.0,
-                      icons: Icons.height,
-                      colorBorder: PaletteColors.greyInput,
-                      background: PaletteColors.greyInput,
-                    ),
-                  ),
+                      alignment: Alignment.center,
+                      width: width * 0.12,
+                      height: 30,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(2.0)),
+                      child: TextCustom(
+                        text: SWalls,
+                        color: PaletteColors.grey,
+                        textAlign: TextAlign.center,
+                      )),
                   Ink(
                     decoration: ShapeDecoration(
                       color: PaletteColors.midGrey,
@@ -373,11 +495,21 @@ class _ConstructionStepState extends State<ConstructionStep> {
                           maxWidth: 28),
                       iconSize: 16.0,
                       padding: EdgeInsets.zero,
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          if (nWalls >= 0) {
+                            nWalls = nWalls + 5;
+                            SWalls = '$nWalls';
+                          }
+                        });
+                      },
                     ),
                   ),
                 ],
-              ), //Paredes e painéis
+              ),
+              SizedBox(
+                height: height * 0.01,
+              ),
               Row(
                 children: [
                   TextCustom(
@@ -408,24 +540,27 @@ class _ConstructionStepState extends State<ConstructionStep> {
                           maxWidth: 28),
                       iconSize: 16.0,
                       padding: EdgeInsets.zero,
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          if (nFrames > 0) {
+                            nFrames = nFrames - 5;
+                            SFrames = "$nFrames";
+                          }
+                        });
+                      },
                     ),
                   ),
                   Container(
-                      height: 40,
-                      width: width * 0.18,
-                    child: InputRegister(
-                      controller: _controllerNumber,
-                      hint: '01',
-                      fonts: 14.0,
-                      keyboardType: TextInputType.number,
-                      width: width * 0.09,
-                      sizeIcon: 0.0,
-                      icons: Icons.height,
-                      colorBorder: PaletteColors.greyInput,
-                      background: PaletteColors.greyInput,
-                    ),
-                  ),
+                      alignment: Alignment.center,
+                      width: width * 0.12,
+                      height: 30,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(2.0)),
+                      child: TextCustom(
+                        text: SFrames,
+                        color: PaletteColors.grey,
+                        textAlign: TextAlign.center,
+                      )),
                   Ink(
                     decoration: ShapeDecoration(
                       color: PaletteColors.midGrey,
@@ -446,11 +581,21 @@ class _ConstructionStepState extends State<ConstructionStep> {
                           maxWidth: 28),
                       iconSize: 16.0,
                       padding: EdgeInsets.zero,
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          if (nFrames >= 0) {
+                            nFrames = nFrames + 5;
+                            SFrames = '$nFrames';
+                          }
+                        });
+                      },
                     ),
                   ),
                 ],
-              ), //Esquadrias
+              ),
+              SizedBox(
+                height: height * 0.01,
+              ),
               Row(
                 children: [
                   TextCustom(
@@ -481,24 +626,27 @@ class _ConstructionStepState extends State<ConstructionStep> {
                           maxWidth: 28),
                       iconSize: 16.0,
                       padding: EdgeInsets.zero,
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          if (nGlasses > 0) {
+                            nGlasses = nGlasses - 5;
+                            SGlasses = "$nGlasses";
+                          }
+                        });
+                      },
                     ),
                   ),
                   Container(
-                      height: 40,
-                      width: width * 0.18,
-                    child: InputRegister(
-                      controller: _controllerNumber,
-                      hint: '01',
-                      fonts: 14.0,
-                      keyboardType: TextInputType.number,
-                      width: width * 0.09,
-                      sizeIcon: 0.0,
-                      icons: Icons.height,
-                      colorBorder: PaletteColors.greyInput,
-                      background: PaletteColors.greyInput,
-                    ),
-                  ),
+                      alignment: Alignment.center,
+                      width: width * 0.12,
+                      height: 30,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(2.0)),
+                      child: TextCustom(
+                        text: SGlasses,
+                        color: PaletteColors.grey,
+                        textAlign: TextAlign.center,
+                      )),
                   Ink(
                     decoration: ShapeDecoration(
                       color: PaletteColors.midGrey,
@@ -519,19 +667,32 @@ class _ConstructionStepState extends State<ConstructionStep> {
                           maxWidth: 28),
                       iconSize: 16.0,
                       padding: EdgeInsets.zero,
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          if (nGlasses >= 0) {
+                            nGlasses = nGlasses + 5;
+                            SGlasses = "$nGlasses";
+                          }
+                        });
+                      },
                     ),
                   ),
                 ],
-              ), //Vidros e plásticos
+              ),
+              SizedBox(
+                height: height * 0.01,
+              ), 
               Row(
                 children: [
-                  TextCustom(
-                    text: "Coberturas",
-                    size: 16.0,
-                    color: PaletteColors.grey,
-                    fontWeight: FontWeight.normal,
-                    textAlign: TextAlign.start,
+                  Container(
+                  
+                    child: TextCustom(
+                      text: "Coberturas",
+                      size: 16.0,
+                      color: PaletteColors.grey,
+                      fontWeight: FontWeight.normal,
+                      textAlign: TextAlign.start,
+                    ),
                   ),
                   Spacer(),
                   Ink(
@@ -554,24 +715,27 @@ class _ConstructionStepState extends State<ConstructionStep> {
                           maxWidth: 28),
                       iconSize: 16.0,
                       padding: EdgeInsets.zero,
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          if (nCeiling > 0) {
+                            nCeiling = nCeiling - 5;
+                            SCeiling = "$nCeiling";
+                          }
+                        });
+                      },
                     ),
                   ),
                   Container(
-                      height: 40,
-                      width: width * 0.18,
-                    child: InputRegister(
-                      controller: _controllerNumber,
-                      hint: '01',
-                      fonts: 14.0,
-                      keyboardType: TextInputType.number,
-                      width: width * 0.09,
-                      sizeIcon: 0.0,
-                      icons: Icons.height,
-                      colorBorder: PaletteColors.greyInput,
-                      background: PaletteColors.greyInput,
-                    ),
-                  ),
+                      alignment: Alignment.center,
+                      width: width * 0.12,
+                      height: 30,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(2.0)),
+                      child: TextCustom(
+                        text: SCeiling,
+                        color: PaletteColors.grey,
+                        textAlign: TextAlign.center,
+                      )),
                   Ink(
                     decoration: ShapeDecoration(
                       color: PaletteColors.midGrey,
@@ -592,11 +756,21 @@ class _ConstructionStepState extends State<ConstructionStep> {
                           maxWidth: 28),
                       iconSize: 16.0,
                       padding: EdgeInsets.zero,
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          if (nCeiling >= 0) {
+                            nCeiling = nCeiling + 5;
+                            SCeiling = "$nCeiling";
+                          }
+                        });
+                      },
                     ),
                   ),
                 ],
-              ), //Coberturas
+              ),
+              SizedBox(
+                height: height * 0.01,
+              ), 
               Row(
                 children: [
                   TextCustom(
@@ -627,24 +801,27 @@ class _ConstructionStepState extends State<ConstructionStep> {
                           maxWidth: 28),
                       iconSize: 16.0,
                       padding: EdgeInsets.zero,
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          if (nWaterProof > 0) {
+                            nWaterProof = nWaterProof - 5;
+                            SWaterProof = "$nWaterProof";
+                          }
+                        });
+                      },
                     ),
                   ),
                   Container(
-                      height: 40,
-                      width: width * 0.18,
-                    child: InputRegister(
-                      controller: _controllerNumber,
-                      hint: '01',
-                      fonts: 14.0,
-                      keyboardType: TextInputType.number,
-                      width: width * 0.09,
-                      sizeIcon: 0.0,
-                      icons: Icons.height,
-                      colorBorder: PaletteColors.greyInput,
-                      background: PaletteColors.greyInput,
-                    ),
-                  ),
+                      alignment: Alignment.center,
+                      width: width * 0.12,
+                      height: 30,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(2.0)),
+                      child: TextCustom(
+                        text: SWaterProof,
+                        color: PaletteColors.grey,
+                        textAlign: TextAlign.center,
+                      )),
                   Ink(
                     decoration: ShapeDecoration(
                       color: PaletteColors.midGrey,
@@ -665,17 +842,117 @@ class _ConstructionStepState extends State<ConstructionStep> {
                           maxWidth: 28),
                       iconSize: 16.0,
                       padding: EdgeInsets.zero,
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          if (nWaterProof >= 0) {
+                            nWaterProof = nWaterProof + 5;
+                            SWaterProof = "$nWaterProof";
+                          }
+                        });
+                      },
                     ),
                   ),
                 ],
-              ), //Impermeabilizações
+              ),
+              SizedBox(
+                height: height * 0.01,
+              ), 
               Row(
                 children: [
                   Container(
                     width: width * 0.4,
                     child: TextCustom(
                       text: "Revestimentos Internos",
+                      size: 16.0,
+                      color: PaletteColors.grey,
+                      fontWeight: FontWeight.normal,
+                      textAlign: TextAlign.start,
+                    ),
+                  ),
+
+                  Spacer(),
+                  Ink(
+                    decoration: ShapeDecoration(
+                      color: PaletteColors.midGrey,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(10),
+                              bottomLeft: Radius.circular(10))),
+                    ),
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.remove,
+                        color: PaletteColors.grey,
+                      ),
+                      constraints: BoxConstraints(
+                          minHeight: 28,
+                          minWidth: 28,
+                          maxHeight: 28,
+                          maxWidth: 28),
+                      iconSize: 16.0,
+                      padding: EdgeInsets.zero,
+                      onPressed: () {
+                        setState(() {
+                          if (nIntern > 0) {
+                            nIntern = nIntern - 5;
+                            SIntern = "$nIntern";
+                          }
+                        });
+                      },
+                    ),
+                  ),
+                  Container(
+                      alignment: Alignment.center,
+                      width: width * 0.12,
+                      height: 30,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(2.0)),
+                      child: TextCustom(
+                        text: SIntern,
+                        color: PaletteColors.grey,
+                        textAlign: TextAlign.center,
+                      )),
+                  Ink(
+                    decoration: ShapeDecoration(
+                      color: PaletteColors.midGrey,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(10),
+                              bottomRight: Radius.circular(10))),
+                    ),
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.add,
+                        color: PaletteColors.grey,
+                      ),
+                      constraints: BoxConstraints(
+                          minHeight: 28,
+                          minWidth: 28,
+                          maxHeight: 28,
+                          maxWidth: 28),
+                      iconSize: 16.0,
+                      padding: EdgeInsets.zero,
+                      onPressed: () {
+                        setState(() {
+                          if (nIntern >= 0) {
+                            nIntern = nIntern + 5;
+                            SIntern = "$nIntern";
+                          }
+                        });
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: height * 0.01,
+              ),
+              Row(
+                children: [
+                  Container(
+
+                    child: TextCustom(
+                      text: "Forros",
                       size: 16.0,
                       color: PaletteColors.grey,
                       fontWeight: FontWeight.normal,
@@ -703,24 +980,27 @@ class _ConstructionStepState extends State<ConstructionStep> {
                           maxWidth: 28),
                       iconSize: 16.0,
                       padding: EdgeInsets.zero,
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          if (nLinings > 0) {
+                            nLinings = nLinings - 5;
+                            SLinings = "$nLinings";
+                          }
+                        });
+                      },
                     ),
                   ),
                   Container(
-                      height: 40,
-                      width: width * 0.18,
-                    child: InputRegister(
-                      controller: _controllerNumber,
-                      hint: '01',
-                      fonts: 14.0,
-                      keyboardType: TextInputType.number,
-                      width: width * 0.09,
-                      sizeIcon: 0.0,
-                      icons: Icons.height,
-                      colorBorder: PaletteColors.greyInput,
-                      background: PaletteColors.greyInput,
-                    ),
-                  ),
+                      alignment: Alignment.center,
+                      width: width * 0.12,
+                      height: 30,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(2.0)),
+                      child: TextCustom(
+                        text: SLinings,
+                        color: PaletteColors.grey,
+                        textAlign: TextAlign.center,
+                      )),
                   Ink(
                     decoration: ShapeDecoration(
                       color: PaletteColors.midGrey,
@@ -741,88 +1021,25 @@ class _ConstructionStepState extends State<ConstructionStep> {
                           maxWidth: 28),
                       iconSize: 16.0,
                       padding: EdgeInsets.zero,
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          if (nLinings >= 0) {
+                            nLinings = nLinings + 5;
+                            SLinings = "$nLinings";
+                          }
+                        });
+                      },
                     ),
                   ),
                 ],
-              ), //Revestimentos Internos
-              Row(
-                children: [
-                  TextCustom(
-                    text: "Forros",
-                    size: 16.0,
-                    color: PaletteColors.grey,
-                    fontWeight: FontWeight.normal,
-                    textAlign: TextAlign.start,
-                  ),
-                  Spacer(),
-                  Ink(
-                    decoration: ShapeDecoration(
-                      color: PaletteColors.midGrey,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(10),
-                              bottomLeft: Radius.circular(10))),
-                    ),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.remove,
-                        color: PaletteColors.grey,
-                      ),
-                      constraints: BoxConstraints(
-                          minHeight: 28,
-                          minWidth: 28,
-                          maxHeight: 28,
-                          maxWidth: 28),
-                      iconSize: 16.0,
-                      padding: EdgeInsets.zero,
-                      onPressed: () {},
-                    ),
-                  ),
-                  Container(
-                      height: 40,
-                      width: width * 0.18,
-                    child: InputRegister(
-                      controller: _controllerNumber,
-                      hint: '01',
-                      fonts: 14.0,
-                      keyboardType: TextInputType.number,
-                      width: width * 0.09,
-                      sizeIcon: 0.0,
-                      icons: Icons.height,
-                      colorBorder: PaletteColors.greyInput,
-                      background: PaletteColors.greyInput,
-                    ),
-                  ),
-                  Ink(
-                    decoration: ShapeDecoration(
-                      color: PaletteColors.midGrey,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(10),
-                              bottomRight: Radius.circular(10))),
-                    ),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.add,
-                        color: PaletteColors.grey,
-                      ),
-                      constraints: BoxConstraints(
-                          minHeight: 28,
-                          minWidth: 28,
-                          maxHeight: 28,
-                          maxWidth: 28),
-                      iconSize: 16.0,
-                      padding: EdgeInsets.zero,
-                      onPressed: () {},
-                    ),
-                  ),
-                ],
-              ), //Forros
+              ),
+              SizedBox(
+                height: height * 0.01,
+              ),
               Row(
                 children: [
                   Container(
-                    width: width*0.4,
+                    width: width * 0.4,
                     child: TextCustom(
                       text: "Revestimentos externos",
                       size: 16.0,
@@ -852,24 +1069,29 @@ class _ConstructionStepState extends State<ConstructionStep> {
                           maxWidth: 28),
                       iconSize: 16.0,
                       padding: EdgeInsets.zero,
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          if (nExtern > 0) {
+                            nExtern =
+                                nExtern - 5;
+                            SExtern =
+                            "$nExtern";
+                          }
+                        });
+                      },
                     ),
                   ),
                   Container(
-                      height: 40,
-                      width: width * 0.18,
-                    child: InputRegister(
-                      controller: _controllerNumber,
-                      hint: '01',
-                      fonts: 14.0,
-                      keyboardType: TextInputType.number,
-                      width: width * 0.09,
-                      sizeIcon: 0.0,
-                      icons: Icons.height,
-                      colorBorder: PaletteColors.greyInput,
-                      background: PaletteColors.greyInput,
-                    ),
-                  ),
+                      alignment: Alignment.center,
+                      width: width * 0.12,
+                      height: 30,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(2.0)),
+                      child: TextCustom(
+                        text: SExtern,
+                        color: PaletteColors.grey,
+                        textAlign: TextAlign.center,
+                      )),
                   Ink(
                     decoration: ShapeDecoration(
                       color: PaletteColors.midGrey,
@@ -890,19 +1112,34 @@ class _ConstructionStepState extends State<ConstructionStep> {
                           maxWidth: 28),
                       iconSize: 16.0,
                       padding: EdgeInsets.zero,
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          if (nExtern >= 0) {
+                            nExtern =
+                                nExtern + 5;
+                            SExtern =
+                            "$nExtern";
+                          }
+                        });
+                      },
                     ),
                   ),
                 ],
-              ), //Revestimentos externos
+              ),
+              SizedBox(
+                height: height * 0.01,
+              ), 
               Row(
                 children: [
-                  TextCustom(
-                    text: "Pintura",
-                    size: 16.0,
-                    color: PaletteColors.grey,
-                    fontWeight: FontWeight.normal,
-                    textAlign: TextAlign.start,
+                  Container(
+                    width: width * 0.4,
+                    child: TextCustom(
+                      text: "Pintura",
+                      size: 16.0,
+                      color: PaletteColors.grey,
+                      fontWeight: FontWeight.normal,
+                      textAlign: TextAlign.start,
+                    ),
                   ),
                   Spacer(),
                   Ink(
@@ -925,24 +1162,27 @@ class _ConstructionStepState extends State<ConstructionStep> {
                           maxWidth: 28),
                       iconSize: 16.0,
                       padding: EdgeInsets.zero,
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          if (nPaint > 0) {
+                            nPaint = nPaint - 5;
+                            SPaint = "$nPaint";
+                          }
+                        });
+                      },
                     ),
                   ),
                   Container(
-                      height: 40,
-                      width: width * 0.18,
-                    child: InputRegister(
-                      controller: _controllerNumber,
-                      hint: '01',
-                      fonts: 14.0,
-                      keyboardType: TextInputType.number,
-                      width: width * 0.09,
-                      sizeIcon: 0.0,
-                      icons: Icons.height,
-                      colorBorder: PaletteColors.greyInput,
-                      background: PaletteColors.greyInput,
-                    ),
-                  ),
+                      alignment: Alignment.center,
+                      width: width * 0.12,
+                      height: 30,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(2.0)),
+                      child: TextCustom(
+                        text: SPaint,
+                        color: PaletteColors.grey,
+                        textAlign: TextAlign.center,
+                      )),
                   Ink(
                     decoration: ShapeDecoration(
                       color: PaletteColors.midGrey,
@@ -963,11 +1203,21 @@ class _ConstructionStepState extends State<ConstructionStep> {
                           maxWidth: 28),
                       iconSize: 16.0,
                       padding: EdgeInsets.zero,
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          if (nPaint >= 0) {
+                            nPaint = nPaint + 5;
+                            SPaint = "$nPaint";
+                          }
+                        });
+                      },
                     ),
                   ),
                 ],
-              ), //Pintura
+              ),
+              SizedBox(
+                height: height * 0.01,
+              ), 
               Row(
                 children: [
                   TextCustom(
@@ -998,24 +1248,27 @@ class _ConstructionStepState extends State<ConstructionStep> {
                           maxWidth: 28),
                       iconSize: 16.0,
                       padding: EdgeInsets.zero,
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          if (nFloors > 0) {
+                            nFloors = nFloors - 5;
+                            SFloors = "$nFloors";
+                          }
+                        });
+                      },
                     ),
                   ),
                   Container(
-                      height: 40,
-                      width: width * 0.18,
-                    child: InputRegister(
-                      controller: _controllerNumber,
-                      hint: '01',
-                      fonts: 14.0,
-                      keyboardType: TextInputType.number,
-                      width: width * 0.09,
-                      sizeIcon: 0.0,
-                      icons: Icons.height,
-                      colorBorder: PaletteColors.greyInput,
-                      background: PaletteColors.greyInput,
-                    ),
-                  ),
+                      alignment: Alignment.center,
+                      width: width * 0.12,
+                      height: 30,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(2.0)),
+                      child: TextCustom(
+                        text: SFloors,
+                        color: PaletteColors.grey,
+                        textAlign: TextAlign.center,
+                      )),
                   Ink(
                     decoration: ShapeDecoration(
                       color: PaletteColors.midGrey,
@@ -1036,11 +1289,21 @@ class _ConstructionStepState extends State<ConstructionStep> {
                           maxWidth: 28),
                       iconSize: 16.0,
                       padding: EdgeInsets.zero,
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          if (nFloors >= 0) {
+                            nFloors = nFloors + 5;
+                            SFloors = "$nFloors";
+                          }
+                        });
+                      },
                     ),
                   ),
                 ],
-              ), //Pisos
+              ),
+              SizedBox(
+                height: height * 0.01,
+              ),
               Row(
                 children: [
                   TextCustom(
@@ -1071,24 +1334,27 @@ class _ConstructionStepState extends State<ConstructionStep> {
                           maxWidth: 28),
                       iconSize: 16.0,
                       padding: EdgeInsets.zero,
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          if (nFinishes > 0) {
+                            nFinishes = nFinishes - 5;
+                            SFinishes = "$nFinishes";
+                          }
+                        });
+                      },
                     ),
                   ),
                   Container(
-                      height: 40,
-                      width: width * 0.18,
-                    child: InputRegister(
-                      controller: _controllerNumber,
-                      hint: '01',
-                      fonts: 14.0,
-                      keyboardType: TextInputType.number,
-                      width: width * 0.09,
-                      sizeIcon: 0.0,
-                      icons: Icons.height,
-                      colorBorder: PaletteColors.greyInput,
-                      background: PaletteColors.greyInput,
-                    ),
-                  ),
+                      alignment: Alignment.center,
+                      width: width * 0.12,
+                      height: 30,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(2.0)),
+                      child: TextCustom(
+                        text: SFinishes,
+                        color: PaletteColors.grey,
+                        textAlign: TextAlign.center,
+                      )),
                   Ink(
                     decoration: ShapeDecoration(
                       color: PaletteColors.midGrey,
@@ -1109,11 +1375,21 @@ class _ConstructionStepState extends State<ConstructionStep> {
                           maxWidth: 28),
                       iconSize: 16.0,
                       padding: EdgeInsets.zero,
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          if (nFinishes >= 0) {
+                            nFinishes = nFinishes + 5;
+                            SFinishes = "$nFinishes";
+                          }
+                        });
+                      },
                     ),
                   ),
                 ],
-              ), //Acabamentos
+              ),
+              SizedBox(
+                height: height * 0.01,
+              ), 
               Row(
                 children: [
                   Container(
@@ -1147,24 +1423,27 @@ class _ConstructionStepState extends State<ConstructionStep> {
                           maxWidth: 28),
                       iconSize: 16.0,
                       padding: EdgeInsets.zero,
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          if (nEletric > 0) {
+                            nEletric = nEletric - 5;
+                            SEletric = "$nEletric";
+                          }
+                        });
+                      },
                     ),
                   ),
                   Container(
-                      height: 40,
-                      width: width * 0.18,
-                    child: InputRegister(
-                      controller: _controllerNumber,
-                      hint: '01',
-                      fonts: 14.0,
-                      keyboardType: TextInputType.number,
-                      width: width * 0.09,
-                      sizeIcon: 0.0,
-                      icons: Icons.height,
-                      colorBorder: PaletteColors.greyInput,
-                      background: PaletteColors.greyInput,
-                    ),
-                  ),
+                      alignment: Alignment.center,
+                      width: width * 0.12,
+                      height: 30,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(2.0)),
+                      child: TextCustom(
+                        text: SEletric,
+                        color: PaletteColors.grey,
+                        textAlign: TextAlign.center,
+                      )),
                   Ink(
                     decoration: ShapeDecoration(
                       color: PaletteColors.midGrey,
@@ -1185,19 +1464,32 @@ class _ConstructionStepState extends State<ConstructionStep> {
                           maxWidth: 28),
                       iconSize: 16.0,
                       padding: EdgeInsets.zero,
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          if (nEletric >= 0) {
+                            nEletric = nEletric + 5;
+                            SEletric = "$nEletric";
+                          }
+                        });
+                      },
                     ),
                   ),
                 ],
-              ), //Inst. elétricas e telefônicas
+              ),
+              SizedBox(
+                height: height * 0.01,
+              ),
               Row(
                 children: [
-                  TextCustom(
-                    text: "Inst. hidráulicas",
-                    size: 16.0,
-                    color: PaletteColors.grey,
-                    fontWeight: FontWeight.normal,
-                    textAlign: TextAlign.start,
+                  Container(
+                    width: width * 0.4,
+                    child: TextCustom(
+                      text: "Inst. hidráulicas",
+                      size: 16.0,
+                      color: PaletteColors.grey,
+                      fontWeight: FontWeight.normal,
+                      textAlign: TextAlign.start,
+                    ),
                   ),
                   Spacer(),
                   Ink(
@@ -1220,24 +1512,27 @@ class _ConstructionStepState extends State<ConstructionStep> {
                           maxWidth: 28),
                       iconSize: 16.0,
                       padding: EdgeInsets.zero,
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          if (nHidro > 0) {
+                            nHidro = nHidro - 5;
+                            SHidro = "$nHidro";
+                          }
+                        });
+                      },
                     ),
                   ),
                   Container(
-                      height: 40,
-                      width: width * 0.18,
-                    child: InputRegister(
-                      controller: _controllerNumber,
-                      hint: '01',
-                      fonts: 14.0,
-                      keyboardType: TextInputType.number,
-                      width: width * 0.09,
-                      sizeIcon: 0.0,
-                      icons: Icons.height,
-                      colorBorder: PaletteColors.greyInput,
-                      background: PaletteColors.greyInput,
-                    ),
-                  ),
+                      alignment: Alignment.center,
+                      width: width * 0.12,
+                      height: 30,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(2.0)),
+                      child: TextCustom(
+                        text: SHidro,
+                        color: PaletteColors.grey,
+                        textAlign: TextAlign.center,
+                      )),
                   Ink(
                     decoration: ShapeDecoration(
                       color: PaletteColors.midGrey,
@@ -1258,11 +1553,21 @@ class _ConstructionStepState extends State<ConstructionStep> {
                           maxWidth: 28),
                       iconSize: 16.0,
                       padding: EdgeInsets.zero,
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          if (nHidro >= 0) {
+                            nHidro = nHidro + 5;
+                            SHidro = "$nHidro";
+                          }
+                        });
+                      },
                     ),
                   ),
                 ],
-              ), //Inst. hidráulicas
+              ),
+              SizedBox(
+                height: height * 0.01,
+              ),
               Row(
                 children: [
                   Container(
@@ -1296,24 +1601,27 @@ class _ConstructionStepState extends State<ConstructionStep> {
                           maxWidth: 28),
                       iconSize: 16.0,
                       padding: EdgeInsets.zero,
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          if (nSewer > 0) {
+                            nSewer = nSewer - 5;
+                            SSewer = "$nSewer";
+                          }
+                        });
+                      },
                     ),
                   ),
                   Container(
-                      height: 40,
-                      width: width * 0.18,
-                    child: InputRegister(
-                      controller: _controllerNumber,
-                      hint: '01',
-                      fonts: 14.0,
-                      keyboardType: TextInputType.number,
-                      width: width * 0.09,
-                      sizeIcon: 0.0,
-                      icons: Icons.height,
-                      colorBorder: PaletteColors.greyInput,
-                      background: PaletteColors.greyInput,
-                    ),
-                  ),
+                      alignment: Alignment.center,
+                      width: width * 0.12,
+                      height: 30,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(2.0)),
+                      child: TextCustom(
+                        text: SSewer,
+                        color: PaletteColors.grey,
+                        textAlign: TextAlign.center,
+                      )),
                   Ink(
                     decoration: ShapeDecoration(
                       color: PaletteColors.midGrey,
@@ -1334,19 +1642,32 @@ class _ConstructionStepState extends State<ConstructionStep> {
                           maxWidth: 28),
                       iconSize: 16.0,
                       padding: EdgeInsets.zero,
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          if (nSewer >= 0) {
+                            nSewer = nSewer + 5;
+                            SSewer = "$nSewer";
+                          }
+                        });
+                      },
                     ),
                   ),
                 ],
-              ), //Inst. esgoto e águas pluviais
+              ),
+              SizedBox(
+                height: height * 0.01,
+              ),
               Row(
                 children: [
-                  TextCustom(
-                    text: "Louças e metais",
-                    size: 16.0,
-                    color: PaletteColors.grey,
-                    fontWeight: FontWeight.normal,
-                    textAlign: TextAlign.start,
+                  Container(
+
+                    child: TextCustom(
+                      text: "Louças e metais",
+                      size: 16.0,
+                      color: PaletteColors.grey,
+                      fontWeight: FontWeight.normal,
+                      textAlign: TextAlign.start,
+                    ),
                   ),
                   Spacer(),
                   Ink(
@@ -1369,24 +1690,27 @@ class _ConstructionStepState extends State<ConstructionStep> {
                           maxWidth: 28),
                       iconSize: 16.0,
                       padding: EdgeInsets.zero,
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          if (nSlabs > 0) {
+                            nSlabs = nSlabs - 5;
+                            SSlabs = "$nSlabs";
+                          }
+                        });
+                      },
                     ),
                   ),
                   Container(
-                      height: 40,
-                      width: width * 0.18,
-                    child: InputRegister(
-                      controller: _controllerNumber,
-                      hint: '01',
-                      fonts: 14.0,
-                      keyboardType: TextInputType.number,
-                      width: width * 0.09,
-                      sizeIcon: 0.0,
-                      icons: Icons.height,
-                      colorBorder: PaletteColors.greyInput,
-                      background: PaletteColors.greyInput,
-                    ),
-                  ),
+                      alignment: Alignment.center,
+                      width: width * 0.12,
+                      height: 30,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(2.0)),
+                      child: TextCustom(
+                        text: SSlabs,
+                        color: PaletteColors.grey,
+                        textAlign: TextAlign.center,
+                      )),
                   Ink(
                     decoration: ShapeDecoration(
                       color: PaletteColors.midGrey,
@@ -1407,19 +1731,32 @@ class _ConstructionStepState extends State<ConstructionStep> {
                           maxWidth: 28),
                       iconSize: 16.0,
                       padding: EdgeInsets.zero,
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          if (nSlabs >= 0) {
+                            nSlabs = nSlabs + 5;
+                            SSlabs = "$nSlabs";
+                          }
+                        });
+                      },
                     ),
                   ),
                 ],
-              ), //Louças e metais
+              ),
+              SizedBox(
+                height: height * 0.01,
+              ),
               Row(
                 children: [
-                  TextCustom(
-                    text: "Complementos",
-                    size: 16.0,
-                    color: PaletteColors.grey,
-                    fontWeight: FontWeight.normal,
-                    textAlign: TextAlign.start,
+                  Container(
+
+                    child: TextCustom(
+                      text: "Complementos",
+                      size: 16.0,
+                      color: PaletteColors.grey,
+                      fontWeight: FontWeight.normal,
+                      textAlign: TextAlign.start,
+                    ),
                   ),
                   Spacer(),
                   Ink(
@@ -1442,24 +1779,27 @@ class _ConstructionStepState extends State<ConstructionStep> {
                           maxWidth: 28),
                       iconSize: 16.0,
                       padding: EdgeInsets.zero,
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          if (nComplements > 0) {
+                            nComplements = nComplements - 5;
+                            SComplements = "$nComplements";
+                          }
+                        });
+                      },
                     ),
                   ),
                   Container(
-                      height: 40,
-                      width: width * 0.18,
-                    child: InputRegister(
-                      controller: _controllerNumber,
-                      hint: '01',
-                      fonts: 14.0,
-                      keyboardType: TextInputType.number,
-                      width: width * 0.09,
-                      sizeIcon: 0.0,
-                      icons: Icons.height,
-                      colorBorder: PaletteColors.greyInput,
-                      background: PaletteColors.greyInput,
-                    ),
-                  ),
+                      alignment: Alignment.center,
+                      width: width * 0.12,
+                      height: 30,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(2.0)),
+                      child: TextCustom(
+                        text: SComplements,
+                        color: PaletteColors.grey,
+                        textAlign: TextAlign.center,
+                      )),
                   Ink(
                     decoration: ShapeDecoration(
                       color: PaletteColors.midGrey,
@@ -1480,19 +1820,32 @@ class _ConstructionStepState extends State<ConstructionStep> {
                           maxWidth: 28),
                       iconSize: 16.0,
                       padding: EdgeInsets.zero,
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          if (nComplements >= 0) {
+                            nComplements = nComplements + 5;
+                            SComplements = "$nComplements";
+                          }
+                        });
+                      },
                     ),
                   ),
                 ],
-              ), //Complementos
+              ),
+              SizedBox(
+                height: height * 0.01,
+              ),
               Row(
                 children: [
-                  TextCustom(
-                    text: "Outros serviços",
-                    size: 16.0,
-                    color: PaletteColors.grey,
-                    fontWeight: FontWeight.normal,
-                    textAlign: TextAlign.start,
+                  Container(
+
+                    child: TextCustom(
+                      text: "Outros serviços",
+                      size: 16.0,
+                      color: PaletteColors.grey,
+                      fontWeight: FontWeight.normal,
+                      textAlign: TextAlign.start,
+                    ),
                   ),
                   Spacer(),
                   Ink(
@@ -1515,24 +1868,27 @@ class _ConstructionStepState extends State<ConstructionStep> {
                           maxWidth: 28),
                       iconSize: 16.0,
                       padding: EdgeInsets.zero,
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          if (nOthers > 0) {
+                            nOthers = nOthers - 5;
+                            SOthers = "$nOthers";
+                          }
+                        });
+                      },
                     ),
                   ),
                   Container(
-                      height: 40,
-                      width: width * 0.18,
-                    child: InputRegister(
-                      controller: _controllerNumber,
-                      hint: '01',
-                      fonts: 14.0,
-                      keyboardType: TextInputType.number,
-                      width: width * 0.09,
-                      sizeIcon: 0.0,
-                      icons: Icons.height,
-                      colorBorder: PaletteColors.greyInput,
-                      background: PaletteColors.greyInput,
-                    ),
-                  ),
+                      alignment: Alignment.center,
+                      width: width * 0.12,
+                      height: 30,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(2.0)),
+                      child: TextCustom(
+                        text: SOthers,
+                        color: PaletteColors.grey,
+                        textAlign: TextAlign.center,
+                      )),
                   Ink(
                     decoration: ShapeDecoration(
                       color: PaletteColors.midGrey,
@@ -1553,11 +1909,18 @@ class _ConstructionStepState extends State<ConstructionStep> {
                           maxWidth: 28),
                       iconSize: 16.0,
                       padding: EdgeInsets.zero,
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          if (nOthers >= 0) {
+                            nOthers = nOthers + 5;
+                            SOthers = "$nOthers";
+                          }
+                        });
+                      },
                     ),
                   ),
                 ],
-              ), //Outros serviços
+              ),
               Divider(
                 thickness: 1.0,
               ),
@@ -1582,8 +1945,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
                     child: ButtonCustom(
                       widthCustom: 0.3,
                       heightCustom: 0.070,
-                      onPressed: () =>
-                          Navigator.pushNamed(context, '/finished'),
+                      onPressed: () => _tableConstruction(),
                       text: "Concluir",
                       size: 14.0,
                       colorButton: PaletteColors.primaryColor,

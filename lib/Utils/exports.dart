@@ -10,7 +10,7 @@ export 'package:firebase_auth/firebase_auth.dart';
 export 'package:firebase_core/firebase_core.dart';
 export 'package:firebase_storage/firebase_storage.dart';
 export 'package:cloud_firestore/cloud_firestore.dart';
-
+export 'package:image_picker/image_picker.dart';
 
 
 export '../Views/initial_screen.dart';
@@ -37,7 +37,7 @@ export '../Widgets/text_custom.dart';
 export '../Widgets/list_tile_custom.dart';
 export '../Widgets/inputRegister.dart';
 export '../Widgets/inputPassword.dart';
-
+export '../Widgets/checkbox_ratings/checkbox_water.dart';
 
 export '../Utils/colors.dart';
 export '../Utils/routes.dart';
@@ -49,7 +49,11 @@ export '../Models/check_box_model.dart';
 export '../Models/list_tile_model.dart';
 export '../Models/user_model.dart';
 export '../Models/survey_model.dart';
-export '../Models/inputs_model.dart';
+export '../Models/Check List Models/check_list_casa_model.dart';
+export '../Models/Check List Models/check_list_apto_model.dart';
+export '../Models/Check List Models/check_list_etapa_de_obra.dart';
+export '../Models/Check List Models/check_list_lote_model.dart';
+
 
 
 

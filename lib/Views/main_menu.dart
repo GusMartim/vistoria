@@ -8,9 +8,7 @@ class MenuScreen extends StatefulWidget {
 }
 
 class _MenuScreenState extends State<MenuScreen> {
-
   FirebaseFirestore db = FirebaseFirestore.instance;
-
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +44,9 @@ class _MenuScreenState extends State<MenuScreen> {
                   horizontal: 30,
                 ),
                 child: TextCustom(
-                  text: 'Olá, ' + FirebaseAuth.instance.currentUser!.displayName!+'!',
+                  text: 'Olá, ' +
+                      FirebaseAuth.instance.currentUser!.displayName! +
+                      '!',
                   size: 14.0,
                   color: PaletteColors.grey,
                   fontWeight: FontWeight.bold,
@@ -56,21 +56,23 @@ class _MenuScreenState extends State<MenuScreen> {
               Container(
                 alignment: Alignment.center,
                 width: width * 1.5,
-
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     CustomCard(
-                      text: "Demandas",
-                      icon: Icons.add_location_rounded,
-                      page: '/demandas',
-                    ),
+                        text: "Demandas",
+                        icon: Icons.add_location_rounded,
+                        screen: RequestScreen()),
                     CustomCard(
                       text: "Nova Vistoria",
                       icon: Icons.list_rounded,
-                      page: '/vistoria',
-                    ),
+                      screen: Surveyscreen(
+                          text: 'Nova Vistoria',
+                          buttonText: 'Prosseguir',
+                          id: ''),
+
+                    )
                   ],
                 ),
               ),
@@ -82,15 +84,15 @@ class _MenuScreenState extends State<MenuScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     CustomCard(
-                      text: "Historico",
-                      icon: Icons.window_outlined,
-                      page: '/history',
-                    ),
+                        text: "Historico",
+                        icon: Icons.window_outlined,
+                        screen: HistoryScreen(),
+                        ),
                     CustomCard(
-                      text: "Tutorial",
-                      icon: Icons.branding_watermark_rounded,
-                      page: '/tutorial',
-                    ),
+                        text: "Tutorial",
+                        icon: Icons.branding_watermark_rounded,
+                        screen: TutorialScreen(),
+                        ),
                   ],
                 ),
               ),
@@ -102,10 +104,10 @@ class _MenuScreenState extends State<MenuScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     CustomCard(
-                      text: "Enviar Feedback",
-                      icon: Icons.comment_rounded,
-                      page: '/feedback',
-                    ),
+                        text: "Enviar Feedback",
+                        icon: Icons.comment_rounded,
+                        screen: FeedbackScreen(),
+                       ),
                   ],
                 ),
               )

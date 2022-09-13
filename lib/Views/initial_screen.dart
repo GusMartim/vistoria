@@ -18,10 +18,11 @@ class _InitialScreenState extends State<InitialScreen> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              SizedBox(
+              Container(
+                alignment: Alignment.center,
                 height: height * 0.4,
                 width: height * 0.4,
-                child: Image.asset("assets/image/TEIA.png"),
+                child: Image.asset("assets/image/logo_light.png"),
               ),
               Padding(
                 padding: const EdgeInsets.all(9.5),

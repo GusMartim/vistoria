@@ -4,7 +4,8 @@ import 'package:vistoria/Widgets/text_custom.dart';
 class CustomCard extends StatelessWidget {
   final String text;
   final IconData icon;
-  final String page;
+
+  final screen;
   //final double vertical;
   //final double horizontal;
 
@@ -12,7 +13,8 @@ class CustomCard extends StatelessWidget {
   {Key? key,
     required this.text,
     required this.icon,
-    required this.page,
+
+    required this.screen
     //required this.vertical,
     //required this.horizontal,
 }
@@ -34,7 +36,11 @@ class CustomCard extends StatelessWidget {
         width: height * 0.24,
 
         child: GestureDetector(
-          onTap: ()=> Navigator.pushNamed(context, page),
+          onTap: () => Navigator.push(context,
+              MaterialPageRoute(
+                  builder: (_) => screen
+              )
+          ),
           child: Card(
             elevation: 4,
             color: PaletteColors.greyInput,

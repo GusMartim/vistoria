@@ -66,7 +66,17 @@ class ListTileCustom extends StatelessWidget {
                     iconSize: 32.0,
                     padding: EdgeInsets.zero,
                     onPressed: () =>
-                        Navigator.pushNamed(context, '/vistoria'),
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => Surveyscreen(
+                                    text: 'Editar Vistoria',
+                                    buttonText: 'Continuar',
+                                    id: ''
+                                )
+                            )
+
+                        ),
                   ),
                 ),
                 SizedBox(width: 10),

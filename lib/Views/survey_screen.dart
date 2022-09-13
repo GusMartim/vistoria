@@ -1,12 +1,16 @@
 import 'dart:collection';
 
+import 'package:flutter/services.dart';
 import 'package:vistoria/Utils/exports.dart';
 import 'package:vistoria/Widgets/inputRegister.dart';
 import 'package:vistoria/Widgets/snackBars.dart';
 import 'package:vistoria/Widgets/text_custom.dart';
 
 class Surveyscreen extends StatefulWidget {
-  const Surveyscreen({Key? key}) : super(key: key);
+  final text;
+  final buttonText;
+  final id;
+   Surveyscreen({ required this.text,required this.buttonText,required this.id}) ;
 
   @override
   State<Surveyscreen> createState() => _SurveyscreenState();
@@ -25,21 +29,35 @@ class _SurveyscreenState extends State<Surveyscreen> {
   final TextEditingController _controllerLongG = TextEditingController();
   final TextEditingController _controllerLongMin = TextEditingController();
   final TextEditingController _controllerLongSeg = TextEditingController();
+  final TextEditingController _controllerUserCode = TextEditingController();
+  final TextEditingController _controllerSurveyCode = TextEditingController();
   List<String> states = ['SP', 'RJ', 'PR', 'MG'];
   String? selectedState = 'SP';
-  List<String> type = ['Casa', 'Apartamento', 'Lote', 'Obra'];
+  List<String> type = [
+    'Casa',
+    'Apartamento',
+    'Lote',
+    'Obra',
+    'Dados',
+    'Infrutifera'
+  ];
   String? selectedType = 'Casa';
+  String selectedText = 'Imagens';
   FirebaseFirestore db = FirebaseFirestore.instance;
+  FirebaseStorage storage = FirebaseStorage.instance;
   final Map<String, dynamic> data = HashMap();
   SurveyModel _surveyModel = SurveyModel();
   String _error = '';
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  File? picture;
+  bool _sending = false;
+  String _urlPhoto = '';
 
   _saveData(SurveyModel surveyModel) async {
     db
         .collection('surveys')
         .doc(_surveyModel.idSurvey)
-        .set(surveyModel.toMap())
+        .set(surveyModel.toMap(), SetOptions(merge: true))
         .then((_) => _surveyType(_surveyModel.idSurvey));
   }
 
@@ -49,61 +67,35 @@ class _SurveyscreenState extends State<Surveyscreen> {
         if (_controllerDistrict.text.isNotEmpty) {
           if (_controllerCity.text.isNotEmpty) {
             if (_controllerCEP.text.isNotEmpty) {
-              if (_controllerLatG.text.isNotEmpty) {
-                if (_controllerLatMin.text.isNotEmpty) {
-                  if (_controllerLatSeg.text.isNotEmpty) {
-                    if (_controllerLongG.text.isNotEmpty) {
-                      if (_controllerLongMin.text.isNotEmpty) {
-                        if (_controllerLongSeg.text.isNotEmpty) {
-                          setState(() {
-                            _error = '';
-                          });
-                          _createTable();
-                        } else {
-                          _error = 'Confira os dados de Longitude';
-                          showSnackBar(context, _error, _scaffoldKey);
-                        }
-                      } else {
-                        _error = 'Confira os dados de Longitude';
-                        showSnackBar(context, _error, _scaffoldKey);
-                      }
-                    } else {
-                      _error = 'Confira os dados de Longitude';
-                      showSnackBar(context, _error, _scaffoldKey);
-                    }
-                  } else {
-                    _error = 'Confira os dados de Latitude';
-                    showSnackBar(context, _error, _scaffoldKey);
-                  }
-                } else {
-                  _error = 'Confira os dados de Latitude';
-                  showSnackBar(context, _error, _scaffoldKey);
-                }
-              } else {
-                _error = 'Confira os dados de Latitude';
-                showSnackBar(context, _error, _scaffoldKey);
-              }
-            } else {
-              _error = 'CEP inválido!';
-              showSnackBar(context, _error, _scaffoldKey);
+              setState(() {
+                _error = '';
+              });
+              _createTable();
             }
-          } else {
-            _error = 'Cidade inválida!';
+           else {
+            _error = 'CEP inválido!';
             showSnackBar(context, _error, _scaffoldKey);
           }
         } else {
-          _error = 'Bairro inválido!';
+          _error = 'Cidade inválida!';
           showSnackBar(context, _error, _scaffoldKey);
         }
       } else {
-        _error = 'Numero inválido!';
+        _error = 'Bairro inválido!';
         showSnackBar(context, _error, _scaffoldKey);
       }
     } else {
-      _error = 'Endereço inválido!';
+      _error = 'Numero inválido!';
       showSnackBar(context, _error, _scaffoldKey);
     }
   }
+
+  else {
+  _error = 'Endereço inválido!';
+  showSnackBar(context, _error, _scaffoldKey);
+  }
+}
+
 
   _createTable() async {
     _surveyModel.adress = _controllerAdress.text;
@@ -114,21 +106,73 @@ class _SurveyscreenState extends State<Surveyscreen> {
     _surveyModel.state = selectedState.toString();
     _surveyModel.type = selectedType.toString();
     _surveyModel.cep = _controllerCEP.text;
-    _surveyModel.latG = _controllerLatG.text;
-    _surveyModel.latMin = _controllerLatMin.text;
-    _surveyModel.latSeg = _controllerLatSeg.text;
-    _surveyModel.longG = _controllerLongG.text;
-    _surveyModel.longMin = _controllerLongMin.text;
-    _surveyModel.longSeg = _controllerLongSeg.text;
     _surveyModel.hourRequest = DateTime.now().toString();
     _surveyModel.idUser = FirebaseAuth.instance.currentUser!.uid;
     _saveData(_surveyModel);
   }
 
+  Future _savePhoto() async{
+    try{
+      final image = await ImagePicker()
+          .pickImage(source: ImageSource.camera, imageQuality: 100);
+      if(image == null) return;
+
+      final imageTemporary = File(image.path);
+      setState(() {
+        this.picture = imageTemporary;
+        setState(() {
+          _sending = true;
+        });
+        _uploadImage();
+      });
+    } on PlatformException catch (e){
+      print('Error : $e');
+    }
+  }
+
+  Future _uploadImage() async{
+    Reference pastaRaiz = storage.ref();
+    Reference arquivo = pastaRaiz.child("surveys").child(selectedText+"_"+DateTime.now().toString()+".jpg");
+
+    UploadTask task = arquivo.putFile(picture!);
+
+    Future.delayed(const Duration(seconds: 5), ()async{
+      String urlImage = await task.snapshot.ref.getDownloadURL();
+      if (urlImage != null) {
+        setState(() {
+          _urlPhoto= urlImage;
+        });
+        _urlImageFirestore(urlImage);
+      }
+    });
+  }
+  _urlImageFirestore(String url){
+
+      Map<String , dynamic> dateUpdate = {
+        'photoUrl' : FieldValue.arrayUnion([url]),
+        'idSurvey': _surveyModel.idSurvey
+      };
+      db
+          .collection("surveys")
+          .doc(_surveyModel.idSurvey)
+          .set(dateUpdate,SetOptions(merge: true))
+          .then((value) {
+            setState(() {
+              _sending = false;
+            });
+      });
+
+  }
+
   @override
   void initState() {
     super.initState();
-    _surveyModel = SurveyModel.createId();
+    if(widget.id=='') {
+      _surveyModel = SurveyModel.createId();
+    }
+    if(widget.text =='Alterar vistoria'){
+
+    }
   }
 
   @override
@@ -146,7 +190,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
         ),
         elevation: 0,
         title: TextCustom(
-          text: 'NOVA VISTORIA',
+          text: widget.text,
           size: 20.0,
           color: PaletteColors.white,
           fontWeight: FontWeight.bold,
@@ -167,7 +211,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                   minHeight: 28, minWidth: 28, maxHeight: 28, maxWidth: 28),
               iconSize: 24.0,
               padding: EdgeInsets.all(2.0),
-              onPressed: () {},
+              onPressed: () => _savePhoto(),
             ),
           ),
           SizedBox(width: width * 0.02),
@@ -200,6 +244,62 @@ class _SurveyscreenState extends State<Surveyscreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               SizedBox(height: height * 0.05),
+              Container(
+                width: width * 0.9,
+                child: Row(
+                  children: [
+                    SizedBox(width: width * 0.04),
+                    TextCustom(
+                      text: "Codigo Usuario",
+                      size: 14.0,
+                      color: PaletteColors.grey,
+                      fontWeight: FontWeight.bold,
+                      textAlign: TextAlign.start,
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                width: width * 0.9,
+                child: InputRegister(
+                    controller: _controllerUserCode,
+                    hint: '',
+                    fonts: 14.0,
+                    keyboardType: TextInputType.text,
+                    width: width * 0.83,
+                    sizeIcon: 0.0,
+                    icons: Icons.height,
+                    colorBorder: PaletteColors.greyInput,
+                    background: PaletteColors.greyInput),
+              ),
+              Container(
+                width: width * 0.9,
+                child: Row(
+                  children: [
+                    SizedBox(width: width * 0.04),
+                    TextCustom(
+                      text: "Codigo Vistoria ",
+                      size: 14.0,
+                      color: PaletteColors.grey,
+                      fontWeight: FontWeight.bold,
+                      textAlign: TextAlign.start,
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                width: width * 0.9,
+                child: InputRegister(
+                    controller: _controllerSurveyCode,
+                    hint: '',
+                    fonts: 14.0,
+                    keyboardType: TextInputType.text,
+                    width: width * 0.83,
+                    sizeIcon: 0.0,
+                    icons: Icons.height,
+                    colorBorder: PaletteColors.greyInput,
+                    background: PaletteColors.greyInput),
+              ),
               Container(
                 width: width * 0.9,
                 child: Row(
@@ -699,8 +799,8 @@ class _SurveyscreenState extends State<Surveyscreen> {
                 child: ButtonCustom(
                   widthCustom: 0.80,
                   heightCustom: 0.070,
-                  onPressed: () => _createData(),
-                  text: "Prosseguir",
+                  onPressed: () => _createTable(),
+                  text: widget.buttonText,
                   size: 14.0,
                   colorButton: PaletteColors.primaryColor,
                   colorText: PaletteColors.white,
@@ -719,13 +819,19 @@ class _SurveyscreenState extends State<Surveyscreen> {
       Navigator.pushNamed(context, '/check1',arguments: id );
     }
     if (selectedType == type[1]) {
-      Navigator.pushNamed(context, '/checkapto1');
+      Navigator.pushNamed(context, '/checkapto1',arguments: id);
     }
     if (selectedType == type[2]) {
-      Navigator.pushNamed(context, '/checklote1');
+      Navigator.pushNamed(context, '/checklote1',arguments: id);
     }
     if (selectedType == type[3]) {
-      Navigator.pushNamed(context, '/construction');
+      Navigator.pushNamed(context, '/construction', arguments: id);
+    }
+    if (selectedType == type[4]) {
+      Navigator.pushNamed(context, '/data', arguments: id);
+    }
+    if (selectedType == type[5]) {
+      Navigator.pushNamed(context, '/inviability', arguments: id);
     }
   }
 }

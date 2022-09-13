@@ -36,7 +36,7 @@ class _SplashScreenState extends State<SplashScreen> {
         child: SizedBox(
           height: height * 0.4,
           width: height * 0.4,
-          child: Image.asset("assets/image/TEIA.png"),
+          child: Image.asset("assets/image/logo_dark.png"),
         ),
       ),
     );
