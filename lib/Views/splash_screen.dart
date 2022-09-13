@@ -33,7 +33,8 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       backgroundColor: PaletteColors.bgColor,
       body: Center(
-        child: SizedBox(
+        child: Container(
+          alignment: Alignment.topCenter,
           height: height * 0.4,
           width: height * 0.4,
           child: Image.asset("assets/image/logo_dark.png"),

@@ -1,5 +1,6 @@
 import 'package:vistoria/Utils/exports.dart';
 import 'package:vistoria/Views/check_list_data.dart';
+import 'package:vistoria/Views/check_list_unfruitful.dart';
 import 'package:vistoria/Views/checklist_apto_1.dart';
 import 'package:vistoria/Views/checklist_lote_1.dart';
 import 'package:vistoria/Views/construction_step.dart';
@@ -68,7 +69,7 @@ class Routes {
         );
       case "/inviability":
         return MaterialPageRoute(
-            builder: (_) => ConstructionStep(idSurvey: args as String)
+            builder: (_) => CheckListUnfruitful(idSurvey: args as String)
         );
       case "/finished":
         return MaterialPageRoute(

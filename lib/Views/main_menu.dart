@@ -25,9 +25,9 @@ class _MenuScreenState extends State<MenuScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(
-                height: height * 0.2,
-                width: width * 0.2,
-                child: Image.asset("assets/image/TEIA.png"),
+                height: height * 0.15,
+                width: width * 0.15,
+                child: Image.asset("assets/image/logo_light.png"),
               ),
             ],
           )),

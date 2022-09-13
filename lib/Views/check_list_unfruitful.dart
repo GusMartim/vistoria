@@ -1,17 +1,16 @@
-import 'dart:collection';
-
-import 'package:flutter/services.dart';
 import 'package:vistoria/Utils/exports.dart';
 
-class CheckList1 extends StatefulWidget {
+import '../Models/Check List Models/check_list_data_model.dart';
+
+class CheckListUnfruitful extends StatefulWidget {
   final String idSurvey;
-   CheckList1({required this.idSurvey});
+  CheckListUnfruitful({required this.idSurvey});
 
   @override
-  State<CheckList1> createState() => _CheckList1State();
+  State<CheckListUnfruitful> createState() => _CheckListUnfruitfulState();
 }
 
-class _CheckList1State extends State<CheckList1> {
+class _CheckListUnfruitfulState extends State<CheckListUnfruitful> {
   int nRoom = 0;
   String SRoom = '0';
   int nSocialBathroom = 0;
@@ -46,317 +45,138 @@ class _CheckList1State extends State<CheckList1> {
   String SPool = '0';
   List<String> goal = ['Venda', 'Aluguel'];
   String? selectedGoal = 'Venda';
-  List<String> infoOrigin = ['Oferta de Mercado','Transação Efetuada'];
+  List<String> infoOrigin = ['Oferta de Mercado', 'Transação Efetuada'];
   String? selectedInfo = 'Oferta de Mercado';
-  UnityModel _unityModel = UnityModel();
-  File? picture;
-  bool _sending = false;
-  String _urlPhoto = '';
-  String selectedText = 'Imagens';
-  FirebaseStorage storage = FirebaseStorage.instance;
-  final Map<String, dynamic> data = HashMap();
+  DataModel _dataModel = DataModel();
+
   FirebaseFirestore db = FirebaseFirestore.instance;
-  Future _savePhoto() async{
-    try{
-      final image = await ImagePicker()
-          .pickImage(source: ImageSource.camera, imageQuality: 100);
-      if(image == null) return;
 
-      final imageTemporary = File(image.path);
-      setState(() {
-        this.picture = imageTemporary;
-        setState(() {
-          _sending = true;
-        });
-        _uploadImage();
-      });
-    } on PlatformException catch (e){
-      print('Error : $e');
-    }
-  }
-  SurveyModel _surveyModel = SurveyModel();
-  Future _uploadImage() async{
-    Reference pastaRaiz = storage.ref();
-    Reference arquivo = pastaRaiz.child("surveys").child(selectedText+"_"+DateTime.now().toString()+".jpg");
-
-    UploadTask task = arquivo.putFile(picture!);
-
-    Future.delayed(const Duration(seconds: 5), ()async{
-      String urlImage = await task.snapshot.ref.getDownloadURL();
-      if (urlImage != null) {
-        setState(() {
-          _urlPhoto= urlImage;
-        });
-        _urlImageFirestore(urlImage);
-      }
-    });
-  }
-  _urlImageFirestore(String url){
-
-    Map<String , dynamic> dateUpdate = {
-      'photoUrl' : FieldValue.arrayUnion([url]),
-      'idSurvey': _surveyModel.idSurvey
-    };
-    db
-        .collection("surveys")
-        .doc(_surveyModel.idSurvey)
-        .set(dateUpdate,SetOptions(merge: true))
-        .then((value) {
-      setState(() {
-        _sending = false;
-      });
-    });
-
-  }
-  _saveUnitys(UnityModel unityModel) async {
+  _saveData(DataModel dataModel) async {
     db
         .collection('surveys')
         .doc(widget.idSurvey)
-        .update(unityModel.toMap())
+        .update(dataModel.toMap())
         .then((_) => Navigator.pushReplacementNamed(context, '/finished'));
   }
 
   _UnitysTable() async {
-    _unityModel.Goal = selectedGoal.toString();
-    _unityModel.Origin = selectedInfo.toString();
-    _unityModel.rooms = SRoom;
-    _unityModel.socialbathrooms = SSocialBathroom;
-    _unityModel.privatebathrooms = SPrivateBathroom;
-    _unityModel.lavs = SLav;
-    _unityModel.servicebathrooms = SServiceBathroom;
-    _unityModel.maidrooms = SMaidRoom;
-    _unityModel.balconys = SBalcony;
-    _unityModel.completecontainers = SCompleteCabinets;
-    _unityModel.kitchens = SKitchen;
-    _unityModel.restrooms = SRestRoom;
-    _unityModel.servicearearoofed = SServiceAreaRoofed;
-    _unityModel.serviceareaunroofed = SServiceAreaUnroofed;
-    _unityModel.garageroofed = SClosedGarage;
-    _unityModel.garageunroofed = SOpenGarage;
-    _unityModel.acs = SAc;
-    _unityModel.pools = SPool;
-    _unityModel.age = _controllerAge.text;
-    _unityModel.price = _controllerPrice.text;
-    _unityModel.obs = _controllerObs.text;
-    _unityModel.TotalArea = _controllerTotalArea.text;
-    _unityModel.OpenArea = _controllerOpenArea.text;
-    _unityModel.ClosedArea = _controllerClosedArea.text;
-    _unityModel.TerrainArea = _controllerTerrainArea.text;
-    _unityModel.type = _controllerType.text;
-    _unityModel.infra = _controllerInfra.text;
-    _unityModel.situation = _controllerSituation.text;
-    _unityModel.quota = _controllerQuota.text;
-    _unityModel.unPosition = _controllerPosition.text;
-    _unityModel.roof = _controllerRoof.text;
-    _unityModel.wall = _controllerWall.text;
-    _unityModel.internPaint = _controllerInternPaint.text;
-    _unityModel.externPaint = _controllerPaint.text;
-    _unityModel.externDoors = _controllerExtern.text;
-    _unityModel.floor = _controllerFloor.text;
-    _unityModel.internDoors = _controllerIntern.text;
-    _unityModel.windowns = _controllerWindows.text;
-    _unityModel.balcony = _controllerBalcony.text;
-    _unityModel.switchboard = _controllerSwitchBoard.text;
-    _unityModel.kitchen = _controllerKitchen.text;
-    _unityModel.bathroom = _controllerBathroom.text;
-    _unityModel.tank = _controllerTank.text;
-    _unityModel.pattern = _controllerPattern.text;
-    _unityModel.state = _controllerState.text;
-    _unityModel.unRoof = _controllerUnityRoof.text;
-    _unityModel.block = _controllerBlock.text;
-    _unityModel.pathology = _controllerPathology.text;
+    _dataModel.Goal = selectedGoal.toString();
+    _dataModel.Origin = selectedInfo.toString();
+    _dataModel.rooms = SRoom;
+    _dataModel.socialbathrooms = SSocialBathroom;
+    _dataModel.privatebathrooms = SPrivateBathroom;
+    _dataModel.lavs = SLav;
+    _dataModel.servicebathrooms = SServiceBathroom;
+    _dataModel.maidrooms = SMaidRoom;
+    _dataModel.balconys = SBalcony;
+    _dataModel.completecontainers = SCompleteCabinets;
+    _dataModel.kitchens = SKitchen;
+    _dataModel.restrooms = SRestRoom;
+    _dataModel.servicearearoofed = SServiceAreaRoofed;
+    _dataModel.serviceareaunroofed = SServiceAreaUnroofed;
+    _dataModel.garageroofed = SClosedGarage;
+    _dataModel.garageunroofed = SOpenGarage;
+    _dataModel.acs = SAc;
+    _dataModel.pools = SPool;
+    _dataModel.age = _controllerAge.text;
+    _dataModel.price = _controllerPrice.text;
+    _dataModel.obs = _controllerObs.text;
+    _dataModel.TotalArea = _controllerTotalArea.text;
+    _dataModel.OpenArea = _controllerOpenArea.text;
+    _dataModel.ClosedArea = _controllerClosedArea.text;
+    _dataModel.TerrainArea = _controllerTerrainArea.text;
+    _dataModel.infra = _controllerInfra.text;
+    _dataModel.situation = _controllerSituation.text;
+    _dataModel.quota = _controllerQuota.text;
+    _dataModel.unPosition = _controllerPosition.text;
+    _dataModel.roof = _controllerRoof.text;
+    _dataModel.wall = _controllerWall.text;
+    _dataModel.internPaint = _controllerInternPaint.text;
+    _dataModel.externPaint = _controllerPaint.text;
+    _dataModel.windowns = _controllerWindows.text;
+    _dataModel.pattern = _controllerPattern.text;
+    _dataModel.state = _controllerState.text;
+    _dataModel.phone = _controllerPhone.text;
+    _dataModel.adress = _controllerAdress.text;
+    _dataModel.contact = _controllerContact.text;
 
-    _saveUnitys(_unityModel);
+    _saveData(_dataModel);
   }
 
   _saveCheckList() async {
-    saveBlock.clear();
-    for (var i = 0; i < block.length; i++) {
-      if (block[i].value != false) {
-        saveBlock.add(block[i].title +
-            '#' +
-            block[i].value.toString());
-      }
-    }
-    saveKitchen.clear();
-    for (var i = 0; i < kitchen.length; i++) {
-      if (kitchen[i].value != false) {
-        saveKitchen.add(kitchen[i].title +
-            '#' +
-            kitchen[i].value.toString());
-      }
-    }
-    saveBathroom.clear();
-    for (var i = 0; i < bathroom.length; i++) {
-      if (bathroom[i].value != false) {
-        saveBathroom.add(bathroom[i].title +
-            '#' +
-            bathroom[i].value.toString());
-      }
-    }
-    saveTank.clear();
-    for (var i = 0; i < tank.length; i++) {
-      if (tank[i].value != false) {
-        saveTank.add(tank[i].title +
-            '#' +
-            tank[i].value.toString() );
-      }
-    }
     savePattern.clear();
     for (var i = 0; i < pattern.length; i++) {
       if (pattern[i].value != false) {
-        savePattern.add(pattern[i].title +
-            '#' +
-            pattern[i].value.toString());
+        savePattern.add(pattern[i].title + '#' + pattern[i].value.toString());
       }
     }
     saveState.clear();
     for (var i = 0; i < state.length; i++) {
       if (state[i].value != false) {
-        saveState.add(state[i].title +
-            '#' +
-            state[i].value.toString());
+        saveState.add(state[i].title + '#' + state[i].value.toString());
       }
     }
-    saveUnityroof.clear();
-    for (var i = 0; i < unityroof.length; i++) {
-      if (unityroof[i].value != false) {
-        saveUnityroof.add(unityroof[i].title +
-            '#' +
-            unityroof[i].value.toString());
-      }
-    }
-    saveExtern.clear();
-    for (var i = 0; i < extern.length; i++) {
-      if (extern[i].value != false) {
-        saveExtern.add(extern[i].title +
-            '#' +
-            extern[i].value.toString());
-      }
-    }
-    saveFloor.clear();
-    for (var i = 0; i < floor.length; i++) {
-      if (floor[i].value != false) {
-        saveFloor.add(floor[i].title +
-            '#' +
-            floor[i].value.toString());
-      }
-    }
-    saveIntern.clear();
-    for (var i = 0; i < Intern.length; i++) {
-      if (Intern[i].value != false) {
-        saveIntern.add(Intern[i].title +
-            '#' +
-            Intern[i].value.toString());
-      }
-    }
+
     saveWindowns.clear();
     for (var i = 0; i < Windows.length; i++) {
       if (Windows[i].value != false) {
-        saveWindowns.add(Windows[i].title +
-            '#' +
-            Windows[i].value.toString());
+        saveWindowns.add(Windows[i].title + '#' + Windows[i].value.toString());
       }
     }
     saveInternPaint.clear();
     for (var i = 0; i < InternPaint.length; i++) {
       if (InternPaint[i].value != false) {
-        saveInternPaint.add(InternPaint[i].title +
-            '#' +
-            InternPaint[i].value.toString());
+        saveInternPaint
+            .add(InternPaint[i].title + '#' + InternPaint[i].value.toString());
       }
     }
-    saveBalcony.clear();
-    for (var i = 0; i < balcony.length; i++) {
-      if (balcony[i].value != false) {
-        saveBalcony.add(balcony[i].title +
-            '#' +
-            balcony[i].value.toString());
-      }
-    }
-    saveSwitchBoard.clear();
-    for (var i = 0; i < switchboard.length; i++) {
-      if (switchboard[i].value != false) {
-        saveSwitchBoard.add(switchboard[i].title +
-            '#' +
-            switchboard[i].value.toString());
-      }
-    }
-    saveType.clear();
-    for (var i = 0; i < type.length; i++) {
-      if (type[i].value != false) {
-        saveType.add(type[i].title +
-            '#' +
-            type[i].value.toString());
-      }
-    }
+
     saveInfra.clear();
     for (var i = 0; i < infra.length; i++) {
       if (infra[i].value != false) {
-        saveInfra.add(infra[i].title +
-            '#' +
-            infra[i].value.toString());
+        saveInfra.add(infra[i].title + '#' + infra[i].value.toString());
       }
     }
     saveSituation.clear();
     for (var i = 0; i < situation.length; i++) {
       if (situation[i].value != false) {
-        saveSituation.add(situation[i].title +
-            '#' +
-            situation[i].value.toString());
+        saveSituation
+            .add(situation[i].title + '#' + situation[i].value.toString());
       }
     }
     saveQuota.clear();
     for (var i = 0; i < quota.length; i++) {
       if (quota[i].value != false) {
-        saveQuota.add(quota[i].title +
-            '#' +
-            quota[i].value.toString());
+        saveQuota.add(quota[i].title + '#' + quota[i].value.toString());
       }
     }
     savePosition.clear();
     for (var i = 0; i < position.length; i++) {
       if (position[i].value != false) {
-        savePosition.add(position[i].title +
-            '#' +
-            position[i].value.toString());
+        savePosition
+            .add(position[i].title + '#' + position[i].value.toString());
       }
     }
     saveRoof.clear();
     for (var i = 0; i < roof.length; i++) {
       if (roof[i].value != false) {
-        saveRoof.add(roof[i].title +
-            '#' +
-            roof[i].value.toString());
+        saveRoof.add(roof[i].title + '#' + roof[i].value.toString());
       }
     }
     saveWall.clear();
     for (var i = 0; i < wall.length; i++) {
       if (wall[i].value != false) {
-        saveWall.add(wall[i].title +
-            '#' +
-            wall[i].value.toString());
+        saveWall.add(wall[i].title + '#' + wall[i].value.toString());
       }
     }
     savePaint.clear();
     for (var i = 0; i < paint.length; i++) {
       if (paint[i].value != false) {
-        savePaint.add(paint[i].title +
-            '#' +
-            paint[i].value.toString());
+        savePaint.add(paint[i].title + '#' + paint[i].value.toString());
       }
     }
-    savePathology.clear();
-    for (var i = 0; i < pathology.length; i++) {
-      if (pathology[i].value != false) {
-        savePathology.add(pathology[i].title +
-            '#' +
-            pathology[i].value.toString());
-      }
-    }
+
     db.collection('surveys').doc(widget.idSurvey).update({
-      "Patologia": savePathology.toSet().toList(),
-      "Tipo de Imóvel": saveType.toSet().toList(),
       "Infraestrutura": saveInfra.toSet().toList(),
       "Situação": saveSituation.toSet().toList(),
       "Cota Greide": saveQuota.toSet().toList(),
@@ -364,72 +184,18 @@ class _CheckList1State extends State<CheckList1> {
       "Telhado": saveRoof.toSet().toList(),
       "Muro": saveWall.toSet().toList(),
       "Pintura": savePaint.toSet().toList(),
-      "Portas externas": saveExtern.toSet().toList(),
-      "Piso": saveFloor.toSet().toList(),
-      "Portas Internas": saveIntern.toSet().toList(),
       "Janelas": saveWindowns.toSet().toList(),
       "Pintura Interna": saveInternPaint.toSet().toList(),
-      "Bancada": saveBalcony.toSet().toList(),
-      "Quadro Elétrico": saveSwitchBoard.toSet().toList(),
-      "Revestimento da Cozinha": saveKitchen.toSet().toList(),
-      "Revestimento do Banheiro": saveBathroom.toSet().toList(),
-      "Revestimento do Tanque": saveTank.toSet().toList(),
       "Padrão de Acabamento": savePattern.toSet().toList(),
       "Estado de Conservação": saveState.toSet().toList(),
-      "Teto da Unidade": saveUnityroof.toSet().toList(),
-      "Condominio Bloco": saveBlock.toSet().toList(),
-
     });
     _UnitysTable();
   }
 
   final TextEditingController _controllerObs = TextEditingController();
-  final block = [
-    CheckBoxModel(title: 'Portaria/Guarita'),
-    CheckBoxModel(title: 'Equipe de Segurança'),
-    CheckBoxModel(title: 'Salão de Festas'),
-    CheckBoxModel(title: 'PlayGround'),
-    CheckBoxModel(title: 'Sauna/Ofurô'),
-    CheckBoxModel(title: 'Quadra Poliesportiva'),
-    CheckBoxModel(title: 'Quadra de Tênis'),
-    CheckBoxModel(title: 'Mini Quadra'),
-    CheckBoxModel(title: 'Piscina'),
-    CheckBoxModel(title: 'Espaço com churrasqueira'),
-    CheckBoxModel(title: 'Aquecimento Solar'),
-    CheckBoxModel(title: 'Gerador'),
-    CheckBoxModel(title: 'Campo de futebol/Mini Golf'),
-    CheckBoxModel(title: 'Poço Artesiano'),
-    CheckBoxModel(title: 'Outro:'),
-  ];
-  final TextEditingController _controllerBlock = TextEditingController();
-  final kitchen = [
-    CheckBoxModel(title: 'Ceramico'),
-    CheckBoxModel(title: 'Barra lisa'),
-    CheckBoxModel(title: '1/2 altura'),
-    CheckBoxModel(title: 'Piso a teto'),
-    CheckBoxModel(title: 'Nenhum'),
-    CheckBoxModel(title: 'Outro:'),
-  ];
-  final TextEditingController _controllerKitchen = TextEditingController();
-
-  final bathroom = [
-    CheckBoxModel(title: 'Ceramico'),
-    CheckBoxModel(title: 'Barra lisa'),
-    CheckBoxModel(title: '1/2 altura'),
-    CheckBoxModel(title: 'Piso a teto'),
-    CheckBoxModel(title: 'Nenhum'),
-    CheckBoxModel(title: 'Outro:'),
-  ];
-  final TextEditingController _controllerBathroom = TextEditingController();
-  final tank = [
-    CheckBoxModel(title: 'Ceramico'),
-    CheckBoxModel(title: 'Barra lisa'),
-    CheckBoxModel(title: '1/2 altura'),
-    CheckBoxModel(title: 'Piso a teto'),
-    CheckBoxModel(title: 'Nenhum'),
-    CheckBoxModel(title: 'Outro:'),
-  ];
-  final TextEditingController _controllerTank = TextEditingController();
+  final TextEditingController _controllerAdress = TextEditingController();
+  final TextEditingController _controllerPhone = TextEditingController();
+  final TextEditingController _controllerContact = TextEditingController();
 
   final pattern = [
     CheckBoxModel(title: 'Luxo'),
@@ -453,43 +219,8 @@ class _CheckList1State extends State<CheckList1> {
     CheckBoxModel(title: 'Outro:'),
   ];
   final TextEditingController _controllerState = TextEditingController();
-
-  final unityroof = [
-    CheckBoxModel(title: 'Forro PVC'),
-    CheckBoxModel(title: 'Forro Gesso'),
-    CheckBoxModel(title: 'Forro Paulista'),
-    CheckBoxModel(title: 'Laje'),
-    CheckBoxModel(title: 'Telhado aparente'),
-    CheckBoxModel(title: 'Outro:'),
-  ];
-  final TextEditingController _controllerUnityRoof = TextEditingController();
-
   final TextEditingController _controllerAge = TextEditingController();
   final TextEditingController _controllerPrice = TextEditingController();
-
-  final extern = [
-    CheckBoxModel(title: 'Madeira'),
-    CheckBoxModel(title: 'Blindex'),
-    CheckBoxModel(title: 'Aço'),
-    CheckBoxModel(title: 'Outro:'),
-  ];
-  final TextEditingController _controllerExtern = TextEditingController();
-
-  final floor = [
-    CheckBoxModel(title: 'Cerâmico'),
-    CheckBoxModel(title: 'Porcelanato'),
-    CheckBoxModel(title: 'Cimento liso'),
-    CheckBoxModel(title: 'Outro:'),
-  ];
-  final TextEditingController _controllerFloor = TextEditingController();
-
-  final Intern = [
-    CheckBoxModel(title: 'Madeira'),
-    CheckBoxModel(title: 'Blindex'),
-    CheckBoxModel(title: 'Aço'),
-    CheckBoxModel(title: 'Outro:'),
-  ];
-  final TextEditingController _controllerIntern = TextEditingController();
 
   final Windows = [
     CheckBoxModel(title: 'Madeira'),
@@ -508,33 +239,6 @@ class _CheckList1State extends State<CheckList1> {
     CheckBoxModel(title: 'Outro:'),
   ];
   final TextEditingController _controllerInternPaint = TextEditingController();
-
-  final balcony = [
-    CheckBoxModel(title: 'Granito'),
-    CheckBoxModel(title: 'Mármore'),
-    CheckBoxModel(title: 'Ardósia'),
-    CheckBoxModel(title: 'Sintético'),
-    CheckBoxModel(title: 'Outro:'),
-  ];
-  final TextEditingController _controllerBalcony = TextEditingController();
-
-  final switchboard = [
-    CheckBoxModel(title: '2 Disjuntores'),
-    CheckBoxModel(title: '3 Disjuntores'),
-    CheckBoxModel(title: '4 Disjuntores'),
-    CheckBoxModel(title: '4+ Disjuntores'),
-    CheckBoxModel(title: 'Nenhum'),
-    CheckBoxModel(title: 'Outro:'),
-  ];
-  final TextEditingController _controllerSwitchBoard = TextEditingController();
-
-  final type = [
-    CheckBoxModel(title: 'Residencial'),
-    CheckBoxModel(title: 'Comercial'),
-    CheckBoxModel(title: 'Misto'),
-    CheckBoxModel(title: 'Outro:'),
-  ];
-  final TextEditingController _controllerType = TextEditingController();
 
   final infra = [
     CheckBoxModel(title: 'Rede de Água'),
@@ -596,37 +300,16 @@ class _CheckList1State extends State<CheckList1> {
     CheckBoxModel(title: 'Outro:'),
   ];
   final TextEditingController _controllerPaint = TextEditingController();
-  final pathology = [
-    CheckBoxModel(title: 'Telhado selado'),
-    CheckBoxModel(title: 'Solapamentos Visiveis'),
-    CheckBoxModel(title: 'Umidade Paredes'),
-    CheckBoxModel(title: 'Umidade Teto'),
-    CheckBoxModel(title: 'Trincas/Fissuras/Rachaduras'),
-    CheckBoxModel(title: 'Outro:'),
-  ];
-  final TextEditingController _controllerPathology = TextEditingController();
 
   final TextEditingController _controllerOpenArea = TextEditingController();
   final TextEditingController _controllerClosedArea = TextEditingController();
   final TextEditingController _controllerTerrainArea = TextEditingController();
   final TextEditingController _controllerTotalArea = TextEditingController();
 
-
-  List saveBlock = [];
-  List saveKitchen = [];
-  List saveBathroom = [];
-  List saveTank = [];
   List savePattern = [];
   List saveState = [];
-  List saveUnityroof = [];
-  List saveExtern = [];
-  List saveFloor = [];
-  List saveIntern = [];
   List saveWindowns = [];
   List saveInternPaint = [];
-  List saveBalcony = [];
-  List saveSwitchBoard = [];
-  List saveType = [];
   List saveInfra = [];
   List saveSituation = [];
   List saveQuota = [];
@@ -634,7 +317,6 @@ class _CheckList1State extends State<CheckList1> {
   List saveRoof = [];
   List saveWall = [];
   List savePaint = [];
-  List savePathology = [];
 
   @override
   Widget build(BuildContext context) {
@@ -650,7 +332,7 @@ class _CheckList1State extends State<CheckList1> {
         ),
         elevation: 0,
         title: TextCustom(
-          text: 'CASA',
+          text: 'INFRUTIFERA',
           size: 20.0,
           color: PaletteColors.white,
           fontWeight: FontWeight.bold,
@@ -736,7 +418,7 @@ class _CheckList1State extends State<CheckList1> {
                             Container(
                               width: width * 0.45,
                               child: TextCustom(
-                                  text: "Valor",
+                                  text: "Valor Proposto",
                                   size: 14.0,
                                   color: PaletteColors.grey,
                                   fontWeight: FontWeight.bold),
@@ -762,7 +444,7 @@ class _CheckList1State extends State<CheckList1> {
                     )
                   ],
                 ),
-                SizedBox(height: height* 0.01),
+                SizedBox(height: height * 0.01),
                 Row(
                   children: [
                     Column(
@@ -776,7 +458,7 @@ class _CheckList1State extends State<CheckList1> {
                             Container(
                               width: width * 0.7,
                               child: TextCustom(
-                                  text: "Área Coberta",
+                                  text: "Área Coberta/Fechada",
                                   size: 14.0,
                                   color: PaletteColors.grey,
                                   fontWeight: FontWeight.bold),
@@ -799,10 +481,9 @@ class _CheckList1State extends State<CheckList1> {
                         ),
                       ],
                     ),
-
                   ],
                 ),
-                SizedBox(height: height* 0.01),
+                SizedBox(height: height * 0.01),
                 Row(
                   children: [
                     Column(
@@ -816,7 +497,7 @@ class _CheckList1State extends State<CheckList1> {
                             Container(
                               width: width * 0.7,
                               child: TextCustom(
-                                  text: "Área Descoberta",
+                                  text: "Área Coberta/Aberta",
                                   size: 14.0,
                                   color: PaletteColors.grey,
                                   fontWeight: FontWeight.bold),
@@ -839,10 +520,9 @@ class _CheckList1State extends State<CheckList1> {
                         ),
                       ],
                     ),
-
                   ],
                 ),
-                SizedBox(height: height* 0.01),
+                SizedBox(height: height * 0.01),
                 Row(
                   children: [
                     Column(
@@ -856,7 +536,7 @@ class _CheckList1State extends State<CheckList1> {
                             Container(
                               width: width * 0.7,
                               child: TextCustom(
-                                  text: "Área do Terreno",
+                                  text: "Área do Terreno/Testada",
                                   size: 14.0,
                                   color: PaletteColors.grey,
                                   fontWeight: FontWeight.bold),
@@ -879,13 +559,169 @@ class _CheckList1State extends State<CheckList1> {
                         ),
                       ],
                     ),
-
                   ],
                 ),
-                SizedBox(height: height* 0.01),
+                SizedBox(height: height * 0.01),
                 Row(
                   children: [
-
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Row(
+                          children: [
+                            SizedBox(width: 10),
+                            Container(
+                              width: width * 0.7,
+                              child: TextCustom(
+                                  text: "Área Total",
+                                  size: 14.0,
+                                  color: PaletteColors.grey,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                        Container(
+                          width: width * 0.7,
+                          child: InputRegister(
+                            icons: Icons.height,
+                            sizeIcon: 0.0,
+                            width: width * 0.2,
+                            controller: _controllerTerrainArea,
+                            hint: "   ",
+                            fonts: 14.0,
+                            keyboardType: TextInputType.number,
+                            colorBorder: PaletteColors.greyInput,
+                            background: PaletteColors.greyInput,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(height: height * 0.01),
+                Divider(),
+                Row(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Row(
+                          children: [
+                            SizedBox(width: 10),
+                            Container(
+                              width: width * 0.7,
+                              child: TextCustom(
+                                  text: "Endereço Completo",
+                                  size: 14.0,
+                                  color: PaletteColors.grey,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                        Container(
+                          width: width * 0.7,
+                          child: InputRegister(
+                            icons: Icons.height,
+                            sizeIcon: 0.0,
+                            width: width * 0.2,
+                            controller: _controllerAdress,
+                            hint: " Rua Fulano, Bairro Teste, Nª404  ",
+                            fonts: 14.0,
+                            keyboardType: TextInputType.number,
+                            colorBorder: PaletteColors.greyInput,
+                            background: PaletteColors.greyInput,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(height: height * 0.01),
+                Row(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Row(
+                          children: [
+                            SizedBox(width: 10),
+                            Container(
+                              width: width * 0.7,
+                              child: TextCustom(
+                                  text: "Contato",
+                                  size: 14.0,
+                                  color: PaletteColors.grey,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                        Container(
+                          width: width * 0.7,
+                          child: InputRegister(
+                            icons: Icons.height,
+                            sizeIcon: 0.0,
+                            width: width * 0.2,
+                            controller: _controllerContact,
+                            hint: " Fulano de Tal ",
+                            fonts: 14.0,
+                            keyboardType: TextInputType.number,
+                            colorBorder: PaletteColors.greyInput,
+                            background: PaletteColors.greyInput,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(height: height * 0.01),
+                Row(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Row(
+                          children: [
+                            SizedBox(width: 10),
+                            Container(
+                              width: width * 0.7,
+                              child: TextCustom(
+                                  text: "Telefone",
+                                  size: 14.0,
+                                  color: PaletteColors.grey,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                        Container(
+                          width: width * 0.7,
+                          child: InputRegister(
+                            icons: Icons.height,
+                            sizeIcon: 0.0,
+                            width: width * 0.2,
+                            controller: _controllerPhone,
+                            hint: " 35271870  ",
+                            fonts: 14.0,
+                            keyboardType: TextInputType.number,
+                            colorBorder: PaletteColors.greyInput,
+                            background: PaletteColors.greyInput,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(height: height * 0.01),
+                Divider(),
+                Row(
+                  children: [
                     Column(
                       children: [
                         Row(
@@ -903,7 +739,7 @@ class _CheckList1State extends State<CheckList1> {
                             ),
                           ],
                         ),
-                        SizedBox(height: height* 0.01),
+                        SizedBox(height: height * 0.01),
                         Row(
                           children: [
                             SizedBox(width: 10),
@@ -918,11 +754,11 @@ class _CheckList1State extends State<CheckList1> {
                                 child: DropdownButton<String>(
                                   items: goal
                                       .map((goal) => DropdownMenuItem<String>(
-                                      value: goal,
-                                      child: TextCustom(
-                                        text: goal,
-                                        color: PaletteColors.grey,
-                                      )))
+                                          value: goal,
+                                          child: TextCustom(
+                                            text: goal,
+                                            color: PaletteColors.grey,
+                                          )))
                                       .toList(),
                                   value: selectedGoal,
                                   onChanged: (goal) =>
@@ -932,15 +768,13 @@ class _CheckList1State extends State<CheckList1> {
                             ),
                           ],
                         ),
-
                       ],
                     ),
                   ],
                 ),
-                SizedBox(height: height* 0.01),
+                SizedBox(height: height * 0.01),
                 Row(
                   children: [
-
                     Column(
                       children: [
                         Row(
@@ -958,7 +792,7 @@ class _CheckList1State extends State<CheckList1> {
                             ),
                           ],
                         ),
-                        SizedBox(height: height* 0.01),
+                        SizedBox(height: height * 0.01),
                         Row(
                           children: [
                             SizedBox(width: 10),
@@ -972,12 +806,13 @@ class _CheckList1State extends State<CheckList1> {
                               child: DropdownButtonHideUnderline(
                                 child: DropdownButton<String>(
                                   items: infoOrigin
-                                      .map((infoOrigin) => DropdownMenuItem<String>(
-                                      value: infoOrigin,
-                                      child: TextCustom(
-                                        text: infoOrigin,
-                                        color: PaletteColors.grey,
-                                      )))
+                                      .map((infoOrigin) =>
+                                          DropdownMenuItem<String>(
+                                              value: infoOrigin,
+                                              child: TextCustom(
+                                                text: infoOrigin,
+                                                color: PaletteColors.grey,
+                                              )))
                                       .toList(),
                                   value: selectedInfo,
                                   onChanged: (infoOrigin) =>
@@ -987,69 +822,15 @@ class _CheckList1State extends State<CheckList1> {
                             ),
                           ],
                         ),
-
                       ],
                     ),
                   ],
                 ),
-                SizedBox(height: height* 0.01),
-                TextCustom(
-                  text: "Patologia",
-                  size: 16.0,
-                  color: PaletteColors.grey,
-                  fontWeight: FontWeight.bold,
-                  textAlign: TextAlign.start,
-                ),
-                ListView(
-                  scrollDirection: Axis.vertical,
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  children: [
-                    ...pathology.map(buildSingleCheckbox).toList(),
-                  ],
-                ), //Tipo de imovel
-                InputRegister(
-                    controller: _controllerType,
-                    hint: 'Especificar',
-                    fonts: 14.0,
-                    keyboardType: TextInputType.text,
-                    width: width * 0.5,
-                    sizeIcon: 0.0,
-                    icons: Icons.height,
-                    colorBorder: PaletteColors.greyInput,
-                    background: PaletteColors.greyInput),
+                SizedBox(height: height * 0.01),
                 Divider(
                   thickness: 1.0,
                 ),
-                SizedBox(height: height* 0.01),
-                TextCustom(
-                  text: "Tipo de Imóvel",
-                  size: 16.0,
-                  color: PaletteColors.grey,
-                  fontWeight: FontWeight.bold,
-                  textAlign: TextAlign.start,
-                ),
-                ListView(
-                  scrollDirection: Axis.vertical,
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  children: [
-                    ...type.map(buildSingleCheckbox).toList(),
-                  ],
-                ), //Tipo de imovel
-                InputRegister(
-                    controller: _controllerType,
-                    hint: 'Especificar',
-                    fonts: 14.0,
-                    keyboardType: TextInputType.text,
-                    width: width * 0.5,
-                    sizeIcon: 0.0,
-                    icons: Icons.height,
-                    colorBorder: PaletteColors.greyInput,
-                    background: PaletteColors.greyInput),
-                Divider(
-                  thickness: 1.0,
-                ),
+                SizedBox(height: height * 0.01),
                 TextCustom(
                   text: "Infraestrutura",
                   size: 16.0,
@@ -1253,90 +1034,6 @@ class _CheckList1State extends State<CheckList1> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     TextCustom(
-                      text: "Revestimento da Cozinha",
-                      size: 16.0,
-                      color: PaletteColors.grey,
-                      fontWeight: FontWeight.bold,
-                      textAlign: TextAlign.start,
-                    ),
-                    ListView(
-                      scrollDirection: Axis.vertical,
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      children: [
-                        ...kitchen.map(buildSingleCheckbox).toList(),
-                      ],
-                    ), //Revestimento da Cozinha
-                    InputRegister(
-                        controller: _controllerKitchen,
-                        hint: 'Especificar',
-                        fonts: 14.0,
-                        keyboardType: TextInputType.text,
-                        width: width * 0.5,
-                        sizeIcon: 0.0,
-                        icons: Icons.height,
-                        colorBorder: PaletteColors.greyInput,
-                        background: PaletteColors.greyInput),
-                    Divider(
-                      thickness: 1.0,
-                    ),
-                    TextCustom(
-                      text: "Revestimento do Banheiro",
-                      size: 16.0,
-                      color: PaletteColors.grey,
-                      fontWeight: FontWeight.bold,
-                      textAlign: TextAlign.start,
-                    ),
-                    ListView(
-                      scrollDirection: Axis.vertical,
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      children: [
-                        ...bathroom.map(buildSingleCheckbox).toList(),
-                      ],
-                    ), //Revestimento do Banheiro
-                    InputRegister(
-                        controller: _controllerBathroom,
-                        hint: 'Especificar',
-                        fonts: 14.0,
-                        keyboardType: TextInputType.text,
-                        width: width * 0.5,
-                        sizeIcon: 0.0,
-                        icons: Icons.height,
-                        colorBorder: PaletteColors.greyInput,
-                        background: PaletteColors.greyInput),
-                    Divider(
-                      thickness: 1.0,
-                    ),
-                    TextCustom(
-                      text: "Revestimento do Tanque",
-                      size: 16.0,
-                      color: PaletteColors.grey,
-                      fontWeight: FontWeight.bold,
-                      textAlign: TextAlign.start,
-                    ),
-                    ListView(
-                      scrollDirection: Axis.vertical,
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      children: [
-                        ...tank.map(buildSingleCheckbox).toList(),
-                      ],
-                    ), //Revestimento do Tanque
-                    InputRegister(
-                        controller: _controllerTank,
-                        hint: 'Especificar',
-                        fonts: 14.0,
-                        keyboardType: TextInputType.text,
-                        width: width * 0.5,
-                        sizeIcon: 0.0,
-                        icons: Icons.height,
-                        colorBorder: PaletteColors.greyInput,
-                        background: PaletteColors.greyInput),
-                    Divider(
-                      thickness: 1.0,
-                    ),
-                    TextCustom(
                       text: "Padrão de Acabamento",
                       size: 16.0,
                       color: PaletteColors.grey,
@@ -1392,34 +1089,7 @@ class _CheckList1State extends State<CheckList1> {
                     Divider(
                       thickness: 1.0,
                     ),
-                    TextCustom(
-                      text: "Teto da Unidade",
-                      size: 16.0,
-                      color: PaletteColors.grey,
-                      fontWeight: FontWeight.bold,
-                      textAlign: TextAlign.start,
-                    ),
-                    ListView(
-                      scrollDirection: Axis.vertical,
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      children: [
-                        ...unityroof.map(buildSingleCheckbox).toList(),
-                      ],
-                    ), //Teto da Unidade
-                    InputRegister(
-                        controller: _controllerUnityRoof,
-                        hint: 'Especificar',
-                        fonts: 14.0,
-                        keyboardType: TextInputType.text,
-                        width: width * 0.5,
-                        sizeIcon: 0.0,
-                        icons: Icons.height,
-                        colorBorder: PaletteColors.greyInput,
-                        background: PaletteColors.greyInput),
-                    Divider(
-                      thickness: 1.0,
-                    ),
+
                   ],
                 ),
                 Column(
@@ -2825,35 +2495,6 @@ class _CheckList1State extends State<CheckList1> {
                         ),
                       ],
                     ), //Piscina
-                    Divider(
-                      thickness: 1.0,
-                    ),
-                    TextCustom(
-                      text: "Condominio/Bloco",
-                      size: 16.0,
-                      color: PaletteColors.grey,
-                      fontWeight: FontWeight.bold,
-                      textAlign: TextAlign.start,
-                    ),
-                    ListView(
-                      padding: EdgeInsets.zero,
-                      scrollDirection: Axis.vertical,
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      children: [
-                        ...block.map(buildSingleCheckbox).toList(),
-                      ],
-                    ), //Revestimento do Banheiro
-                    InputRegister(
-                        controller: _controllerBlock,
-                        hint: 'Especificar',
-                        fonts: 14.0,
-                        keyboardType: TextInputType.text,
-                        width: width * 0.5,
-                        sizeIcon: 0.0,
-                        icons: Icons.height,
-                        colorBorder: PaletteColors.greyInput,
-                        background: PaletteColors.greyInput),
                     Divider(
                       thickness: 1.0,
                     ),
