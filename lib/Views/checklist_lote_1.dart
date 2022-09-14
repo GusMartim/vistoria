@@ -116,13 +116,73 @@ class _CheckListLote1State extends State<CheckListLote1> {
   final TextEditingController _controllerObs = TextEditingController();
   FirebaseFirestore db = FirebaseFirestore.instance;
   LoteModel _loteModel = LoteModel();
+  File? picture;
+  bool _sending = false;
+  String _urlPhoto = '';
+  String selectedText = 'Imagens';
+  FirebaseStorage storage = FirebaseStorage.instance;
+  final Map<String, dynamic> data = HashMap();
+
+
+  Future _savePhoto() async{
+    try{
+      final image = await ImagePicker()
+          .pickImage(source: ImageSource.camera, imageQuality: 100);
+      if(image == null) return;
+
+      final imageTemporary = File(image.path);
+      setState(() {
+        this.picture = imageTemporary;
+        setState(() {
+          _sending = true;
+        });
+        _uploadImage();
+      });
+    } on PlatformException catch (e){
+      print('Error : $e');
+    }
+  }
+
+  Future _uploadImage() async{
+    Reference pastaRaiz = storage.ref();
+    Reference arquivo = pastaRaiz.child("surveys").child(selectedText+"_"+DateTime.now().toString()+".jpg");
+
+    UploadTask task = arquivo.putFile(picture!);
+
+    Future.delayed(const Duration(seconds: 5), ()async{
+      String urlImage = await task.snapshot.ref.getDownloadURL();
+      if (urlImage != null) {
+        setState(() {
+          _urlPhoto= urlImage;
+        });
+        _urlImageFirestore(urlImage);
+      }
+    });
+  }
+  _urlImageFirestore(String url){
+
+    Map<String , dynamic> dateUpdate = {
+      'photoUrl' : FieldValue.arrayUnion([url]),
+      'idSurvey': widget.idSurvey
+    };
+    db
+        .collection("surveys")
+        .doc(widget.idSurvey)
+        .set(dateUpdate,SetOptions(merge: true))
+        .then((value) {
+      setState(() {
+        _sending = false;
+      });
+    });
+
+  }
 
   _saveLote(LoteModel loteModel) async {
     db
         .collection('surveys')
         .doc(widget.idSurvey)
         .update(loteModel.toMap())
-        .then((_) => Navigator.pushReplacementNamed(context, '/finished'));
+        .then((_) => Navigator.pushReplacementNamed(context, '/finished',arguments: widget.idSurvey));
   }
 
   _LoteTable() async {
@@ -257,7 +317,23 @@ class _CheckListLote1State extends State<CheckListLote1> {
     'Lazer',
   ];
   final ratings = [];
-
+  int order = 0;
+  FirebaseAuth _auth = FirebaseAuth.instance;
+  _getSurveyNumber() async {
+    final User? user = _auth.currentUser;
+    final uid = user?.uid;
+    DocumentSnapshot snapshot = await db.collection('users').doc(uid).get();
+    Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
+    setState(() {
+      order = data?["surveyNumber"] ?? 0;
+    });
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _getSurveyNumber();
+  }
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -272,7 +348,7 @@ class _CheckListLote1State extends State<CheckListLote1> {
         ),
         elevation: 0,
         title: TextCustom(
-          text: 'LOTE',
+          text: 'Vistoria Nº $order',
           size: 20.0,
           color: PaletteColors.white,
           fontWeight: FontWeight.bold,
@@ -293,7 +369,7 @@ class _CheckListLote1State extends State<CheckListLote1> {
                   minHeight: 28, minWidth: 28, maxHeight: 28, maxWidth: 28),
               iconSize: 24.0,
               padding: EdgeInsets.all(3.0),
-              onPressed: () {},
+              onPressed: () => _savePhoto(),
             ),
           ),
           SizedBox(

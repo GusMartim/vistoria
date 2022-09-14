@@ -73,7 +73,7 @@ class Routes {
         );
       case "/finished":
         return MaterialPageRoute(
-            builder: (_) =>const SurveyFinishScreen()
+            builder: (_) => SurveyFinishScreen(idSurvey: args as String)
         );
 
 

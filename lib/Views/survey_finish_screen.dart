@@ -1,14 +1,75 @@
+import 'package:vistoria/Models/image_model.dart';
+import 'package:vistoria/Models/order_model.dart';
 import 'package:vistoria/Utils/exports.dart';
 import 'package:vistoria/Widgets/text_custom.dart';
 
 class SurveyFinishScreen extends StatefulWidget {
-  const SurveyFinishScreen({Key? key}) : super(key: key);
+  final String idSurvey;
+
+  SurveyFinishScreen({required this.idSurvey});
 
   @override
   State<SurveyFinishScreen> createState() => _SurveyFinishScreenState();
 }
 
 class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
+  FirebaseFirestore db = FirebaseFirestore.instance;
+  int order = 0;
+  OrderModel _orderModel = OrderModel();
+  List imageList = [];
+  FirebaseAuth _auth = FirebaseAuth.instance;
+
+  _SurveyNumber() async {
+    _orderModel.order = order + 1;
+    final User? user = _auth.currentUser;
+    final uid = user?.uid;
+    await db
+        .collection('users')
+        .doc(uid)
+        .set({'surveyNumber': _orderModel.order},SetOptions(merge: true)).then(
+            (value) => Navigator.popAndPushNamed(context, '/main'));
+
+  }
+
+
+
+  _getSurveyNumber() async {
+    final User? user = _auth.currentUser;
+    final uid = user?.uid;
+    DocumentSnapshot snapshot =
+        await db.collection('users').doc(uid).get();
+    Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
+    setState(() {
+      order = data?["surveyNumber"] ?? 0;
+      print(order);
+
+
+    });
+    _SurveyNumber();
+  }
+
+  @override
+
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _dataImages();
+
+  }
+
+
+
+  _dataImages() async {
+    DocumentSnapshot snapshot =
+    await db.collection("surveys").doc(widget.idSurvey).get();
+    Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
+    setState(() {
+      imageList = data?["photoUrl"];
+
+    });
+
+
+  }
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -43,7 +104,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                 height: 20,
               ),
               TextCustom(
-                text: "Unidade",
+                text: "Fotos:",
                 size: 16.0,
                 color: PaletteColors.grey,
                 fontWeight: FontWeight.bold,
@@ -52,39 +113,27 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
               SizedBox(
                 height: 16,
               ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    Container(child: Image.asset('assets/image/Casa1.png')),
-                    SizedBox(width: 10),
-                    Container(child: Image.asset('assets/image/Cozinha1.png')),
-                    SizedBox(width: 10),
-                    Container(child: Image.asset('assets/image/telhado1.png')),
-                    SizedBox(width: 10),
-                  ],
-                ),
+              Container(
+                height: height * imageList.length * 0.2,
+                width:  width * 0.9,
+
+                child: GridView.builder(
+                    scrollDirection: Axis.vertical,
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    gridDelegate:
+                        const SliverGridDelegateWithMaxCrossAxisExtent(
+                            maxCrossAxisExtent: 100,mainAxisExtent: 100,crossAxisSpacing: 10,mainAxisSpacing: 10,childAspectRatio: 1.0),
+                    itemCount: imageList.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                          child: Image.network('${imageList[index]}'));
+                    }),
               ),
               SizedBox(
                 height: 10,
               ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    Container(child: Image.asset('assets/image/Banheiro1.png')),
-                    SizedBox(width: 10),
-                    Container(
-                        child: Image.asset('assets/image/Lavanderia1.png')),
-                    SizedBox(width: 10),
-                    Container(child: Image.asset('assets/image/piscina1.png')),
-                    SizedBox(width: 10),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
+
               Row(
                 children: [
                   Ink(
@@ -162,7 +211,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                 child: ButtonCustom(
                   widthCustom: 0.8,
                   heightCustom: 0.070,
-                  onPressed: () => Navigator.popAndPushNamed(context, '/main'),
+                  onPressed: () => _getSurveyNumber(),
                   text: "Finalizar",
                   size: 14.0,
                   colorButton: PaletteColors.primaryColor,

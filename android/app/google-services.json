@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "261997740142",
+    "project_id": "vistoria-ce14e",
+    "storage_bucket": "vistoria-ce14e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:261997740142:android:831a26a7a7bf6fc2d1e67f",
+        "android_client_info": {
+          "package_name": "com.example.vistoria"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "261997740142-08md9oi65ro17p41pd66184jvj5jnel5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9KdTckrV3h2dmctoQy9JFzGM1CHmxW9g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "261997740142-08md9oi65ro17p41pd66184jvj5jnel5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

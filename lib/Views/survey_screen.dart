@@ -1,10 +1,6 @@
-import 'dart:collection';
 
-import 'package:flutter/services.dart';
 import 'package:vistoria/Utils/exports.dart';
-import 'package:vistoria/Widgets/inputRegister.dart';
-import 'package:vistoria/Widgets/snackBars.dart';
-import 'package:vistoria/Widgets/text_custom.dart';
+
 
 class Surveyscreen extends StatefulWidget {
   final text;
@@ -30,7 +26,9 @@ class _SurveyscreenState extends State<Surveyscreen> {
   final TextEditingController _controllerLongMin = TextEditingController();
   final TextEditingController _controllerLongSeg = TextEditingController();
   final TextEditingController _controllerUserCode = TextEditingController();
-  final TextEditingController _controllerSurveyCode = TextEditingController();
+  var   controllerSurveyCode = TextEditingController();
+  Map<String,dynamic>? data;
+  int order = 0;
   List<String> states = ['SP', 'RJ', 'PR', 'MG'];
   String? selectedState = 'SP';
   List<String> type = [
@@ -42,16 +40,19 @@ class _SurveyscreenState extends State<Surveyscreen> {
     'Infrutifera'
   ];
   String? selectedType = 'Casa';
-  String selectedText = 'Imagens';
+
   FirebaseFirestore db = FirebaseFirestore.instance;
-  FirebaseStorage storage = FirebaseStorage.instance;
-  final Map<String, dynamic> data = HashMap();
-  SurveyModel _surveyModel = SurveyModel();
+
   String _error = '';
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   File? picture;
   bool _sending = false;
   String _urlPhoto = '';
+  String selectedText = 'Imagens';
+  FirebaseStorage storage = FirebaseStorage.instance;
+  SurveyModel _surveyModel = SurveyModel();
+
+  FirebaseAuth _auth = FirebaseAuth.instance;
 
   _saveData(SurveyModel surveyModel) async {
     db
@@ -96,7 +97,20 @@ class _SurveyscreenState extends State<Surveyscreen> {
   }
 }
 
+  _getOrder()async{
+    final User? user = _auth.currentUser;
+    final uid = user?.uid;
+    DocumentSnapshot snapshot = await db
+        .collection('users')
+        .doc(uid)
+        .get();
+    Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
+    setState(() {
+      order = data?["surveyNumber"]??0;
 
+    });
+
+  }
   _createTable() async {
     _surveyModel.adress = _controllerAdress.text;
     _surveyModel.number = _controllerNumber.text;
@@ -108,8 +122,13 @@ class _SurveyscreenState extends State<Surveyscreen> {
     _surveyModel.cep = _controllerCEP.text;
     _surveyModel.hourRequest = DateTime.now().toString();
     _surveyModel.idUser = FirebaseAuth.instance.currentUser!.uid;
+
+
+
     _saveData(_surveyModel);
+
   }
+
 
   Future _savePhoto() async{
     try{
@@ -167,6 +186,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
   @override
   void initState() {
     super.initState();
+    _getOrder();
     if(widget.id=='') {
       _surveyModel = SurveyModel.createId();
     }
@@ -272,34 +292,48 @@ class _SurveyscreenState extends State<Surveyscreen> {
                     colorBorder: PaletteColors.greyInput,
                     background: PaletteColors.greyInput),
               ),
-              Container(
-                width: width * 0.9,
-                child: Row(
-                  children: [
-                    SizedBox(width: width * 0.04),
-                    TextCustom(
-                      text: "Codigo Vistoria ",
-                      size: 14.0,
-                      color: PaletteColors.grey,
-                      fontWeight: FontWeight.bold,
-                      textAlign: TextAlign.start,
+              SizedBox(height: height * 0.02),
+              Column(
+                children: [
+                  Container(
+
+                    width: width * 0.9,
+
+                    child: Row(
+                      children: [
+                        SizedBox(width: width * 0.04),
+                        TextCustom(
+                          text: " Vistoria Numero: ",
+                          size: 14.0,
+                          color: PaletteColors.grey,
+                          fontWeight: FontWeight.bold,
+                          textAlign: TextAlign.start,
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                  SizedBox(height: height * 0.01),
+                  Container(
+                    width: width * 0.9,
+                    child: Row(
+                      children: [
+                        SizedBox(width: width * 0.04),
+                        Container(
+                          color:PaletteColors.greyInput,
+                          child: TextCustom(
+                            text: "$order",
+                            size: 14.0,
+                            color: PaletteColors.grey,
+                            fontWeight: FontWeight.bold,
+                            textAlign: TextAlign.start,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-              Container(
-                width: width * 0.9,
-                child: InputRegister(
-                    controller: _controllerSurveyCode,
-                    hint: '',
-                    fonts: 14.0,
-                    keyboardType: TextInputType.text,
-                    width: width * 0.83,
-                    sizeIcon: 0.0,
-                    icons: Icons.height,
-                    colorBorder: PaletteColors.greyInput,
-                    background: PaletteColors.greyInput),
-              ),
+              SizedBox(height: height * 0.02),
               Container(
                 width: width * 0.9,
                 child: Row(
@@ -465,7 +499,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                           controller: _controllerCity,
                           hint: "São Paulo",
                           fonts: 14.0,
-                          keyboardType: TextInputType.number,
+                          keyboardType: TextInputType.text,
                           colorBorder: PaletteColors.greyInput,
                           background: PaletteColors.greyInput,
                         ),
@@ -799,7 +833,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                 child: ButtonCustom(
                   widthCustom: 0.80,
                   heightCustom: 0.070,
-                  onPressed: () => _createTable(),
+                  onPressed: () =>  _createTable(),
                   text: widget.buttonText,
                   size: 14.0,
                   colorButton: PaletteColors.primaryColor,

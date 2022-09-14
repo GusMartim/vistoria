@@ -18,6 +18,7 @@ class SurveyModel{
   String longSeg = '';
   String hourRequest = '';
   String idUser = '';
+  int  Nsurvey = 0;
 
   SurveyModel();
 
@@ -40,6 +41,7 @@ Map<String,dynamic> toMap(){
     "longG": this.longG,
     "longMin": this.longMin,
     "longSeg": this.longSeg,
+    "Nsurvey": this.Nsurvey,
 
   };
   return map;

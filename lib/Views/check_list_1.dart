@@ -5,7 +5,8 @@ import 'package:vistoria/Utils/exports.dart';
 
 class CheckList1 extends StatefulWidget {
   final String idSurvey;
-   CheckList1({required this.idSurvey});
+
+  CheckList1({required this.idSurvey});
 
   @override
   State<CheckList1> createState() => _CheckList1State();
@@ -46,7 +47,7 @@ class _CheckList1State extends State<CheckList1> {
   String SPool = '0';
   List<String> goal = ['Venda', 'Aluguel'];
   String? selectedGoal = 'Venda';
-  List<String> infoOrigin = ['Oferta de Mercado','Transação Efetuada'];
+  List<String> infoOrigin = ['Oferta de Mercado', 'Transação Efetuada'];
   String? selectedInfo = 'Oferta de Mercado';
   UnityModel _unityModel = UnityModel();
   File? picture;
@@ -56,11 +57,23 @@ class _CheckList1State extends State<CheckList1> {
   FirebaseStorage storage = FirebaseStorage.instance;
   final Map<String, dynamic> data = HashMap();
   FirebaseFirestore db = FirebaseFirestore.instance;
-  Future _savePhoto() async{
-    try{
+
+  FirebaseAuth _auth = FirebaseAuth.instance;
+  _getSurveyNumber() async {
+    final User? user = _auth.currentUser;
+    final uid = user?.uid;
+    DocumentSnapshot snapshot = await db.collection('users').doc(uid).get();
+    Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
+    setState(() {
+      order = data?["surveyNumber"] ?? 0;
+    });
+  }
+
+  Future _savePhoto() async {
+    try {
       final image = await ImagePicker()
           .pickImage(source: ImageSource.camera, imageQuality: 100);
-      if(image == null) return;
+      if (image == null) return;
 
       final imageTemporary = File(image.path);
       setState(() {
@@ -70,52 +83,52 @@ class _CheckList1State extends State<CheckList1> {
         });
         _uploadImage();
       });
-    } on PlatformException catch (e){
+    } on PlatformException catch (e) {
       print('Error : $e');
     }
   }
-  SurveyModel _surveyModel = SurveyModel();
-  Future _uploadImage() async{
+  Future _uploadImage() async {
     Reference pastaRaiz = storage.ref();
-    Reference arquivo = pastaRaiz.child("surveys").child(selectedText+"_"+DateTime.now().toString()+".jpg");
+    Reference arquivo = pastaRaiz
+        .child("surveys")
+        .child(selectedText + "_" + DateTime.now().toString() + ".jpg");
 
     UploadTask task = arquivo.putFile(picture!);
 
-    Future.delayed(const Duration(seconds: 5), ()async{
+    Future.delayed(const Duration(seconds: 5), () async {
       String urlImage = await task.snapshot.ref.getDownloadURL();
       if (urlImage != null) {
         setState(() {
-          _urlPhoto= urlImage;
+          _urlPhoto = urlImage;
         });
         _urlImageFirestore(urlImage);
       }
     });
   }
-  _urlImageFirestore(String url){
-
-    Map<String , dynamic> dateUpdate = {
-      'photoUrl' : FieldValue.arrayUnion([url]),
-      'idSurvey': _surveyModel.idSurvey
+  _urlImageFirestore(String url) {
+    Map<String, dynamic> dateUpdate = {
+      'photoUrl': FieldValue.arrayUnion([url]),
+      'idSurvey': widget.idSurvey
     };
     db
         .collection("surveys")
-        .doc(_surveyModel.idSurvey)
-        .set(dateUpdate,SetOptions(merge: true))
+        .doc(widget.idSurvey)
+        .set(dateUpdate, SetOptions(merge: true))
         .then((value) {
       setState(() {
         _sending = false;
       });
     });
-
   }
+
   _saveUnitys(UnityModel unityModel) async {
     db
         .collection('surveys')
         .doc(widget.idSurvey)
         .update(unityModel.toMap())
-        .then((_) => Navigator.pushReplacementNamed(context, '/finished'));
+        .then((_) => Navigator.pushReplacementNamed(context, '/finished',
+            arguments: widget.idSurvey));
   }
-
   _UnitysTable() async {
     _unityModel.Goal = selectedGoal.toString();
     _unityModel.Origin = selectedInfo.toString();
@@ -168,190 +181,150 @@ class _CheckList1State extends State<CheckList1> {
 
     _saveUnitys(_unityModel);
   }
-
   _saveCheckList() async {
     saveBlock.clear();
     for (var i = 0; i < block.length; i++) {
       if (block[i].value != false) {
-        saveBlock.add(block[i].title +
-            '#' +
-            block[i].value.toString());
+        saveBlock.add(block[i].title + '#' + block[i].value.toString());
       }
     }
     saveKitchen.clear();
     for (var i = 0; i < kitchen.length; i++) {
       if (kitchen[i].value != false) {
-        saveKitchen.add(kitchen[i].title +
-            '#' +
-            kitchen[i].value.toString());
+        saveKitchen.add(kitchen[i].title + '#' + kitchen[i].value.toString());
       }
     }
     saveBathroom.clear();
     for (var i = 0; i < bathroom.length; i++) {
       if (bathroom[i].value != false) {
-        saveBathroom.add(bathroom[i].title +
-            '#' +
-            bathroom[i].value.toString());
+        saveBathroom
+            .add(bathroom[i].title + '#' + bathroom[i].value.toString());
       }
     }
     saveTank.clear();
     for (var i = 0; i < tank.length; i++) {
       if (tank[i].value != false) {
-        saveTank.add(tank[i].title +
-            '#' +
-            tank[i].value.toString() );
+        saveTank.add(tank[i].title + '#' + tank[i].value.toString());
       }
     }
     savePattern.clear();
     for (var i = 0; i < pattern.length; i++) {
       if (pattern[i].value != false) {
-        savePattern.add(pattern[i].title +
-            '#' +
-            pattern[i].value.toString());
+        savePattern.add(pattern[i].title + '#' + pattern[i].value.toString());
       }
     }
     saveState.clear();
     for (var i = 0; i < state.length; i++) {
       if (state[i].value != false) {
-        saveState.add(state[i].title +
-            '#' +
-            state[i].value.toString());
+        saveState.add(state[i].title + '#' + state[i].value.toString());
       }
     }
     saveUnityroof.clear();
     for (var i = 0; i < unityroof.length; i++) {
       if (unityroof[i].value != false) {
-        saveUnityroof.add(unityroof[i].title +
-            '#' +
-            unityroof[i].value.toString());
+        saveUnityroof
+            .add(unityroof[i].title + '#' + unityroof[i].value.toString());
       }
     }
     saveExtern.clear();
     for (var i = 0; i < extern.length; i++) {
       if (extern[i].value != false) {
-        saveExtern.add(extern[i].title +
-            '#' +
-            extern[i].value.toString());
+        saveExtern.add(extern[i].title + '#' + extern[i].value.toString());
       }
     }
     saveFloor.clear();
     for (var i = 0; i < floor.length; i++) {
       if (floor[i].value != false) {
-        saveFloor.add(floor[i].title +
-            '#' +
-            floor[i].value.toString());
+        saveFloor.add(floor[i].title + '#' + floor[i].value.toString());
       }
     }
     saveIntern.clear();
     for (var i = 0; i < Intern.length; i++) {
       if (Intern[i].value != false) {
-        saveIntern.add(Intern[i].title +
-            '#' +
-            Intern[i].value.toString());
+        saveIntern.add(Intern[i].title + '#' + Intern[i].value.toString());
       }
     }
     saveWindowns.clear();
     for (var i = 0; i < Windows.length; i++) {
       if (Windows[i].value != false) {
-        saveWindowns.add(Windows[i].title +
-            '#' +
-            Windows[i].value.toString());
+        saveWindowns.add(Windows[i].title + '#' + Windows[i].value.toString());
       }
     }
     saveInternPaint.clear();
     for (var i = 0; i < InternPaint.length; i++) {
       if (InternPaint[i].value != false) {
-        saveInternPaint.add(InternPaint[i].title +
-            '#' +
-            InternPaint[i].value.toString());
+        saveInternPaint
+            .add(InternPaint[i].title + '#' + InternPaint[i].value.toString());
       }
     }
     saveBalcony.clear();
     for (var i = 0; i < balcony.length; i++) {
       if (balcony[i].value != false) {
-        saveBalcony.add(balcony[i].title +
-            '#' +
-            balcony[i].value.toString());
+        saveBalcony.add(balcony[i].title + '#' + balcony[i].value.toString());
       }
     }
     saveSwitchBoard.clear();
     for (var i = 0; i < switchboard.length; i++) {
       if (switchboard[i].value != false) {
-        saveSwitchBoard.add(switchboard[i].title +
-            '#' +
-            switchboard[i].value.toString());
+        saveSwitchBoard
+            .add(switchboard[i].title + '#' + switchboard[i].value.toString());
       }
     }
     saveType.clear();
     for (var i = 0; i < type.length; i++) {
       if (type[i].value != false) {
-        saveType.add(type[i].title +
-            '#' +
-            type[i].value.toString());
+        saveType.add(type[i].title + '#' + type[i].value.toString());
       }
     }
     saveInfra.clear();
     for (var i = 0; i < infra.length; i++) {
       if (infra[i].value != false) {
-        saveInfra.add(infra[i].title +
-            '#' +
-            infra[i].value.toString());
+        saveInfra.add(infra[i].title + '#' + infra[i].value.toString());
       }
     }
     saveSituation.clear();
     for (var i = 0; i < situation.length; i++) {
       if (situation[i].value != false) {
-        saveSituation.add(situation[i].title +
-            '#' +
-            situation[i].value.toString());
+        saveSituation
+            .add(situation[i].title + '#' + situation[i].value.toString());
       }
     }
     saveQuota.clear();
     for (var i = 0; i < quota.length; i++) {
       if (quota[i].value != false) {
-        saveQuota.add(quota[i].title +
-            '#' +
-            quota[i].value.toString());
+        saveQuota.add(quota[i].title + '#' + quota[i].value.toString());
       }
     }
     savePosition.clear();
     for (var i = 0; i < position.length; i++) {
       if (position[i].value != false) {
-        savePosition.add(position[i].title +
-            '#' +
-            position[i].value.toString());
+        savePosition
+            .add(position[i].title + '#' + position[i].value.toString());
       }
     }
     saveRoof.clear();
     for (var i = 0; i < roof.length; i++) {
       if (roof[i].value != false) {
-        saveRoof.add(roof[i].title +
-            '#' +
-            roof[i].value.toString());
+        saveRoof.add(roof[i].title + '#' + roof[i].value.toString());
       }
     }
     saveWall.clear();
     for (var i = 0; i < wall.length; i++) {
       if (wall[i].value != false) {
-        saveWall.add(wall[i].title +
-            '#' +
-            wall[i].value.toString());
+        saveWall.add(wall[i].title + '#' + wall[i].value.toString());
       }
     }
     savePaint.clear();
     for (var i = 0; i < paint.length; i++) {
       if (paint[i].value != false) {
-        savePaint.add(paint[i].title +
-            '#' +
-            paint[i].value.toString());
+        savePaint.add(paint[i].title + '#' + paint[i].value.toString());
       }
     }
     savePathology.clear();
     for (var i = 0; i < pathology.length; i++) {
       if (pathology[i].value != false) {
-        savePathology.add(pathology[i].title +
-            '#' +
-            pathology[i].value.toString());
+        savePathology
+            .add(pathology[i].title + '#' + pathology[i].value.toString());
       }
     }
     db.collection('surveys').doc(widget.idSurvey).update({
@@ -378,7 +351,6 @@ class _CheckList1State extends State<CheckList1> {
       "Estado de Conservação": saveState.toSet().toList(),
       "Teto da Unidade": saveUnityroof.toSet().toList(),
       "Condominio Bloco": saveBlock.toSet().toList(),
-
     });
     _UnitysTable();
   }
@@ -611,7 +583,6 @@ class _CheckList1State extends State<CheckList1> {
   final TextEditingController _controllerTerrainArea = TextEditingController();
   final TextEditingController _controllerTotalArea = TextEditingController();
 
-
   List saveBlock = [];
   List saveKitchen = [];
   List saveBathroom = [];
@@ -635,6 +606,15 @@ class _CheckList1State extends State<CheckList1> {
   List saveWall = [];
   List savePaint = [];
   List savePathology = [];
+  int order = 0;
+
+
+
+  @override
+  void initState() {
+    super.initState();
+    _getSurveyNumber();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -650,7 +630,7 @@ class _CheckList1State extends State<CheckList1> {
         ),
         elevation: 0,
         title: TextCustom(
-          text: 'CASA',
+          text: 'Vistoria Nº $order',
           size: 20.0,
           color: PaletteColors.white,
           fontWeight: FontWeight.bold,
@@ -671,7 +651,7 @@ class _CheckList1State extends State<CheckList1> {
                   minHeight: 28, minWidth: 28, maxHeight: 28, maxWidth: 28),
               iconSize: 24.0,
               padding: EdgeInsets.all(3.0),
-              onPressed: () {},
+              onPressed: () => _savePhoto(),
             ),
           ),
           SizedBox(width: width * 0.04),
@@ -762,7 +742,7 @@ class _CheckList1State extends State<CheckList1> {
                     )
                   ],
                 ),
-                SizedBox(height: height* 0.01),
+                SizedBox(height: height * 0.01),
                 Row(
                   children: [
                     Column(
@@ -799,10 +779,9 @@ class _CheckList1State extends State<CheckList1> {
                         ),
                       ],
                     ),
-
                   ],
                 ),
-                SizedBox(height: height* 0.01),
+                SizedBox(height: height * 0.01),
                 Row(
                   children: [
                     Column(
@@ -839,10 +818,9 @@ class _CheckList1State extends State<CheckList1> {
                         ),
                       ],
                     ),
-
                   ],
                 ),
-                SizedBox(height: height* 0.01),
+                SizedBox(height: height * 0.01),
                 Row(
                   children: [
                     Column(
@@ -879,13 +857,11 @@ class _CheckList1State extends State<CheckList1> {
                         ),
                       ],
                     ),
-
                   ],
                 ),
-                SizedBox(height: height* 0.01),
+                SizedBox(height: height * 0.01),
                 Row(
                   children: [
-
                     Column(
                       children: [
                         Row(
@@ -903,7 +879,7 @@ class _CheckList1State extends State<CheckList1> {
                             ),
                           ],
                         ),
-                        SizedBox(height: height* 0.01),
+                        SizedBox(height: height * 0.01),
                         Row(
                           children: [
                             SizedBox(width: 10),
@@ -918,11 +894,11 @@ class _CheckList1State extends State<CheckList1> {
                                 child: DropdownButton<String>(
                                   items: goal
                                       .map((goal) => DropdownMenuItem<String>(
-                                      value: goal,
-                                      child: TextCustom(
-                                        text: goal,
-                                        color: PaletteColors.grey,
-                                      )))
+                                          value: goal,
+                                          child: TextCustom(
+                                            text: goal,
+                                            color: PaletteColors.grey,
+                                          )))
                                       .toList(),
                                   value: selectedGoal,
                                   onChanged: (goal) =>
@@ -932,15 +908,13 @@ class _CheckList1State extends State<CheckList1> {
                             ),
                           ],
                         ),
-
                       ],
                     ),
                   ],
                 ),
-                SizedBox(height: height* 0.01),
+                SizedBox(height: height * 0.01),
                 Row(
                   children: [
-
                     Column(
                       children: [
                         Row(
@@ -958,7 +932,7 @@ class _CheckList1State extends State<CheckList1> {
                             ),
                           ],
                         ),
-                        SizedBox(height: height* 0.01),
+                        SizedBox(height: height * 0.01),
                         Row(
                           children: [
                             SizedBox(width: 10),
@@ -972,12 +946,13 @@ class _CheckList1State extends State<CheckList1> {
                               child: DropdownButtonHideUnderline(
                                 child: DropdownButton<String>(
                                   items: infoOrigin
-                                      .map((infoOrigin) => DropdownMenuItem<String>(
-                                      value: infoOrigin,
-                                      child: TextCustom(
-                                        text: infoOrigin,
-                                        color: PaletteColors.grey,
-                                      )))
+                                      .map((infoOrigin) =>
+                                          DropdownMenuItem<String>(
+                                              value: infoOrigin,
+                                              child: TextCustom(
+                                                text: infoOrigin,
+                                                color: PaletteColors.grey,
+                                              )))
                                       .toList(),
                                   value: selectedInfo,
                                   onChanged: (infoOrigin) =>
@@ -987,12 +962,11 @@ class _CheckList1State extends State<CheckList1> {
                             ),
                           ],
                         ),
-
                       ],
                     ),
                   ],
                 ),
-                SizedBox(height: height* 0.01),
+                SizedBox(height: height * 0.01),
                 TextCustom(
                   text: "Patologia",
                   size: 16.0,
@@ -1021,7 +995,7 @@ class _CheckList1State extends State<CheckList1> {
                 Divider(
                   thickness: 1.0,
                 ),
-                SizedBox(height: height* 0.01),
+                SizedBox(height: height * 0.01),
                 TextCustom(
                   text: "Tipo de Imóvel",
                   size: 16.0,

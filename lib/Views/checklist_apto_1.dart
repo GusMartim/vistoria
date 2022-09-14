@@ -51,6 +51,76 @@ class _CheckListApto1State extends State<CheckListApto1> {
   String SAptos = '0';
   int nUnitys = 0;
   String SUnitys = '0';
+  int order = 0;
+  File? picture;
+  bool _sending = false;
+  String _urlPhoto = '';
+  String selectedText = 'Imagens';
+  FirebaseStorage storage = FirebaseStorage.instance;
+  final Map<String, dynamic> data = HashMap();
+
+  FirebaseAuth _auth = FirebaseAuth.instance;
+  _getSurveyNumber() async {
+    final User? user = _auth.currentUser;
+    final uid = user?.uid;
+    DocumentSnapshot snapshot = await db.collection('users').doc(uid).get();
+    Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
+    setState(() {
+      order = data?["surveyNumber"] ?? 0;
+    });
+  }
+
+  Future _savePhoto() async{
+    try{
+      final image = await ImagePicker()
+          .pickImage(source: ImageSource.camera, imageQuality: 100);
+      if(image == null) return;
+
+      final imageTemporary = File(image.path);
+      setState(() {
+        this.picture = imageTemporary;
+        setState(() {
+          _sending = true;
+        });
+        _uploadImage();
+      });
+    } on PlatformException catch (e){
+      print('Error : $e');
+    }
+  }
+  Future _uploadImage() async{
+    Reference pastaRaiz = storage.ref();
+    Reference arquivo = pastaRaiz.child("surveys").child(selectedText+"_"+DateTime.now().toString()+".jpg");
+
+    UploadTask task = arquivo.putFile(picture!);
+
+    Future.delayed(const Duration(seconds: 5), ()async{
+      String urlImage = await task.snapshot.ref.getDownloadURL();
+      if (urlImage != null) {
+        setState(() {
+          _urlPhoto= urlImage;
+        });
+        _urlImageFirestore(urlImage);
+      }
+    });
+  }
+  _urlImageFirestore(String url){
+
+    Map<String , dynamic> dateUpdate = {
+      'photoUrl' : FieldValue.arrayUnion([url]),
+      'idSurvey': widget.idSurvey
+    };
+    db
+        .collection("surveys")
+        .doc(widget.idSurvey)
+        .set(dateUpdate,SetOptions(merge: true))
+        .then((value) {
+      setState(() {
+        _sending = false;
+      });
+    });
+
+  }
 
   AptoModel _aptoModel = AptoModel();
   FirebaseFirestore db = FirebaseFirestore.instance;
@@ -59,9 +129,8 @@ class _CheckListApto1State extends State<CheckListApto1> {
         .collection('surveys')
         .doc(widget.idSurvey)
         .update(aptoModel.toMap())
-        .then((_) => Navigator.pushReplacementNamed(context, '/finished'));
+        .then((_) => Navigator.pushReplacementNamed(context, '/finished',arguments: widget.idSurvey));
   }
-
   _AptoTable() async {
     _aptoModel.Goal = selectedGoal.toString();
     _aptoModel.Origin = selectedInfo.toString();
@@ -118,7 +187,6 @@ class _CheckListApto1State extends State<CheckListApto1> {
     _aptoModel.phone = _controllerPhone.text;
     _saveApto(_aptoModel);
   }
-
   _saveCheckList() async {
     saveBlock.clear();
     for (var i = 0; i < block.length; i++) {
@@ -128,36 +196,12 @@ class _CheckListApto1State extends State<CheckListApto1> {
             block[i].value.toString());
       }
     }
-    saveunity.clear();
-    for (var i = 0; i < unityapto.length; i++) {
-      if (unityapto[i].value != false) {
-        saveunity.add(unityapto[i].title +
-            '#' +
-            unityapto[i].value.toString());
-      }
-    }
-    saveEdPosition.clear();
-    for (var i = 0; i < edPosition.length; i++) {
-      if (edPosition[i].value != false) {
-        saveEdPosition.add(edPosition[i].title +
-            '#' +
-            edPosition[i].value.toString());
-      }
-    }
     saveView.clear();
     for (var i = 0; i < view.length; i++) {
       if (view[i].value != false) {
         saveView.add(view[i].title +
             '#' +
             view[i].value.toString());
-      }
-    }
-    saveUnityPosition.clear();
-    for (var i = 0; i < unPosition.length; i++) {
-      if (unPosition[i].value != false) {
-        saveUnityPosition.add(unPosition[i].title +
-            '#' +
-            unPosition[i].value.toString());
       }
     }
     saveKitchen.clear();
@@ -393,15 +437,6 @@ class _CheckListApto1State extends State<CheckListApto1> {
     CheckBoxModel(title: 'Outro:'),
   ];
   final TextEditingController _controllerQuota = TextEditingController();
-  final unPosition = [
-    CheckBoxModel(title: 'Isolada'),
-    CheckBoxModel(title: 'Junto a uma Lateral'),
-    CheckBoxModel(title: 'Junto as Laterais'),
-    CheckBoxModel(title: 'Geminada'),
-    CheckBoxModel(title: 'Ocupa todo terreno'),
-    CheckBoxModel(title: 'Outro:'),
-  ];
-  final TextEditingController _controllerunPosition = TextEditingController();
   final wall = [
     CheckBoxModel(title: 'Alvenaria'),
     CheckBoxModel(title: 'Placa'),
@@ -545,20 +580,6 @@ class _CheckListApto1State extends State<CheckListApto1> {
     CheckBoxModel(title: 'Outro:'),
   ];
   final TextEditingController _controllerUnityRoof = TextEditingController();
-
-  final unityapto = [
-    CheckBoxModel(title: 'Andar'),
-    CheckBoxModel(title: 'Apto de cobertura'),
-    CheckBoxModel(title: 'Outro:'),
-  ];
-  final TextEditingController _controllerUnity = TextEditingController();
-
-  final edPosition = [
-    CheckBoxModel(title: 'Isolado/ Frente do terreno'),
-    CheckBoxModel(title: 'Isolado/ Centro do terreno'),
-    CheckBoxModel(title: 'Outro:'),
-  ];
-  final TextEditingController _controllerEdPosition = TextEditingController();
   final view = [
     CheckBoxModel(title: 'Favorável'),
     CheckBoxModel(title: 'Desfavorável'),
@@ -638,6 +659,14 @@ class _CheckListApto1State extends State<CheckListApto1> {
   List saveUnityPosition = [];
   List saveBlock = [];
   List savePathology = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _getSurveyNumber();
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -652,7 +681,7 @@ class _CheckListApto1State extends State<CheckListApto1> {
         ),
         elevation: 0,
         title: TextCustom(
-          text: 'APARTAMENTO',
+          text: 'Vistoria Nº $order',
           size: 20.0,
           color: PaletteColors.white,
           fontWeight: FontWeight.bold,
@@ -673,7 +702,7 @@ class _CheckListApto1State extends State<CheckListApto1> {
                   minHeight: 28, minWidth: 28, maxHeight: 28, maxWidth: 28),
               iconSize: 24.0,
               padding: EdgeInsets.all(3.0),
-              onPressed: () {},
+              onPressed: () => _savePhoto(),
             ),
           ),
           SizedBox(width: width * 0.04),

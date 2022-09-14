@@ -1,7 +1,9 @@
 export 'dart:async';
 export 'dart:io';
 export 'dart:convert';
+export 'dart:collection';
 
+export 'package:flutter/services.dart';
 export 'package:flutter/material.dart';
 export 'package:auto_size_text/auto_size_text.dart';
 export 'package:brasil_fields/brasil_fields.dart';
@@ -30,6 +32,7 @@ export '../Views/survey_finish_screen.dart';
 
 
 
+export '../Widgets/snackBars.dart';
 export '../Widgets/buttom_custom.dart';
 export '../Widgets/show_dialog_alert.dart';
 export '../Widgets/card_custom.dart';
