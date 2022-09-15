@@ -119,6 +119,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
     _surveyModel.cep = _controllerCEP.text;
     _surveyModel.hourRequest = DateTime.now().toString();
     _surveyModel.idUser = FirebaseAuth.instance.currentUser!.uid;
+    _surveyModel.Nsurvey = order + 1;
 
 
 
@@ -318,7 +319,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                         Container(
                           color:PaletteColors.greyInput,
                           child: TextCustom(
-                            text: "$order",
+                            text: "${order+1}",
                             size: 14.0,
                             color: PaletteColors.grey,
                             fontWeight: FontWeight.bold,

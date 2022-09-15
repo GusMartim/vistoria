@@ -184,7 +184,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
         ),
         elevation: 0,
         title: TextCustom(
-          text: 'ETAPA DE OBRA',
+          text: 'Vistoria Nª ${order+1}',
           size: 20.0,
           color: PaletteColors.white,
           fontWeight: FontWeight.bold,
