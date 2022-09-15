@@ -52,6 +52,7 @@ export '../Models/check_box_model.dart';
 export '../Models/list_tile_model.dart';
 export '../Models/user_model.dart';
 export '../Models/survey_model.dart';
+export '../Models/order_model.dart';
 export '../Models/Check List Models/check_list_casa_model.dart';
 export '../Models/Check List Models/check_list_apto_model.dart';
 export '../Models/Check List Models/check_list_etapa_de_obra.dart';

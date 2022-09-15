@@ -22,7 +22,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseFirestore db = FirebaseFirestore.instance;
   UserModel _userModel = UserModel();
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
   bool visiblePassword = true;
   bool visibleConfirmPassword = true;
   String _error = '';
@@ -42,10 +42,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   _createUser() async {
-    if (_controllerDoc.text.isNotEmpty) {
+    if (_controllerDoc.text.length>=13) {
       if (_controllerName.text.isNotEmpty) {
         if (_controllerEmail.text.isNotEmpty) {
-          if (_controllerPhone.text.isNotEmpty) {
+          if (_controllerPhone.text.length>=14) {
             if (_controllerPassword.text == _controllerPasswordConfirm.text &&
                 _controllerPassword.text.isNotEmpty) {
               setState(() {
@@ -74,22 +74,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 if (e.code == "weak-password") {
                   setState(() {
                     _error = "Digite uma senha mais forte!";
-                    showSnackBar(context, _error, _scaffoldKey);
+                    showSnackBar(context, _error,);
                   });
                 } else if (e.code == "unknown") {
                   setState(() {
                     _error = "A senha está vazia";
-                    showSnackBar(context, _error, _scaffoldKey);
+                    showSnackBar(context, _error,);
                   });
                 } else if (e.code == "invalid-email") {
                   setState(() {
                     _error = "Digite um e-mail válido";
-                    showSnackBar(context, _error, _scaffoldKey);
+                    showSnackBar(context, _error,);
                   });
                 } else if (e.code == "email-already-in-use") {
                   setState(() {
                     _error = "Esse e-mail já está cadastrado!";
-                    showSnackBar(context, _error, _scaffoldKey);
+                    showSnackBar(context, _error,);
                   });
                 } else {
                   setState(() {
@@ -100,21 +100,31 @@ class _RegisterScreenState extends State<RegisterScreen> {
             } else {
               setState(() {
                 _error = 'Senhas diferentes';
-                showSnackBar(context, _error, _scaffoldKey);
+                showSnackBar(context, _error,);
               });
             }
           } else {
             setState(() {
               _error = 'Confira o número do telefone';
-              showSnackBar(context, _error, _scaffoldKey);
+              showSnackBar(context, _error,);
             });
           }
+        }else {
+          setState(() {
+            _error = 'Campo email está vazio!';
+            showSnackBar(context, _error,);
+          });
         }
+      }else {
+        setState(() {
+          _error = 'Campo nome está vazio!';
+          showSnackBar(context, _error,);
+        });
       }
     } else {
       setState(() {
         _error = 'Confira o CPF ou CNPJ';
-        showSnackBar(context, _error, _scaffoldKey);
+        showSnackBar(context, _error,);
       });
     }
   }
@@ -124,7 +134,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
-      key: _scaffoldKey,
       backgroundColor: PaletteColors.white,
       appBar: AppBar(
         backgroundColor: PaletteColors.bgColor,
@@ -230,11 +239,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Container(
                   alignment: Alignment.center,
                   child: InputRegister(
+                    inputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly,
+                      CpfOuCnpjFormatter()
+                    ],
                     icons: Icons.height,
                     sizeIcon: 0.0,
                     width: width * 0.8,
                     controller: _controllerDoc,
-                    hint: '000.000.000-0',
+                    hint: '000.000.000-0/99.999.999/9999-99',
                     fonts: 14.0,
                     keyboardType: TextInputType.text,
                     colorBorder: PaletteColors.greyInput,
@@ -338,6 +351,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Container(
                   alignment: Alignment.center,
                   child: InputRegister(
+                    inputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly,
+                      TelefoneInputFormatter()
+                    ],
                     icons: Icons.height,
                     sizeIcon: 0.0,
                     width: width * 0.8,

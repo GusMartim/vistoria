@@ -1,5 +1,4 @@
-import 'package:vistoria/Models/image_model.dart';
-import 'package:vistoria/Models/order_model.dart';
+import 'package:vistoria/Models/image_model.dart';import 'package:vistoria/Models/order_model.dart';
 import 'package:vistoria/Utils/exports.dart';
 import 'package:vistoria/Widgets/text_custom.dart';
 
@@ -15,34 +14,32 @@ class SurveyFinishScreen extends StatefulWidget {
 class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
   FirebaseFirestore db = FirebaseFirestore.instance;
   int order = 0;
-  OrderModel _orderModel = OrderModel();
-  List imageList = [];
-  FirebaseAuth _auth = FirebaseAuth.instance;
 
+  List imageList = [];
+
+
+
+
+
+  OrderModel _orderModel = OrderModel();
   _SurveyNumber() async {
     _orderModel.order = order + 1;
-    final User? user = _auth.currentUser;
-    final uid = user?.uid;
     await db
-        .collection('users')
-        .doc(uid)
-        .set({'surveyNumber': _orderModel.order},SetOptions(merge: true)).then(
-            (value) => Navigator.popAndPushNamed(context, '/main'));
+        .collection('surveyNumber')
+        .doc('surveyNumber')
+        .set({'surveyNumber': _orderModel.order},SetOptions(merge: true))
+        .then((value) => Navigator.pushReplacementNamed(context, '/main'));
 
   }
+  _getOrder()async{
 
-
-
-  _getSurveyNumber() async {
-    final User? user = _auth.currentUser;
-    final uid = user?.uid;
-    DocumentSnapshot snapshot =
-        await db.collection('users').doc(uid).get();
+    DocumentSnapshot snapshot = await db
+        .collection('surveyNumber')
+        .doc('surveyNumber')
+        .get();
     Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
     setState(() {
-      order = data?["surveyNumber"] ?? 0;
-      print(order);
-
+      order = data?["surveyNumber"]??0;
 
     });
     _SurveyNumber();
@@ -113,22 +110,28 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
               SizedBox(
                 height: 16,
               ),
-              Container(
-                height: height * imageList.length * 0.2,
-                width:  width * 0.9,
+              Column(
+                children: [
+                  Container(
+                    width:  width * 0.9,
 
-                child: GridView.builder(
-                    scrollDirection: Axis.vertical,
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    gridDelegate:
-                        const SliverGridDelegateWithMaxCrossAxisExtent(
-                            maxCrossAxisExtent: 100,mainAxisExtent: 100,crossAxisSpacing: 10,mainAxisSpacing: 10,childAspectRatio: 1.0),
-                    itemCount: imageList.length,
-                    itemBuilder: (context, index) {
-                      return Container(
-                          child: Image.network('${imageList[index]}'));
-                    }),
+                    child: GridView.builder(
+                        scrollDirection: Axis.vertical,
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        gridDelegate:
+                            const SliverGridDelegateWithMaxCrossAxisExtent(
+                                maxCrossAxisExtent: 160,mainAxisExtent: 120,mainAxisSpacing: 10,childAspectRatio: 1.0),
+                        itemCount: imageList.length,
+                        itemBuilder: (context, index) {
+                          return Container(
+
+
+                              child: Image.network('${imageList[index]}'));
+                        }),
+                  ),
+                  SizedBox(height: height * 0.01,)
+                ],
               ),
               SizedBox(
                 height: 10,
@@ -211,7 +214,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                 child: ButtonCustom(
                   widthCustom: 0.8,
                   heightCustom: 0.070,
-                  onPressed: () => _getSurveyNumber(),
+                  onPressed: () => _getOrder(),
                   text: "Finalizar",
                   size: 14.0,
                   colorButton: PaletteColors.primaryColor,

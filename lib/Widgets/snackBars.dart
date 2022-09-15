@@ -1,6 +1,6 @@
 import 'package:vistoria/Utils/exports.dart';
 
-void showSnackBar(BuildContext context, String text,final _scaffoldKey){
+void showSnackBar(BuildContext context, String text){
   final snackbar = SnackBar(
     backgroundColor: Colors.red,
     content: Row(
@@ -15,5 +15,5 @@ void showSnackBar(BuildContext context, String text,final _scaffoldKey){
     ),
   );
 
-  _scaffoldKey.currentState.showSnackBar(snackbar);
+  ScaffoldMessenger.of(context).showSnackBar(snackbar);
 }

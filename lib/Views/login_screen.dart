@@ -11,7 +11,6 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _controllerEmail = TextEditingController();
   final _controllerPassword = TextEditingController();
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
   bool visiblePassword = true;
   FirebaseAuth _auth = FirebaseAuth.instance;
   String _error =  "";
@@ -33,24 +32,24 @@ class _LoginScreenState extends State<LoginScreen> {
         if(e.code =="unknown"){
           setState(() {
             _error = "A senha está vazia!";
-            showSnackBar(context, _error,_scaffoldKey);
+            showSnackBar(context, _error,);
           });
         }else if(e.code =="invalid-email"){
           setState(() {
             _error = "Digite um e-mail válido!";
-            showSnackBar(context, _error,_scaffoldKey);
+            showSnackBar(context, _error,);
           });
         }else{
           setState(() {
             _error = e.code;
-            showSnackBar(context, _error,_scaffoldKey);
+            showSnackBar(context, _error,);
           });
         }
       }
     } else {
       setState(() {
         _error = "Preencha seu email";
-        showSnackBar(context, _error,_scaffoldKey);
+        showSnackBar(context, _error,);
       });
     }
   }
@@ -62,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
     double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      key: _scaffoldKey,
+
       backgroundColor: PaletteColors.white,
       body: Center(
         child: SingleChildScrollView(

@@ -51,14 +51,17 @@ class _CheckListDataState extends State<CheckListData> {
   FirebaseStorage storage = FirebaseStorage.instance;
   final Map<String, dynamic> data = HashMap();
   int order = 0;
-  FirebaseAuth _auth = FirebaseAuth.instance;
-  _getSurveyNumber() async {
-    final User? user = _auth.currentUser;
-    final uid = user?.uid;
-    DocumentSnapshot snapshot = await db.collection('users').doc(uid).get();
+
+  _getSurveyNumber()async{
+
+    DocumentSnapshot snapshot = await db
+        .collection('surveyNumber')
+        .doc('surveyNumber')
+        .get();
     Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
     setState(() {
-      order = data?["surveyNumber"] ?? 0;
+      order = data?["surveyNumber"]??0;
+
     });
   }
 
@@ -124,7 +127,7 @@ class _CheckListDataState extends State<CheckListData> {
         .collection('surveys')
         .doc(widget.idSurvey)
         .update(dataModel.toMap())
-        .then((_) => Navigator.pushReplacementNamed(context, '/finished',
+        .then((_) => Navigator.pushNamed(context, '/finished',
             arguments: widget.idSurvey));
   }
 
@@ -504,6 +507,10 @@ class _CheckListDataState extends State<CheckListData> {
                         Container(
                           width: width * 0.45,
                           child: InputRegister(
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly,
+                              RealInputFormatter(moeda: true)
+                            ],
                             icons: Icons.height,
                             sizeIcon: 0.0,
                             width: width * 0.53,
@@ -664,7 +671,7 @@ class _CheckListDataState extends State<CheckListData> {
                             icons: Icons.height,
                             sizeIcon: 0.0,
                             width: width * 0.2,
-                            controller: _controllerTerrainArea,
+                            controller: _controllerTotalArea,
                             hint: "   ",
                             fonts: 14.0,
                             keyboardType: TextInputType.number,
@@ -779,11 +786,15 @@ class _CheckListDataState extends State<CheckListData> {
                         Container(
                           width: width * 0.7,
                           child: InputRegister(
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly,
+                              TelefoneInputFormatter()
+                            ],
                             icons: Icons.height,
                             sizeIcon: 0.0,
                             width: width * 0.2,
                             controller: _controllerPhone,
-                            hint: " 35271870  ",
+                            hint: " ",
                             fonts: 14.0,
                             keyboardType: TextInputType.number,
                             colorBorder: PaletteColors.greyInput,
@@ -2603,7 +2614,14 @@ class _CheckListDataState extends State<CheckListData> {
                           child: ButtonCustom(
                             widthCustom: 0.3,
                             heightCustom: 0.070,
-                            onPressed: () => Navigator.pop(context),
+                            onPressed: () => Navigator.pushReplacement(context,
+                                MaterialPageRoute(
+                                  builder: (_) => Surveyscreen(
+                                      text: 'Nova Vistoria',
+                                      buttonText: 'Prosseguir',
+                                      id: ''),
+                                )
+                            ),
                             text: "Voltar",
                             size: 14.0,
                             colorButton: PaletteColors.white,

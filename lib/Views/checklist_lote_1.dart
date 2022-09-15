@@ -111,7 +111,6 @@ class _CheckListLote1State extends State<CheckListLote1> {
 
   final TextEditingController _controllerTerrainArea = TextEditingController();
 
-  final TextEditingController _controllertype = TextEditingController();
   final TextEditingController _controllerPrice = TextEditingController();
   final TextEditingController _controllerObs = TextEditingController();
   FirebaseFirestore db = FirebaseFirestore.instance;
@@ -182,7 +181,7 @@ class _CheckListLote1State extends State<CheckListLote1> {
         .collection('surveys')
         .doc(widget.idSurvey)
         .update(loteModel.toMap())
-        .then((_) => Navigator.pushReplacementNamed(context, '/finished',arguments: widget.idSurvey));
+        .then((_) => Navigator.pushNamed(context, '/finished',arguments: widget.idSurvey));
   }
 
   _LoteTable() async {
@@ -318,14 +317,16 @@ class _CheckListLote1State extends State<CheckListLote1> {
   ];
   final ratings = [];
   int order = 0;
-  FirebaseAuth _auth = FirebaseAuth.instance;
-  _getSurveyNumber() async {
-    final User? user = _auth.currentUser;
-    final uid = user?.uid;
-    DocumentSnapshot snapshot = await db.collection('users').doc(uid).get();
+  _getSurveyNumber()async{
+
+    DocumentSnapshot snapshot = await db
+        .collection('surveyNumber')
+        .doc('surveyNumber')
+        .get();
     Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
     setState(() {
-      order = data?["surveyNumber"] ?? 0;
+      order = data?["surveyNumber"]??0;
+
     });
   }
   @override
@@ -396,6 +397,43 @@ class _CheckListLote1State extends State<CheckListLote1> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
                       children: [
+                        Row(
+                          children: [
+                            SizedBox(width: 10),
+                            TextCustom(
+                              text: "Valor",
+                              size: 14.0,
+                              color: PaletteColors.grey,
+                              fontWeight: FontWeight.bold,
+                              textAlign: TextAlign.left,
+                            ),
+
+                            SizedBox(height: 6),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Container(
+                              width: width * 0.7,
+                              child: InputRegister(
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.digitsOnly,
+                                  RealInputFormatter(moeda: true),
+                                ],
+                                icons: Icons.height,
+                                sizeIcon: 0.0,
+                                width: width * 0.50,
+                                controller: _controllerPrice,
+                                hint: 'R\$000.000.00',
+                                fonts: 14.0,
+                                keyboardType: TextInputType.number,
+                                colorBorder: PaletteColors.greyInput,
+                                background: PaletteColors.greyInput,
+                              ),
+                            ),
+                            SizedBox(height: 6),
+                          ],
+                        ),
                         Row(
                           children: [
                             SizedBox(width: 10),
@@ -914,25 +952,6 @@ class _CheckListLote1State extends State<CheckListLote1> {
                     ),
                     Divider(thickness: 1),
                     TextCustom(
-                      text: "Valor",
-                      size: 14.0,
-                      color: PaletteColors.grey,
-                      fontWeight: FontWeight.bold,
-                      textAlign: TextAlign.left,
-                    ),
-                    InputRegister(
-                      icons: Icons.height,
-                      sizeIcon: 0.0,
-                      width: width * 0.50,
-                      controller: _controllerPrice,
-                      hint: 'R\$000.000.00',
-                      fonts: 14.0,
-                      keyboardType: TextInputType.number,
-                      colorBorder: PaletteColors.greyInput,
-                      background: PaletteColors.greyInput,
-                    ),
-                    SizedBox(height: 6),
-                    TextCustom(
                       text: "Observações:",
                       size: 16.0,
                       color: PaletteColors.grey,
@@ -961,7 +980,14 @@ class _CheckListLote1State extends State<CheckListLote1> {
                           child: ButtonCustom(
                             widthCustom: 0.3,
                             heightCustom: 0.070,
-                            onPressed: () => Navigator.pop(context),
+                            onPressed: () => Navigator.pushReplacement(context,
+                                MaterialPageRoute(
+                                  builder: (_) => Surveyscreen(
+                                      text: 'Nova Vistoria',
+                                      buttonText: 'Prosseguir',
+                                      id: ''),
+                                )
+                            ),
                             text: "Voltar",
                             size: 14.0,
                             colorButton: PaletteColors.white,

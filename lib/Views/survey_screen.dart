@@ -44,7 +44,6 @@ class _SurveyscreenState extends State<Surveyscreen> {
   FirebaseFirestore db = FirebaseFirestore.instance;
 
   String _error = '';
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
   File? picture;
   bool _sending = false;
   String _urlPhoto = '';
@@ -52,7 +51,6 @@ class _SurveyscreenState extends State<Surveyscreen> {
   FirebaseStorage storage = FirebaseStorage.instance;
   SurveyModel _surveyModel = SurveyModel();
 
-  FirebaseAuth _auth = FirebaseAuth.instance;
 
   _saveData(SurveyModel surveyModel) async {
     db
@@ -67,7 +65,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
       if (_controllerNumber.text.isNotEmpty) {
         if (_controllerDistrict.text.isNotEmpty) {
           if (_controllerCity.text.isNotEmpty) {
-            if (_controllerCEP.text.isNotEmpty) {
+            if (_controllerCEP.text.length==10) {
               setState(() {
                 _error = '';
               });
@@ -75,34 +73,33 @@ class _SurveyscreenState extends State<Surveyscreen> {
             }
            else {
             _error = 'CEP inválido!';
-            showSnackBar(context, _error, _scaffoldKey);
+            showSnackBar(context, _error,);
           }
         } else {
           _error = 'Cidade inválida!';
-          showSnackBar(context, _error, _scaffoldKey);
+          showSnackBar(context, _error, );
         }
       } else {
         _error = 'Bairro inválido!';
-        showSnackBar(context, _error, _scaffoldKey);
+        showSnackBar(context, _error, );
       }
     } else {
       _error = 'Numero inválido!';
-      showSnackBar(context, _error, _scaffoldKey);
+      showSnackBar(context, _error, );
     }
   }
 
   else {
   _error = 'Endereço inválido!';
-  showSnackBar(context, _error, _scaffoldKey);
+  showSnackBar(context, _error, );
   }
 }
 
   _getOrder()async{
-    final User? user = _auth.currentUser;
-    final uid = user?.uid;
+
     DocumentSnapshot snapshot = await db
-        .collection('users')
-        .doc(uid)
+        .collection('surveyNumber')
+        .doc('surveyNumber')
         .get();
     Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
     setState(() {
@@ -201,7 +198,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
     double height = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      key: _scaffoldKey,
+
       backgroundColor: PaletteColors.white,
       appBar: AppBar(
         backgroundColor: PaletteColors.bgColor,
@@ -270,7 +267,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                   children: [
                     SizedBox(width: width * 0.04),
                     TextCustom(
-                      text: "Codigo Usuario",
+                      text: "Codigo Empresa",
                       size: 14.0,
                       color: PaletteColors.grey,
                       fontWeight: FontWeight.bold,
@@ -303,7 +300,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                       children: [
                         SizedBox(width: width * 0.04),
                         TextCustom(
-                          text: " Vistoria Numero: ",
+                          text: "Numero do Sistema: ",
                           size: 14.0,
                           color: PaletteColors.grey,
                           fontWeight: FontWeight.bold,
@@ -424,7 +421,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                           controller: _controllerComplement,
                           hint: "Ex. Casa",
                           fonts: 14.0,
-                          keyboardType: TextInputType.number,
+                          keyboardType: TextInputType.text,
                           colorBorder: PaletteColors.greyInput,
                           background: PaletteColors.greyInput,
                         ),
@@ -577,11 +574,15 @@ class _SurveyscreenState extends State<Surveyscreen> {
                       Container(
                         width: width * 0.35,
                         child: InputRegister(
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                            CepInputFormatter()
+                          ],
                           icons: Icons.height,
                           sizeIcon: 0.0,
                           width: width * 0.28,
                           controller: _controllerCEP,
-                          hint: "15000-000",
+                          hint: "15.000-000",
                           fonts: 14.0,
                           keyboardType: TextInputType.number,
                           colorBorder: PaletteColors.greyInput,
@@ -862,7 +863,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
       Navigator.pushNamed(context, '/construction', arguments: id);
     }
     if (selectedType == type[4]) {
-      Navigator.pushNamed(context, '/data', arguments: id);
+      Navigator.restorablePushNamed(context, '/data', arguments: id);
     }
     if (selectedType == type[5]) {
       Navigator.pushNamed(context, '/inviability', arguments: id);

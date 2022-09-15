@@ -49,9 +49,6 @@ class AptoModel{
   String unRoof = '';
   String block = '';
   String TerrainArea = '';
-  String ClosedArea = '';
-  String OpenArea = '';
-  String TotalArea =  '';
   String Origin = '';
   String Goal = '';
   String PavType = '';
@@ -110,9 +107,7 @@ class AptoModel{
       "unRoof": this.unRoof,
       "block": this.block,
       "TerrainArea" : this.TerrainArea,
-      "ClosedArea"  : this.ClosedArea,
-      "OpenArea"  : this.OpenArea,
-      "TotalArea" : this.TotalArea,
+
       "Origin" : this.Origin,
       "Goal" : this.Goal,
       "PavType" : this.PavType,

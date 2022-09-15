@@ -59,14 +59,16 @@ class _CheckListApto1State extends State<CheckListApto1> {
   FirebaseStorage storage = FirebaseStorage.instance;
   final Map<String, dynamic> data = HashMap();
 
-  FirebaseAuth _auth = FirebaseAuth.instance;
-  _getSurveyNumber() async {
-    final User? user = _auth.currentUser;
-    final uid = user?.uid;
-    DocumentSnapshot snapshot = await db.collection('users').doc(uid).get();
+  _getSurveyNumber()async{
+
+    DocumentSnapshot snapshot = await db
+        .collection('surveyNumber')
+        .doc('surveyNumber')
+        .get();
     Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
     setState(() {
-      order = data?["surveyNumber"] ?? 0;
+      order = data?["surveyNumber"]??0;
+
     });
   }
 
@@ -129,7 +131,7 @@ class _CheckListApto1State extends State<CheckListApto1> {
         .collection('surveys')
         .doc(widget.idSurvey)
         .update(aptoModel.toMap())
-        .then((_) => Navigator.pushReplacementNamed(context, '/finished',arguments: widget.idSurvey));
+        .then((_) => Navigator.pushNamed(context, '/finished',arguments: widget.idSurvey));
   }
   _AptoTable() async {
     _aptoModel.Goal = selectedGoal.toString();
@@ -624,7 +626,7 @@ class _CheckListApto1State extends State<CheckListApto1> {
     CheckBoxModel(title: 'Outro:'),
   ];
   final TextEditingController _controllerBlock = TextEditingController();
-  final TextEditingController _controllerClosedArea = TextEditingController();
+
   final TextEditingController _controllerTerrainArea = TextEditingController();
   List<String> goal = ['Venda', 'Aluguel'];
   String? selectedGoal = 'Venda';
@@ -777,6 +779,10 @@ class _CheckListApto1State extends State<CheckListApto1> {
                         Container(
                           width: width * 0.45,
                           child: InputRegister(
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly,
+                              RealInputFormatter(moeda:true),
+                            ],
                             icons: Icons.height,
                             sizeIcon: 0.0,
                             width: width * 0.53,
@@ -807,47 +813,7 @@ class _CheckListApto1State extends State<CheckListApto1> {
                             Container(
                               width: width * 0.7,
                               child: TextCustom(
-                                  text: "Área Testada",
-                                  size: 14.0,
-                                  color: PaletteColors.grey,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                        Container(
-                          width: width * 0.7,
-                          child: InputRegister(
-                            icons: Icons.height,
-                            sizeIcon: 0.0,
-                            width: width * 0.2,
-                            controller: _controllerClosedArea,
-                            hint: "   ",
-                            fonts: 14.0,
-                            keyboardType: TextInputType.number,
-                            colorBorder: PaletteColors.greyInput,
-                            background: PaletteColors.greyInput,
-                          ),
-                        ),
-                      ],
-                    ),
-
-                  ],
-                ),
-                SizedBox(height: height* 0.01),
-                Row(
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Row(
-                          children: [
-                            SizedBox(width: 10),
-                            Container(
-                              width: width * 0.7,
-                              child: TextCustom(
-                                  text: "Área do Terreno",
+                                  text: "Área do Terreno/Testada",
                                   size: 14.0,
                                   color: PaletteColors.grey,
                                   fontWeight: FontWeight.bold),
@@ -3650,7 +3616,14 @@ class _CheckListApto1State extends State<CheckListApto1> {
                           child: ButtonCustom(
                             widthCustom: 0.3,
                             heightCustom: 0.070,
-                            onPressed: () => Navigator.pop(context),
+                            onPressed: () =>Navigator.pushReplacement(context,
+                                MaterialPageRoute(
+                                  builder: (_) => Surveyscreen(
+                                      text: 'Nova Vistoria',
+                                      buttonText: 'Prosseguir',
+                                      id: ''),
+                                )
+                            ),
                             text: "Voltar",
                             size: 14.0,
                             colorButton: PaletteColors.white,

@@ -119,7 +119,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
         .collection('surveys')
         .doc(widget.idSurvey)
         .update(constructionModel.toMap())
-        .then((_) => Navigator.pushReplacementNamed(context, '/finished',arguments: widget.idSurvey));
+        .then((_) => Navigator.pushNamed(context, '/finished',arguments: widget.idSurvey));
   }
   _tableConstruction() async{
     _constructionModel.services = SServices;
@@ -151,14 +151,16 @@ class _ConstructionStepState extends State<ConstructionStep> {
   FirebaseFirestore db = FirebaseFirestore.instance;
 
   int order = 0;
-  FirebaseAuth _auth = FirebaseAuth.instance;
-  _getSurveyNumber() async {
-    final User? user = _auth.currentUser;
-    final uid = user?.uid;
-    DocumentSnapshot snapshot = await db.collection('users').doc(uid).get();
+  _getSurveyNumber()async{
+
+    DocumentSnapshot snapshot = await db
+        .collection('surveyNumber')
+        .doc('surveyNumber')
+        .get();
     Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
     setState(() {
-      order = data?["surveyNumber"] ?? 0;
+      order = data?["surveyNumber"]??0;
+
     });
   }
   @override
@@ -2012,7 +2014,14 @@ class _ConstructionStepState extends State<ConstructionStep> {
                     child: ButtonCustom(
                       widthCustom: 0.3,
                       heightCustom: 0.070,
-                      onPressed: () => Navigator.pop(context),
+                      onPressed: () => Navigator.pushReplacement(context,
+                          MaterialPageRoute(
+                            builder: (_) => Surveyscreen(
+                                text: 'Nova Vistoria',
+                                buttonText: 'Prosseguir',
+                                id: ''),
+                          )
+                      ),
                       text: "Voltar",
                       size: 14.0,
                       colorButton: PaletteColors.white,

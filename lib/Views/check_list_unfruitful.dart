@@ -115,7 +115,7 @@ class _CheckListUnfruitfulState extends State<CheckListUnfruitful> {
         .collection('surveys')
         .doc(widget.idSurvey)
         .update(dataModel.toMap())
-        .then((_) => Navigator.pushReplacementNamed(context, '/finished',arguments: widget.idSurvey));
+        .then((_) => Navigator.pushNamed(context, '/finished',arguments: widget.idSurvey));
   }
 
   _UnitysTable() async {
@@ -376,14 +376,17 @@ class _CheckListUnfruitfulState extends State<CheckListUnfruitful> {
   List saveRoof = [];
   List saveWall = [];
   List savePaint = [];
-  FirebaseAuth _auth = FirebaseAuth.instance;
-  _getSurveyNumber() async {
-    final User? user = _auth.currentUser;
-    final uid = user?.uid;
-    DocumentSnapshot snapshot = await db.collection('users').doc(uid).get();
+
+  _getSurveyNumber()async{
+
+    DocumentSnapshot snapshot = await db
+        .collection('surveyNumber')
+        .doc('surveyNumber')
+        .get();
     Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
     setState(() {
-      order = data?["surveyNumber"] ?? 0;
+      order = data?["surveyNumber"]??0;
+
     });
   }
   int order = 0;
@@ -503,6 +506,10 @@ class _CheckListUnfruitfulState extends State<CheckListUnfruitful> {
                         Container(
                           width: width * 0.45,
                           child: InputRegister(
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly,
+                              RealInputFormatter(moeda:true)
+                            ],
                             icons: Icons.height,
                             sizeIcon: 0.0,
                             width: width * 0.53,
@@ -663,7 +670,7 @@ class _CheckListUnfruitfulState extends State<CheckListUnfruitful> {
                             icons: Icons.height,
                             sizeIcon: 0.0,
                             width: width * 0.2,
-                            controller: _controllerTerrainArea,
+                            controller: _controllerTotalArea,
                             hint: "   ",
                             fonts: 14.0,
                             keyboardType: TextInputType.number,
@@ -2603,7 +2610,14 @@ class _CheckListUnfruitfulState extends State<CheckListUnfruitful> {
                           child: ButtonCustom(
                             widthCustom: 0.3,
                             heightCustom: 0.070,
-                            onPressed: () => Navigator.pop(context),
+                            onPressed: () => Navigator.pushReplacement(context,
+                                MaterialPageRoute(
+                                  builder: (_) => Surveyscreen(
+                                      text: 'Nova Vistoria',
+                                      buttonText: 'Prosseguir',
+                                      id: ''),
+                                )
+                            ),
                             text: "Voltar",
                             size: 14.0,
                             colorButton: PaletteColors.white,
