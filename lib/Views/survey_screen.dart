@@ -835,7 +835,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                 child: ButtonCustom(
                   widthCustom: 0.80,
                   heightCustom: 0.070,
-                  onPressed: () =>  _createTable(),
+                  onPressed: () =>  _createData(),
                   text: widget.buttonText,
                   size: 14.0,
                   colorButton: PaletteColors.primaryColor,
