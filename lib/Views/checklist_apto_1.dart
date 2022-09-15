@@ -683,7 +683,7 @@ class _CheckListApto1State extends State<CheckListApto1> {
         ),
         elevation: 0,
         title: TextCustom(
-          text: 'Vistoria Nº $order',
+          text: 'Vistoria Nº ${order+1}',
           size: 20.0,
           color: PaletteColors.white,
           fontWeight: FontWeight.bold,
