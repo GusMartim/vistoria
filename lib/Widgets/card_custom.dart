@@ -24,7 +24,7 @@ class CustomCard extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final height = MediaQuery.of(context).size.height;
-
+    final width = MediaQuery.of(context).size.width;
 
     return Container(
        /* margin: EdgeInsets.symmetric(
@@ -32,8 +32,8 @@ class CustomCard extends StatelessWidget {
             horizontal: horizontal,
         ),*/
         margin: EdgeInsets.all(8.0) ,
-        height: height * 0.20,
-        width: height * 0.24,
+        height: height * 0.2,
+        width: width * 0.4,
 
         child: GestureDetector(
           onTap: () => Navigator.push(context,

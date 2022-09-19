@@ -3,7 +3,8 @@ import 'package:vistoria/Widgets/inputRegister.dart';
 import 'package:vistoria/Widgets/text_custom.dart';
 
 class HistoryScreen extends StatefulWidget {
-  const HistoryScreen({Key? key}) : super(key: key);
+  final String idSurvey;
+  HistoryScreen({required this.idSurvey});
 
   @override
   State<HistoryScreen> createState() => _HistoryScreenState();
@@ -11,6 +12,7 @@ class HistoryScreen extends StatefulWidget {
 
 class _HistoryScreenState extends State<HistoryScreen> {
   int selectedText = 0;
+  FirebaseFirestore db = FirebaseFirestore.instance;
   List<ListTileModel> items = [
     ListTileModel(
         text: 'Rua Washington Carvalho, 2541, Centro - São Paulo/SP',
@@ -65,7 +67,36 @@ class _HistoryScreenState extends State<HistoryScreen> {
         data: '20/04/2022  16:00',
         iconShow: false),
   ];
-  final TextEditingController _controllerAdress = TextEditingController();
+  TextEditingController _controllerAdress = TextEditingController();
+  TextEditingController _controllerNumber = TextEditingController();
+  TextEditingController _controllerDistrict = TextEditingController();
+  TextEditingController _controllerCity = TextEditingController();
+  TextEditingController _controllerState = TextEditingController();
+  TextEditingController _controllerDate = TextEditingController();
+  _getData()async{
+    DocumentSnapshot snapshot =
+    await db.collection("surveys").doc(widget.idSurvey).get();
+    Map<String,dynamic>? data = snapshot.data() as Map<String,dynamic>?;
+    setState(() {
+      _controllerAdress = data?["adress"];
+      _controllerNumber = data?["number"];
+
+      _controllerDistrict = data?["district"];
+      _controllerCity = data?["city"];
+      _controllerState = data?["state"];
+      _controllerDate =data?["hourRequest"];
+
+    });
+    QuerySnapshot querySnapshot = await db.collection("surveys").get();
+    var list = querySnapshot;
+  }
+  @override
+  void initState() {
+    super.initState();
+
+    _getData();
+
+  }
 
   @override
   Widget build(BuildContext context) {

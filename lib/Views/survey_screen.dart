@@ -13,24 +13,28 @@ class Surveyscreen extends StatefulWidget {
 }
 
 class _SurveyscreenState extends State<Surveyscreen> {
-  final TextEditingController _controllerAdress = TextEditingController();
-  final TextEditingController _controllerNumber = TextEditingController();
-  final TextEditingController _controllerComplement = TextEditingController();
-  final TextEditingController _controllerDistrict = TextEditingController();
-  final TextEditingController _controllerCity = TextEditingController();
-  final TextEditingController _controllerCEP = TextEditingController();
-  final TextEditingController _controllerLatG = TextEditingController();
-  final TextEditingController _controllerLatMin = TextEditingController();
-  final TextEditingController _controllerLatSeg = TextEditingController();
-  final TextEditingController _controllerLongG = TextEditingController();
-  final TextEditingController _controllerLongMin = TextEditingController();
-  final TextEditingController _controllerLongSeg = TextEditingController();
-  final TextEditingController _controllerUserCode = TextEditingController();
-  var   controllerSurveyCode = TextEditingController();
+  TextEditingController _controllerAdress = TextEditingController();
+   TextEditingController _controllerNumber = TextEditingController();
+   TextEditingController _controllerComplement = TextEditingController();
+   TextEditingController _controllerDistrict = TextEditingController();
+   TextEditingController _controllerCity = TextEditingController();
+   TextEditingController _controllerCEP = TextEditingController();
+   TextEditingController _controllerLatG = TextEditingController();
+   TextEditingController _controllerLatMin = TextEditingController();
+   TextEditingController _controllerLatSeg = TextEditingController();
+   TextEditingController _controllerLongG = TextEditingController();
+   TextEditingController _controllerLongMin = TextEditingController();
+   TextEditingController _controllerLongSeg = TextEditingController();
+   TextEditingController _controllerUserCode = TextEditingController();
+    var   controllerSurveyCode = TextEditingController();
   Map<String,dynamic>? data;
   int order = 0;
-  List<String> states = ['SP', 'RJ', 'PR', 'MG'];
-  String? selectedState = 'SP';
+  List<String> states = [
+    'AC','AL','AP','AM','BA','CE','DF','ES','GO',
+    'MA','MT','MS','MG','PA','PB','PR','PE','PI',
+    'RJ','RN','RS','RO','RR','SC','SP','SE','TO'
+  ];
+  String? selectedState = 'AC';
   List<String> type = [
     'Casa',
     'Apartamento',
@@ -181,10 +185,29 @@ class _SurveyscreenState extends State<Surveyscreen> {
 
   }
 
+  _getData()async{
+  DocumentSnapshot snapshot =
+  await db.collection("surveys").doc(widget.id).get();
+  Map<String,dynamic>? data = snapshot.data() as Map<String,dynamic>?;
+  setState(() {
+    _controllerAdress = data?["adress"];
+    _controllerNumber = data?["number"];
+    _controllerComplement = data?["complement"];
+    _controllerDistrict = data?["district"];
+    _controllerCity = data?["city"];
+    selectedState = data?["state"];
+    _controllerCEP =data?["cep"];
+    selectedType = data?["type"];
+  });
+
+  }
+
+
   @override
   void initState() {
     super.initState();
     _getOrder();
+    _getData();
     if(widget.id=='') {
       _surveyModel = SurveyModel.createId();
     }

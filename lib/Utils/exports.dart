@@ -3,6 +3,7 @@ export 'dart:io';
 export 'dart:convert';
 export 'dart:collection';
 
+export 'package:geolocator/geolocator.dart';
 export 'package:flutter/services.dart';
 export 'package:flutter/material.dart';
 export 'package:auto_size_text/auto_size_text.dart';

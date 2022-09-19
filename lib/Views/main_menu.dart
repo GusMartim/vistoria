@@ -10,6 +10,7 @@ class MenuScreen extends StatefulWidget {
 class _MenuScreenState extends State<MenuScreen> {
   FirebaseFirestore db = FirebaseFirestore.instance;
 
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -86,7 +87,7 @@ class _MenuScreenState extends State<MenuScreen> {
                     CustomCard(
                         text: "Historico",
                         icon: Icons.window_outlined,
-                        screen: HistoryScreen(),
+                        screen: HistoryScreen(idSurvey: ''),
                         ),
                     CustomCard(
                         text: "Tutorial",
