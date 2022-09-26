@@ -82,8 +82,9 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
     Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
     setState(() {
       imageList = data?["photoUrl"];
-      Future.delayed(Duration(seconds: 3));
+      Future.delayed(Duration(seconds: 5));
       loading = true;
+
     });
 
     }
