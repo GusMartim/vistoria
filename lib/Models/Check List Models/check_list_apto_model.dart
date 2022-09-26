@@ -53,6 +53,8 @@ class AptoModel{
   String Goal = '';
   String PavType = '';
   String pathology = '';
+  String unity = '';
+  String view = '';
   AptoModel();
 
   Map<String,dynamic> toMap(){
@@ -105,6 +107,8 @@ class AptoModel{
       "pattern": this.pattern,
       "state": this.state,
       "unRoof": this.unRoof,
+      "unity": this.unity,
+      "view": this.view,
       "block": this.block,
       "TerrainArea" : this.TerrainArea,
 

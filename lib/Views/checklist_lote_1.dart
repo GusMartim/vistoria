@@ -13,14 +13,14 @@ class CheckListLote1 extends StatefulWidget {
 
 class _CheckListLote1State extends State<CheckListLote1> {
   bool checkBoxvalue = false;
-  final TextEditingController _controllerFactors = TextEditingController();
+   TextEditingController _controllerFactors = TextEditingController();
   final type = [
     CheckBoxModel(title: 'Lote único'),
     CheckBoxModel(title: 'Loteamento'),
     CheckBoxModel(title: 'Condomínio'),
     CheckBoxModel(title: 'Outro:'),
   ];
-  final TextEditingController _controllerType = TextEditingController();
+   TextEditingController _controllerType = TextEditingController();
 
   final shape = [
     CheckBoxModel(title: 'Retangular'),
@@ -29,7 +29,7 @@ class _CheckListLote1State extends State<CheckListLote1> {
     CheckBoxModel(title: 'Irregular'),
     CheckBoxModel(title: 'Outro:'),
   ];
-  final TextEditingController _controllerShape = TextEditingController();
+   TextEditingController _controllerShape = TextEditingController();
 
   final situation = [
     CheckBoxModel(title: 'Meio de Quadra'),
@@ -37,7 +37,7 @@ class _CheckListLote1State extends State<CheckListLote1> {
     CheckBoxModel(title: 'Quadra Inteira'),
     CheckBoxModel(title: 'Outro:'),
   ];
-  final TextEditingController _controllerSituation = TextEditingController();
+   TextEditingController _controllerSituation = TextEditingController();
 
   final topography = [
     CheckBoxModel(title: 'Plano/ semi plano'),
@@ -49,7 +49,7 @@ class _CheckListLote1State extends State<CheckListLote1> {
     CheckBoxModel(title: 'No greide da rua'),
     CheckBoxModel(title: 'Outro:'),
   ];
-  final TextEditingController _controllerTopography = TextEditingController();
+   TextEditingController _controllerTopography = TextEditingController();
   final terrain = [
     CheckBoxModel(title: 'Muro alvenaria'),
     CheckBoxModel(title: 'Muro pré-moldado'),
@@ -57,7 +57,7 @@ class _CheckListLote1State extends State<CheckListLote1> {
     CheckBoxModel(title: 'Tela soldada'),
     CheckBoxModel(title: 'Outro:'),
   ];
-  final TextEditingController _controllerTerrain = TextEditingController();
+   TextEditingController _controllerTerrain = TextEditingController();
 
   final location = [
     CheckBoxModel(title: 'Inserida na malha urbana'),
@@ -65,7 +65,7 @@ class _CheckListLote1State extends State<CheckListLote1> {
     CheckBoxModel(title: 'Periferia fora da área de expansão'),
     CheckBoxModel(title: 'Outro:'),
   ];
-  final TextEditingController _controllerLocation = TextEditingController();
+   TextEditingController _controllerLocation = TextEditingController();
 
   final use = [
     CheckBoxModel(title: 'Residencial unifamiliar'),
@@ -74,7 +74,7 @@ class _CheckListLote1State extends State<CheckListLote1> {
     CheckBoxModel(title: 'Industrial'),
     CheckBoxModel(title: 'Outro:'),
   ];
-  final TextEditingController _controllerUse = TextEditingController();
+   TextEditingController _controllerUse = TextEditingController();
 
   final pattern = [
     CheckBoxModel(title: 'Alto'),
@@ -83,7 +83,7 @@ class _CheckListLote1State extends State<CheckListLote1> {
     CheckBoxModel(title: 'Mínimo'),
     CheckBoxModel(title: 'Outro:'),
   ];
-  final TextEditingController _controllerPattern = TextEditingController();
+   TextEditingController _controllerPattern = TextEditingController();
 
   final evaluation = [
     CheckBoxModel(title: 'Boa'),
@@ -91,14 +91,14 @@ class _CheckListLote1State extends State<CheckListLote1> {
     CheckBoxModel(title: 'Ruim'),
     CheckBoxModel(title: 'Outro:'),
   ];
-  final TextEditingController _controllerEvaluation = TextEditingController();
+   TextEditingController _controllerEvaluation = TextEditingController();
   final density = [
     CheckBoxModel(title: 'Área altamente adensada'),
     CheckBoxModel(title: 'Densidade normal p/ o município'),
     CheckBoxModel(title: 'Área pouco adensada'),
     CheckBoxModel(title: 'Outro:'),
   ];
-  final TextEditingController _controllerDensity = TextEditingController();
+   TextEditingController _controllerDensity = TextEditingController();
 
   final transport = [
     CheckBoxModel(title: 'Satisfatório'),
@@ -107,12 +107,33 @@ class _CheckListLote1State extends State<CheckListLote1> {
     CheckBoxModel(title: 'Não necessário'),
     CheckBoxModel(title: 'Outro:'),
   ];
-  final TextEditingController _controllerTransport = TextEditingController();
+  List saveCheckList = [];
+  List saveratings = [];
+  List titles = [
+    'Água',
+    'Esgoto',
+    'Energia elétrica',
+    'Iluminação Pública',
+    'Telefone',
+    'Pavimentação',
+    'Águas pluviais',
+    'Guias e sarjetas',
+    'Abast. de gás',
+    'Coleta de lixo',
+    'Escola',
+    'Creche',
+    'Saúde Pública',
+    'Comércio',
+    'Segurança Pública',
+    'Lazer',
+  ];
+  final ratings = [];
+  TextEditingController _controllerTransport = TextEditingController();
 
-  final TextEditingController _controllerTerrainArea = TextEditingController();
+  TextEditingController _controllerTerrainArea = TextEditingController();
 
-  final TextEditingController _controllerPrice = TextEditingController();
-  final TextEditingController _controllerObs = TextEditingController();
+  TextEditingController _controllerPrice = TextEditingController();
+  TextEditingController _controllerObs = TextEditingController();
   FirebaseFirestore db = FirebaseFirestore.instance;
   LoteModel _loteModel = LoteModel();
   File? picture;
@@ -122,12 +143,11 @@ class _CheckListLote1State extends State<CheckListLote1> {
   FirebaseStorage storage = FirebaseStorage.instance;
   final Map<String, dynamic> data = HashMap();
 
-
-  Future _savePhoto() async{
-    try{
+  Future _savePhoto() async {
+    try {
       final image = await ImagePicker()
           .pickImage(source: ImageSource.camera, imageQuality: 100);
-      if(image == null) return;
+      if (image == null) return;
 
       final imageTemporary = File(image.path);
       setState(() {
@@ -137,43 +157,44 @@ class _CheckListLote1State extends State<CheckListLote1> {
         });
         _uploadImage();
       });
-    } on PlatformException catch (e){
+    } on PlatformException catch (e) {
       print('Error : $e');
     }
   }
 
-  Future _uploadImage() async{
+  Future _uploadImage() async {
     Reference pastaRaiz = storage.ref();
-    Reference arquivo = pastaRaiz.child("surveys").child(selectedText+"_"+DateTime.now().toString()+".jpg");
+    Reference arquivo = pastaRaiz
+        .child("surveys")
+        .child(selectedText + "_" + DateTime.now().toString() + ".jpg");
 
     UploadTask task = arquivo.putFile(picture!);
 
-    Future.delayed(const Duration(seconds: 5), ()async{
+    Future.delayed(const Duration(seconds: 5), () async {
       String urlImage = await task.snapshot.ref.getDownloadURL();
       if (urlImage != null) {
         setState(() {
-          _urlPhoto= urlImage;
+          _urlPhoto = urlImage;
         });
         _urlImageFirestore(urlImage);
       }
     });
   }
-  _urlImageFirestore(String url){
 
-    Map<String , dynamic> dateUpdate = {
-      'photoUrl' : FieldValue.arrayUnion([url]),
+  _urlImageFirestore(String url) {
+    Map<String, dynamic> dateUpdate = {
+      'photoUrl': FieldValue.arrayUnion([url]),
       'idSurvey': widget.idSurvey
     };
     db
         .collection("surveys")
         .doc(widget.idSurvey)
-        .set(dateUpdate,SetOptions(merge: true))
+        .set(dateUpdate, SetOptions(merge: true))
         .then((value) {
       setState(() {
         _sending = false;
       });
     });
-
   }
 
   _saveLote(LoteModel loteModel) async {
@@ -181,7 +202,9 @@ class _CheckListLote1State extends State<CheckListLote1> {
         .collection('surveys')
         .doc(widget.idSurvey)
         .update(loteModel.toMap())
-        .then((_) => Navigator.pushNamed(context, '/finished',arguments: widget.idSurvey));
+        .then((_) =>
+        Navigator.pushNamed(context, '/finished',
+            arguments: widget.idSurvey));
   }
 
   _LoteTable() async {
@@ -205,831 +228,1227 @@ class _CheckListLote1State extends State<CheckListLote1> {
     _saveLote(_loteModel);
   }
 
-  _saveCheckList() async {
-    saveTerrain.clear();
-    for (var i = 0; i < type.length; i++) {
-      if (type[i].value != false) {
-        saveTerrain.add(type[i].title + '#' + type[i].value.toString());
-      }
-    }
-    saveTerrainForm.clear();
-    for (var i = 0; i < shape.length; i++) {
-      if (shape[i].value != false) {
-        saveTerrainForm.add(shape[i].title + '#' + shape[i].value.toString());
-      }
-    }
-    saveSituation.clear();
-    for (var i = 0; i < situation.length; i++) {
-      if (situation[i].value != false) {
-        saveSituation
-            .add(situation[i].title + '#' + situation[i].value.toString());
-      }
-    }
-    saveTopography.clear();
-    for (var i = 0; i < topography.length; i++) {
-      if (topography[i].value != false) {
-        saveTopography
-            .add(topography[i].title + '#' + topography[i].value.toString());
-      }
-    }
-    savePattern.clear();
-    for (var i = 0; i < pattern.length; i++) {
-      if (pattern[i].value != false) {
-        savePattern.add(pattern[i].title +
-            '#' +
-            pattern[i].value.toString() +
-            _controllerPattern.text);
-      }
-    }
-
-    saveSituation.clear();
-    for (var i = 0; i < situation.length; i++) {
-      if (situation[i].value != false) {
-        saveSituation.add(situation[i].title +
-            '#' +
-            situation[i].value.toString() +
-            _controllerSituation.text);
-      }
-    }
-    
-        saveratings.clear();
-        for(var i = 0; i < titles.length; i++){
-          saveratings.add('${titles[i]}#${ratings[i].satisfactory}#${ratings[i].precary}#${ratings[i].notAvaiable}');
-        }
-        setState(() {
-          print(saveratings);
-        });
-
-
-
-    db.collection('surveys').doc(widget.idSurvey).update({
-      "Patologia": savePathology.toSet().toList(),
-      "Tipo": saveTerrain.toSet().toList(),
-      "Forma do Terreno": saveTerrainForm.toSet().toList(),
-      "Situação": saveSituation.toSet().toList(),
-      "Topografia": saveTopography.toSet().toList(),
-      "Fechamento do Terreno": saveClosing.toSet().toList(),
-      "Localização da Unidade": saveLocation.toSet().toList(),
-      "Uso predominante": saveUse.toSet().toList(),
-      "Padrão usual de acabamento": savePattern.toSet().toList(),
-      "Avaliação da Localização": saveRating.toSet().toList(),
-      "Densidade de Ocupação": saveDensity.toSet().toList(),
-      "Transporte coletivo": saveTransport.toSet().toList(),
-      "Avaliações": saveratings.toList(),
-    });
-
-    _LoteTable();
-  }
-
-  bool satisfactory = false;
-  bool precary = false;
-  bool notAvaiable = false;
-  List saveTerrain = [];
-  List saveTerrainForm = [];
-  List saveSituation = [];
-  List saveTopography = [];
-  List saveClosing = [];
-  List saveLocation = [];
-  List saveUse = [];
-  List savePattern = [];
-  List saveRating = [];
-  List saveDensity = [];
-  List saveTransport = [];
-  List savePathology = [];
-  List saveratings = [];
-  List titles= [
-    'Água',
-    'Esgoto',
-    'Energia elétrica',
-    'Iluminação Pública',
-    'Telefone',
-    'Pavimentação',
-    'Águas pluviais',
-    'Guias e sarjetas',
-    'Abast. de gás',
-    'Coleta de lixo',
-    'Escola',
-    'Creche',
-    'Saúde Pública',
-    'Comércio',
-    'Segurança Pública',
-    'Lazer',
-  ];
-  final ratings = [];
-  int order = 0;
-  _getSurveyNumber()async{
-
-    DocumentSnapshot snapshot = await db
-        .collection('surveyNumber')
-        .doc('surveyNumber')
-        .get();
+  _getData() async {
+    DocumentSnapshot snapshot =
+    await db.collection("surveys").doc(widget.idSurvey).get();
     Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
+
     setState(() {
-      order = data?["surveyNumber"]??0;
-
+      saveCheckList = data?["checklist"];
+      saveratings = data?["ratings"];
     });
-  }
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    _getSurveyNumber();
-  }
-  @override
-  Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    type.clear();
+    for (int i = 0; i <= 3; i++) {
+      var splitted = saveCheckList[i].replaceAll("1", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      type.add(
+          CheckBoxModel(title: title, value: check == 'true' ? true : false));
+    }
+    shape.clear();
+    for (int i = 4; i <= 8; i++) {
+      var splitted = saveCheckList[i].replaceAll("2", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      shape.add(
+          CheckBoxModel(title: title, value: check == 'true' ? true : false));
+    }
+    situation.clear();
+    for (int i = 9; i <= 12; i++) {
+      var splitted = saveCheckList[i].replaceAll("3", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      situation.add(
+          CheckBoxModel(title: title, value: check == 'true' ? true : false));
+    }
 
-    return Scaffold(
-      backgroundColor: PaletteColors.white,
-      appBar: AppBar(
-        backgroundColor: PaletteColors.bgColor,
-        iconTheme: IconThemeData(
-          color: PaletteColors.white,
-        ),
-        elevation: 0,
-        title: TextCustom(
-          text: 'Vistoria Nº ${order+1}',
-          size: 20.0,
-          color: PaletteColors.white,
-          fontWeight: FontWeight.bold,
-          textAlign: TextAlign.center,
-        ),
-        actions: <Widget>[
-          Ink(
-            decoration: ShapeDecoration(
-              color: PaletteColors.white,
-              shape: CircleBorder(),
-            ),
-            child: IconButton(
-              icon: Icon(
-                Icons.camera_alt,
-                color: PaletteColors.primaryColor,
-              ),
-              constraints: BoxConstraints(
-                  minHeight: 28, minWidth: 28, maxHeight: 28, maxWidth: 28),
-              iconSize: 24.0,
-              padding: EdgeInsets.all(3.0),
-              onPressed: () => _savePhoto(),
-            ),
+    topography.clear();
+    for (int i = 13; i <= 20; i++) {
+      var splitted = saveCheckList[i].replaceAll("4", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      topography.add(
+          CheckBoxModel(title: title, value: check == 'true' ? true : false));
+    }
+    terrain.clear();
+    for (int i = 21; i <= 25; i++) {
+      var splitted = saveCheckList[i].replaceAll("5", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      terrain.add(
+          CheckBoxModel(title: title, value: check == 'true' ? true : false));
+    }
+    location.clear();
+    for (int i = 26; i <= 29; i++) {
+      var splitted = saveCheckList[i].replaceAll("6", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      location.add(
+          CheckBoxModel(title: title, value: check == 'true' ? true : false));
+    }
+    use.clear();
+    for (int i = 30; i <= 34; i++) {
+      var splitted = saveCheckList[i].replaceAll("7", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      use.add(
+          CheckBoxModel(title: title, value: check == 'true' ? true : false));
+    }
+    pattern.clear();
+    for (int i = 35; i <= 39; i++) {
+      var splitted = saveCheckList[i].replaceAll("8", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      pattern.add(
+          CheckBoxModel(title: title, value: check == 'true' ? true : false));
+    }
+    evaluation.clear();
+    for (int i = 40; i <= 43; i++) {
+      var splitted = saveCheckList[i].replaceAll("9", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      evaluation.add(
+          CheckBoxModel(title: title, value: check == 'true' ? true : false));
+    }
+    density.clear();
+    for (int i = 44; i <= 47; i++) {
+      var splitted = saveCheckList[i].replaceAll("10", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      density.add(
+          CheckBoxModel(title: title, value: check == 'true' ? true : false));
+    }
+    transport.clear();
+    for (int i = 48; i <= 52; i++) {
+      var splitted = saveCheckList[i].replaceAll("11", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      transport.add(
+          CheckBoxModel(title: title, value: check == 'true' ? true : false));
+    }
+    ratings.clear();
+    for( int i = 0; i < saveratings.length; i++){
+      var splitted = saveratings[i].split('#');
+      var check1 = splitted[1];
+      var check2 = splitted[2];
+      var check3 = splitted[3];
+      ratings.add(
+            CheckBoxModelRatings(satisfactory: check1== 'true' ? true : false,
+            precary: check2== 'true' ? true : false,
+            notAvaiable: check3== 'true' ? true : false
+        ));
+
+
+    }
+  setState(() {
+    _controllerPrice = TextEditingController(text: data?["price"]);
+    _controllerTerrainArea = TextEditingController(text: data?["TerrainArea"]);
+    _controllerType = TextEditingController(text: data?["type"]);
+    _controllerShape = TextEditingController(text: data?["shape"]);
+    _controllerSituation = TextEditingController(text: data?["situation"]);
+    _controllerTopography = TextEditingController(text: data?["topography"]);
+    _controllerTerrain = TextEditingController(text: data?["terrainClosing"]);
+    _controllerLocation = TextEditingController(text: data?["localization"]);
+    _controllerUse = TextEditingController(text: data?["use"]);
+    _controllerPattern = TextEditingController(text: data?["pattern"]);
+    _controllerEvaluation = TextEditingController(text: data?["rating"]);
+    _controllerDensity = TextEditingController(text: data?["density"]);
+    _controllerTransport = TextEditingController(text: data?["transport"]);
+    _controllerFactors = TextEditingController(text: data?["factors"]);
+    _controllerObs = TextEditingController(text: data?["obs"]);
+  });
+  }
+    _saveCheckList() async {
+      saveCheckList.clear();
+      for (var i = 0; i < type.length; i++) {
+        saveCheckList.add(type[i].title + '1' + '#' + type[i].value.toString());
+      }
+
+      for (var i = 0; i < shape.length; i++) {
+        saveCheckList.add(
+            shape[i].title + '2' + '#' + shape[i].value.toString());
+      }
+
+      for (var i = 0; i < situation.length; i++) {
+        saveCheckList
+            .add(
+            situation[i].title + '3' + '#' + situation[i].value.toString());
+      }
+
+      for (var i = 0; i < topography.length; i++) {
+        saveCheckList.add(
+            topography[i].title + '4' + '#' + topography[i].value.toString());
+      }
+      for (var i = 0; i < terrain.length; i++) {
+        saveCheckList
+            .add(terrain[i].title + '5' + '#' + terrain[i].value.toString());
+      }
+      for (var i = 0; i < location.length; i++) {
+        saveCheckList
+            .add(location[i].title + '6' + '#' + location[i].value.toString());
+      }
+      for (var i = 0; i < use.length; i++) {
+        saveCheckList.add(use[i].title + '7' + '#' + use[i].value.toString());
+      }
+
+      for (var i = 0; i < pattern.length; i++) {
+        saveCheckList.add(
+            pattern[i].title + '8' + '#' + pattern[i].value.toString());
+      }
+
+      for (var i = 0; i < evaluation.length; i++) {
+        saveCheckList
+            .add(
+            evaluation[i].title + '9' + '#' + evaluation[i].value.toString());
+      }
+      for (var i = 0; i < density.length; i++) {
+        saveCheckList.add(
+            density[i].title + '10' + '#' + density[i].value.toString());
+      }
+
+      for (var i = 0; i < transport.length; i++) {
+        saveCheckList
+            .add(
+            transport[i].title + '11' + '#' + transport[i].value.toString());
+      }
+
+      saveratings.clear();
+      for (var i = 0; i < titles.length; i++) {
+        saveratings.add(
+            '${titles[i]}'+'#'+'${ratings[i].satisfactory}'+'#'+'${ratings[i]
+                .precary}'+'#'+'${ratings[i].notAvaiable}'+'#');
+      }
+      setState(() {
+
+      });
+
+      db.collection('surveys').doc(widget.idSurvey).update({
+        "checklist": saveCheckList.toSet().toList(),
+        "ratings": saveratings.toList(),
+      });
+
+      _LoteTable();
+    }
+
+    bool satisfactory = false;
+    bool precary = false;
+    bool notAvaiable = false;
+
+    int order = 0;
+    int nsurvey = 0;
+    String title = '';
+    getOrder() async {
+      DocumentSnapshot snapshot =
+      await db.collection('surveyNumber').doc('surveyNumber').get();
+      Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
+      setState(() {
+        order = data?["surveyNumber"] ?? 0;
+        title = '${order + 1}';
+      });
+    }
+    getNSurvey() async {
+      DocumentSnapshot snapshot =
+      await db.collection('surveys').doc(widget.idSurvey).get();
+      Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
+      setState(() {
+        nsurvey = data?["Nsurvey"] ?? 0;
+      });
+      if (nsurvey == 0) {
+        getOrder();
+      } else {
+        setState(() {
+          title = '$nsurvey';
+        });
+      }
+    }
+
+    @override
+    void initState() {
+      // TODO: implement initState
+      super.initState();
+      getNSurvey();
+      _getData();
+    }
+
+    @override
+    Widget build(BuildContext context) {
+      double width = MediaQuery
+          .of(context)
+          .size
+          .width;
+      double height = MediaQuery
+          .of(context)
+          .size
+          .height;
+
+      return Scaffold(
+        backgroundColor: PaletteColors.white,
+        appBar: AppBar(
+          backgroundColor: PaletteColors.bgColor,
+          iconTheme: IconThemeData(
+            color: PaletteColors.white,
           ),
-          SizedBox(
-            width: width * 0.04,
-          )
-        ],
-      ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(vertical: 24, horizontal: 8),
-        child: Center(
-          child: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            physics: ScrollPhysics(),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SizedBox(height: height * 0.01),
-                Row(
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Row(
-                          children: [
-                            SizedBox(width: 10),
-                            TextCustom(
-                              text: "Valor",
-                              size: 14.0,
-                              color: PaletteColors.grey,
-                              fontWeight: FontWeight.bold,
-                              textAlign: TextAlign.left,
-                            ),
-
-                            SizedBox(height: 6),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Container(
-                              width: width * 0.7,
-                              child: InputRegister(
-                                inputFormatters: [
-                                  FilteringTextInputFormatter.digitsOnly,
-                                  RealInputFormatter(moeda: true),
-                                ],
-                                icons: Icons.height,
-                                sizeIcon: 0.0,
-                                width: width * 0.50,
-                                controller: _controllerPrice,
-                                hint: 'R\$000.000.00',
-                                fonts: 14.0,
-                                keyboardType: TextInputType.number,
-                                colorBorder: PaletteColors.greyInput,
-                                background: PaletteColors.greyInput,
-                              ),
-                            ),
-                            SizedBox(height: 6),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            SizedBox(width: 10),
-                            Container(
-                              width: width * 0.7,
-                              child: TextCustom(
-                                  text: "Área do Terreno",
-                                  size: 14.0,
-                                  color: PaletteColors.grey,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
+          elevation: 0,
+          title: TextCustom(
+            text: 'Vistoria Nº ${title}',
+            size: 20.0,
+            color: PaletteColors.white,
+            fontWeight: FontWeight.bold,
+            textAlign: TextAlign.center,
+          ),
+          actions: <Widget>[
+            Ink(
+              decoration: ShapeDecoration(
+                color: PaletteColors.white,
+                shape: CircleBorder(),
+              ),
+              child: IconButton(
+                icon: Icon(
+                  Icons.camera_alt,
+                  color: PaletteColors.primaryColor,
+                ),
+                constraints: BoxConstraints(
+                    minHeight: 28, minWidth: 28, maxHeight: 28, maxWidth: 28),
+                iconSize: 24.0,
+                padding: EdgeInsets.all(3.0),
+                onPressed: () => _savePhoto(),
+              ),
+            ),
+            SizedBox(
+              width: width * 0.04,
+            )
+          ],
+        ),
+        body: Padding(
+          padding: EdgeInsets.symmetric(vertical: 24, horizontal: 26),
+          child: Center(
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              physics: ScrollPhysics(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(height: height * 0.01),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            width: width * 0.60,
+                            child: TextCustom(
+                                text: "Valor",
+                                size: 14.0,
+                                color: PaletteColors.grey,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      Row(children: [
                         Container(
-                          width: width * 0.7,
                           child: InputRegister(
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly,
+                              RealInputFormatter(moeda: true)
+                            ],
                             icons: Icons.height,
                             sizeIcon: 0.0,
-                            width: width * 0.2,
-                            controller: _controllerTerrainArea,
-                            hint: "   ",
+                            width: width * 0.60,
+                            controller: _controllerPrice,
+                            hint: 'R\$100.000.00',
                             fonts: 14.0,
                             keyboardType: TextInputType.number,
                             colorBorder: PaletteColors.greyInput,
                             background: PaletteColors.greyInput,
                           ),
                         ),
-                      ],
+                      ]),
+                      SizedBox(height: height * 0.03),
+                      Row(
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Row(
+                                children: [
+                                  Container(
+                                    width: width * 0.8,
+                                    child: TextCustom(
+                                        text: "Área do Terreno",
+                                        size: 14.0,
+                                        color: PaletteColors.grey,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                              Container(
+                                width: width * 0.8,
+                                child: InputRegister(
+                                  icons: Icons.height,
+                                  sizeIcon: 0.0,
+                                  width: width * 0.2,
+                                  controller: _controllerTerrainArea,
+                                  hint: "   ",
+                                  fonts: 14.0,
+                                  keyboardType: TextInputType.number,
+                                  colorBorder: PaletteColors.greyInput,
+                                  background: PaletteColors.greyInput,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: height * 0.01),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 14.0),
+                    child: TextCustom(
+                      text: "TERRENO",
+                      size: 20.0,
+                      color: PaletteColors.grey,
+                      fontWeight: FontWeight.bold,
+                      textAlign: TextAlign.start,
                     ),
-                  ],
-                ),
-                SizedBox(height: height * 0.01),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 14.0),
-                  child: TextCustom(
-                    text: "TERRENO",
-                    size: 20.0,
+                  ),
+                  SizedBox(height: 8),
+                  Divider(
+                    thickness: 1,
+                    color: PaletteColors.lightGrey,
+                  ),
+                  SizedBox(height: height * 0.03),
+                  TextCustom(
+                    text: "Tipo",
+                    size: 16.0,
                     color: PaletteColors.grey,
                     fontWeight: FontWeight.bold,
                     textAlign: TextAlign.start,
                   ),
-                ),
-                SizedBox(height: 8),
-                TextCustom(
-                  text: "Tipo",
-                  size: 16.0,
-                  color: PaletteColors.grey,
-                  fontWeight: FontWeight.bold,
-                  textAlign: TextAlign.start,
-                ), //Tipo
-                ListView(
-                  scrollDirection: Axis.vertical,
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  children: [
-                    ...type.map(buildSingleCheckbox).toList(),
-                  ],
-                ),
-                InputRegister(
-                    controller: _controllerType,
-                    hint: 'Especificar',
-                    fonts: 14.0,
-                    keyboardType: TextInputType.text,
-                    width: width * 0.5,
-                    sizeIcon: 0.0,
-                    icons: Icons.height,
-                    colorBorder: PaletteColors.greyInput,
-                    background: PaletteColors.greyInput),
-                Divider(
-                  thickness: 1.0,
-                ),
-                TextCustom(
-                  text: "Forma do terreno",
-                  size: 16.0,
-                  color: PaletteColors.grey,
-                  fontWeight: FontWeight.bold,
-                  textAlign: TextAlign.start,
-                ), //Forma do terreno
-                ListView(
-                  scrollDirection: Axis.vertical,
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  children: [
-                    ...shape.map(buildSingleCheckbox).toList(),
-                  ],
-                ), //Infraestrutura
-                InputRegister(
-                    controller: _controllerShape,
-                    hint: 'Especificar',
-                    fonts: 14.0,
-                    keyboardType: TextInputType.text,
-                    width: width * 0.5,
-                    sizeIcon: 0.0,
-                    icons: Icons.height,
-                    colorBorder: PaletteColors.greyInput,
-                    background: PaletteColors.greyInput),
-                Divider(
-                  thickness: 1.0,
-                ),
-                TextCustom(
-                  text: "Situação",
-                  size: 16.0,
-                  color: PaletteColors.grey,
-                  fontWeight: FontWeight.bold,
-                  textAlign: TextAlign.start,
-                ), //Situação
-                ListView(
-                  scrollDirection: Axis.vertical,
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  children: [
-                    ...situation.map(buildSingleCheckbox).toList(),
-                  ],
-                ),
-                InputRegister(
-                    controller: _controllerSituation,
-                    hint: 'Especificar',
-                    fonts: 14.0,
-                    keyboardType: TextInputType.text,
-                    width: width * 0.5,
-                    sizeIcon: 0.0,
-                    icons: Icons.height,
-                    colorBorder: PaletteColors.greyInput,
-                    background: PaletteColors.greyInput),
-                Divider(
-                  thickness: 1.0,
-                ),
-                TextCustom(
-                  text: "Topografia",
-                  size: 16.0,
-                  color: PaletteColors.grey,
-                  fontWeight: FontWeight.bold,
-                  textAlign: TextAlign.start,
-                ), //Topografia
-                ListView(
-                  scrollDirection: Axis.vertical,
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  children: [
-                    ...topography.map(buildSingleCheckbox).toList(),
-                  ],
-                ),
-                InputRegister(
-                    controller: _controllerTopography,
-                    hint: 'Especificar',
-                    fonts: 14.0,
-                    keyboardType: TextInputType.text,
-                    width: width * 0.5,
-                    sizeIcon: 0.0,
-                    icons: Icons.height,
-                    colorBorder: PaletteColors.greyInput,
-                    background: PaletteColors.greyInput),
-                Divider(
-                  thickness: 1.0,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 14.0),
-                  child: TextCustom(
-                    text: "BENFEITORIAS EXISTENTES",
-                    size: 20.0,
+                  SizedBox(height: height * 0.03),
+                  Container(
+                    height: type.length * 50,
+                    child: ListView.builder(
+                        itemCount: type.length,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          return Row(
+                            children: [
+                              Container(
+                                width: width * 0.60,
+                                child: TextCustom(
+                                    text: type[index].title,
+                                    color: PaletteColors.grey,
+                                    fontWeight: FontWeight.normal),
+                              ),
+                              Spacer(),
+                              Checkbox(
+                                  activeColor: PaletteColors.primaryColor,
+                                  checkColor: Colors.white,
+                                  value: type[index].value,
+                                  onChanged: (checked) =>
+                                      setState(() {
+                                        type[index].value = checked!;
+                                      })),
+                            ],
+                          );
+                        }),
+                  ),
+                  Container(
+                    child: InputRegister(
+                        controller: _controllerType,
+                        hint: 'Especificar',
+                        fonts: 14.0,
+                        keyboardType: TextInputType.text,
+                        width: width * 0.8,
+                        sizeIcon: 0.0,
+                        icons: Icons.height,
+                        colorBorder: PaletteColors.greyInput,
+                        background: PaletteColors.greyInput),
+                  ),
+                  Divider(
+                    thickness: 1,
+                    color: PaletteColors.lightGrey,
+                  ),
+                  SizedBox(height: height * 0.03),
+                  TextCustom(
+                    text: "Forma do Terreno",
+                    size: 16.0,
                     color: PaletteColors.grey,
                     fontWeight: FontWeight.bold,
                     textAlign: TextAlign.start,
                   ),
-                ),
-                SizedBox(height: 8),
-                TextCustom(
-                  text: "Fechamento do terreno",
-                  size: 16.0,
-                  color: PaletteColors.grey,
-                  fontWeight: FontWeight.bold,
-                  textAlign: TextAlign.start,
-                ),
-                ListView(
-                  scrollDirection: Axis.vertical,
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  children: [
-                    ...terrain.map(buildSingleCheckbox).toList(),
-                  ],
-                ), // Posição da Unidade
-                InputRegister(
-                    controller: _controllerTerrain,
-                    hint: 'Especificar',
-                    fonts: 14.0,
-                    keyboardType: TextInputType.text,
-                    width: width * 0.5,
-                    sizeIcon: 0.0,
-                    icons: Icons.height,
-                    colorBorder: PaletteColors.greyInput,
-                    background: PaletteColors.greyInput),
-                Divider(
-                  thickness: 1.0,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 14.0),
-                      child: TextCustom(
-                        text: "CARACTERÍSTICAS DA REGIÃO",
-                        size: 20.0,
+                  SizedBox(height: height * 0.03),
+                  Container(
+                    height: shape.length * 50,
+                    child: ListView.builder(
+                        itemCount: shape.length,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          return Row(
+                            children: [
+                              Container(
+                                width: width * 0.60,
+                                child: TextCustom(
+                                    text: shape[index].title,
+                                    color: PaletteColors.grey,
+                                    fontWeight: FontWeight.normal),
+                              ),
+                              Spacer(),
+                              Checkbox(
+                                  activeColor: PaletteColors.primaryColor,
+                                  checkColor: Colors.white,
+                                  value: shape[index].value,
+                                  onChanged: (checked) =>
+                                      setState(() {
+                                        shape[index].value = checked!;
+                                      })),
+                            ],
+                          );
+                        }),
+                  ),
+                  Container(
+                    child: InputRegister(
+                        controller: _controllerShape,
+                        hint: 'Especificar',
+                        fonts: 14.0,
+                        keyboardType: TextInputType.text,
+                        width: width * 0.8,
+                        sizeIcon: 0.0,
+                        icons: Icons.height,
+                        colorBorder: PaletteColors.greyInput,
+                        background: PaletteColors.greyInput),
+                  ),
+                  Divider(
+                    thickness: 1,
+                    color: PaletteColors.lightGrey,
+                  ),
+                  SizedBox(height: height * 0.03),
+                  TextCustom(
+                    text: "Situação",
+                    size: 16.0,
+                    color: PaletteColors.grey,
+                    fontWeight: FontWeight.bold,
+                    textAlign: TextAlign.start,
+                  ),
+                  SizedBox(height: height * 0.03),
+                  Container(
+                    height: situation.length * 50,
+                    child: ListView.builder(
+                        itemCount: situation.length,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          return Row(
+                            children: [
+                              Container(
+                                width: width * 0.60,
+                                child: TextCustom(
+                                    text: situation[index].title,
+                                    color: PaletteColors.grey,
+                                    fontWeight: FontWeight.normal),
+                              ),
+                              Spacer(),
+                              Checkbox(
+                                  activeColor: PaletteColors.primaryColor,
+                                  checkColor: Colors.white,
+                                  value: situation[index].value,
+                                  onChanged: (checked) =>
+                                      setState(() {
+                                        situation[index].value = checked!;
+                                      })),
+                            ],
+                          );
+                        }),
+                  ),
+                  Container(
+                    child: InputRegister(
+                        controller: _controllerSituation,
+                        hint: 'Especificar',
+                        fonts: 14.0,
+                        keyboardType: TextInputType.text,
+                        width: width * 0.8,
+                        sizeIcon: 0.0,
+                        icons: Icons.height,
+                        colorBorder: PaletteColors.greyInput,
+                        background: PaletteColors.greyInput),
+                  ),
+                  Divider(
+                    thickness: 1,
+                    color: PaletteColors.lightGrey,
+                  ),
+                  SizedBox(height: height * 0.03),
+                  TextCustom(
+                    text: "Topografia",
+                    size: 16.0,
+                    color: PaletteColors.grey,
+                    fontWeight: FontWeight.bold,
+                    textAlign: TextAlign.start,
+                  ),
+                  SizedBox(height: height * 0.03),
+                  Container(
+                    height: topography.length * 50,
+                    child: ListView.builder(
+                        itemCount: topography.length,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          return Row(
+                            children: [
+                              Container(
+                                width: width * 0.60,
+                                child: TextCustom(
+                                    text: topography[index].title,
+                                    color: PaletteColors.grey,
+                                    fontWeight: FontWeight.normal),
+                              ),
+                              Spacer(),
+                              Checkbox(
+                                  activeColor: PaletteColors.primaryColor,
+                                  checkColor: Colors.white,
+                                  value: topography[index].value,
+                                  onChanged: (checked) =>
+                                      setState(() {
+                                        topography[index].value = checked!;
+                                      })),
+                            ],
+                          );
+                        }),
+                  ),
+                  Container(
+                    child: InputRegister(
+                        controller: _controllerTopography,
+                        hint: 'Especificar',
+                        fonts: 14.0,
+                        keyboardType: TextInputType.text,
+                        width: width * 0.8,
+                        sizeIcon: 0.0,
+                        icons: Icons.height,
+                        colorBorder: PaletteColors.greyInput,
+                        background: PaletteColors.greyInput),
+                  ),
+                  Divider(
+                    thickness: 1,
+                    color: PaletteColors.lightGrey,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 14.0),
+                    child: TextCustom(
+                      text: "BENFEITORIAS EXISTENTES",
+                      size: 20.0,
+                      color: PaletteColors.grey,
+                      fontWeight: FontWeight.bold,
+                      textAlign: TextAlign.start,
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  SizedBox(height: height * 0.03),
+                  TextCustom(
+                    text: "Fechamento do terreno",
+                    size: 16.0,
+                    color: PaletteColors.grey,
+                    fontWeight: FontWeight.bold,
+                    textAlign: TextAlign.start,
+                  ),
+                  SizedBox(height: height * 0.03),
+                  Container(
+                    height: terrain.length * 50,
+                    child: ListView.builder(
+                        itemCount: terrain.length,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          return Row(
+                            children: [
+                              Container(
+                                width: width * 0.60,
+                                child: TextCustom(
+                                    text: terrain[index].title,
+                                    color: PaletteColors.grey,
+                                    fontWeight: FontWeight.normal),
+                              ),
+                              Spacer(),
+                              Checkbox(
+                                  activeColor: PaletteColors.primaryColor,
+                                  checkColor: Colors.white,
+                                  value: terrain[index].value,
+                                  onChanged: (checked) =>
+                                      setState(() {
+                                        terrain[index].value = checked!;
+                                      })),
+                            ],
+                          );
+                        }),
+                  ),
+                  Container(
+                    child: InputRegister(
+                        controller: _controllerTerrain,
+                        hint: 'Especificar',
+                        fonts: 14.0,
+                        keyboardType: TextInputType.text,
+                        width: width * 0.8,
+                        sizeIcon: 0.0,
+                        icons: Icons.height,
+                        colorBorder: PaletteColors.greyInput,
+                        background: PaletteColors.greyInput),
+                  ),
+                  Divider(
+                    thickness: 1.0,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 14.0),
+                        child: TextCustom(
+                          text: "CARACTERÍSTICAS DA REGIÃO",
+                          size: 20.0,
+                          color: PaletteColors.grey,
+                          fontWeight: FontWeight.bold,
+                          textAlign: TextAlign.start,
+                        ),
+                      ),
+                      SizedBox(height: height * 0.03),
+                      TextCustom(
+                        text: "Localização da Unidade",
+                        size: 16.0,
                         color: PaletteColors.grey,
                         fontWeight: FontWeight.bold,
                         textAlign: TextAlign.start,
                       ),
-                    ),
-                    SizedBox(height: 8),
-                    TextCustom(
-                      text: "Localização da Unidade",
-                      size: 16.0,
-                      color: PaletteColors.grey,
-                      fontWeight: FontWeight.bold,
-                      textAlign: TextAlign.start,
-                    ), //Localização da Unidade
-                    ListView(
-                      scrollDirection: Axis.vertical,
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      children: [
-                        ...location.map(buildSingleCheckbox).toList(),
-                      ],
-                    ),
-                    InputRegister(
-                        controller: _controllerLocation,
-                        hint: 'Especificar',
-                        fonts: 14.0,
-                        keyboardType: TextInputType.text,
-                        width: width * 0.5,
-                        sizeIcon: 0.0,
-                        icons: Icons.height,
-                        colorBorder: PaletteColors.greyInput,
-                        background: PaletteColors.greyInput),
-                    Divider(
-                      thickness: 1.0,
-                    ),
-                    TextCustom(
-                      text: "Uso predominante",
-                      size: 16.0,
-                      color: PaletteColors.grey,
-                      fontWeight: FontWeight.bold,
-                      textAlign: TextAlign.start,
-                    ), //Uso predominante
-                    ListView(
-                      scrollDirection: Axis.vertical,
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      children: [
-                        ...use.map(buildSingleCheckbox).toList(),
-                      ],
-                    ), //Infraestrutura
-                    InputRegister(
-                        controller: _controllerUse,
-                        hint: 'Especificar',
-                        fonts: 14.0,
-                        keyboardType: TextInputType.text,
-                        width: width * 0.5,
-                        sizeIcon: 0.0,
-                        icons: Icons.height,
-                        colorBorder: PaletteColors.greyInput,
-                        background: PaletteColors.greyInput),
-                    Divider(
-                      thickness: 1.0,
-                    ),
-                    TextCustom(
-                      text: "Padrão usual de acabamento",
-                      size: 16.0,
-                      color: PaletteColors.grey,
-                      fontWeight: FontWeight.bold,
-                      textAlign: TextAlign.start,
-                    ), //Padrão usual de acabamento
-                    ListView(
-                      scrollDirection: Axis.vertical,
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      children: [
-                        ...pattern.map(buildSingleCheckbox).toList(),
-                      ],
-                    ),
-                    InputRegister(
-                        controller: _controllerPattern,
-                        hint: 'Especificar',
-                        fonts: 14.0,
-                        keyboardType: TextInputType.text,
-                        width: width * 0.5,
-                        sizeIcon: 0.0,
-                        icons: Icons.height,
-                        colorBorder: PaletteColors.greyInput,
-                        background: PaletteColors.greyInput),
-                    Divider(
-                      thickness: 1.0,
-                    ),
-                    TextCustom(
-                      text: "Avaliação da Localização",
-                      size: 16.0,
-                      color: PaletteColors.grey,
-                      fontWeight: FontWeight.bold,
-                      textAlign: TextAlign.start,
-                    ), //Avaliação da Localização
-                    ListView(
-                      scrollDirection: Axis.vertical,
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      children: [
-                        ...evaluation.map(buildSingleCheckbox).toList(),
-                      ],
-                    ),
-                    InputRegister(
-                        controller: _controllerEvaluation,
-                        hint: 'Especificar',
-                        fonts: 14.0,
-                        keyboardType: TextInputType.text,
-                        width: width * 0.5,
-                        sizeIcon: 0.0,
-                        icons: Icons.height,
-                        colorBorder: PaletteColors.greyInput,
-                        background: PaletteColors.greyInput),
-                    Divider(
-                      thickness: 1.0,
-                    ),
-                    TextCustom(
-                      text: "Densidade de ocupação",
-                      size: 16.0,
-                      color: PaletteColors.grey,
-                      fontWeight: FontWeight.bold,
-                      textAlign: TextAlign.start,
-                    ), //Densidade de ocupação
-                    ListView(
-                      scrollDirection: Axis.vertical,
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      children: [
-                        ...density.map(buildSingleCheckbox).toList(),
-                      ],
-                    ),
-                    InputRegister(
-                        controller: _controllerDensity,
-                        hint: 'Especificar',
-                        fonts: 14.0,
-                        keyboardType: TextInputType.text,
-                        width: width * 0.5,
-                        sizeIcon: 0.0,
-                        icons: Icons.height,
-                        colorBorder: PaletteColors.greyInput,
-                        background: PaletteColors.greyInput),
-                    Divider(
-                      thickness: 1.0,
-                    ),
-                    TextCustom(
-                      text: "Transporte coletivo",
-                      size: 16.0,
-                      color: PaletteColors.grey,
-                      fontWeight: FontWeight.bold,
-                      textAlign: TextAlign.start,
-                    ), //Transporte coletivo
-                    ListView(
-                      scrollDirection: Axis.vertical,
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      children: [
-                        ...transport.map(buildSingleCheckbox).toList(),
-                      ],
-                    ),
-                    InputRegister(
-                        controller: _controllerTransport,
-                        hint: 'Especificar',
-                        fonts: 14.0,
-                        keyboardType: TextInputType.text,
-                        width: width * 0.5,
-                        sizeIcon: 0.0,
-                        icons: Icons.height,
-                        colorBorder: PaletteColors.greyInput,
-                        background: PaletteColors.greyInput),
-                    Divider(
-                      thickness: 1.0,
-                    ),
-                  ],
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    TextCustom(
-                      text:
-                          'Soluções de infra-estrutura disponíveis \njunto à unidade, serviços e equipamentos\ncomunitários no entorno',
-                      color: PaletteColors.grey,
-                      maxLines: 3,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Spacer(),
-                        RotatedBox(
-                          quarterTurns: 3,
-                          child: TextCustom(
-                            text: 'Satisfatório',
-                            color: PaletteColors.grey,
-                            size: 14.0,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 27,
-                        ),
-                        RotatedBox(
-                          quarterTurns: 3,
-                          child: TextCustom(
-                            text: 'Precário',
-                            color: PaletteColors.grey,
-                            size: 14.0,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 27,
-                        ),
-                        RotatedBox(
-                          quarterTurns: 3,
-                          child: TextCustom(
-                            text: 'Não disponível',
-                            color: PaletteColors.grey,
-                            size: 14.0,
-                          ),
-                        ),
-                        SizedBox(width: 15),
-                      ],
-                    ),
-                    Container(
-                      height:  titles.length * 50,
-                      child: ListView.builder(
-                          itemCount: titles.length,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemBuilder: (context, index){
-                            ratings.add(CheckBoxModelRatings());
-                            return Row(
-
-                              children: [
-                                Container(
-                                  width: width * 0.35,
-                                  child: TextCustom(
-                                      text: titles[index],
-                                      color: PaletteColors.grey,
-                                      fontWeight: FontWeight.normal),
-                                ),
-                                Spacer(),
-                                Checkbox(
-                                    value: ratings[index].satisfactory,
-                                    onChanged: (checked) => setState(() {
-                                      ratings[index].satisfactory = checked!;
-
-                                    })
-                                ),
-                                Checkbox(
-                                    value:ratings[index].precary,
-                                    onChanged: (checked) => setState(() {
-                                      ratings[index].precary = checked!;
-
-                                    })
-                                ),
-                                Checkbox(
-                                    value: ratings[index].notAvaiable,
-                                    onChanged: (checked) => setState(() {
-                                      ratings[index].notAvaiable = checked!;
-
-                                    })
-                                ),
-                              ],
-                            );
-                          }
+                      SizedBox(height: height * 0.03),
+                      Container(
+                        height: location.length * 50,
+                        child: ListView.builder(
+                            itemCount: location.length,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              return Row(
+                                children: [
+                                  Container(
+                                    width: width * 0.60,
+                                    child: TextCustom(
+                                        text: location[index].title,
+                                        color: PaletteColors.grey,
+                                        fontWeight: FontWeight.normal),
+                                  ),
+                                  Spacer(),
+                                  Checkbox(
+                                      activeColor: PaletteColors.primaryColor,
+                                      checkColor: Colors.white,
+                                      value: location[index].value,
+                                      onChanged: (checked) =>
+                                          setState(() {
+                                            location[index].value = checked!;
+                                          })),
+                                ],
+                              );
+                            }),
                       ),
-                    ),
-                    Divider(
-                      thickness: 1.0,
-                    ),
-                  ],
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    TextCustom(
-                      text: "Fatores desvalorizantes na região",
-                      size: 16.0,
-                      color: PaletteColors.grey,
-                      fontWeight: FontWeight.bold,
-                      textAlign: TextAlign.start,
-                    ),
-                    Container(
-                      child: TextCustom(
-                        text:
-                            "Há no entorno da unidade atividades e/ou características incompatíveis com o uso ou que possam provocar risco ou situação de insalubridade nas edificações, com consequente comprometimento do retorno da operação? Em caso afirmativo especifique abaixo:",
+                      Container(
+                        child: InputRegister(
+                            controller: _controllerLocation,
+                            hint: 'Especificar',
+                            fonts: 14.0,
+                            keyboardType: TextInputType.text,
+                            width: width * 0.8,
+                            sizeIcon: 0.0,
+                            icons: Icons.height,
+                            colorBorder: PaletteColors.greyInput,
+                            background: PaletteColors.greyInput),
+                      ),
+                      Divider(
+                        thickness: 1,
+                        color: PaletteColors.lightGrey,
+                      ),
+                      SizedBox(height: height * 0.03),
+                      TextCustom(
+                        text: "Uso predominante",
                         size: 16.0,
-                        maxLines: 7,
                         color: PaletteColors.grey,
-                        fontWeight: FontWeight.normal,
+                        fontWeight: FontWeight.bold,
                         textAlign: TextAlign.start,
                       ),
-                    ),
-                    Container(
-                      width: width * 0.8,
-                      height: height * 0.2,
-                      child: InputRegister(
-                          controller: _controllerFactors,
-                          hint: '',
-                          fonts: 14.0,
-                          keyboardType: TextInputType.text,
-                          width: width * 0.5,
-                          sizeIcon: 0.0,
-                          icons: Icons.height,
-                          colorBorder: PaletteColors.greyInput,
-                          background: PaletteColors.greyInput),
-                    ),
-                    Divider(thickness: 1),
-                    TextCustom(
-                      text: "Observações:",
-                      size: 16.0,
-                      color: PaletteColors.grey,
-                      fontWeight: FontWeight.bold,
-                      textAlign: TextAlign.start,
-                    ),
-                    Container(
-                      width: width * 0.8,
-                      height: height * 0.2,
-                      child: InputRegister(
-                          controller: _controllerObs,
-                          hint: '',
-                          fonts: 14.0,
-                          keyboardType: TextInputType.text,
-                          width: width * 0.5,
-                          sizeIcon: 0.0,
-                          icons: Icons.height,
-                          colorBorder: PaletteColors.greyInput,
-                          background: PaletteColors.greyInput),
-                    ),
-                    SizedBox(height: 6),
-                    Row(
-                      children: [
-                        Container(
-                          width: width * 0.35,
-                          child: ButtonCustom(
-                            widthCustom: 0.3,
-                            heightCustom: 0.070,
-                            onPressed: () => Navigator.pushReplacement(context,
-                                MaterialPageRoute(
-                                  builder: (_) => Surveyscreen(
-                                      text: 'Nova Vistoria',
-                                      buttonText: 'Prosseguir',
-                                      id: ''),
-                                )
+                      SizedBox(height: height * 0.03),
+                      Container(
+                        height: use.length * 50,
+                        child: ListView.builder(
+                            itemCount: use.length,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              return Row(
+                                children: [
+                                  Container(
+                                    width: width * 0.60,
+                                    child: TextCustom(
+                                        text: use[index].title,
+                                        color: PaletteColors.grey,
+                                        fontWeight: FontWeight.normal),
+                                  ),
+                                  Spacer(),
+                                  Checkbox(
+                                      activeColor: PaletteColors.primaryColor,
+                                      checkColor: Colors.white,
+                                      value: use[index].value,
+                                      onChanged: (checked) =>
+                                          setState(() {
+                                            use[index].value = checked!;
+                                          })),
+                                ],
+                              );
+                            }),
+                      ),
+                      Container(
+                        child: InputRegister(
+                            controller: _controllerUse,
+                            hint: 'Especificar',
+                            fonts: 14.0,
+                            keyboardType: TextInputType.text,
+                            width: width * 0.8,
+                            sizeIcon: 0.0,
+                            icons: Icons.height,
+                            colorBorder: PaletteColors.greyInput,
+                            background: PaletteColors.greyInput),
+                      ),
+                      Divider(
+                        thickness: 1,
+                        color: PaletteColors.lightGrey,
+                      ),
+                      SizedBox(height: height * 0.03),
+                      TextCustom(
+                        text: "Padrão usual de acabamento",
+                        size: 16.0,
+                        color: PaletteColors.grey,
+                        fontWeight: FontWeight.bold,
+                        textAlign: TextAlign.start,
+                      ),
+                      SizedBox(height: height * 0.03),
+                      Container(
+                        height: pattern.length * 50,
+                        child: ListView.builder(
+                            itemCount: pattern.length,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              return Row(
+                                children: [
+                                  Container(
+                                    width: width * 0.60,
+                                    child: TextCustom(
+                                        text: pattern[index].title,
+                                        color: PaletteColors.grey,
+                                        fontWeight: FontWeight.normal),
+                                  ),
+                                  Spacer(),
+                                  Checkbox(
+                                      activeColor: PaletteColors.primaryColor,
+                                      checkColor: Colors.white,
+                                      value: pattern[index].value,
+                                      onChanged: (checked) =>
+                                          setState(() {
+                                            pattern[index].value = checked!;
+                                          })),
+                                ],
+                              );
+                            }),
+                      ),
+                      Container(
+                        child: InputRegister(
+                            controller: _controllerPattern,
+                            hint: 'Especificar',
+                            fonts: 14.0,
+                            keyboardType: TextInputType.text,
+                            width: width * 0.8,
+                            sizeIcon: 0.0,
+                            icons: Icons.height,
+                            colorBorder: PaletteColors.greyInput,
+                            background: PaletteColors.greyInput),
+                      ),
+                      Divider(
+                        thickness: 1,
+                        color: PaletteColors.lightGrey,
+                      ),
+                      SizedBox(height: height * 0.03),
+                      TextCustom(
+                        text: "Avaliação da Localização",
+                        size: 16.0,
+                        color: PaletteColors.grey,
+                        fontWeight: FontWeight.bold,
+                        textAlign: TextAlign.start,
+                      ),
+                      SizedBox(height: height * 0.03),
+                      Container(
+                        height: evaluation.length * 50,
+                        child: ListView.builder(
+                            itemCount: evaluation.length,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              return Row(
+                                children: [
+                                  Container(
+                                    width: width * 0.60,
+                                    child: TextCustom(
+                                        text: evaluation[index].title,
+                                        color: PaletteColors.grey,
+                                        fontWeight: FontWeight.normal),
+                                  ),
+                                  Spacer(),
+                                  Checkbox(
+                                      activeColor: PaletteColors.primaryColor,
+                                      checkColor: Colors.white,
+                                      value: evaluation[index].value,
+                                      onChanged: (checked) =>
+                                          setState(() {
+                                            evaluation[index].value = checked!;
+                                          })),
+                                ],
+                              );
+                            }),
+                      ),
+                      Container(
+                        child: InputRegister(
+                            controller: _controllerEvaluation,
+                            hint: 'Especificar',
+                            fonts: 14.0,
+                            keyboardType: TextInputType.text,
+                            width: width * 0.8,
+                            sizeIcon: 0.0,
+                            icons: Icons.height,
+                            colorBorder: PaletteColors.greyInput,
+                            background: PaletteColors.greyInput),
+                      ),
+                      Divider(
+                        thickness: 1,
+                        color: PaletteColors.lightGrey,
+                      ),
+                      SizedBox(height: height * 0.03),
+                      TextCustom(
+                        text: "Densidade de ocupação",
+                        size: 16.0,
+                        color: PaletteColors.grey,
+                        fontWeight: FontWeight.bold,
+                        textAlign: TextAlign.start,
+                      ),
+                      SizedBox(height: height * 0.03),
+                      Container(
+                        height: density.length * 50,
+                        child: ListView.builder(
+                            itemCount: density.length,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              return Row(
+                                children: [
+                                  Container(
+                                    width: width * 0.60,
+                                    child: TextCustom(
+                                        text: density[index].title,
+                                        color: PaletteColors.grey,
+                                        fontWeight: FontWeight.normal),
+                                  ),
+                                  Spacer(),
+                                  Checkbox(
+                                      activeColor: PaletteColors.primaryColor,
+                                      checkColor: Colors.white,
+                                      value: density[index].value,
+                                      onChanged: (checked) =>
+                                          setState(() {
+                                            density[index].value = checked!;
+                                          })),
+                                ],
+                              );
+                            }),
+                      ),
+                      Container(
+                        child: InputRegister(
+                            controller: _controllerDensity,
+                            hint: 'Especificar',
+                            fonts: 14.0,
+                            keyboardType: TextInputType.text,
+                            width: width * 0.8,
+                            sizeIcon: 0.0,
+                            icons: Icons.height,
+                            colorBorder: PaletteColors.greyInput,
+                            background: PaletteColors.greyInput),
+                      ),
+                      Divider(
+                        thickness: 1,
+                        color: PaletteColors.lightGrey,
+                      ),
+                      SizedBox(height: height * 0.03),
+                      TextCustom(
+                        text: "Transporte Coletivo",
+                        size: 16.0,
+                        color: PaletteColors.grey,
+                        fontWeight: FontWeight.bold,
+                        textAlign: TextAlign.start,
+                      ),
+                      SizedBox(height: height * 0.03),
+                      Container(
+                        height: transport.length * 50,
+                        child: ListView.builder(
+                            itemCount: transport.length,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              return Row(
+                                children: [
+                                  Container(
+                                    width: width * 0.60,
+                                    child: TextCustom(
+                                        text: transport[index].title,
+                                        color: PaletteColors.grey,
+                                        fontWeight: FontWeight.normal),
+                                  ),
+                                  Spacer(),
+                                  Checkbox(
+                                      activeColor: PaletteColors.primaryColor,
+                                      checkColor: Colors.white,
+                                      value: transport[index].value,
+                                      onChanged: (checked) =>
+                                          setState(() {
+                                            transport[index].value = checked!;
+                                          })),
+                                ],
+                              );
+                            }),
+                      ),
+                      Container(
+                        child: InputRegister(
+                            controller: _controllerTransport,
+                            hint: 'Especificar',
+                            fonts: 14.0,
+                            keyboardType: TextInputType.text,
+                            width: width * 0.8,
+                            sizeIcon: 0.0,
+                            icons: Icons.height,
+                            colorBorder: PaletteColors.greyInput,
+                            background: PaletteColors.greyInput),
+                      ),
+                      Divider(
+                        thickness: 1,
+                        color: PaletteColors.lightGrey,
+                      ),
+                    ],
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      TextCustom(
+                        text:
+                        'Soluções de infra-estrutura disponíveis \njunto à unidade, serviços e equipamentos\ncomunitários no entorno',
+                        color: PaletteColors.grey,
+                        maxLines: 3,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Spacer(),
+                          RotatedBox(
+                            quarterTurns: 3,
+                            child: TextCustom(
+                              text: 'Satisfatório',
+                              color: PaletteColors.grey,
+                              size: 14.0,
                             ),
-                            text: "Voltar",
-                            size: 14.0,
-                            colorButton: PaletteColors.white,
-                            colorText: PaletteColors.primaryColor,
-                            colorBorder: PaletteColors.primaryColor,
                           ),
-                        ),
-                        SizedBox(width: width * 0.15),
-                        Container(
-                          width: width * 0.35,
-                          child: ButtonCustom(
-                            widthCustom: 0.3,
-                            heightCustom: 0.070,
-                            onPressed: () => _saveCheckList(),
-                            text: "Concluir",
-                            size: 14.0,
-                            colorButton: PaletteColors.primaryColor,
-                            colorText: PaletteColors.white,
-                            colorBorder: PaletteColors.primaryColor,
+                          SizedBox(
+                            width: 27,
                           ),
+                          RotatedBox(
+                            quarterTurns: 3,
+                            child: TextCustom(
+                              text: 'Precário',
+                              color: PaletteColors.grey,
+                              size: 14.0,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 27,
+                          ),
+                          RotatedBox(
+                            quarterTurns: 3,
+                            child: TextCustom(
+                              text: 'Não disponível',
+                              color: PaletteColors.grey,
+                              size: 14.0,
+                            ),
+                          ),
+                          SizedBox(width: 15),
+                        ],
+                      ),
+                      Container(
+                        height: titles.length * 50,
+                        child: ListView.builder(
+                            itemCount: titles.length,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              ratings.add(CheckBoxModelRatings());
+                              return Row(
+                                children: [
+                                  Container(
+                                    width: width * 0.35,
+                                    child: TextCustom(
+                                        text: titles[index],
+                                        color: PaletteColors.grey,
+                                        fontWeight: FontWeight.normal),
+                                  ),
+                                  Spacer(),
+                                  Checkbox(
+                                      activeColor: PaletteColors.primaryColor,
+                                      checkColor: Colors.white,
+                                      value: ratings[index].satisfactory,
+                                      onChanged: (checked) =>
+                                          setState(() {
+                                            ratings[index].satisfactory =
+                                            checked!;
+                                          })),
+                                  Checkbox(
+                                      activeColor: PaletteColors.primaryColor,
+                                      checkColor: Colors.white,
+                                      value: ratings[index].precary,
+                                      onChanged: (checked) =>
+                                          setState(() {
+                                            ratings[index].precary = checked!;
+                                          })),
+                                  Checkbox(
+                                      activeColor: PaletteColors.primaryColor,
+                                      checkColor: Colors.white,
+                                      value: ratings[index].notAvaiable,
+                                      onChanged: (checked) =>
+                                          setState(() {
+                                            ratings[index].notAvaiable =
+                                            checked!;
+                                          })),
+                                ],
+                              );
+                            }),
+                      ),
+                      Divider(
+                        thickness: 1.0,
+                      ),
+                    ],
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      TextCustom(
+                        text: "Fatores desvalorizantes na região",
+                        size: 16.0,
+                        color: PaletteColors.grey,
+                        fontWeight: FontWeight.bold,
+                        textAlign: TextAlign.start,
+                      ),
+                      Container(
+                        child: TextCustom(
+                          text:
+                          "Há no entorno da unidade atividades e/ou características incompatíveis com o uso ou que possam provocar risco ou situação de insalubridade nas edificações, com consequente comprometimento do retorno da operação? Em caso afirmativo especifique abaixo:",
+                          size: 16.0,
+                          maxLines: 7,
+                          color: PaletteColors.grey,
+                          fontWeight: FontWeight.normal,
+                          textAlign: TextAlign.start,
                         ),
-                      ],
-                    )
-                  ],
-                ),
-              ],
+                      ),
+                      Container(
+                        width: width * 0.8,
+                        height: height * 0.2,
+                        child: InputRegister(
+                            controller: _controllerFactors,
+                            hint: '',
+                            fonts: 14.0,
+                            keyboardType: TextInputType.text,
+                            width: width * 0.5,
+                            sizeIcon: 0.0,
+                            icons: Icons.height,
+                            colorBorder: PaletteColors.greyInput,
+                            background: PaletteColors.greyInput),
+                      ),
+                      Divider(thickness: 1),
+                      TextCustom(
+                        text: "Observações:",
+                        size: 16.0,
+                        color: PaletteColors.grey,
+                        fontWeight: FontWeight.bold,
+                        textAlign: TextAlign.start,
+                      ),
+                      Container(
+                        width: width * 0.8,
+                        height: height * 0.2,
+                        child: InputRegister(
+                            controller: _controllerObs,
+                            hint: '',
+                            fonts: 14.0,
+                            keyboardType: TextInputType.text,
+                            width: width * 0.5,
+                            sizeIcon: 0.0,
+                            icons: Icons.height,
+                            colorBorder: PaletteColors.greyInput,
+                            background: PaletteColors.greyInput),
+                      ),
+                      SizedBox(height: 6),
+                      Row(
+                        children: [
+                          Container(
+                            width: width * 0.35,
+                            child: ButtonCustom(
+                              widthCustom: 0.35,
+                              heightCustom: 0.070,
+                              onPressed: () =>
+
+                                  Navigator.pop(context),
+                              text: "Voltar",
+                              size: 14.0,
+                              colorButton: PaletteColors.white,
+                              colorText: PaletteColors.primaryColor,
+                              colorBorder: PaletteColors.primaryColor,
+                            ),
+                          ),
+                          SizedBox(width: width * 0.08),
+                          Container(
+                            width: width * 0.35,
+                            child: ButtonCustom(
+                              widthCustom: 0.35,
+                              heightCustom: 0.070,
+                              onPressed: () => _saveCheckList(),
+                              text: "Concluir",
+                              size: 14.0,
+                              colorButton: PaletteColors.primaryColor,
+                              colorText: PaletteColors.white,
+                              colorBorder: PaletteColors.primaryColor,
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
-      ),
-    );
+      );
+    }
+
+    Widget buildSingleCheckbox(CheckBoxModel checkBoxModel) =>
+        CheckboxListTile(
+          title: TextCustom(
+              text: checkBoxModel.title,
+              color: PaletteColors.grey,
+              fontWeight: FontWeight.normal,
+              size: 16.0),
+          value: checkBoxModel.value,
+          onChanged: (value) => setState(() => checkBoxModel.value = value!),
+          activeColor: PaletteColors.primaryColor,
+          checkColor: PaletteColors.white,
+        );
   }
 
-  Widget buildSingleCheckbox(CheckBoxModel checkBoxModel) => CheckboxListTile(
-        title: TextCustom(
-            text: checkBoxModel.title,
-            color: PaletteColors.grey,
-            fontWeight: FontWeight.normal,
-            size: 16.0),
-        value: checkBoxModel.value,
-        onChanged: (value) => setState(() => checkBoxModel.value = value!),
-        activeColor: PaletteColors.primaryColor,
-        checkColor: PaletteColors.white,
-      );
-}

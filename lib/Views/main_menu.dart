@@ -87,7 +87,7 @@ class _MenuScreenState extends State<MenuScreen> {
                     CustomCard(
                         text: "Historico",
                         icon: Icons.window_outlined,
-                        screen: HistoryScreen(idSurvey: ''),
+                        screen: HistoryScreen(),
                         ),
                     CustomCard(
                         text: "Tutorial",

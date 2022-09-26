@@ -1,14 +1,14 @@
 import 'package:flutter/services.dart';
-import 'package:vistoria/Utils/exports.dart';
+
+import '../Utils/exports.dart';
 
 class InputRegister extends StatelessWidget {
-
   final controller;
   final hint;
   final fonts;
   final keyboardType;
   final width;
-  List<TextInputFormatter>? inputFormatters=[];
+  List<TextInputFormatter>? inputFormatters = [];
   final sizeIcon;
   final icons;
   final colorBorder;
@@ -31,21 +31,18 @@ class InputRegister extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
     return Container(
-      alignment: Alignment.topCenter,
+      alignment: Alignment.topLeft,
       width: this.width,
       padding: EdgeInsets.symmetric(horizontal: 8),
-      margin: EdgeInsets.symmetric(horizontal: 10,vertical: 6),
+      margin: EdgeInsets.only( top: 6, bottom: 6, right: 24),
       decoration: BoxDecoration(
-
-        color: background,
-        borderRadius: BorderRadius.circular(6),
-        border: Border.all(color: colorBorder)
-      ),
+          color: background,
+          borderRadius: BorderRadius.circular(4),
+          border: Border.all(color: colorBorder)),
       child: Row(
         children: [
           Expanded(
@@ -59,18 +56,18 @@ class InputRegister extends StatelessWidget {
                 color: Colors.black54,
                 fontSize: this.fonts,
               ),
-              inputFormatters:this.inputFormatters,
+              inputFormatters: this.inputFormatters,
               decoration: InputDecoration(
-                  border: InputBorder.none,
-                  hintText: this.hint,
-                  hintStyle: TextStyle(
-                    color: Colors.black54,
-                    fontSize: this.fonts,
-                  ),
+                border: InputBorder.none,
+                hintText: this.hint,
+                hintStyle: TextStyle(
+                  color: Colors.black54,
+                  fontSize: this.fonts,
+                ),
               ),
             ),
           ),
-          Icon(icons,size: sizeIcon),
+          Icon(icons, size: sizeIcon),
         ],
       ),
     );

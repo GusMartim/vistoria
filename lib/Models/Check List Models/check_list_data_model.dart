@@ -37,7 +37,7 @@ class DataModel{
   String Origin = '';
   String Goal = '';
   String phone = '';
-  String adress = '';
+  String completeAdress = '';
   String contact = '';
   DataModel();
 
@@ -80,7 +80,7 @@ class DataModel{
       "Origin" : this.Origin,
       "Goal" : this.Goal,
       "phone" : this.phone,
-      "adress" : this.adress,
+      "completeAdress" : this.completeAdress,
       "contact" : this.contact,
 
     };

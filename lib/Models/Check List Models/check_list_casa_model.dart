@@ -38,7 +38,7 @@ class UnityModel{
   String bathroom = '';
   String tank = '';
   String pattern = '';
-  String state = '';
+  String stateList = '';
   String unRoof = '';
   String block = '';
   String TerrainArea = '';
@@ -48,6 +48,7 @@ class UnityModel{
   String Origin = '';
   String Goal = '';
   String pathology = '';
+  String idSurvey = '';
   UnityModel();
 
   Map<String,dynamic> toMap(){
@@ -90,7 +91,7 @@ class UnityModel{
       "bathroom": this.bathroom,
       "tank": this.tank,
       "pattern": this.pattern,
-      "state": this.state,
+      "state": this.stateList,
       "unRoof": this.unRoof,
       "block": this.block,
       "TerrainArea" : this.TerrainArea,
@@ -99,7 +100,8 @@ class UnityModel{
       "TotalArea" : this.TotalArea,
       "Origin" : this.Origin,
       "Goal" : this.Goal,
-      "Pathology" : this.pathology
+      "Pathology" : this.pathology,
+      "idSurvey" : this.idSurvey
     };
     return map;
 

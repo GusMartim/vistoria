@@ -151,23 +151,75 @@ class _ConstructionStepState extends State<ConstructionStep> {
   FirebaseFirestore db = FirebaseFirestore.instance;
 
   int order = 0;
-  _getSurveyNumber()async{
+  int nsurvey=0;
+  String title = '';
+  _getData() async{
+    DocumentSnapshot snapshot =
+    await db.collection("surveys").doc(widget.idSurvey).get();
+    Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
+    setState(() {
+      SServices = data?["services"];
+      SInfra = data?["infra"];
+      SSupra = data?["supra"];
+      SWalls = data?["walls"];
+      SFrames = data?["frames"];
+      SGlasses = data?["glasses"];
+      SCeiling = data?["ceiling"];
+      SWaterProof = data?["waterproof"];
+      SIntern = data?["intern"];
+      SLinings = data?["linings"];
+      SExtern = data?["extern"];
+      SPaint = data?["paints"];
+      SFloors = data?["floors"];
+      SFinishes = data?["finishes"];
+      SEletric = data?["electric"];
+      SHidro = data?["hidro"];
+      SSewer = data?["sewer"];
+      SSlabs = data?["slabs"];
+      SComplements = data?["complements"];
+      SOthers = data?["others"];
 
+
+    });
+  }
+  getOrder()async{
     DocumentSnapshot snapshot = await db
         .collection('surveyNumber')
         .doc('surveyNumber')
         .get();
     Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
     setState(() {
-      order = data?["surveyNumber"]??0;
+      order = data?["surveyNumber"] ?? 0;
+      title = '${order + 1}';
 
     });
+
+  }
+  getNSurvey()async{
+    DocumentSnapshot snapshot = await db
+        .collection('surveys')
+        .doc(widget.idSurvey)
+        .get();
+    Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
+    setState(() {
+      nsurvey = data?["Nsurvey"] ?? 0;
+    });
+    if(nsurvey== 0){
+      getOrder();
+    }else{
+      setState(() {
+        title = '$nsurvey';
+      });
+
+    }
+
   }
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _getSurveyNumber();
+    getNSurvey();
+    _getData();
   }
 
   @override
@@ -184,7 +236,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
         ),
         elevation: 0,
         title: TextCustom(
-          text: 'Vistoria Nª ${order+1}',
+          text: 'Vistoria Nª ${title}',
           size: 20.0,
           color: PaletteColors.white,
           fontWeight: FontWeight.bold,
@@ -2014,14 +2066,9 @@ class _ConstructionStepState extends State<ConstructionStep> {
                     child: ButtonCustom(
                       widthCustom: 0.3,
                       heightCustom: 0.070,
-                      onPressed: () => Navigator.pushReplacement(context,
-                          MaterialPageRoute(
-                            builder: (_) => Surveyscreen(
-                                text: 'Nova Vistoria',
-                                buttonText: 'Prosseguir',
-                                id: ''),
-                          )
-                      ),
+                      onPressed: () =>
+
+                          Navigator.pop(context),
                       text: "Voltar",
                       size: 14.0,
                       colorButton: PaletteColors.white,

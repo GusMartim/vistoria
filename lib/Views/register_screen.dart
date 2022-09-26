@@ -193,27 +193,33 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ],
                 ),
-                Container(
-                  width: width * 0.8,
-                  padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 1.0),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: PaletteColors.greyInput),
-                  child: DropdownButtonHideUnderline(
-                    child: DropdownButton<String>(
-                      items: type
-                          .map((type) => DropdownMenuItem<String>(
-                              value: type,
-                              child: TextCustom(
-                                text: type,
-                                color: PaletteColors.grey,
-                                textAlign: TextAlign.start,
-                              )))
-                          .toList(),
-                      value: selectedType,
-                      onChanged: (type) => setState(() => selectedType = type),
+                Row(
+                  children: [
+                    SizedBox(width: width * 0.1),
+                    Container(
+
+                      width: width * 0.8,
+                      padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 1.0),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: PaletteColors.greyInput),
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton<String>(
+                          items: type
+                              .map((type) => DropdownMenuItem<String>(
+                                  value: type,
+                                  child: TextCustom(
+                                    text: type,
+                                    color: PaletteColors.grey,
+                                    textAlign: TextAlign.start,
+                                  )))
+                              .toList(),
+                          value: selectedType,
+                          onChanged: (type) => setState(() => selectedType = type),
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
               ],
             ),
@@ -236,23 +242,28 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ],
                 ),
-                Container(
-                  alignment: Alignment.center,
-                  child: InputRegister(
-                    inputFormatters: [
-                      FilteringTextInputFormatter.digitsOnly,
-                      CpfOuCnpjFormatter()
-                    ],
-                    icons: Icons.height,
-                    sizeIcon: 0.0,
-                    width: width * 0.8,
-                    controller: _controllerDoc,
-                    hint: '000.000.000-0/99.999.999/9999-99',
-                    fonts: 14.0,
-                    keyboardType: TextInputType.text,
-                    colorBorder: PaletteColors.greyInput,
-                    background: PaletteColors.greyInput,
-                  ),
+                Row(
+                  children: [
+                    SizedBox(width: width * 0.1),
+                    Container(
+                      alignment: Alignment.center,
+                      child: InputRegister(
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                          CpfOuCnpjFormatter()
+                        ],
+                        icons: Icons.height,
+                        sizeIcon: 0.0,
+                        width: width * 0.8,
+                        controller: _controllerDoc,
+                        hint: '000.000.000-0/99.999.999/9999-99',
+                        fonts: 14.0,
+                        keyboardType: TextInputType.text,
+                        colorBorder: PaletteColors.greyInput,
+                        background: PaletteColors.greyInput,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -276,19 +287,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ],
                 ),
-                Container(
-                  alignment: Alignment.center,
-                  child: InputRegister(
-                    icons: Icons.height,
-                    sizeIcon: 0.0,
-                    width: width * 0.8,
-                    controller: _controllerName,
-                    hint: 'Nome Completo',
-                    fonts: 14.0,
-                    keyboardType: TextInputType.text,
-                    colorBorder: PaletteColors.greyInput,
-                    background: PaletteColors.greyInput,
-                  ),
+                Row(
+                  children: [
+                    SizedBox(width: width * 0.1),
+                    Container(
+                      alignment: Alignment.center,
+                      child: InputRegister(
+                        icons: Icons.height,
+                        sizeIcon: 0.0,
+                        width: width * 0.8,
+                        controller: _controllerName,
+                        hint: 'Nome Completo',
+                        fonts: 14.0,
+                        keyboardType: TextInputType.text,
+                        colorBorder: PaletteColors.greyInput,
+                        background: PaletteColors.greyInput,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -312,19 +328,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ],
                 ),
-                Container(
-                  alignment: Alignment.center,
-                  child: InputRegister(
-                    icons: Icons.height,
-                    sizeIcon: 0.0,
-                    width: width * 0.8,
-                    controller: _controllerEmail,
-                    hint: "E-mail",
-                    fonts: 14.0,
-                    keyboardType: TextInputType.text,
-                    colorBorder: PaletteColors.greyInput,
-                    background: PaletteColors.greyInput,
-                  ),
+                Row(
+                  children: [
+                    SizedBox(width: width * 0.1),
+                    Container(
+                      alignment: Alignment.center,
+                      child: InputRegister(
+                        icons: Icons.height,
+                        sizeIcon: 0.0,
+                        width: width * 0.8,
+                        controller: _controllerEmail,
+                        hint: "E-mail",
+                        fonts: 14.0,
+                        keyboardType: TextInputType.text,
+                        colorBorder: PaletteColors.greyInput,
+                        background: PaletteColors.greyInput,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -348,23 +369,28 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ],
                 ),
-                Container(
-                  alignment: Alignment.center,
-                  child: InputRegister(
-                    inputFormatters: [
-                      FilteringTextInputFormatter.digitsOnly,
-                      TelefoneInputFormatter()
-                    ],
-                    icons: Icons.height,
-                    sizeIcon: 0.0,
-                    width: width * 0.8,
-                    controller: _controllerPhone,
-                    hint: "(XX) XXXXX-XXXX",
-                    fonts: 14.0,
-                    keyboardType: TextInputType.number,
-                    colorBorder: PaletteColors.greyInput,
-                    background: PaletteColors.greyInput,
-                  ),
+                Row(
+                  children: [
+                    SizedBox(width: width * 0.1),
+                    Container(
+                      alignment: Alignment.center,
+                      child: InputRegister(
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                          TelefoneInputFormatter()
+                        ],
+                        icons: Icons.height,
+                        sizeIcon: 0.0,
+                        width: width * 0.8,
+                        controller: _controllerPhone,
+                        hint: "(XX) XXXXX-XXXX",
+                        fonts: 14.0,
+                        keyboardType: TextInputType.number,
+                        colorBorder: PaletteColors.greyInput,
+                        background: PaletteColors.greyInput,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -388,28 +414,33 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ],
                 ),
-                Container(
-                  alignment: Alignment.center,
-                  child: InputPassword(
-                    controller: _controllerPassword,
-                    hint: "**********",
-                    fonts: 14.0,
-                    keyboardType: TextInputType.visiblePassword,
-                    obscure: visiblePassword,
-                    width: width * 0.8,
-                    colorIcon: PaletteColors.primaryColor,
-                    icons: Icons.height,
-                    showPassword: visiblePassword,
-                    onPressed: () {
-                      setState(() {
-                        if (visiblePassword == false) {
-                          visiblePassword = true;
-                        } else {
-                          visiblePassword = false;
-                        }
-                      });
-                    },
-                  ),
+                Row(
+                  children: [
+                    SizedBox(width: width * 0.1),
+                    Container(
+                      alignment: Alignment.center,
+                      child: InputPassword(
+                        controller: _controllerPassword,
+                        hint: "**********",
+                        fonts: 14.0,
+                        keyboardType: TextInputType.visiblePassword,
+                        obscure: visiblePassword,
+                        width: width * 0.8,
+                        colorIcon: PaletteColors.primaryColor,
+                        icons: Icons.height,
+                        showPassword: visiblePassword,
+                        onPressed: () {
+                          setState(() {
+                            if (visiblePassword == false) {
+                              visiblePassword = true;
+                            } else {
+                              visiblePassword = false;
+                            }
+                          });
+                        },
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -433,46 +464,56 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ],
                 ),
-                Container(
-                  alignment: Alignment.center,
-                  child: InputPassword(
-                    controller: _controllerPasswordConfirm,
-                    hint: "**********",
-                    fonts: 14.0,
-                    keyboardType: TextInputType.visiblePassword,
-                    obscure: visibleConfirmPassword,
-                    width: width * 0.8,
-                    colorIcon: PaletteColors.primaryColor,
-                    icons: Icons.height,
-                    showPassword: visibleConfirmPassword,
-                    onPressed: () {
-                      setState(() {
-                        if (visibleConfirmPassword == false) {
-                          visibleConfirmPassword = true;
-                        } else {
-                          visibleConfirmPassword = false;
-                        }
-                      });
-                    },
-                  ),
+                Row(
+                  children: [
+                    SizedBox(width: width * 0.1),
+                    Container(
+                      alignment: Alignment.center,
+                      child: InputPassword(
+                        controller: _controllerPasswordConfirm,
+                        hint: "**********",
+                        fonts: 14.0,
+                        keyboardType: TextInputType.visiblePassword,
+                        obscure: visibleConfirmPassword,
+                        width: width * 0.8,
+                        colorIcon: PaletteColors.primaryColor,
+                        icons: Icons.height,
+                        showPassword: visibleConfirmPassword,
+                        onPressed: () {
+                          setState(() {
+                            if (visibleConfirmPassword == false) {
+                              visibleConfirmPassword = true;
+                            } else {
+                              visibleConfirmPassword = false;
+                            }
+                          });
+                        },
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
 
 
             SizedBox(height: height * 0.06),
-            Container(
-              alignment: Alignment.center,
-              child: ButtonCustom(
-                widthCustom: 0.80,
-                heightCustom: 0.070,
-                onPressed: () => _createUser(),
-                text: "Crie sua conta",
-                size: 14.0,
-                colorButton: PaletteColors.primaryColor,
-                colorText: PaletteColors.white,
-                colorBorder: PaletteColors.primaryColor,
-              ),
+            Row(
+              children: [
+                SizedBox(width: width * 0.1),
+                Container(
+
+                  child: ButtonCustom(
+                    widthCustom: 0.80,
+                    heightCustom: 0.070,
+                    onPressed: () => _createUser(),
+                    text: "Crie sua conta",
+                    size: 14.0,
+                    colorButton: PaletteColors.primaryColor,
+                    colorText: PaletteColors.white,
+                    colorBorder: PaletteColors.primaryColor,
+                  ),
+                ),
+              ],
             ),
             SizedBox(height: height * 0.06),
           ],

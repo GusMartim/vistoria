@@ -6,6 +6,7 @@ import 'package:vistoria/Utils/exports.dart';
 class CheckList1 extends StatefulWidget {
   final String idSurvey;
 
+
   CheckList1({required this.idSurvey});
 
   @override
@@ -58,17 +59,286 @@ class _CheckList1State extends State<CheckList1> {
   final Map<String, dynamic> data = HashMap();
   FirebaseFirestore db = FirebaseFirestore.instance;
 
-  _getSurveyNumber()async{
+  _getData() async {
+    DocumentSnapshot snapshot =
+        await db.collection("surveys").doc(widget.idSurvey).get();
+    Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
 
+    setState(() {
+      saveChecklist = data?["checklist"];
+    });
+    pathology.clear();
+    for (int i = 0; i <= 5; i++) {
+      var splitted = saveChecklist[i].replaceAll("1", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      pathology.add(
+          CheckBoxModel(title: title, value: check == 'true' ? true : false));
+    }
+    type.clear();
+    for (int i = 6; i <= 9; i++) {
+      var splitted = saveChecklist[i].replaceAll("2", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      type.add(
+          CheckBoxModel(title: title, value: check == 'true' ? true : false));
+    }
+    infra.clear();
+    for (int i = 10; i <= 18; i++) {
+      var splitted = saveChecklist[i].replaceAll("3", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      infra.add(
+          CheckBoxModel(title: title, value: check == 'true' ? true : false));
+    }
+    situation.clear();
+    for (int i = 19; i <= 22; i++) {
+      var splitted = saveChecklist[i].replaceAll("4", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      situation.add(
+          CheckBoxModel(title: title, value: check == 'true' ? true : false));
+    }
+    quota.clear();
+    for (int i = 23; i <= 26; i++) {
+      var splitted = saveChecklist[i].replaceAll("5", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      quota.add(
+          CheckBoxModel(title: title, value: check == 'true' ? true : false));
+    }
+    position.clear();
+    for (int i = 27; i <= 32; i++) {
+      var splitted = saveChecklist[i].replaceAll("6", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      position.add(
+          CheckBoxModel(title: title, value: check == 'true' ? true : false));
+    }
+    roof.clear();
+    for (int i = 33; i <= 37; i++) {
+      var splitted = saveChecklist[i].replaceAll("7", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      roof.add(
+          CheckBoxModel(title: title, value: check == 'true' ? true : false));
+    }
+    wall.clear();
+    for (int i = 38; i <= 41; i++) {
+      var splitted = saveChecklist[i].replaceAll("8", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      wall.add(
+          CheckBoxModel(title: title, value: check == 'true' ? true : false));
+    }
+    paint.clear();
+    for (int i = 42; i <= 47; i++) {
+      var splitted = saveChecklist[i].replaceAll("9", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      paint.add(
+          CheckBoxModel(title: title, value: check == 'true' ? true : false));
+    }
+    extern.clear();
+    for (int i = 48; i <= 51; i++) {
+      var splitted = saveChecklist[i].replaceAll("10", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      extern.add(
+          CheckBoxModel(title: title, value: check == 'true' ? true : false));
+    }
+    floor.clear();
+    for (int i = 52; i <= 55; i++) {
+      var splitted = saveChecklist[i].replaceAll("11", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      floor.add(
+          CheckBoxModel(title: title, value: check == 'true' ? true : false));
+    }
+    Intern.clear();
+    for (int i = 56; i <= 59; i++) {
+      var splitted = saveChecklist[i].replaceAll("12", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      Intern.add(
+          CheckBoxModel(title: title, value: check == 'true' ? true : false));
+    }
+    Windows.clear();
+    for (int i = 60; i <= 63; i++) {
+      var splitted = saveChecklist[i].replaceAll("13", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      Windows.add(
+          CheckBoxModel(title: title, value: check == 'true' ? true : false));
+    }
+    InternPaint.clear();
+    for (int i = 64; i <= 69; i++) {
+      var splitted = saveChecklist[i].replaceAll("14", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      InternPaint.add(
+          CheckBoxModel(title: title, value: check == 'true' ? true : false));
+    }
+    balcony.clear();
+    for (int i = 70; i <= 74; i++) {
+      var splitted = saveChecklist[i].replaceAll("15", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      balcony.add(
+          CheckBoxModel(title: title, value: check == 'true' ? true : false));
+    }
+    switchboard.clear();
+    for (int i = 75; i <= 80; i++) {
+      var splitted = saveChecklist[i].replaceAll("16", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      switchboard.add(
+          CheckBoxModel(title: title, value: check == 'true' ? true : false));
+    }
+    kitchen.clear();
+    for (int i = 81; i <= 86; i++) {
+      var splitted = saveChecklist[i].replaceAll("17", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      kitchen.add(
+          CheckBoxModel(title: title, value: check == 'true' ? true : false));
+    }
+    bathroom.clear();
+    for (int i = 87; i <= 92; i++) {
+      var splitted = saveChecklist[i].replaceAll("18", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      bathroom.add(
+          CheckBoxModel(title: title, value: check == 'true' ? true : false));
+    }
+    tank.clear();
+    for (int i = 93; i <= 98; i++) {
+      var splitted = saveChecklist[i].replaceAll("19", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      tank.add(
+          CheckBoxModel(title: title, value: check == 'true' ? true : false));
+    }
+    pattern.clear();
+    for (int i = 99; i <= 106; i++) {
+      var splitted = saveChecklist[i].replaceAll("20", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      pattern.add(
+          CheckBoxModel(title: title, value: check == 'true' ? true : false));
+    }
+    state.clear();
+    for (int i = 107; i <= 113; i++) {
+      var splitted = saveChecklist[i].replaceAll("21", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      state.add(
+          CheckBoxModel(title: title, value: check == 'true' ? true : false));
+    }
+    unityroof.clear();
+    for (int i = 114; i <= 119; i++) {
+      var splitted = saveChecklist[i].replaceAll("22", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      unityroof.add(
+          CheckBoxModel(title: title, value: check == 'true' ? true : false));
+    }
+    block.clear();
+    for (int i = 120; i <= 134; i++) {
+      var splitted = saveChecklist[i].replaceAll("23", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      block.add(
+          CheckBoxModel(title: title, value: check == 'true' ? true : false));
+    }
+
+    setState(() {
+      _controllerAge = TextEditingController(text: data?["age"]);
+      _controllerOpenArea = TextEditingController(text: data?["OpenArea"]);
+      _controllerClosedArea = TextEditingController(text: data?["ClosedArea"]);
+      _controllerTerrainArea =
+          TextEditingController(text: data?["TerrainArea"]);
+      _controllerPrice = TextEditingController(text: data?["price"]);
+      _controllerPathology = TextEditingController(text: data?["Pathology"]);
+      _controllerType = TextEditingController(text: data?["type"]);
+      _controllerInfra = TextEditingController(text: data?["infra"]);
+      _controllerSituation = TextEditingController(text: data?["situation"]);
+      _controllerQuota = TextEditingController(text: data?["quota"]);
+      _controllerPosition = TextEditingController(text: data?["unPosition"]);
+      _controllerRoof = TextEditingController(text: data?["roof"]);
+      _controllerWall = TextEditingController(text: data?["wall"]);
+      _controllerInternPaint =
+          TextEditingController(text: data?["internPaint"]);
+      _controllerPaint = TextEditingController(text: data?["externPaint"]);
+      _controllerExtern = TextEditingController(text: data?["externDoors"]);
+      _controllerFloor = TextEditingController(text: data?["floor"]);
+      _controllerIntern = TextEditingController(text: data?["internDoors"]);
+      _controllerWindows = TextEditingController(text: data?["windowns"]);
+      _controllerBalcony = TextEditingController(text: data?["balcony"]);
+      _controllerSwitchBoard =
+          TextEditingController(text: data?["switchboard"]);
+      _controllerKitchen = TextEditingController(text: data?["kitchen"]);
+      _controllerBathroom = TextEditingController(text: data?["bathroom"]);
+      _controllerTank = TextEditingController(text: data?["tank"]);
+      _controllerPattern = TextEditingController(text: data?["pattern"]);
+      _controllerState = TextEditingController(text: data?["state"]);
+      _controllerUnityRoof = TextEditingController(text: data?["unRoof"]);
+      _controllerBlock = TextEditingController(text: data?["block"]);
+      _controllerObs = TextEditingController(text: data?["obs"]);
+
+      selectedGoal = data?["Goal"];
+      selectedInfo = data?["Origin"];
+      SRoom = data?["rooms"];
+      SSocialBathroom = data?["socialbathrooms"];
+      SPrivateBathroom = data?["privatebathrooms"];
+      SLav = data?["lavs"];
+      SServiceBathroom = data?["servicebathrooms"];
+      SMaidRoom = data?["maidrooms"];
+      SBalcony = data?["balconys"];
+      SCompleteCabinets = data?["completecontainers"];
+      SKitchen = data?["kitchens"];
+      SRestRoom = data?["restrooms"];
+      SServiceAreaRoofed = data?["servicearearoofed"];
+      SServiceAreaUnroofed = data?["serviceareaunroofed"];
+      SClosedGarage = data?["garageroofed"];
+      SOpenGarage = data?["garageunroofed"];
+      SAc = data?["acs"];
+      SPool = data?["pools"];
+    });
+  }
+  int nsurvey=0;
+  String title = '';
+  getOrder()async{
     DocumentSnapshot snapshot = await db
         .collection('surveyNumber')
         .doc('surveyNumber')
         .get();
     Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
     setState(() {
-      order = data?["surveyNumber"]??0;
+      order = data?["surveyNumber"] ?? 0;
+      title = '${order + 1}';
 
     });
+
+  }
+  getNSurvey()async{
+    DocumentSnapshot snapshot = await db
+        .collection('surveys')
+        .doc(widget.idSurvey)
+        .get();
+    Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
+    setState(() {
+      nsurvey = data?["Nsurvey"] ?? 0;
+    });
+    if(nsurvey== 0){
+      getOrder();
+    }else{
+      setState(() {
+        title = '$nsurvey';
+      });
+
+    }
+
   }
 
   Future _savePhoto() async {
@@ -89,6 +359,7 @@ class _CheckList1State extends State<CheckList1> {
       print('Error : $e');
     }
   }
+
   Future _uploadImage() async {
     Reference pastaRaiz = storage.ref();
     Reference arquivo = pastaRaiz
@@ -107,6 +378,7 @@ class _CheckList1State extends State<CheckList1> {
       }
     });
   }
+
   _urlImageFirestore(String url) {
     Map<String, dynamic> dateUpdate = {
       'photoUrl': FieldValue.arrayUnion([url]),
@@ -131,6 +403,7 @@ class _CheckList1State extends State<CheckList1> {
         .then((_) => Navigator.pushNamed(context, '/finished',
             arguments: widget.idSurvey));
   }
+
   _UnitysTable() async {
     _unityModel.Goal = selectedGoal.toString();
     _unityModel.Origin = selectedInfo.toString();
@@ -176,188 +449,127 @@ class _CheckList1State extends State<CheckList1> {
     _unityModel.bathroom = _controllerBathroom.text;
     _unityModel.tank = _controllerTank.text;
     _unityModel.pattern = _controllerPattern.text;
-    _unityModel.state = _controllerState.text;
+    _unityModel.stateList = _controllerState.text;
     _unityModel.unRoof = _controllerUnityRoof.text;
     _unityModel.block = _controllerBlock.text;
     _unityModel.pathology = _controllerPathology.text;
+    _unityModel.idSurvey = widget.idSurvey;
 
     _saveUnitys(_unityModel);
   }
+
   _saveCheckList() async {
-    saveBlock.clear();
-    for (var i = 0; i < block.length; i++) {
-      if (block[i].value != false) {
-        saveBlock.add(block[i].title + '#' + block[i].value.toString());
-      }
-    }
-    saveKitchen.clear();
-    for (var i = 0; i < kitchen.length; i++) {
-      if (kitchen[i].value != false) {
-        saveKitchen.add(kitchen[i].title + '#' + kitchen[i].value.toString());
-      }
-    }
-    saveBathroom.clear();
-    for (var i = 0; i < bathroom.length; i++) {
-      if (bathroom[i].value != false) {
-        saveBathroom
-            .add(bathroom[i].title + '#' + bathroom[i].value.toString());
-      }
-    }
-    saveTank.clear();
-    for (var i = 0; i < tank.length; i++) {
-      if (tank[i].value != false) {
-        saveTank.add(tank[i].title + '#' + tank[i].value.toString());
-      }
-    }
-    savePattern.clear();
-    for (var i = 0; i < pattern.length; i++) {
-      if (pattern[i].value != false) {
-        savePattern.add(pattern[i].title + '#' + pattern[i].value.toString());
-      }
-    }
-    saveState.clear();
-    for (var i = 0; i < state.length; i++) {
-      if (state[i].value != false) {
-        saveState.add(state[i].title + '#' + state[i].value.toString());
-      }
-    }
-    saveUnityroof.clear();
-    for (var i = 0; i < unityroof.length; i++) {
-      if (unityroof[i].value != false) {
-        saveUnityroof
-            .add(unityroof[i].title + '#' + unityroof[i].value.toString());
-      }
-    }
-    saveExtern.clear();
-    for (var i = 0; i < extern.length; i++) {
-      if (extern[i].value != false) {
-        saveExtern.add(extern[i].title + '#' + extern[i].value.toString());
-      }
-    }
-    saveFloor.clear();
-    for (var i = 0; i < floor.length; i++) {
-      if (floor[i].value != false) {
-        saveFloor.add(floor[i].title + '#' + floor[i].value.toString());
-      }
-    }
-    saveIntern.clear();
-    for (var i = 0; i < Intern.length; i++) {
-      if (Intern[i].value != false) {
-        saveIntern.add(Intern[i].title + '#' + Intern[i].value.toString());
-      }
-    }
-    saveWindowns.clear();
-    for (var i = 0; i < Windows.length; i++) {
-      if (Windows[i].value != false) {
-        saveWindowns.add(Windows[i].title + '#' + Windows[i].value.toString());
-      }
-    }
-    saveInternPaint.clear();
-    for (var i = 0; i < InternPaint.length; i++) {
-      if (InternPaint[i].value != false) {
-        saveInternPaint
-            .add(InternPaint[i].title + '#' + InternPaint[i].value.toString());
-      }
-    }
-    saveBalcony.clear();
-    for (var i = 0; i < balcony.length; i++) {
-      if (balcony[i].value != false) {
-        saveBalcony.add(balcony[i].title + '#' + balcony[i].value.toString());
-      }
-    }
-    saveSwitchBoard.clear();
-    for (var i = 0; i < switchboard.length; i++) {
-      if (switchboard[i].value != false) {
-        saveSwitchBoard
-            .add(switchboard[i].title + '#' + switchboard[i].value.toString());
-      }
-    }
-    saveType.clear();
-    for (var i = 0; i < type.length; i++) {
-      if (type[i].value != false) {
-        saveType.add(type[i].title + '#' + type[i].value.toString());
-      }
-    }
-    saveInfra.clear();
-    for (var i = 0; i < infra.length; i++) {
-      if (infra[i].value != false) {
-        saveInfra.add(infra[i].title + '#' + infra[i].value.toString());
-      }
-    }
-    saveSituation.clear();
-    for (var i = 0; i < situation.length; i++) {
-      if (situation[i].value != false) {
-        saveSituation
-            .add(situation[i].title + '#' + situation[i].value.toString());
-      }
-    }
-    saveQuota.clear();
-    for (var i = 0; i < quota.length; i++) {
-      if (quota[i].value != false) {
-        saveQuota.add(quota[i].title + '#' + quota[i].value.toString());
-      }
-    }
-    savePosition.clear();
-    for (var i = 0; i < position.length; i++) {
-      if (position[i].value != false) {
-        savePosition
-            .add(position[i].title + '#' + position[i].value.toString());
-      }
-    }
-    saveRoof.clear();
-    for (var i = 0; i < roof.length; i++) {
-      if (roof[i].value != false) {
-        saveRoof.add(roof[i].title + '#' + roof[i].value.toString());
-      }
-    }
-    saveWall.clear();
-    for (var i = 0; i < wall.length; i++) {
-      if (wall[i].value != false) {
-        saveWall.add(wall[i].title + '#' + wall[i].value.toString());
-      }
-    }
-    savePaint.clear();
-    for (var i = 0; i < paint.length; i++) {
-      if (paint[i].value != false) {
-        savePaint.add(paint[i].title + '#' + paint[i].value.toString());
-      }
-    }
-    savePathology.clear();
+    saveChecklist.clear();
     for (var i = 0; i < pathology.length; i++) {
-      if (pathology[i].value != false) {
-        savePathology
-            .add(pathology[i].title + '#' + pathology[i].value.toString());
-      }
+      saveChecklist
+          .add(pathology[i].title + '1' + '#' + pathology[i].value.toString());
     }
+    for (var i = 0; i < type.length; i++) {
+      saveChecklist.add(type[i].title + '2' + '#' + type[i].value.toString());
+    }
+
+    for (var i = 0; i < infra.length; i++) {
+      saveChecklist.add(infra[i].title + '3' + '#' + infra[i].value.toString());
+    }
+    for (var i = 0; i < situation.length; i++) {
+      saveChecklist
+          .add(situation[i].title + '4' + '#' + situation[i].value.toString());
+    }
+
+    for (var i = 0; i < quota.length; i++) {
+      saveChecklist.add(quota[i].title + '5' + '#' + quota[i].value.toString());
+    }
+    for (var i = 0; i < position.length; i++) {
+      saveChecklist
+          .add(position[i].title + '6' + '#' + position[i].value.toString());
+    }
+
+    for (var i = 0; i < roof.length; i++) {
+      saveChecklist.add(roof[i].title + '7' + '#' + roof[i].value.toString());
+    }
+
+    for (var i = 0; i < wall.length; i++) {
+      saveChecklist.add(wall[i].title + '8' + '#' + wall[i].value.toString());
+    }
+
+    for (var i = 0; i < paint.length; i++) {
+      saveChecklist.add(paint[i].title + '9' + '#' + paint[i].value.toString());
+    }
+    for (var i = 0; i < extern.length; i++) {
+      saveChecklist
+          .add(extern[i].title + '10' + '#' + extern[i].value.toString());
+    }
+
+    for (var i = 0; i < floor.length; i++) {
+      saveChecklist
+          .add(floor[i].title + '11' + '#' + floor[i].value.toString());
+    }
+
+    for (var i = 0; i < Intern.length; i++) {
+      saveChecklist
+          .add(Intern[i].title + '12' + '#' + Intern[i].value.toString());
+    }
+
+    for (var i = 0; i < Windows.length; i++) {
+      saveChecklist
+          .add(Windows[i].title + '13' + '#' + Windows[i].value.toString());
+    }
+
+    for (var i = 0; i < InternPaint.length; i++) {
+      saveChecklist.add(
+          InternPaint[i].title + '14' + '#' + InternPaint[i].value.toString());
+    }
+
+    for (var i = 0; i < balcony.length; i++) {
+      saveChecklist
+          .add(balcony[i].title + '15' + '#' + balcony[i].value.toString());
+    }
+
+    for (var i = 0; i < switchboard.length; i++) {
+      saveChecklist.add(
+          switchboard[i].title + '16' + '#' + switchboard[i].value.toString());
+    }
+    for (var i = 0; i < kitchen.length; i++) {
+      saveChecklist
+          .add(kitchen[i].title + '17' + '#' + kitchen[i].value.toString());
+    }
+
+    for (var i = 0; i < bathroom.length; i++) {
+      saveChecklist
+          .add(bathroom[i].title + '18' + '#' + bathroom[i].value.toString());
+    }
+
+    for (var i = 0; i < tank.length; i++) {
+      saveChecklist.add(tank[i].title + '19' + '#' + tank[i].value.toString());
+    }
+
+    for (var i = 0; i < pattern.length; i++) {
+      saveChecklist
+          .add(pattern[i].title + '20' + '#' + pattern[i].value.toString());
+    }
+
+    for (var i = 0; i < state.length; i++) {
+      saveChecklist
+          .add(state[i].title + '21' + '#' + state[i].value.toString());
+    }
+
+    for (var i = 0; i < unityroof.length; i++) {
+      saveChecklist
+          .add(unityroof[i].title + '22' + '#' + unityroof[i].value.toString());
+    }
+    for (var i = 0; i < block.length; i++) {
+      saveChecklist
+          .add(block[i].title + '23' + '#' + block[i].value.toString());
+    }
+
     db.collection('surveys').doc(widget.idSurvey).update({
-      "Patologia": savePathology.toSet().toList(),
-      "Tipo de Imóvel": saveType.toSet().toList(),
-      "Infraestrutura": saveInfra.toSet().toList(),
-      "Situação": saveSituation.toSet().toList(),
-      "Cota Greide": saveQuota.toSet().toList(),
-      "Posição da Unidade": savePosition.toSet().toList(),
-      "Telhado": saveRoof.toSet().toList(),
-      "Muro": saveWall.toSet().toList(),
-      "Pintura": savePaint.toSet().toList(),
-      "Portas externas": saveExtern.toSet().toList(),
-      "Piso": saveFloor.toSet().toList(),
-      "Portas Internas": saveIntern.toSet().toList(),
-      "Janelas": saveWindowns.toSet().toList(),
-      "Pintura Interna": saveInternPaint.toSet().toList(),
-      "Bancada": saveBalcony.toSet().toList(),
-      "Quadro Elétrico": saveSwitchBoard.toSet().toList(),
-      "Revestimento da Cozinha": saveKitchen.toSet().toList(),
-      "Revestimento do Banheiro": saveBathroom.toSet().toList(),
-      "Revestimento do Tanque": saveTank.toSet().toList(),
-      "Padrão de Acabamento": savePattern.toSet().toList(),
-      "Estado de Conservação": saveState.toSet().toList(),
-      "Teto da Unidade": saveUnityroof.toSet().toList(),
-      "Condominio Bloco": saveBlock.toSet().toList(),
+      "checklist": saveChecklist.toSet().toList(),
     });
     _UnitysTable();
   }
 
-  final TextEditingController _controllerObs = TextEditingController();
+  List<CheckBoxModel> itens = [];
+  TextEditingController _controllerObs = TextEditingController();
   final block = [
     CheckBoxModel(title: 'Portaria/Guarita'),
     CheckBoxModel(title: 'Equipe de Segurança'),
@@ -375,7 +587,7 @@ class _CheckList1State extends State<CheckList1> {
     CheckBoxModel(title: 'Poço Artesiano'),
     CheckBoxModel(title: 'Outro:'),
   ];
-  final TextEditingController _controllerBlock = TextEditingController();
+  TextEditingController _controllerBlock = TextEditingController();
   final kitchen = [
     CheckBoxModel(title: 'Ceramico'),
     CheckBoxModel(title: 'Barra lisa'),
@@ -384,7 +596,7 @@ class _CheckList1State extends State<CheckList1> {
     CheckBoxModel(title: 'Nenhum'),
     CheckBoxModel(title: 'Outro:'),
   ];
-  final TextEditingController _controllerKitchen = TextEditingController();
+  TextEditingController _controllerKitchen = TextEditingController();
 
   final bathroom = [
     CheckBoxModel(title: 'Ceramico'),
@@ -394,7 +606,7 @@ class _CheckList1State extends State<CheckList1> {
     CheckBoxModel(title: 'Nenhum'),
     CheckBoxModel(title: 'Outro:'),
   ];
-  final TextEditingController _controllerBathroom = TextEditingController();
+  TextEditingController _controllerBathroom = TextEditingController();
   final tank = [
     CheckBoxModel(title: 'Ceramico'),
     CheckBoxModel(title: 'Barra lisa'),
@@ -403,7 +615,7 @@ class _CheckList1State extends State<CheckList1> {
     CheckBoxModel(title: 'Nenhum'),
     CheckBoxModel(title: 'Outro:'),
   ];
-  final TextEditingController _controllerTank = TextEditingController();
+  TextEditingController _controllerTank = TextEditingController();
 
   final pattern = [
     CheckBoxModel(title: 'Luxo'),
@@ -415,7 +627,7 @@ class _CheckList1State extends State<CheckList1> {
     CheckBoxModel(title: 'Mínimo'),
     CheckBoxModel(title: 'Outro:'),
   ];
-  final TextEditingController _controllerPattern = TextEditingController();
+  TextEditingController _controllerPattern = TextEditingController();
 
   final state = [
     CheckBoxModel(title: 'Novo'),
@@ -426,7 +638,7 @@ class _CheckList1State extends State<CheckList1> {
     CheckBoxModel(title: 'Ruim'),
     CheckBoxModel(title: 'Outro:'),
   ];
-  final TextEditingController _controllerState = TextEditingController();
+  TextEditingController _controllerState = TextEditingController();
 
   final unityroof = [
     CheckBoxModel(title: 'Forro PVC'),
@@ -436,10 +648,10 @@ class _CheckList1State extends State<CheckList1> {
     CheckBoxModel(title: 'Telhado aparente'),
     CheckBoxModel(title: 'Outro:'),
   ];
-  final TextEditingController _controllerUnityRoof = TextEditingController();
+  TextEditingController _controllerUnityRoof = TextEditingController();
 
-  final TextEditingController _controllerAge = TextEditingController();
-  final TextEditingController _controllerPrice = TextEditingController();
+  TextEditingController _controllerAge = TextEditingController();
+  TextEditingController _controllerPrice = TextEditingController();
 
   final extern = [
     CheckBoxModel(title: 'Madeira'),
@@ -447,7 +659,7 @@ class _CheckList1State extends State<CheckList1> {
     CheckBoxModel(title: 'Aço'),
     CheckBoxModel(title: 'Outro:'),
   ];
-  final TextEditingController _controllerExtern = TextEditingController();
+  TextEditingController _controllerExtern = TextEditingController();
 
   final floor = [
     CheckBoxModel(title: 'Cerâmico'),
@@ -455,7 +667,7 @@ class _CheckList1State extends State<CheckList1> {
     CheckBoxModel(title: 'Cimento liso'),
     CheckBoxModel(title: 'Outro:'),
   ];
-  final TextEditingController _controllerFloor = TextEditingController();
+  TextEditingController _controllerFloor = TextEditingController();
 
   final Intern = [
     CheckBoxModel(title: 'Madeira'),
@@ -463,7 +675,7 @@ class _CheckList1State extends State<CheckList1> {
     CheckBoxModel(title: 'Aço'),
     CheckBoxModel(title: 'Outro:'),
   ];
-  final TextEditingController _controllerIntern = TextEditingController();
+  TextEditingController _controllerIntern = TextEditingController();
 
   final Windows = [
     CheckBoxModel(title: 'Madeira'),
@@ -471,7 +683,7 @@ class _CheckList1State extends State<CheckList1> {
     CheckBoxModel(title: 'Aço'),
     CheckBoxModel(title: 'Outro:'),
   ];
-  final TextEditingController _controllerWindows = TextEditingController();
+  TextEditingController _controllerWindows = TextEditingController();
 
   final InternPaint = [
     CheckBoxModel(title: 'PVA'),
@@ -481,7 +693,7 @@ class _CheckList1State extends State<CheckList1> {
     CheckBoxModel(title: 'Nenhuma'),
     CheckBoxModel(title: 'Outro:'),
   ];
-  final TextEditingController _controllerInternPaint = TextEditingController();
+  TextEditingController _controllerInternPaint = TextEditingController();
 
   final balcony = [
     CheckBoxModel(title: 'Granito'),
@@ -490,7 +702,7 @@ class _CheckList1State extends State<CheckList1> {
     CheckBoxModel(title: 'Sintético'),
     CheckBoxModel(title: 'Outro:'),
   ];
-  final TextEditingController _controllerBalcony = TextEditingController();
+  TextEditingController _controllerBalcony = TextEditingController();
 
   final switchboard = [
     CheckBoxModel(title: '2 Disjuntores'),
@@ -500,7 +712,7 @@ class _CheckList1State extends State<CheckList1> {
     CheckBoxModel(title: 'Nenhum'),
     CheckBoxModel(title: 'Outro:'),
   ];
-  final TextEditingController _controllerSwitchBoard = TextEditingController();
+  TextEditingController _controllerSwitchBoard = TextEditingController();
 
   final type = [
     CheckBoxModel(title: 'Residencial'),
@@ -508,7 +720,7 @@ class _CheckList1State extends State<CheckList1> {
     CheckBoxModel(title: 'Misto'),
     CheckBoxModel(title: 'Outro:'),
   ];
-  final TextEditingController _controllerType = TextEditingController();
+  TextEditingController _controllerType = TextEditingController();
 
   final infra = [
     CheckBoxModel(title: 'Rede de Água'),
@@ -521,7 +733,7 @@ class _CheckList1State extends State<CheckList1> {
     CheckBoxModel(title: 'Cisterna'),
     CheckBoxModel(title: 'Outro:'),
   ];
-  final TextEditingController _controllerInfra = TextEditingController();
+  TextEditingController _controllerInfra = TextEditingController();
 
   final situation = [
     CheckBoxModel(title: 'Meio de Quadra'),
@@ -529,14 +741,14 @@ class _CheckList1State extends State<CheckList1> {
     CheckBoxModel(title: 'Quadra Inteira'),
     CheckBoxModel(title: 'Outro:'),
   ];
-  final TextEditingController _controllerSituation = TextEditingController();
+  TextEditingController _controllerSituation = TextEditingController();
   final quota = [
     CheckBoxModel(title: 'Abaixo'),
     CheckBoxModel(title: 'Mesmo Nivel'),
     CheckBoxModel(title: 'Acima'),
     CheckBoxModel(title: 'Outro:'),
   ];
-  final TextEditingController _controllerQuota = TextEditingController();
+  TextEditingController _controllerQuota = TextEditingController();
   final position = [
     CheckBoxModel(title: 'Isolada'),
     CheckBoxModel(title: 'Junto a uma Lateral'),
@@ -545,7 +757,7 @@ class _CheckList1State extends State<CheckList1> {
     CheckBoxModel(title: 'Ocupa todo terreno'),
     CheckBoxModel(title: 'Outro:'),
   ];
-  final TextEditingController _controllerPosition = TextEditingController();
+  TextEditingController _controllerPosition = TextEditingController();
   final roof = [
     CheckBoxModel(title: 'Concreto'),
     CheckBoxModel(title: 'Plan'),
@@ -553,14 +765,14 @@ class _CheckList1State extends State<CheckList1> {
     CheckBoxModel(title: 'Fibrocimento'),
     CheckBoxModel(title: 'Outro:'),
   ];
-  final TextEditingController _controllerRoof = TextEditingController();
+  TextEditingController _controllerRoof = TextEditingController();
   final wall = [
     CheckBoxModel(title: 'Alvenaria'),
     CheckBoxModel(title: 'Placa'),
     CheckBoxModel(title: 'Nenhum'),
     CheckBoxModel(title: 'Outro:'),
   ];
-  final TextEditingController _controllerWall = TextEditingController();
+  TextEditingController _controllerWall = TextEditingController();
   final paint = [
     CheckBoxModel(title: 'PVA'),
     CheckBoxModel(title: 'Acrílica'),
@@ -569,8 +781,8 @@ class _CheckList1State extends State<CheckList1> {
     CheckBoxModel(title: 'Nenhuma'),
     CheckBoxModel(title: 'Outro:'),
   ];
-  final TextEditingController _controllerPaint = TextEditingController();
-  final pathology = [
+  TextEditingController _controllerPaint = TextEditingController();
+  List<CheckBoxModel> pathology = [
     CheckBoxModel(title: 'Telhado selado'),
     CheckBoxModel(title: 'Solapamentos Visiveis'),
     CheckBoxModel(title: 'Umidade Paredes'),
@@ -578,44 +790,21 @@ class _CheckList1State extends State<CheckList1> {
     CheckBoxModel(title: 'Trincas/Fissuras/Rachaduras'),
     CheckBoxModel(title: 'Outro:'),
   ];
-  final TextEditingController _controllerPathology = TextEditingController();
+  TextEditingController _controllerPathology = TextEditingController();
 
-  final TextEditingController _controllerOpenArea = TextEditingController();
-  final TextEditingController _controllerClosedArea = TextEditingController();
-  final TextEditingController _controllerTerrainArea = TextEditingController();
-  final TextEditingController _controllerTotalArea = TextEditingController();
+  TextEditingController _controllerOpenArea = TextEditingController();
+  TextEditingController _controllerClosedArea = TextEditingController();
+  TextEditingController _controllerTerrainArea = TextEditingController();
+  TextEditingController _controllerTotalArea = TextEditingController();
 
-  List saveBlock = [];
-  List saveKitchen = [];
-  List saveBathroom = [];
-  List saveTank = [];
-  List savePattern = [];
-  List saveState = [];
-  List saveUnityroof = [];
-  List saveExtern = [];
-  List saveFloor = [];
-  List saveIntern = [];
-  List saveWindowns = [];
-  List saveInternPaint = [];
-  List saveBalcony = [];
-  List saveSwitchBoard = [];
-  List saveType = [];
-  List saveInfra = [];
-  List saveSituation = [];
-  List saveQuota = [];
-  List savePosition = [];
-  List saveRoof = [];
-  List saveWall = [];
-  List savePaint = [];
-  List savePathology = [];
+  List saveChecklist = [];
   int order = 0;
-
-
 
   @override
   void initState() {
     super.initState();
-    _getSurveyNumber();
+    _getData();
+    getNSurvey();
   }
 
   @override
@@ -632,7 +821,7 @@ class _CheckList1State extends State<CheckList1> {
         ),
         elevation: 0,
         title: TextCustom(
-          text: 'Vistoria Nº ${order+1}',
+          text: 'Vistoria Nº $title',
           size: 20.0,
           color: PaletteColors.white,
           fontWeight: FontWeight.bold,
@@ -660,95 +849,70 @@ class _CheckList1State extends State<CheckList1> {
         ],
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(vertical: 24, horizontal: 24),
+        padding: EdgeInsets.symmetric(vertical: 24, horizontal: 26),
         child: Center(
           child: SingleChildScrollView(
             scrollDirection: Axis.vertical,
             physics: ScrollPhysics(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [
                 Row(
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Row(
-                          children: [
-                            SizedBox(width: 10),
-                            Container(
-                              width: width * 0.25,
-                              child: TextCustom(
-                                  text: "Idade",
-                                  size: 14.0,
-                                  color: PaletteColors.grey,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                        Container(
-                          width: width * 0.25,
-                          child: InputRegister(
-                            icons: Icons.height,
-                            sizeIcon: 0.0,
-                            width: width * 0.2,
-                            controller: _controllerAge,
-                            hint: " 00 ",
-                            fonts: 14.0,
-                            keyboardType: TextInputType.number,
-                            colorBorder: PaletteColors.greyInput,
-                            background: PaletteColors.greyInput,
-                          ),
-                        ),
-                      ],
+                    Container(
+                      width: width * 0.28,
+                      child: TextCustom(
+                        text: "Idade",
+                        size: 14.0,
+                        color: PaletteColors.grey,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                    Spacer(),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Row(
-                          children: [
-                            SizedBox(width: 10),
-                            Container(
-                              width: width * 0.45,
-                              child: TextCustom(
-                                  text: "Valor",
-                                  size: 14.0,
-                                  color: PaletteColors.grey,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                        Container(
-                          width: width * 0.45,
-                          child: InputRegister(
-                            inputFormatters: [
-                              FilteringTextInputFormatter.digitsOnly,
-                              RealInputFormatter(moeda: true)
-                            ],
-                            icons: Icons.height,
-                            sizeIcon: 0.0,
-                            width: width * 0.53,
-                            controller: _controllerPrice,
-                            hint: 'R\$100.000.00',
-                            fonts: 14.0,
-                            keyboardType: TextInputType.number,
-                            colorBorder: PaletteColors.greyInput,
-                            background: PaletteColors.greyInput,
-                          ),
-                        ),
-                        SizedBox(width: width * 0.045)
-                      ],
-                    )
+                    Container(
+                      width: width * 0.45,
+                      child: TextCustom(
+                          text: "Valor",
+                          size: 14.0,
+                          color: PaletteColors.grey,
+                          fontWeight: FontWeight.bold),
+                    ),
                   ],
                 ),
-                SizedBox(height: height * 0.01),
+                Row(children: [
+                  Container(
+                    child: InputRegister(
+                      icons: Icons.height,
+                      sizeIcon: 0.0,
+                      width: width * 0.2,
+                      controller: _controllerAge,
+                      hint: " 00 ",
+                      fonts: 14.0,
+                      keyboardType: TextInputType.number,
+                      colorBorder: PaletteColors.greyInput,
+                      background: PaletteColors.greyInput,
+                    ),
+                  ),
+                  Container(
+                    child: InputRegister(
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                        RealInputFormatter(moeda: true)
+                      ],
+                      icons: Icons.height,
+                      sizeIcon: 0.0,
+                      width: width * 0.45,
+                      controller: _controllerPrice,
+                      hint: 'R\$100.000.00',
+                      fonts: 14.0,
+                      keyboardType: TextInputType.number,
+                      colorBorder: PaletteColors.greyInput,
+                      background: PaletteColors.greyInput,
+                    ),
+                  ),
+                ]),
+                SizedBox(height: height * 0.03),
                 Row(
                   children: [
                     Column(
@@ -758,9 +922,8 @@ class _CheckList1State extends State<CheckList1> {
                       children: [
                         Row(
                           children: [
-                            SizedBox(width: 10),
                             Container(
-                              width: width * 0.7,
+                              width: width * 0.8,
                               child: TextCustom(
                                   text: "Área Coberta",
                                   size: 14.0,
@@ -770,7 +933,7 @@ class _CheckList1State extends State<CheckList1> {
                           ],
                         ),
                         Container(
-                          width: width * 0.7,
+                          width: width * 0.8,
                           child: InputRegister(
                             icons: Icons.height,
                             sizeIcon: 0.0,
@@ -787,7 +950,7 @@ class _CheckList1State extends State<CheckList1> {
                     ),
                   ],
                 ),
-                SizedBox(height: height * 0.01),
+                SizedBox(height: height * 0.03),
                 Row(
                   children: [
                     Column(
@@ -797,9 +960,8 @@ class _CheckList1State extends State<CheckList1> {
                       children: [
                         Row(
                           children: [
-                            SizedBox(width: 10),
                             Container(
-                              width: width * 0.7,
+                              width: width * 0.8,
                               child: TextCustom(
                                   text: "Área Descoberta",
                                   size: 14.0,
@@ -809,7 +971,7 @@ class _CheckList1State extends State<CheckList1> {
                           ],
                         ),
                         Container(
-                          width: width * 0.7,
+                          width: width * 0.8,
                           child: InputRegister(
                             icons: Icons.height,
                             sizeIcon: 0.0,
@@ -826,7 +988,7 @@ class _CheckList1State extends State<CheckList1> {
                     ),
                   ],
                 ),
-                SizedBox(height: height * 0.01),
+                SizedBox(height: height * 0.03),
                 Row(
                   children: [
                     Column(
@@ -836,9 +998,8 @@ class _CheckList1State extends State<CheckList1> {
                       children: [
                         Row(
                           children: [
-                            SizedBox(width: 10),
                             Container(
-                              width: width * 0.7,
+                              width: width * 0.8,
                               child: TextCustom(
                                   text: "Área do Terreno",
                                   size: 14.0,
@@ -848,7 +1009,7 @@ class _CheckList1State extends State<CheckList1> {
                           ],
                         ),
                         Container(
-                          width: width * 0.7,
+                          width: width * 0.8,
                           child: InputRegister(
                             icons: Icons.height,
                             sizeIcon: 0.0,
@@ -865,16 +1026,15 @@ class _CheckList1State extends State<CheckList1> {
                     ),
                   ],
                 ),
-                SizedBox(height: height * 0.01),
+                SizedBox(height: height * 0.03),
                 Row(
                   children: [
                     Column(
                       children: [
                         Row(
                           children: [
-                            SizedBox(width: 10),
                             Container(
-                              width: width * 0.7,
+                              width: width * 0.72,
                               child: TextCustom(
                                 text: "Finalidade",
                                 size: 16.0,
@@ -885,16 +1045,15 @@ class _CheckList1State extends State<CheckList1> {
                             ),
                           ],
                         ),
-                        SizedBox(height: height * 0.01),
+                        SizedBox(height: height * 0.03),
                         Row(
                           children: [
-                            SizedBox(width: 10),
                             Container(
                               height: 50,
-                              width: width * 0.7,
+                              width: width * 0.72,
                               padding: EdgeInsets.symmetric(horizontal: 8.0),
                               decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
+                                  borderRadius: BorderRadius.circular(4),
                                   color: PaletteColors.greyInput),
                               child: DropdownButtonHideUnderline(
                                 child: DropdownButton<String>(
@@ -918,16 +1077,15 @@ class _CheckList1State extends State<CheckList1> {
                     ),
                   ],
                 ),
-                SizedBox(height: height * 0.01),
+                SizedBox(height: height * 0.03),
                 Row(
                   children: [
                     Column(
                       children: [
                         Row(
                           children: [
-                            SizedBox(width: 10),
                             Container(
-                              width: width * 0.7,
+                              width: width * 0.72,
                               child: TextCustom(
                                 text: "Origem da Informação",
                                 size: 16.0,
@@ -938,16 +1096,15 @@ class _CheckList1State extends State<CheckList1> {
                             ),
                           ],
                         ),
-                        SizedBox(height: height * 0.01),
+                        SizedBox(height: height * 0.03),
                         Row(
                           children: [
-                            SizedBox(width: 10),
                             Container(
-                              width: width * 0.7,
+                              width: width * 0.72,
                               height: 50,
                               padding: EdgeInsets.symmetric(horizontal: 8.0),
                               decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
+                                  borderRadius: BorderRadius.circular(4),
                                   color: PaletteColors.greyInput),
                               child: DropdownButtonHideUnderline(
                                 child: DropdownButton<String>(
@@ -972,7 +1129,11 @@ class _CheckList1State extends State<CheckList1> {
                     ),
                   ],
                 ),
-                SizedBox(height: height * 0.01),
+                Divider(
+                  thickness: 1,
+                  color: PaletteColors.lightGrey,
+                ),
+                SizedBox(height: height * 0.03),
                 TextCustom(
                   text: "Patologia",
                   size: 16.0,
@@ -980,28 +1141,51 @@ class _CheckList1State extends State<CheckList1> {
                   fontWeight: FontWeight.bold,
                   textAlign: TextAlign.start,
                 ),
-                ListView(
-                  scrollDirection: Axis.vertical,
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  children: [
-                    ...pathology.map(buildSingleCheckbox).toList(),
-                  ],
-                ), //Tipo de imovel
-                InputRegister(
-                    controller: _controllerPathology,
-                    hint: 'Especificar',
-                    fonts: 14.0,
-                    keyboardType: TextInputType.text,
-                    width: width * 0.5,
-                    sizeIcon: 0.0,
-                    icons: Icons.height,
-                    colorBorder: PaletteColors.greyInput,
-                    background: PaletteColors.greyInput),
-                Divider(
-                  thickness: 1.0,
+                SizedBox(height: height * 0.03),
+                Container(
+                  height: pathology.length * 50,
+                  child: ListView.builder(
+                      itemCount: pathology.length,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return Row(
+                          children: [
+                            Container(
+                              width: width * 0.45,
+                              child: TextCustom(
+                                  text: pathology[index].title,
+                                  color: PaletteColors.grey,
+                                  fontWeight: FontWeight.normal),
+                            ),
+                            Spacer(),
+                            Checkbox(
+                                activeColor: PaletteColors.primaryColor,
+                                checkColor: Colors.white,
+                                value: pathology[index].value,
+                                onChanged: (checked) => setState(() {
+                                      pathology[index].value = checked!;
+                                    })),
+                          ],
+                        );
+                      }),
                 ),
-                SizedBox(height: height * 0.01),
+                Container(
+                  child: InputRegister(
+                      controller: _controllerPathology,
+                      hint: 'Especificar',
+                      fonts: 14.0,
+                      keyboardType: TextInputType.text,
+                      width: width * 0.8,
+                      sizeIcon: 0.0,
+                      icons: Icons.height,
+                      colorBorder: PaletteColors.greyInput,
+                      background: PaletteColors.greyInput),
+                ),
+                Divider(
+                  thickness: 1,
+                  color: PaletteColors.lightGrey,
+                ),
+                SizedBox(height: height * 0.03),
                 TextCustom(
                   text: "Tipo de Imóvel",
                   size: 16.0,
@@ -1009,27 +1193,51 @@ class _CheckList1State extends State<CheckList1> {
                   fontWeight: FontWeight.bold,
                   textAlign: TextAlign.start,
                 ),
-                ListView(
-                  scrollDirection: Axis.vertical,
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  children: [
-                    ...type.map(buildSingleCheckbox).toList(),
-                  ],
+                SizedBox(height: height * 0.03),
+                Container(
+                  height: type.length * 50,
+                  child: ListView.builder(
+                      itemCount: type.length,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return Row(
+                          children: [
+                            Container(
+                              width: width * 0.45,
+                              child: TextCustom(
+                                  text: type[index].title,
+                                  color: PaletteColors.grey,
+                                  fontWeight: FontWeight.normal),
+                            ),
+                            Spacer(),
+                            Checkbox(
+                                activeColor: PaletteColors.primaryColor,
+                                checkColor: Colors.white,
+                                value: type[index].value,
+                                onChanged: (checked) => setState(() {
+                                      type[index].value = checked!;
+                                    })),
+                          ],
+                        );
+                      }),
                 ), //Tipo de imovel
-                InputRegister(
-                    controller: _controllerType,
-                    hint: 'Especificar',
-                    fonts: 14.0,
-                    keyboardType: TextInputType.text,
-                    width: width * 0.5,
-                    sizeIcon: 0.0,
-                    icons: Icons.height,
-                    colorBorder: PaletteColors.greyInput,
-                    background: PaletteColors.greyInput),
-                Divider(
-                  thickness: 1.0,
+                Container(
+                  child: InputRegister(
+                      controller: _controllerType,
+                      hint: 'Especificar',
+                      fonts: 14.0,
+                      keyboardType: TextInputType.text,
+                      width: width * 0.8,
+                      sizeIcon: 0.0,
+                      icons: Icons.height,
+                      colorBorder: PaletteColors.greyInput,
+                      background: PaletteColors.greyInput),
                 ),
+                Divider(
+                  thickness: 1,
+                  color: PaletteColors.lightGrey,
+                ),
+                SizedBox(height: height * 0.03),
                 TextCustom(
                   text: "Infraestrutura",
                   size: 16.0,
@@ -1037,27 +1245,51 @@ class _CheckList1State extends State<CheckList1> {
                   fontWeight: FontWeight.bold,
                   textAlign: TextAlign.start,
                 ),
-                ListView(
-                  scrollDirection: Axis.vertical,
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  children: [
-                    ...infra.map(buildSingleCheckbox).toList(),
-                  ],
+                SizedBox(height: height * 0.03),
+                Container(
+                  height: infra.length * 50,
+                  child: ListView.builder(
+                      itemCount: infra.length,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return Row(
+                          children: [
+                            Container(
+                              width: width * 0.45,
+                              child: TextCustom(
+                                  text: infra[index].title,
+                                  color: PaletteColors.grey,
+                                  fontWeight: FontWeight.normal),
+                            ),
+                            Spacer(),
+                            Checkbox(
+                                activeColor: PaletteColors.primaryColor,
+                                checkColor: Colors.white,
+                                value: infra[index].value,
+                                onChanged: (checked) => setState(() {
+                                      infra[index].value = checked!;
+                                    })),
+                          ],
+                        );
+                      }),
                 ), //Infraestrutura
-                InputRegister(
-                    controller: _controllerInfra,
-                    hint: 'Especificar',
-                    fonts: 14.0,
-                    keyboardType: TextInputType.text,
-                    width: width * 0.5,
-                    sizeIcon: 0.0,
-                    icons: Icons.height,
-                    colorBorder: PaletteColors.greyInput,
-                    background: PaletteColors.greyInput),
-                Divider(
-                  thickness: 1.0,
+                Container(
+                  child: InputRegister(
+                      controller: _controllerInfra,
+                      hint: 'Especificar',
+                      fonts: 14.0,
+                      keyboardType: TextInputType.text,
+                      width: width * 0.8,
+                      sizeIcon: 0.0,
+                      icons: Icons.height,
+                      colorBorder: PaletteColors.greyInput,
+                      background: PaletteColors.greyInput),
                 ),
+                Divider(
+                  thickness: 1,
+                  color: PaletteColors.lightGrey,
+                ),
+                SizedBox(height: height * 0.03),
                 TextCustom(
                   text: "Situação",
                   size: 16.0,
@@ -1065,55 +1297,99 @@ class _CheckList1State extends State<CheckList1> {
                   fontWeight: FontWeight.bold,
                   textAlign: TextAlign.start,
                 ),
-                ListView(
-                  scrollDirection: Axis.vertical,
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  children: [
-                    ...situation.map(buildSingleCheckbox).toList(),
-                  ],
+                SizedBox(height: height * 0.03),
+                Container(
+                  height: situation.length * 50,
+                  child: ListView.builder(
+                      itemCount: situation.length,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return Row(
+                          children: [
+                            Container(
+                              width: width * 0.45,
+                              child: TextCustom(
+                                  text: situation[index].title,
+                                  color: PaletteColors.grey,
+                                  fontWeight: FontWeight.normal),
+                            ),
+                            Spacer(),
+                            Checkbox(
+                                activeColor: PaletteColors.primaryColor,
+                                checkColor: Colors.white,
+                                value: situation[index].value,
+                                onChanged: (checked) => setState(() {
+                                      situation[index].value = checked!;
+                                    })),
+                          ],
+                        );
+                      }),
                 ), //Situação
                 InputRegister(
                     controller: _controllerSituation,
                     hint: 'Especificar',
                     fonts: 14.0,
                     keyboardType: TextInputType.text,
-                    width: width * 0.5,
+                    width: width * 0.8,
                     sizeIcon: 0.0,
                     icons: Icons.height,
                     colorBorder: PaletteColors.greyInput,
                     background: PaletteColors.greyInput),
                 Divider(
-                  thickness: 1.0,
+                  thickness: 1,
+                  color: PaletteColors.lightGrey,
                 ),
+                SizedBox(height: height * 0.03),
                 TextCustom(
-                  text: "Cota /Greide",
+                  text: "Cota/Greide",
                   size: 16.0,
                   color: PaletteColors.grey,
                   fontWeight: FontWeight.bold,
                   textAlign: TextAlign.start,
                 ),
-                ListView(
-                  scrollDirection: Axis.vertical,
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  children: [
-                    ...quota.map(buildSingleCheckbox).toList(),
-                  ],
-                ), //Cota /Greide
+                SizedBox(height: height * 0.03),
+                Container(
+                  height: quota.length * 50,
+                  child: ListView.builder(
+                      itemCount: quota.length,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return Row(
+                          children: [
+                            Container(
+                              width: width * 0.45,
+                              child: TextCustom(
+                                  text: quota[index].title,
+                                  color: PaletteColors.grey,
+                                  fontWeight: FontWeight.normal),
+                            ),
+                            Spacer(),
+                            Checkbox(
+                                activeColor: PaletteColors.primaryColor,
+                                checkColor: Colors.white,
+                                value: quota[index].value,
+                                onChanged: (checked) => setState(() {
+                                      quota[index].value = checked!;
+                                    })),
+                          ],
+                        );
+                      }),
+                ), //Situação
                 InputRegister(
                     controller: _controllerQuota,
                     hint: 'Especificar',
                     fonts: 14.0,
                     keyboardType: TextInputType.text,
-                    width: width * 0.5,
+                    width: width * 0.8,
                     sizeIcon: 0.0,
                     icons: Icons.height,
                     colorBorder: PaletteColors.greyInput,
                     background: PaletteColors.greyInput),
                 Divider(
-                  thickness: 1.0,
+                  thickness: 1,
+                  color: PaletteColors.lightGrey,
                 ),
+                SizedBox(height: height * 0.03),
                 TextCustom(
                   text: "Posição da Unidade",
                   size: 16.0,
@@ -1121,27 +1397,49 @@ class _CheckList1State extends State<CheckList1> {
                   fontWeight: FontWeight.bold,
                   textAlign: TextAlign.start,
                 ),
-                ListView(
-                  scrollDirection: Axis.vertical,
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  children: [
-                    ...position.map(buildSingleCheckbox).toList(),
-                  ],
-                ), // Posição da Unidade
+                SizedBox(height: height * 0.03),
+                Container(
+                  height: position.length * 50,
+                  child: ListView.builder(
+                      itemCount: position.length,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return Row(
+                          children: [
+                            Container(
+                              width: width * 0.45,
+                              child: TextCustom(
+                                  text: position[index].title,
+                                  color: PaletteColors.grey,
+                                  fontWeight: FontWeight.normal),
+                            ),
+                            Spacer(),
+                            Checkbox(
+                                activeColor: PaletteColors.primaryColor,
+                                checkColor: Colors.white,
+                                value: position[index].value,
+                                onChanged: (checked) => setState(() {
+                                      position[index].value = checked!;
+                                    })),
+                          ],
+                        );
+                      }),
+                ), //Situação
                 InputRegister(
                     controller: _controllerPosition,
                     hint: 'Especificar',
                     fonts: 14.0,
                     keyboardType: TextInputType.text,
-                    width: width * 0.5,
+                    width: width * 0.8,
                     sizeIcon: 0.0,
                     icons: Icons.height,
                     colorBorder: PaletteColors.greyInput,
                     background: PaletteColors.greyInput),
                 Divider(
-                  thickness: 1.0,
+                  thickness: 1,
+                  color: PaletteColors.lightGrey,
                 ),
+                SizedBox(height: height * 0.03),
                 TextCustom(
                   text: "Telhado",
                   size: 16.0,
@@ -1149,27 +1447,49 @@ class _CheckList1State extends State<CheckList1> {
                   fontWeight: FontWeight.bold,
                   textAlign: TextAlign.start,
                 ),
-                ListView(
-                  scrollDirection: Axis.vertical,
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  children: [
-                    ...roof.map(buildSingleCheckbox).toList(),
-                  ],
-                ), // Telhado
+                SizedBox(height: height * 0.03),
+                Container(
+                  height: roof.length * 50,
+                  child: ListView.builder(
+                      itemCount: roof.length,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return Row(
+                          children: [
+                            Container(
+                              width: width * 0.45,
+                              child: TextCustom(
+                                  text: roof[index].title,
+                                  color: PaletteColors.grey,
+                                  fontWeight: FontWeight.normal),
+                            ),
+                            Spacer(),
+                            Checkbox(
+                                activeColor: PaletteColors.primaryColor,
+                                checkColor: Colors.white,
+                                value: roof[index].value,
+                                onChanged: (checked) => setState(() {
+                                      roof[index].value = checked!;
+                                    })),
+                          ],
+                        );
+                      }),
+                ), //Situação
                 InputRegister(
                     controller: _controllerRoof,
                     hint: 'Especificar',
                     fonts: 14.0,
                     keyboardType: TextInputType.text,
-                    width: width * 0.5,
+                    width: width * 0.8,
                     sizeIcon: 0.0,
                     icons: Icons.height,
                     colorBorder: PaletteColors.greyInput,
                     background: PaletteColors.greyInput),
                 Divider(
-                  thickness: 1.0,
+                  thickness: 1,
+                  color: PaletteColors.lightGrey,
                 ),
+                SizedBox(height: height * 0.03),
                 TextCustom(
                   text: "Muro",
                   size: 16.0,
@@ -1177,231 +1497,749 @@ class _CheckList1State extends State<CheckList1> {
                   fontWeight: FontWeight.bold,
                   textAlign: TextAlign.start,
                 ),
-                ListView(
-                  scrollDirection: Axis.vertical,
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  children: [
-                    ...wall.map(buildSingleCheckbox).toList(),
-                  ],
-                ), // Muro
+                SizedBox(height: height * 0.03),
+                Container(
+                  height: wall.length * 50,
+                  child: ListView.builder(
+                      itemCount: wall.length,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return Row(
+                          children: [
+                            Container(
+                              width: width * 0.45,
+                              child: TextCustom(
+                                  text: wall[index].title,
+                                  color: PaletteColors.grey,
+                                  fontWeight: FontWeight.normal),
+                            ),
+                            Spacer(),
+                            Checkbox(
+                                activeColor: PaletteColors.primaryColor,
+                                checkColor: Colors.white,
+                                value: wall[index].value,
+                                onChanged: (checked) => setState(() {
+                                      wall[index].value = checked!;
+                                    })),
+                          ],
+                        );
+                      }),
+                ), //Situação
                 InputRegister(
                     controller: _controllerWall,
                     hint: 'Especificar',
                     fonts: 14.0,
                     keyboardType: TextInputType.text,
-                    width: width * 0.5,
+                    width: width * 0.8,
                     sizeIcon: 0.0,
                     icons: Icons.height,
                     colorBorder: PaletteColors.greyInput,
                     background: PaletteColors.greyInput),
                 Divider(
-                  thickness: 1.0,
+                  thickness: 1,
+                  color: PaletteColors.lightGrey,
                 ),
+                SizedBox(height: height * 0.03),
                 TextCustom(
-                  text: "Pintura",
+                  text: "Pintura Externa",
                   size: 16.0,
                   color: PaletteColors.grey,
                   fontWeight: FontWeight.bold,
                   textAlign: TextAlign.start,
                 ),
-                ListView(
-                  scrollDirection: Axis.vertical,
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  children: [
-                    ...paint.map(buildSingleCheckbox).toList(),
-                  ],
-                ), // Pintura
+                SizedBox(height: height * 0.03),
+                Container(
+                  height: paint.length * 50,
+                  child: ListView.builder(
+                      itemCount: paint.length,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return Row(
+                          children: [
+                            Container(
+                              width: width * 0.45,
+                              child: TextCustom(
+                                  text: paint[index].title,
+                                  color: PaletteColors.grey,
+                                  fontWeight: FontWeight.normal),
+                            ),
+                            Spacer(),
+                            Checkbox(
+                                activeColor: PaletteColors.primaryColor,
+                                checkColor: Colors.white,
+                                value: paint[index].value,
+                                onChanged: (checked) => setState(() {
+                                      paint[index].value = checked!;
+                                    })),
+                          ],
+                        );
+                      }),
+                ), //Situação
                 InputRegister(
                     controller: _controllerPaint,
                     hint: 'Especificar',
                     fonts: 14.0,
                     keyboardType: TextInputType.text,
-                    width: width * 0.5,
+                    width: width * 0.8,
                     sizeIcon: 0.0,
                     icons: Icons.height,
                     colorBorder: PaletteColors.greyInput,
                     background: PaletteColors.greyInput),
                 Divider(
-                  thickness: 1.0,
+                  thickness: 1,
+                  color: PaletteColors.lightGrey,
+                ),
+                SizedBox(height: height * 0.03),
+                TextCustom(
+                  text: "Portas Externas",
+                  size: 16.0,
+                  color: PaletteColors.grey,
+                  fontWeight: FontWeight.bold,
+                  textAlign: TextAlign.start,
+                ),
+                SizedBox(height: height * 0.03),
+                Container(
+                  height: extern.length * 50,
+                  child: ListView.builder(
+                      itemCount: extern.length,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return Row(
+                          children: [
+                            Container(
+                              width: width * 0.45,
+                              child: TextCustom(
+                                  text: extern[index].title,
+                                  color: PaletteColors.grey,
+                                  fontWeight: FontWeight.normal),
+                            ),
+                            Spacer(),
+                            Checkbox(
+                                activeColor: PaletteColors.primaryColor,
+                                checkColor: Colors.white,
+                                value: extern[index].value,
+                                onChanged: (checked) => setState(() {
+                                      extern[index].value = checked!;
+                                    })),
+                          ],
+                        );
+                      }),
+                ), //Situação
+                InputRegister(
+                    controller: _controllerExtern,
+                    hint: 'Especificar',
+                    fonts: 14.0,
+                    keyboardType: TextInputType.text,
+                    width: width * 0.8,
+                    sizeIcon: 0.0,
+                    icons: Icons.height,
+                    colorBorder: PaletteColors.greyInput,
+                    background: PaletteColors.greyInput),
+                Divider(
+                  thickness: 1,
+                  color: PaletteColors.lightGrey,
+                ),
+                SizedBox(height: height * 0.03),
+                TextCustom(
+                  text: "Piso",
+                  size: 16.0,
+                  color: PaletteColors.grey,
+                  fontWeight: FontWeight.bold,
+                  textAlign: TextAlign.start,
+                ),
+                SizedBox(height: height * 0.03),
+                Container(
+                  height: floor.length * 50,
+                  child: ListView.builder(
+                      itemCount: floor.length,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return Row(
+                          children: [
+                            Container(
+                              width: width * 0.45,
+                              child: TextCustom(
+                                  text: floor[index].title,
+                                  color: PaletteColors.grey,
+                                  fontWeight: FontWeight.normal),
+                            ),
+                            Spacer(),
+                            Checkbox(
+                                activeColor: PaletteColors.primaryColor,
+                                checkColor: Colors.white,
+                                value: floor[index].value,
+                                onChanged: (checked) => setState(() {
+                                      floor[index].value = checked!;
+                                    })),
+                          ],
+                        );
+                      }),
+                ), //Situação
+                InputRegister(
+                    controller: _controllerFloor,
+                    hint: 'Especificar',
+                    fonts: 14.0,
+                    keyboardType: TextInputType.text,
+                    width: width * 0.8,
+                    sizeIcon: 0.0,
+                    icons: Icons.height,
+                    colorBorder: PaletteColors.greyInput,
+                    background: PaletteColors.greyInput),
+                Divider(
+                  thickness: 1,
+                  color: PaletteColors.lightGrey,
+                ),
+                SizedBox(height: height * 0.03),
+                TextCustom(
+                  text: "Portas Internas",
+                  size: 16.0,
+                  color: PaletteColors.grey,
+                  fontWeight: FontWeight.bold,
+                  textAlign: TextAlign.start,
+                ),
+                SizedBox(height: height * 0.03),
+                Container(
+                  height: Intern.length * 50,
+                  child: ListView.builder(
+                      itemCount: Intern.length,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return Row(
+                          children: [
+                            Container(
+                              width: width * 0.45,
+                              child: TextCustom(
+                                  text: Intern[index].title,
+                                  color: PaletteColors.grey,
+                                  fontWeight: FontWeight.normal),
+                            ),
+                            Spacer(),
+                            Checkbox(
+                                activeColor: PaletteColors.primaryColor,
+                                checkColor: Colors.white,
+                                value: Intern[index].value,
+                                onChanged: (checked) => setState(() {
+                                      Intern[index].value = checked!;
+                                    })),
+                          ],
+                        );
+                      }),
+                ), //Situação
+                InputRegister(
+                    controller: _controllerIntern,
+                    hint: 'Especificar',
+                    fonts: 14.0,
+                    keyboardType: TextInputType.text,
+                    width: width * 0.8,
+                    sizeIcon: 0.0,
+                    icons: Icons.height,
+                    colorBorder: PaletteColors.greyInput,
+                    background: PaletteColors.greyInput),
+                Divider(
+                  thickness: 1,
+                  color: PaletteColors.lightGrey,
+                ),
+                SizedBox(height: height * 0.03),
+                TextCustom(
+                  text: "Janelas",
+                  size: 16.0,
+                  color: PaletteColors.grey,
+                  fontWeight: FontWeight.bold,
+                  textAlign: TextAlign.start,
+                ),
+                SizedBox(height: height * 0.03),
+                Container(
+                  height: Windows.length * 50,
+                  child: ListView.builder(
+                      itemCount: Windows.length,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return Row(
+                          children: [
+                            Container(
+                              width: width * 0.45,
+                              child: TextCustom(
+                                  text: Windows[index].title,
+                                  color: PaletteColors.grey,
+                                  fontWeight: FontWeight.normal),
+                            ),
+                            Spacer(),
+                            Checkbox(
+                                activeColor: PaletteColors.primaryColor,
+                                checkColor: Colors.white,
+                                value: Windows[index].value,
+                                onChanged: (checked) => setState(() {
+                                      Windows[index].value = checked!;
+                                    })),
+                          ],
+                        );
+                      }),
+                ), //Situação
+                InputRegister(
+                    controller: _controllerWindows,
+                    hint: 'Especificar',
+                    fonts: 14.0,
+                    keyboardType: TextInputType.text,
+                    width: width * 0.8,
+                    sizeIcon: 0.0,
+                    icons: Icons.height,
+                    colorBorder: PaletteColors.greyInput,
+                    background: PaletteColors.greyInput),
+                Divider(
+                  thickness: 1,
+                  color: PaletteColors.lightGrey,
+                ),
+                SizedBox(height: height * 0.03),
+                TextCustom(
+                  text: "Pintura Interna",
+                  size: 16.0,
+                  color: PaletteColors.grey,
+                  fontWeight: FontWeight.bold,
+                  textAlign: TextAlign.start,
+                ),
+                SizedBox(height: height * 0.03),
+                Container(
+                  height: InternPaint.length * 50,
+                  child: ListView.builder(
+                      itemCount: InternPaint.length,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return Row(
+                          children: [
+                            Container(
+                              width: width * 0.45,
+                              child: TextCustom(
+                                  text: InternPaint[index].title,
+                                  color: PaletteColors.grey,
+                                  fontWeight: FontWeight.normal),
+                            ),
+                            Spacer(),
+                            Checkbox(
+                                activeColor: PaletteColors.primaryColor,
+                                checkColor: Colors.white,
+                                value: InternPaint[index].value,
+                                onChanged: (checked) => setState(() {
+                                      InternPaint[index].value = checked!;
+                                    })),
+                          ],
+                        );
+                      }),
+                ), //Situação
+                InputRegister(
+                    controller: _controllerInternPaint,
+                    hint: 'Especificar',
+                    fonts: 14.0,
+                    keyboardType: TextInputType.text,
+                    width: width * 0.8,
+                    sizeIcon: 0.0,
+                    icons: Icons.height,
+                    colorBorder: PaletteColors.greyInput,
+                    background: PaletteColors.greyInput),
+                Divider(
+                  thickness: 1,
+                  color: PaletteColors.lightGrey,
+                ),
+                SizedBox(height: height * 0.03),
+                TextCustom(
+                  text: "Bancada",
+                  size: 16.0,
+                  color: PaletteColors.grey,
+                  fontWeight: FontWeight.bold,
+                  textAlign: TextAlign.start,
+                ),
+                SizedBox(height: height * 0.03),
+                Container(
+                  height: balcony.length * 50,
+                  child: ListView.builder(
+                      itemCount: balcony.length,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return Row(
+                          children: [
+                            Container(
+                              width: width * 0.45,
+                              child: TextCustom(
+                                  text: balcony[index].title,
+                                  color: PaletteColors.grey,
+                                  fontWeight: FontWeight.normal),
+                            ),
+                            Spacer(),
+                            Checkbox(
+                                activeColor: PaletteColors.primaryColor,
+                                checkColor: Colors.white,
+                                value: balcony[index].value,
+                                onChanged: (checked) => setState(() {
+                                      balcony[index].value = checked!;
+                                    })),
+                          ],
+                        );
+                      }),
+                ), //Situação
+                InputRegister(
+                    controller: _controllerBalcony,
+                    hint: 'Especificar',
+                    fonts: 14.0,
+                    keyboardType: TextInputType.text,
+                    width: width * 0.8,
+                    sizeIcon: 0.0,
+                    icons: Icons.height,
+                    colorBorder: PaletteColors.greyInput,
+                    background: PaletteColors.greyInput),
+                Divider(
+                  thickness: 1,
+                  color: PaletteColors.lightGrey,
+                ),
+                SizedBox(height: height * 0.03),
+                TextCustom(
+                  text: "Quadro Elétrico",
+                  size: 16.0,
+                  color: PaletteColors.grey,
+                  fontWeight: FontWeight.bold,
+                  textAlign: TextAlign.start,
+                ),
+                SizedBox(height: height * 0.03),
+                Container(
+                  height: switchboard.length * 50,
+                  child: ListView.builder(
+                      itemCount: switchboard.length,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return Row(
+                          children: [
+                            Container(
+                              width: width * 0.45,
+                              child: TextCustom(
+                                  text: switchboard[index].title,
+                                  color: PaletteColors.grey,
+                                  fontWeight: FontWeight.normal),
+                            ),
+                            Spacer(),
+                            Checkbox(
+                                activeColor: PaletteColors.primaryColor,
+                                checkColor: Colors.white,
+                                value: switchboard[index].value,
+                                onChanged: (checked) => setState(() {
+                                      switchboard[index].value = checked!;
+                                    })),
+                          ],
+                        );
+                      }),
+                ), //Situação
+                InputRegister(
+                    controller: _controllerSwitchBoard,
+                    hint: 'Especificar',
+                    fonts: 14.0,
+                    keyboardType: TextInputType.text,
+                    width: width * 0.8,
+                    sizeIcon: 0.0,
+                    icons: Icons.height,
+                    colorBorder: PaletteColors.greyInput,
+                    background: PaletteColors.greyInput),
+                Divider(
+                  thickness: 1,
+                  color: PaletteColors.lightGrey,
+                ),
+                SizedBox(height: height * 0.03),
+                TextCustom(
+                  text: "Revestimento da Cozinha",
+                  size: 16.0,
+                  color: PaletteColors.grey,
+                  fontWeight: FontWeight.bold,
+                  textAlign: TextAlign.start,
+                ),
+                SizedBox(height: height * 0.03),
+                Container(
+                  height: kitchen.length * 50,
+                  child: ListView.builder(
+                      itemCount: kitchen.length,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return Row(
+                          children: [
+                            Container(
+                              width: width * 0.45,
+                              child: TextCustom(
+                                  text: kitchen[index].title,
+                                  color: PaletteColors.grey,
+                                  fontWeight: FontWeight.normal),
+                            ),
+                            Spacer(),
+                            Checkbox(
+                                activeColor: PaletteColors.primaryColor,
+                                checkColor: Colors.white,
+                                value: kitchen[index].value,
+                                onChanged: (checked) => setState(() {
+                                      kitchen[index].value = checked!;
+                                    })),
+                          ],
+                        );
+                      }),
+                ), //Situação
+                InputRegister(
+                    controller: _controllerKitchen,
+                    hint: 'Especificar',
+                    fonts: 14.0,
+                    keyboardType: TextInputType.text,
+                    width: width * 0.8,
+                    sizeIcon: 0.0,
+                    icons: Icons.height,
+                    colorBorder: PaletteColors.greyInput,
+                    background: PaletteColors.greyInput),
+                Divider(
+                  thickness: 1,
+                  color: PaletteColors.lightGrey,
+                ),
+                SizedBox(height: height * 0.03),
+                TextCustom(
+                  text: "Revestimento do Banheiro",
+                  size: 16.0,
+                  color: PaletteColors.grey,
+                  fontWeight: FontWeight.bold,
+                  textAlign: TextAlign.start,
+                ),
+                SizedBox(height: height * 0.03),
+                Container(
+                  height: bathroom.length * 50,
+                  child: ListView.builder(
+                      itemCount: bathroom.length,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return Row(
+                          children: [
+                            Container(
+                              width: width * 0.45,
+                              child: TextCustom(
+                                  text: bathroom[index].title,
+                                  color: PaletteColors.grey,
+                                  fontWeight: FontWeight.normal),
+                            ),
+                            Spacer(),
+                            Checkbox(
+                                activeColor: PaletteColors.primaryColor,
+                                checkColor: Colors.white,
+                                value: bathroom[index].value,
+                                onChanged: (checked) => setState(() {
+                                      bathroom[index].value = checked!;
+                                    })),
+                          ],
+                        );
+                      }),
+                ), //Situação
+                InputRegister(
+                    controller: _controllerBathroom,
+                    hint: 'Especificar',
+                    fonts: 14.0,
+                    keyboardType: TextInputType.text,
+                    width: width * 0.8,
+                    sizeIcon: 0.0,
+                    icons: Icons.height,
+                    colorBorder: PaletteColors.greyInput,
+                    background: PaletteColors.greyInput),
+                Divider(
+                  thickness: 1,
+                  color: PaletteColors.lightGrey,
+                ),
+                SizedBox(height: height * 0.03),
+                TextCustom(
+                  text: "Revestimento do Tanque",
+                  size: 16.0,
+                  color: PaletteColors.grey,
+                  fontWeight: FontWeight.bold,
+                  textAlign: TextAlign.start,
+                ),
+                SizedBox(height: height * 0.03),
+                Container(
+                  height: tank.length * 50,
+                  child: ListView.builder(
+                      itemCount: tank.length,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return Row(
+                          children: [
+                            Container(
+                              width: width * 0.45,
+                              child: TextCustom(
+                                  text: tank[index].title,
+                                  color: PaletteColors.grey,
+                                  fontWeight: FontWeight.normal),
+                            ),
+                            Spacer(),
+                            Checkbox(
+                                activeColor: PaletteColors.primaryColor,
+                                checkColor: Colors.white,
+                                value: tank[index].value,
+                                onChanged: (checked) => setState(() {
+                                      tank[index].value = checked!;
+                                    })),
+                          ],
+                        );
+                      }),
+                ), //Situação
+                InputRegister(
+                    controller: _controllerTank,
+                    hint: 'Especificar',
+                    fonts: 14.0,
+                    keyboardType: TextInputType.text,
+                    width: width * 0.8,
+                    sizeIcon: 0.0,
+                    icons: Icons.height,
+                    colorBorder: PaletteColors.greyInput,
+                    background: PaletteColors.greyInput),
+                Divider(
+                  thickness: 1,
+                  color: PaletteColors.lightGrey,
+                ),
+                SizedBox(height: height * 0.03),
+                TextCustom(
+                  text: "Padrão de Acabamento",
+                  size: 16.0,
+                  color: PaletteColors.grey,
+                  fontWeight: FontWeight.bold,
+                  textAlign: TextAlign.start,
+                ),
+                SizedBox(height: height * 0.03),
+                Container(
+                  height: pattern.length * 50,
+                  child: ListView.builder(
+                      itemCount: pattern.length,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return Row(
+                          children: [
+                            Container(
+                              width: width * 0.45,
+                              child: TextCustom(
+                                  text: pattern[index].title,
+                                  color: PaletteColors.grey,
+                                  fontWeight: FontWeight.normal),
+                            ),
+                            Spacer(),
+                            Checkbox(
+                                activeColor: PaletteColors.primaryColor,
+                                checkColor: Colors.white,
+                                value: pattern[index].value,
+                                onChanged: (checked) => setState(() {
+                                      pattern[index].value = checked!;
+                                    })),
+                          ],
+                        );
+                      }),
+                ), //Situação
+                InputRegister(
+                    controller: _controllerPattern,
+                    hint: 'Especificar',
+                    fonts: 14.0,
+                    keyboardType: TextInputType.text,
+                    width: width * 0.8,
+                    sizeIcon: 0.0,
+                    icons: Icons.height,
+                    colorBorder: PaletteColors.greyInput,
+                    background: PaletteColors.greyInput),
+                Divider(
+                  thickness: 1,
+                  color: PaletteColors.lightGrey,
+                ),
+                SizedBox(height: height * 0.03),
+                TextCustom(
+                  text: "Estado de Conservação",
+                  size: 16.0,
+                  color: PaletteColors.grey,
+                  fontWeight: FontWeight.bold,
+                  textAlign: TextAlign.start,
+                ),
+                SizedBox(height: height * 0.03),
+                Container(
+                  height: state.length * 50,
+                  child: ListView.builder(
+                      itemCount: state.length,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return Row(
+                          children: [
+                            Container(
+                              width: width * 0.45,
+                              child: TextCustom(
+                                  text: state[index].title,
+                                  color: PaletteColors.grey,
+                                  fontWeight: FontWeight.normal),
+                            ),
+                            Spacer(),
+                            Checkbox(
+                                activeColor: PaletteColors.primaryColor,
+                                checkColor: Colors.white,
+                                value: state[index].value,
+                                onChanged: (checked) => setState(() {
+                                      state[index].value = checked!;
+                                    })),
+                          ],
+                        );
+                      }),
+                ), //Situação
+                InputRegister(
+                    controller: _controllerState,
+                    hint: 'Especificar',
+                    fonts: 14.0,
+                    keyboardType: TextInputType.text,
+                    width: width * 0.8,
+                    sizeIcon: 0.0,
+                    icons: Icons.height,
+                    colorBorder: PaletteColors.greyInput,
+                    background: PaletteColors.greyInput),
+                Divider(
+                  thickness: 1,
+                  color: PaletteColors.lightGrey,
+                ),
+                SizedBox(height: height * 0.03),
+                TextCustom(
+                  text: "Teto da Unidade",
+                  size: 16.0,
+                  color: PaletteColors.grey,
+                  fontWeight: FontWeight.bold,
+                  textAlign: TextAlign.start,
+                ),
+                SizedBox(height: height * 0.03),
+                Container(
+                  height: unityroof.length * 50,
+                  child: ListView.builder(
+                      itemCount: unityroof.length,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return Row(
+                          children: [
+                            Container(
+                              width: width * 0.45,
+                              child: TextCustom(
+                                  text: unityroof[index].title,
+                                  color: PaletteColors.grey,
+                                  fontWeight: FontWeight.normal),
+                            ),
+                            Spacer(),
+                            Checkbox(
+                                activeColor: PaletteColors.primaryColor,
+                                checkColor: Colors.white,
+                                value: unityroof[index].value,
+                                onChanged: (checked) => setState(() {
+                                      unityroof[index].value = checked!;
+                                    })),
+                          ],
+                        );
+                      }),
+                ), //Situação
+                InputRegister(
+                    controller: _controllerUnityRoof,
+                    hint: 'Especificar',
+                    fonts: 14.0,
+                    keyboardType: TextInputType.text,
+                    width: width * 0.8,
+                    sizeIcon: 0.0,
+                    icons: Icons.height,
+                    colorBorder: PaletteColors.greyInput,
+                    background: PaletteColors.greyInput),
+                Divider(
+                  thickness: 1,
+                  color: PaletteColors.lightGrey,
                 ),
 
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    TextCustom(
-                      text: "Revestimento da Cozinha",
-                      size: 16.0,
-                      color: PaletteColors.grey,
-                      fontWeight: FontWeight.bold,
-                      textAlign: TextAlign.start,
-                    ),
-                    ListView(
-                      scrollDirection: Axis.vertical,
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      children: [
-                        ...kitchen.map(buildSingleCheckbox).toList(),
-                      ],
-                    ), //Revestimento da Cozinha
-                    InputRegister(
-                        controller: _controllerKitchen,
-                        hint: 'Especificar',
-                        fonts: 14.0,
-                        keyboardType: TextInputType.text,
-                        width: width * 0.5,
-                        sizeIcon: 0.0,
-                        icons: Icons.height,
-                        colorBorder: PaletteColors.greyInput,
-                        background: PaletteColors.greyInput),
-                    Divider(
-                      thickness: 1.0,
-                    ),
-                    TextCustom(
-                      text: "Revestimento do Banheiro",
-                      size: 16.0,
-                      color: PaletteColors.grey,
-                      fontWeight: FontWeight.bold,
-                      textAlign: TextAlign.start,
-                    ),
-                    ListView(
-                      scrollDirection: Axis.vertical,
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      children: [
-                        ...bathroom.map(buildSingleCheckbox).toList(),
-                      ],
-                    ), //Revestimento do Banheiro
-                    InputRegister(
-                        controller: _controllerBathroom,
-                        hint: 'Especificar',
-                        fonts: 14.0,
-                        keyboardType: TextInputType.text,
-                        width: width * 0.5,
-                        sizeIcon: 0.0,
-                        icons: Icons.height,
-                        colorBorder: PaletteColors.greyInput,
-                        background: PaletteColors.greyInput),
-                    Divider(
-                      thickness: 1.0,
-                    ),
-                    TextCustom(
-                      text: "Revestimento do Tanque",
-                      size: 16.0,
-                      color: PaletteColors.grey,
-                      fontWeight: FontWeight.bold,
-                      textAlign: TextAlign.start,
-                    ),
-                    ListView(
-                      scrollDirection: Axis.vertical,
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      children: [
-                        ...tank.map(buildSingleCheckbox).toList(),
-                      ],
-                    ), //Revestimento do Tanque
-                    InputRegister(
-                        controller: _controllerTank,
-                        hint: 'Especificar',
-                        fonts: 14.0,
-                        keyboardType: TextInputType.text,
-                        width: width * 0.5,
-                        sizeIcon: 0.0,
-                        icons: Icons.height,
-                        colorBorder: PaletteColors.greyInput,
-                        background: PaletteColors.greyInput),
-                    Divider(
-                      thickness: 1.0,
-                    ),
-                    TextCustom(
-                      text: "Padrão de Acabamento",
-                      size: 16.0,
-                      color: PaletteColors.grey,
-                      fontWeight: FontWeight.bold,
-                      textAlign: TextAlign.start,
-                    ),
-                    ListView(
-                      scrollDirection: Axis.vertical,
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      children: [
-                        ...pattern.map(buildSingleCheckbox).toList(),
-                      ],
-                    ), //Padrão de Acabamento
-                    InputRegister(
-                        controller: _controllerPattern,
-                        hint: 'Especificar',
-                        fonts: 14.0,
-                        keyboardType: TextInputType.text,
-                        width: width * 0.5,
-                        sizeIcon: 0.0,
-                        icons: Icons.height,
-                        colorBorder: PaletteColors.greyInput,
-                        background: PaletteColors.greyInput),
-                    Divider(
-                      thickness: 1.0,
-                    ),
-                    TextCustom(
-                      text: "Estado de Conservação",
-                      size: 16.0,
-                      color: PaletteColors.grey,
-                      fontWeight: FontWeight.bold,
-                      textAlign: TextAlign.start,
-                    ),
-                    ListView(
-                      scrollDirection: Axis.vertical,
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      children: [
-                        ...state.map(buildSingleCheckbox).toList(),
-                      ],
-                    ), //Estado de Conservação
-                    InputRegister(
-                        controller: _controllerState,
-                        hint: 'Especificar',
-                        fonts: 14.0,
-                        keyboardType: TextInputType.text,
-                        width: width * 0.5,
-                        sizeIcon: 0.0,
-                        icons: Icons.height,
-                        colorBorder: PaletteColors.greyInput,
-                        background: PaletteColors.greyInput),
-                    Divider(
-                      thickness: 1.0,
-                    ),
-                    TextCustom(
-                      text: "Teto da Unidade",
-                      size: 16.0,
-                      color: PaletteColors.grey,
-                      fontWeight: FontWeight.bold,
-                      textAlign: TextAlign.start,
-                    ),
-                    ListView(
-                      scrollDirection: Axis.vertical,
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      children: [
-                        ...unityroof.map(buildSingleCheckbox).toList(),
-                      ],
-                    ), //Teto da Unidade
-                    InputRegister(
-                        controller: _controllerUnityRoof,
-                        hint: 'Especificar',
-                        fonts: 14.0,
-                        keyboardType: TextInputType.text,
-                        width: width * 0.5,
-                        sizeIcon: 0.0,
-                        icons: Icons.height,
-                        colorBorder: PaletteColors.greyInput,
-                        background: PaletteColors.greyInput),
-                    Divider(
-                      thickness: 1.0,
-                    ),
-                  ],
-                ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -1499,7 +2337,7 @@ class _CheckList1State extends State<CheckList1> {
                       ],
                     ), //Quartos
                     SizedBox(
-                      height: height * 0.01,
+                      height: height * 0.03,
                     ),
                     Row(
                       children: [
@@ -1585,7 +2423,7 @@ class _CheckList1State extends State<CheckList1> {
                       ],
                     ),
                     SizedBox(
-                      height: height * 0.01,
+                      height: height * 0.03,
                     ), //Banheiros sociais
                     Row(
                       children: [
@@ -1672,7 +2510,7 @@ class _CheckList1State extends State<CheckList1> {
                       ],
                     ),
                     SizedBox(
-                      height: height * 0.01,
+                      height: height * 0.03,
                     ), //Banheiros privativos
                     Row(
                       children: [
@@ -1758,7 +2596,7 @@ class _CheckList1State extends State<CheckList1> {
                       ],
                     ),
                     SizedBox(
-                      height: height * 0.01,
+                      height: height * 0.03,
                     ), //Lavabos
                     Row(
                       children: [
@@ -1844,7 +2682,7 @@ class _CheckList1State extends State<CheckList1> {
                       ],
                     ),
                     SizedBox(
-                      height: height * 0.01,
+                      height: height * 0.03,
                     ), //Banheiro de serviço
                     Row(
                       children: [
@@ -1930,7 +2768,7 @@ class _CheckList1State extends State<CheckList1> {
                       ],
                     ),
                     SizedBox(
-                      height: height * 0.01,
+                      height: height * 0.03,
                     ), //Quarto de empregada
                     Row(
                       children: [
@@ -2016,7 +2854,7 @@ class _CheckList1State extends State<CheckList1> {
                       ],
                     ),
                     SizedBox(
-                      height: height * 0.01,
+                      height: height * 0.03,
                     ), //Varanda/sacada
                     Row(
                       children: [
@@ -2105,7 +2943,7 @@ class _CheckList1State extends State<CheckList1> {
                       ],
                     ),
                     SizedBox(
-                      height: height * 0.01,
+                      height: height * 0.03,
                     ), //Numero de armarios completos
                     Row(
                       children: [
@@ -2191,7 +3029,7 @@ class _CheckList1State extends State<CheckList1> {
                       ],
                     ),
                     SizedBox(
-                      height: height * 0.01,
+                      height: height * 0.03,
                     ), //Cozinha
                     Row(
                       children: [
@@ -2277,7 +3115,7 @@ class _CheckList1State extends State<CheckList1> {
                       ],
                     ),
                     SizedBox(
-                      height: height * 0.01,
+                      height: height * 0.03,
                     ), //Sala
                     Row(
                       children: [
@@ -2366,7 +3204,7 @@ class _CheckList1State extends State<CheckList1> {
                       ],
                     ),
                     SizedBox(
-                      height: height * 0.01,
+                      height: height * 0.03,
                     ), //Area de serviço coberto
                     Row(
                       children: [
@@ -2459,7 +3297,7 @@ class _CheckList1State extends State<CheckList1> {
                       ],
                     ),
                     SizedBox(
-                      height: height * 0.01,
+                      height: height * 0.03,
                     ), //Area de serviço descoberto
                     Row(
                       children: [
@@ -2548,7 +3386,7 @@ class _CheckList1State extends State<CheckList1> {
                       ],
                     ),
                     SizedBox(
-                      height: height * 0.01,
+                      height: height * 0.03,
                     ), //Garagem Coberta
                     Row(
                       children: [
@@ -2634,7 +3472,7 @@ class _CheckList1State extends State<CheckList1> {
                       ],
                     ),
                     SizedBox(
-                      height: height * 0.01,
+                      height: height * 0.03,
                     ), //Garagem Descoberta
                     Row(
                       children: [
@@ -2720,7 +3558,7 @@ class _CheckList1State extends State<CheckList1> {
                       ],
                     ),
                     SizedBox(
-                      height: height * 0.01,
+                      height: height * 0.03,
                     ), //Ar condicionado
                     Row(
                       children: [
@@ -2807,7 +3645,9 @@ class _CheckList1State extends State<CheckList1> {
                     ), //Piscina
                     Divider(
                       thickness: 1.0,
+                      color: PaletteColors.lightGrey,
                     ),
+                    SizedBox(height: height * 0.03),
                     TextCustom(
                       text: "Condominio/Bloco",
                       size: 16.0,
@@ -2815,27 +3655,47 @@ class _CheckList1State extends State<CheckList1> {
                       fontWeight: FontWeight.bold,
                       textAlign: TextAlign.start,
                     ),
-                    ListView(
-                      padding: EdgeInsets.zero,
-                      scrollDirection: Axis.vertical,
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      children: [
-                        ...block.map(buildSingleCheckbox).toList(),
-                      ],
-                    ), //Revestimento do Banheiro
+                    SizedBox(height: height * 0.03),
+                    Container(
+                      height: block.length * 50,
+                      child: ListView.builder(
+                          itemCount: block.length,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            return Row(
+                              children: [
+                                Container(
+                                  width: width * 0.45,
+                                  child: TextCustom(
+                                      text: block[index].title,
+                                      color: PaletteColors.grey,
+                                      fontWeight: FontWeight.normal),
+                                ),
+                                Spacer(),
+                                Checkbox(
+                                    activeColor: PaletteColors.primaryColor,
+                                    checkColor: Colors.white,
+                                    value: block[index].value,
+                                    onChanged: (checked) => setState(() {
+                                          block[index].value = checked!;
+                                        })),
+                              ],
+                            );
+                          }),
+                    ), //Situação
                     InputRegister(
                         controller: _controllerBlock,
                         hint: 'Especificar',
                         fonts: 14.0,
                         keyboardType: TextInputType.text,
-                        width: width * 0.5,
+                        width: width * 0.8,
                         sizeIcon: 0.0,
                         icons: Icons.height,
                         colorBorder: PaletteColors.greyInput,
                         background: PaletteColors.greyInput),
                     Divider(
-                      thickness: 1.0,
+                      thickness: 1,
+                      color: PaletteColors.lightGrey,
                     ),
                     TextCustom(
                       text: "Observações:",
@@ -2845,14 +3705,14 @@ class _CheckList1State extends State<CheckList1> {
                       textAlign: TextAlign.start,
                     ),
                     Container(
-                      width: width * 0.8,
+                      width: width * 0.9,
                       height: height * 0.2,
                       child: InputRegister(
                           controller: _controllerObs,
                           hint: ' ',
                           fonts: 14.0,
                           keyboardType: TextInputType.text,
-                          width: width * 0.5,
+                          width: width * 0.9,
                           sizeIcon: 0.0,
                           icons: Icons.height,
                           colorBorder: PaletteColors.greyInput,
@@ -2865,16 +3725,11 @@ class _CheckList1State extends State<CheckList1> {
                         Container(
                           width: width * 0.35,
                           child: ButtonCustom(
-                            widthCustom: 0.3,
+                            widthCustom: 0.35,
                             heightCustom: 0.070,
-                            onPressed: () => Navigator.pushReplacement(context,
-                                MaterialPageRoute(
-                                    builder: (_) => Surveyscreen(
-                                        text: 'Nova Vistoria',
-                                        buttonText: 'Prosseguir',
-                                        id: ''),
-                                )
-                            ),
+                            onPressed: () =>
+
+                                Navigator.pop(context),
                             text: "Voltar",
                             size: 14.0,
                             colorButton: PaletteColors.white,
@@ -2882,11 +3737,11 @@ class _CheckList1State extends State<CheckList1> {
                             colorBorder: PaletteColors.primaryColor,
                           ),
                         ),
-                        SizedBox(width: width * 0.15),
+                        SizedBox(width: width * 0.08),
                         Container(
                           width: width * 0.35,
                           child: ButtonCustom(
-                            widthCustom: 0.3,
+                            widthCustom: 0.35,
                             heightCustom: 0.070,
                             onPressed: () => _saveCheckList(),
                             text: "Concluir",

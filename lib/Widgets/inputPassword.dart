@@ -36,14 +36,14 @@ class InputPassword extends StatelessWidget {
       alignment: Alignment.topCenter,
       width: width,
       padding: EdgeInsets.symmetric(horizontal: 8),
-      margin: EdgeInsets.symmetric(horizontal: 10,vertical: 6),
+      margin:  EdgeInsets.only( top: 6, bottom: 6, right: 24),
       decoration: BoxDecoration(
         color: PaletteColors.greyInput,
         // border: Border.all(
         //   color: Colors.black26, //                   <--- border color
         //   width: 2.0,
         // ),
-        borderRadius: BorderRadius.circular(6)
+        borderRadius: BorderRadius.circular(4)
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

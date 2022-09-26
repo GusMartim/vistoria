@@ -7,9 +7,9 @@ class SurveyModel{
   String complement = '';
   String district = '';
   String city = '';
-  String state = '';
+  String estado = '';
   String cep = '';
-  String type = '';
+  String typesurvey = '';
   String latG = '';
   String latMin = '';
   String latSeg = '';
@@ -18,7 +18,9 @@ class SurveyModel{
   String longSeg = '';
   String hourRequest = '';
   String idUser = '';
-  int  Nsurvey = 0;
+  String userCode ='';
+
+
 
   SurveyModel();
 
@@ -32,17 +34,16 @@ Map<String,dynamic> toMap(){
     "complement"   : this.complement,
     "district": this.district,
     "city": this.city,
-    "state": this.state,
+    "estado": this.estado,
     "cep": this.cep,
-    "type": this.type,
+    "typesurvey": this.typesurvey,
     "latG": this.latG,
     "latMin": this.latMin,
     "latSeg": this.latSeg,
     "longG": this.longG,
     "longMin": this.longMin,
     "longSeg": this.longSeg,
-    "Nsurvey": this.Nsurvey,
-
+    "userCode" : this.userCode
   };
   return map;
 

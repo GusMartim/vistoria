@@ -1,4 +1,4 @@
-import 'package:vistoria/Models/image_model.dart';import 'package:vistoria/Models/order_model.dart';
+import 'package:vistoria/Models/order_model.dart';
 import 'package:vistoria/Utils/exports.dart';
 import 'package:vistoria/Widgets/text_custom.dart';
 
@@ -14,35 +14,54 @@ class SurveyFinishScreen extends StatefulWidget {
 class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
   FirebaseFirestore db = FirebaseFirestore.instance;
   int order = 0;
-
+  int nsurvey = 0;
   List imageList = [];
-
-
-
-
-
   OrderModel _orderModel = OrderModel();
-  _SurveyNumber() async {
-    _orderModel.order = order + 1;
-    await db
-        .collection('surveyNumber')
-        .doc('surveyNumber')
-        .set({'surveyNumber': _orderModel.order},SetOptions(merge: true))
-        .then((value) => Navigator.pushReplacementNamed(context, '/main'));
 
-  }
-  _getOrder()async{
-
+  getNSurvey()async{
+    DocumentSnapshot snapshot = await db
+        .collection('surveys')
+        .doc(widget.idSurvey)
+        .get();
+    Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
+    setState(() {
+      nsurvey = data?["Nsurvey"] ?? 0;
+  });
+    getOrder();
+        }
+  getOrder()async{
     DocumentSnapshot snapshot = await db
         .collection('surveyNumber')
         .doc('surveyNumber')
         .get();
     Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
     setState(() {
-      order = data?["surveyNumber"]??0;
+      order = data?["surveyNumber"] ?? 0;
 
     });
-    _SurveyNumber();
+    _NSurveyValidation();
+  }
+
+  _NSurveyValidation()async{
+    if(nsurvey == 0) {
+      _orderModel.order = order + 1;
+      nsurvey= order;
+      _orderModel.Nsurvey = nsurvey + 1;
+      await db
+          .collection('surveys')
+          .doc(widget.idSurvey)
+          .set({'Nsurvey': _orderModel.Nsurvey},SetOptions(merge: true));
+      await db
+          .collection('surveyNumber')
+          .doc('surveyNumber')
+          .set({'surveyNumber': _orderModel.order}, SetOptions(merge: true))
+          .then((value) => Navigator.pushReplacementNamed(context, '/main'));
+
+      }else{
+      Navigator.pushReplacementNamed(context, '/main');
+
+    }
+
   }
 
   @override
@@ -52,21 +71,27 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
     super.initState();
     _dataImages();
 
+
   }
 
 
-
+  bool loading = false;
   _dataImages() async {
     DocumentSnapshot snapshot =
     await db.collection("surveys").doc(widget.idSurvey).get();
     Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
     setState(() {
       imageList = data?["photoUrl"];
-
+      Future.delayed(Duration(seconds: 3));
+      loading = true;
     });
 
+    }
 
-  }
+
+
+
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -110,7 +135,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
               SizedBox(
                 height: 16,
               ),
-              Column(
+              loading ==true ?Column(
                 children: [
                   Container(
                     width:  width * 0.9,
@@ -132,7 +157,15 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                   ),
                   SizedBox(height: height * 0.01,)
                 ],
-              ),
+              ):
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                CircularProgressIndicator(
+                  color: PaletteColors.primaryColor),
+                
+              ],),
               SizedBox(
                 height: 10,
               ),
@@ -214,7 +247,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                 child: ButtonCustom(
                   widthCustom: 0.8,
                   heightCustom: 0.070,
-                  onPressed: () => _getOrder(),
+                  onPressed: () => getNSurvey(),
                   text: "Finalizar",
                   size: 14.0,
                   colorButton: PaletteColors.primaryColor,
