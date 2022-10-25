@@ -74,22 +74,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 if (e.code == "weak-password") {
                   setState(() {
                     _error = "Digite uma senha mais forte!";
-                    showSnackBar(context, _error,);
+                    showSnackBar(context, _error,Colors.red);
                   });
                 } else if (e.code == "unknown") {
                   setState(() {
                     _error = "A senha está vazia";
-                    showSnackBar(context, _error,);
+                    showSnackBar(context, _error,Colors.red);
                   });
                 } else if (e.code == "invalid-email") {
                   setState(() {
                     _error = "Digite um e-mail válido";
-                    showSnackBar(context, _error,);
+                    showSnackBar(context, _error,Colors.red);
                   });
                 } else if (e.code == "email-already-in-use") {
                   setState(() {
                     _error = "Esse e-mail já está cadastrado!";
-                    showSnackBar(context, _error,);
+                    showSnackBar(context, _error,Colors.red);
                   });
                 } else {
                   setState(() {
@@ -100,31 +100,31 @@ class _RegisterScreenState extends State<RegisterScreen> {
             } else {
               setState(() {
                 _error = 'Senhas diferentes';
-                showSnackBar(context, _error,);
+                showSnackBar(context, _error,Colors.red);
               });
             }
           } else {
             setState(() {
               _error = 'Confira o número do telefone';
-              showSnackBar(context, _error,);
+              showSnackBar(context, _error,Colors.red);
             });
           }
         }else {
           setState(() {
             _error = 'Campo email está vazio!';
-            showSnackBar(context, _error,);
+            showSnackBar(context, _error,Colors.red);
           });
         }
       }else {
         setState(() {
           _error = 'Campo nome está vazio!';
-          showSnackBar(context, _error,);
+          showSnackBar(context, _error,Colors.red);
         });
       }
     } else {
       setState(() {
         _error = 'Confira o CPF ou CNPJ';
-        showSnackBar(context, _error,);
+        showSnackBar(context, _error,Colors.red);
       });
     }
   }

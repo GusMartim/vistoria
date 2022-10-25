@@ -6,7 +6,7 @@ class AlertModel{
         context: context,
         builder: (context) {
 
-          return ShowDialogAlert(
+          return ShowDialog(
 
               title: title,
               content: content,

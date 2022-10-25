@@ -32,24 +32,29 @@ class _LoginScreenState extends State<LoginScreen> {
         if(e.code =="unknown"){
           setState(() {
             _error = "A senha está vazia!";
-            showSnackBar(context, _error,);
+            showSnackBar(context, _error,Colors.red);
           });
         }else if(e.code =="invalid-email"){
           setState(() {
             _error = "Digite um e-mail válido!";
-            showSnackBar(context, _error,);
+            showSnackBar(context, _error,Colors.red);
+          });
+        }else if(e.code =="wrong-password"){
+          setState(() {
+            _error = "Senha incorreta!";
+            showSnackBar(context, _error,Colors.red);
           });
         }else{
           setState(() {
             _error = e.code;
-            showSnackBar(context, _error,);
+            showSnackBar(context, _error,Colors.red);
           });
         }
       }
     } else {
       setState(() {
         _error = "Preencha seu email";
-        showSnackBar(context, _error,);
+        showSnackBar(context, _error,Colors.red);
       });
     }
   }
@@ -162,15 +167,90 @@ class _LoginScreenState extends State<LoginScreen> {
               Row(
                 children: [
                   SizedBox(width: width * 0.2),
-                  Container(
-                    alignment: Alignment.topRight,
-                    width: width * 0.7,
-                    child: TextCustom(
-                      text: "    Esqueci a senha/resetar",
-                      color: PaletteColors.primaryColor,
-                      size: 12.0,
-                      fontWeight: FontWeight.normal,
-                      textAlign: TextAlign.end,
+                  GestureDetector(
+                    onTap: (){
+                      AlertModel().alert(
+                          'Resetar senha',
+                          'Insira o e-mail para resetar a senha',
+                          PaletteColors.primaryColor,
+                          PaletteColors.grey,
+                          context,[
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Row(
+
+                              children: [
+                                SizedBox(width: width * 0.04),
+                                Container(
+
+                                  width: width * 0.65,
+
+                                  child: TextFormField(
+                                    controller: _controllerEmail,
+
+                                    keyboardType: TextInputType.text,
+                                    textAlignVertical: TextAlignVertical.bottom,
+                                    style: TextStyle(
+                                      color: PaletteColors.grey
+                                    ),
+                                    decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      hintText: 'E-mail',
+                                      hintStyle: TextStyle(
+                                        color: PaletteColors.lightGrey,
+                                        fontSize: 16.0
+                                      ),
+
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                SizedBox(width: width * 0.04),
+                                Container(
+                                  width: width * 0.6,
+                                  child: ButtonCustom(
+                                    widthCustom: 0.5,
+                                    heightCustom: 0.085,
+                                    onPressed: () {
+                                      _auth
+                                          .sendPasswordResetEmail(email: _controllerEmail.text)
+                                          .then((value){
+                                        Navigator.of(context).pop();
+                                        showSnackBar(context, 'E-mail de redefinição de senha enviado', Colors.green);
+                                      });
+
+                                    },
+                                    text: "Enviar",
+                                    size: 14.0,
+                                    colorButton: PaletteColors.primaryColor,
+                                    colorText: PaletteColors.white,
+                                    colorBorder: PaletteColors.primaryColor,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+
+                      ]
+                      );
+                    },
+                    child: Container(
+
+                      alignment: Alignment.topRight,
+                      width: width * 0.7,
+                      child: TextCustom(
+                        text: "    Esqueci a senha/resetar",
+                        color: PaletteColors.primaryColor,
+                        size: 12.0,
+                        fontWeight: FontWeight.normal,
+                        textAlign: TextAlign.end,
+                      ),
                     ),
                   ),
                 ],

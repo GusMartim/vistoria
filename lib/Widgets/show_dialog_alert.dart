@@ -1,8 +1,6 @@
-import 'package:vistoria/Utils/exports.dart';
-import 'package:vistoria/Widgets/text_custom.dart';
-import 'package:vistoria/Utils/colors.dart';
+import '../utils/exports.dart';
 
-class ShowDialogAlert extends StatelessWidget {
+class ShowDialog extends StatelessWidget {
 
   final String title;
   final colorTextTitle;
@@ -10,13 +8,13 @@ class ShowDialogAlert extends StatelessWidget {
   final String content;
   final listActions;
 
-  const ShowDialogAlert({
+  ShowDialog({
     required this.title,
     required this.content,
     required this.listActions,
-    this.colorTextTitle = PaletteColors.white,
-    this.colorTextContent = PaletteColors.white,
-});
+    this.colorTextTitle = Colors.red,
+    this.colorTextContent = Colors.red,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -25,49 +23,33 @@ class ShowDialogAlert extends StatelessWidget {
     final height = MediaQuery.of(context).size.height;
 
     return AlertDialog(
-
-      backgroundColor: PaletteColors.bgColor,
-
-      title: Column(
-        children: [
-          Container(
-            alignment: Alignment.center,
-            width: width*0.5,
-            height: height*0.2,
-
-            child: TextCustom(text: title,color: colorTextTitle,size: 20.0,fontWeight: FontWeight.bold,)
-          ),
-        ],
+      title: Container(
+          alignment: Alignment.center,
+          width: width*0.2,
+          height: height*0.05,
+          child: TextCustom(text: title,color: colorTextTitle,size: 20.0,fontWeight: FontWeight.bold,)
       ),
-      titleTextStyle: TextStyle(color: PaletteColors.white,fontSize: 25),
-      content: Column(
-
-
-        mainAxisSize: MainAxisSize.min,
+      titleTextStyle: TextStyle(color: PaletteColors.primaryColor,fontSize: 20),
+      content: Row(
         children: [
-          Container(
-            alignment: Alignment.center,
-            width: width*0.25,
-            height: height*0.04,
-
-            child: TextCustom(
-              textAlign: TextAlign.justify,
-              text: content,
-              color: colorTextContent,
-              maxLines: 10,
-              size: 30.0,
-            ),
+          Expanded(
+              child:  Container(
+                alignment: Alignment.center,
+                width: width*0.25,
+                height: height*0.1,
+                child: TextCustom(
+                  textAlign: TextAlign.center,
+                  text: content,
+                  color: colorTextContent,
+                  maxLines: 2,
+                ),
+              )
           ),
-          Column(
-
-            mainAxisSize: MainAxisSize.min,
-            children: listActions,
-          )
         ],
       ),
       actionsAlignment: MainAxisAlignment.center,
-      contentPadding: EdgeInsets.symmetric(horizontal: 2,vertical: 2),
-      // actions: listActions,
+      contentPadding: EdgeInsets.symmetric(horizontal: 16,vertical: 10),
+      actions: listActions,
     );
   }
 }

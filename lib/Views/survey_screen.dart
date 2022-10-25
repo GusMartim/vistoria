@@ -141,6 +141,8 @@ class _SurveyscreenState extends State<Surveyscreen> {
               showSnackBar(
                 context,
                 _error,
+                Colors.red
+
               );
             }
           } else {
@@ -148,6 +150,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
             showSnackBar(
               context,
               _error,
+                Colors.red
             );
           }
         } else {
@@ -155,6 +158,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
           showSnackBar(
             context,
             _error,
+              Colors.red
           );
         }
       } else {
@@ -162,6 +166,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
         showSnackBar(
           context,
           _error,
+            Colors.red
         );
       }
     } else {
@@ -169,6 +174,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
       showSnackBar(
         context,
         _error,
+          Colors.red
       );
     }
   }

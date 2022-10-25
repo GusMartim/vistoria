@@ -1,8 +1,8 @@
-import 'package:vistoria/Utils/exports.dart';
+import '../Utils/exports.dart';
 
-void showSnackBar(BuildContext context, String text){
+void showSnackBar(BuildContext context, String text,Color colors){
   final snackbar = SnackBar(
-    backgroundColor: Colors.red,
+    backgroundColor: colors,
     content: Row(
       children: [
         Icon(Icons.info_outline,color: Colors.white),

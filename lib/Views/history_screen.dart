@@ -12,6 +12,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
   List list = [];
   int selectedText = 0;
   FirebaseFirestore db = FirebaseFirestore.instance;
+  FirebaseAuth _auth = FirebaseAuth.instance;
   List<ListTileModel> items = [];
   TextEditingController _controllerSearch = TextEditingController();
   
@@ -19,6 +20,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
   _getList() async {
     var historyList = await db
         .collection("surveys")
+        .where("idUser",isEqualTo: _auth.currentUser?.uid)
         .orderBy('hourRequest', descending: true)
         .get();
     setState(() {
