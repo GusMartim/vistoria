@@ -45,7 +45,7 @@ class Routes {
 
       case "/demanda":
         return MaterialPageRoute(
-            builder: (_) =>const DataRequest()
+            builder: (_) =>DataRequest(id:  args as String)
         );
       case "/check1":
         return MaterialPageRoute(

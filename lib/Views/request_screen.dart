@@ -90,19 +90,15 @@ class _RequestScreenState extends State<RequestScreen> {
                               '${item['adress']},${item['number']},${item['district']} -${item['city']}/${item['estado']}',
                               id: '${item['idSurvey']}',
                               ));
-                          return ListTileDemand(
-                            text: items[index].text,
-                            id: items[index].id,
-                            onTap: ()=> Navigator.push(context,
-                                MaterialPageRoute(
-                                    builder: (_) => Surveyscreen(
-                                        text: 'Nova Vistoria',
-                                        buttonText: 'Prosseguir',
-                                        id: items[index].id),
-                                )
-                            ),
-
-
+                          return Column(
+                            children: [
+                              ListTileDemand(
+                                text: items[index].text,
+                                id: items[index].id,
+                                onTap: ()=> Navigator.pushNamed(context, '/demanda', arguments: items[index].id),
+                              ),
+                              Divider()
+                            ],
                           );
                         }):Container()
 

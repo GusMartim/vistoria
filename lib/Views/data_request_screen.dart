@@ -1,14 +1,58 @@
+import 'package:url_launcher/url_launcher.dart';
 import 'package:vistoria/Utils/exports.dart';
 import 'package:vistoria/Widgets/text_custom.dart';
 
 class DataRequest extends StatefulWidget {
-  const DataRequest({Key? key}) : super(key: key);
+  final id;
+  DataRequest({required this.id});
 
   @override
   State<DataRequest> createState() => _DataRequestState();
 }
 
 class _DataRequestState extends State<DataRequest> {
+  FirebaseFirestore db = FirebaseFirestore.instance;
+  String local = '';
+  String district= '';
+  String number = '';
+  String states = '';
+  String adress ='';
+  String type ='';
+  String city ='';
+  List pdfs =[];
+  List urls = [];
+
+
+  _getDemand() async{
+    DocumentSnapshot snapshot =
+    await db
+        .collection("surveys")
+        .doc(widget.id)
+        .get();
+    Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
+    setState(() {
+    adress = data?["adress"];
+    district = data?["district"];
+    number = data?["number"];
+    states = data?["estado"];
+    city = data?["city"];
+    type = data?["typesurvey"];
+    pdfs = data?["pdfs"];
+    urls= data?["pdfUrl"];
+    local = '$adress,$number,$district\n - $city/$states';
+
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print(widget.id);
+    _getDemand();
+
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -41,28 +85,33 @@ class _DataRequestState extends State<DataRequest> {
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [
-                TextCustom(
-                  text: "Local:  ",
-                  color: PaletteColors.grey,
-                  fontWeight: FontWeight.bold,
-                  textAlign: TextAlign.start,
-                ),
-                TextCustom(
-                  text: "Rua Washington Carvalho, 2541, Centro",
-                  color: PaletteColors.grey,
-                  fontWeight: FontWeight.normal,
-                  textAlign: TextAlign.start,
-                ),
+                SizedBox(height: height * 0.1),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    TextCustom(
-                      text: " - São Paulo/SP",
-                      color: PaletteColors.grey,
-                      fontWeight: FontWeight.normal,
-                      textAlign: TextAlign.start,
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      child: TextCustom(
+                        text: "Local:",
+                        color: PaletteColors.grey,
+                        fontWeight: FontWeight.bold,
+                        textAlign: TextAlign.start,
+                        size: 14.0,
+                        maxLines: 2,
+                      ),
+                    ),
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      width: width * 0.7,
+                      child: TextCustom(
+                        text: '''$adress,$number,$district - $city/$states''',
+                        maxLines: 3,
+                        color: PaletteColors.grey,
+                        fontWeight: FontWeight.normal,
+                        textAlign: TextAlign.start,
+                        size: 12.0,
+                      ),
                     ),
                   ],
                 ),
@@ -77,15 +126,17 @@ class _DataRequestState extends State<DataRequest> {
                       color: PaletteColors.grey,
                       fontWeight: FontWeight.bold,
                       textAlign: TextAlign.start,
-                    ),
-                    SizedBox(
-                      width: 4,
+                      size: 14.0,
                     ),
                     TextCustom(
-                      text: "Casa",
+                      text: "$type",
                       color: PaletteColors.grey,
                       fontWeight: FontWeight.normal,
                       textAlign: TextAlign.start,
+                      size: 12.0,
+                    ),
+                    SizedBox(
+                      width: 4,
                     ),
                   ],
                 ),
@@ -100,44 +151,68 @@ class _DataRequestState extends State<DataRequest> {
                   children: [
                     TextCustom(
                       text: "Anexos",
-                      color: PaletteColors.grey,
+                      color: Colors.black54,
                       fontWeight: FontWeight.bold,
                       textAlign: TextAlign.start,
+                      size: 14.0,
                     ),
                   ],
                 ),
                 SizedBox(height: 10),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      'arquivo123.pdf ',
-                      style: TextStyle(
-                          fontWeight: FontWeight.normal,
-                          color: PaletteColors.grey,
-                          decorationColor: PaletteColors.grey,
-                          decoration: TextDecoration.underline),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 6),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      'imagem2546212.jpg',
-                      style: TextStyle(
-                        color: PaletteColors.grey,
-                        fontWeight: FontWeight.normal,
-                        decorationColor: PaletteColors.grey,
-                        decoration: TextDecoration.underline,
-                      ),
-                    ),
-                  ],
+                pdfs.length == 0? Container()
+                    :Container(
+                  width: width * 0.7,
+                  height: height* 0.2,
+                  child: ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      itemCount: pdfs.length,
+                      itemBuilder: (context, index) {
+                        return Column(
+                          children: [
+                            GestureDetector(
+                              onTap: ()async{
+                                print('${urls[index].toString()}');
+                                if (urls.length != 0) {
+                                  String url = '${urls[index].toString()}';
+
+                                  await launchUrl(Uri.parse(url));
+                                }
+
+                              },
+                              child: Row(
+                                children: [
+                                  Container(
+
+                                    child:Text(
+                                      '${pdfs[index].toString()}',
+                                      style: TextStyle(
+                                        fontFamily: 'Nunito',
+                                        fontSize: 12.0,
+                                        color: PaletteColors.grey,
+                                        decoration: TextDecoration.underline,
+
+                                      ),
+                                    ),
+
+                                    // TextCustom(
+                                    //   text:
+                                    //   '${pdfs[index].toString()}',
+                                    //   size: 16.0,
+                                    //   color:
+                                    //   PaletteColors.primaryColor,
+                                    //   textAlign:
+                                    //   TextAlign.start,
+                                    //   fontWeight:
+                                    //   FontWeight.normal,
+                                    // ),
+                                  ),
+                                  SizedBox(height: height* 0.04)
+                                ],
+                              ),
+                            ),
+                          ],
+                        );
+                      }),
                 ),
                 SizedBox(height: 6),
                 Divider(
@@ -150,6 +225,7 @@ class _DataRequestState extends State<DataRequest> {
                       color: PaletteColors.grey,
                       fontWeight: FontWeight.bold,
                       textAlign: TextAlign.start,
+                      size: 14.0,
                     ),
                     SizedBox(width: 6),
                     Ink(
@@ -174,33 +250,24 @@ class _DataRequestState extends State<DataRequest> {
                     ),
                   ],
                 ),
-                SizedBox(height: 180),
-                Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: ButtonCustom(
-                    widthCustom: 0.85,
-                    heightCustom: 0.055,
-                    onPressed: () => Navigator.pushNamed(context, '/main'),
-                    text: "Vistoriar",
-                    size: 14.0,
-                    colorButton: PaletteColors.primaryColor,
-                    colorText: PaletteColors.white,
-                    colorBorder: PaletteColors.primaryColor,
-                  ),
+                SizedBox(height: height * 0.05),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    ButtonCustom(
+                      widthCustom: 0.7,
+                      heightCustom: 0.07,
+                      onPressed: () => Navigator.pushNamed(context, '/main'),
+                      text: "Vistoriar",
+                      size: 14.0,
+                      colorButton: PaletteColors.primaryColor,
+                      colorText: PaletteColors.white,
+                      colorBorder: PaletteColors.primaryColor,
+                    ),
+                  ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: ButtonCustom(
-                    widthCustom: 0.85,
-                    heightCustom: 0.055,
-                    onPressed: () => Navigator.pushNamed(context, '/main'),
-                    text: "Recusar",
-                    size: 14.0,
-                    colorButton: PaletteColors.bgColor,
-                    colorText: PaletteColors.white,
-                    colorBorder: PaletteColors.bgColor,
-                  ),
-                )
+                SizedBox(height: height * 0.03),
               ],
             ),
           ),
