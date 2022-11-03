@@ -1,4 +1,5 @@
 import 'package:intl/intl.dart';
+import 'package:latlong_to_osgrid/latlong_to_osgrid.dart';
 import 'package:vistoria/Utils/exports.dart';
 
 class Surveyscreen extends StatefulWidget {
@@ -20,9 +21,11 @@ class _SurveyscreenState extends State<Surveyscreen> {
   TextEditingController _controllerCity = TextEditingController();
   TextEditingController _controllerCEP = TextEditingController();
   TextEditingController _controllerLatG = TextEditingController();
+  TextEditingController _controllerLat = TextEditingController();
   TextEditingController _controllerLatMin = TextEditingController();
   TextEditingController _controllerLatSeg = TextEditingController();
   TextEditingController _controllerLongG = TextEditingController();
+  TextEditingController _controllerLng = TextEditingController();
   TextEditingController _controllerLongMin = TextEditingController();
   TextEditingController _controllerLongSeg = TextEditingController();
   TextEditingController _controllerUserCode = TextEditingController();
@@ -59,7 +62,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
     'SE',
     'TO'
   ];
-  String? selectedState = 'AC';
+  String? selectedState = 'GO';
   List<String> type = [
     'Casa',
     'Apartamento',
@@ -72,6 +75,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
   Position? position;
   double? lat = 0;
   double? lon = 0;
+  double? h= 0;
 
   Future<Position> _determinePosition() async {
     bool serviceEnabled;
@@ -98,6 +102,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
     position = await _determinePosition();
     lat = position!.latitude;
     lon = position!.longitude;
+    h = position!.altitude;
     print('lat :$lat');
     print('lon :$lon');
 
@@ -220,8 +225,9 @@ class _SurveyscreenState extends State<Surveyscreen> {
     _surveyModel.cep = _controllerCEP.text;
     _surveyModel.hourRequest = dateString;
     _surveyModel.idUser = FirebaseAuth.instance.currentUser!.uid;
-    _surveyModel.longG = _controllerLongG.text;
-    _surveyModel.latG = _controllerLatG.text;
+    _surveyModel.lng = _controllerLat.text;
+    _surveyModel.lat = _controllerLng.text;
+
     if (widget.id != '') {
       _surveyModel.idSurvey = widget.id;
     }
@@ -231,7 +237,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
   Future _savePhoto() async {
     try {
       final image = await ImagePicker()
-          .pickImage(source: ImageSource.camera, imageQuality: 100);
+          .pickImage(source: ImageSource.camera, imageQuality: 50);
       if (image == null) return;
 
       final imageTemporary = File(image.path);
@@ -315,6 +321,9 @@ class _SurveyscreenState extends State<Surveyscreen> {
     if (widget.text == 'Editar Vistoria') {
       getNSurvey();
     }
+    if(widget.text == 'Vistoriar Demanda'){
+      getOrder();
+    }
   }
 
   @override
@@ -372,7 +381,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
               iconSize: 24.0,
               padding: EdgeInsets.all(2.0),
               onPressed: () {
-                _local();
+                 _local();
               },
             ),
           ),
@@ -763,7 +772,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                           Container(
                             width: width * 0.48,
                             child: TextCustom(
-                              text: "Tipo de imóvel",
+                              text: "Tipo de vistoria",
                               size: 14.0,
                               color: PaletteColors.grey,
                               fontWeight: FontWeight.bold,
@@ -839,7 +848,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                     icons: Icons.height,
                     sizeIcon: 0.0,
                     width: width * 0.63,
-                    controller: _controllerLatG,
+                    controller: _controllerLat,
                     hint: "",
                     fonts: 14.0,
                     keyboardType: TextInputType.text,
@@ -867,7 +876,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                     icons: Icons.height,
                     sizeIcon: 0.0,
                     width: width * 0.63,
-                    controller: _controllerLongG,
+                    controller: _controllerLng,
                     hint: "",
                     fonts: 14.0,
                     keyboardType: TextInputType.text,

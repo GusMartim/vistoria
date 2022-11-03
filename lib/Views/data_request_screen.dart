@@ -21,8 +21,24 @@ class _DataRequestState extends State<DataRequest> {
   String city ='';
   List pdfs =[];
   List urls = [];
+  double? lat= 0.0;
+  double? lng = 0.0;
 
-
+  void launchGoogleMaps() async {
+    var url =
+        'google.navigation:q=${lat.toString()},${lng.toString()}';
+    var fallbackUrl =
+        'https://www.google.com/maps/search/?api=1&query=${lat.toString()},${lng.toString()}';
+    try {
+      bool launched =
+      await launch(url, forceSafariVC: false, forceWebView: false);
+      if (!launched) {
+        await launch(fallbackUrl, forceSafariVC: false, forceWebView: false);
+      }
+    } catch (e) {
+      await launch(fallbackUrl, forceSafariVC: false, forceWebView: false);
+    }
+  }
   _getDemand() async{
     DocumentSnapshot snapshot =
     await db
@@ -37,8 +53,29 @@ class _DataRequestState extends State<DataRequest> {
     states = data?["estado"];
     city = data?["city"];
     type = data?["typesurvey"];
-    pdfs = data?["pdfs"];
-    urls= data?["pdfUrl"];
+    if(data?["pdfs"] == null){
+      pdfs = [];
+    }else{
+      pdfs = data?["pdfs"];
+    }if(data?["pdfUrl"] == null){
+      urls = [];
+    }else{
+      urls = data?["pdfUrl"];
+    }
+
+    print("chegou1");
+    if(data?["lat"] == null){
+      lat =0.0;
+    }
+    else{
+      lat = double.parse(data?["lat"]);
+    } if(data?["lng"] == null){
+      lng =0.0;
+    }
+    else{
+      lng = double.parse(data?["lng"]);
+    }
+    print("chegou12");
     local = '$adress,$number,$district\n - $city/$states';
 
     });
@@ -172,10 +209,11 @@ class _DataRequestState extends State<DataRequest> {
                             GestureDetector(
                               onTap: ()async{
                                 print('${urls[index].toString()}');
+
                                 if (urls.length != 0) {
                                   String url = '${urls[index].toString()}';
-
-                                  await launchUrl(Uri.parse(url));
+                                  print(Uri.parse(urls[index]));
+                                  await launchUrl(Uri.parse(urls[index]),mode: LaunchMode.externalApplication);
                                 }
 
                               },
@@ -245,7 +283,7 @@ class _DataRequestState extends State<DataRequest> {
                             maxWidth: 45),
                         iconSize: 35.0,
                         padding: EdgeInsets.zero,
-                        onPressed: () {},
+                        onPressed: () => launchGoogleMaps(),
                       ),
                     ),
                   ],
@@ -258,7 +296,17 @@ class _DataRequestState extends State<DataRequest> {
                     ButtonCustom(
                       widthCustom: 0.7,
                       heightCustom: 0.07,
-                      onPressed: () => Navigator.pushNamed(context, '/main'),
+                      onPressed: () => Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => Surveyscreen(
+                                  text: 'Vistoriar Demanda',
+                                  buttonText: 'Continuar',
+                                  id: widget.id
+                              )
+                          )
+
+                      ),
                       text: "Vistoriar",
                       size: 14.0,
                       colorButton: PaletteColors.primaryColor,

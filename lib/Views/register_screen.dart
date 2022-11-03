@@ -12,6 +12,37 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  List<String> states = [
+    'AC',
+    'AL',
+    'AP',
+    'AM',
+    'BA',
+    'CE',
+    'DF',
+    'ES',
+    'GO',
+    'MA',
+    'MT',
+    'MS',
+    'MG',
+    'PA',
+    'PB',
+    'PR',
+    'PE',
+    'PI',
+    'RJ',
+    'RN',
+    'RS',
+    'RO',
+    'RR',
+    'SC',
+    'SP',
+    'SE',
+    'TO'
+  ];
+  String? selectedState = 'GO';
+  String category = 'Vistoriador';
   final TextEditingController _controllerName = TextEditingController();
   final TextEditingController _controllerDoc = TextEditingController();
   final TextEditingController _controllerPhone = TextEditingController();
@@ -61,6 +92,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   User user = FirebaseAuth.instance.currentUser!;
                   user.updateDisplayName(_controllerName.text);
                   _userModel.userType = selectedType.toString();
+                  _userModel.category = category;
                   _userModel.doc = _controllerDoc.text;
                   _userModel.idUser = user.uid;
                   _userModel.name = _controllerName.text;
@@ -68,6 +100,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   _userModel.email = _controllerEmail.text;
                   _userModel.password = _controllerPassword.text;
                   _userModel.confirmPassword = _controllerPasswordConfirm.text;
+                  _userModel.region = selectedState!;
                   _saveData(_userModel);
                 });
               } on FirebaseAuthException catch (e) {
@@ -367,12 +400,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         textAlign: TextAlign.center,
                       ),
                     ),
+                    SizedBox(width: width * 0.38),
+                    Container(
+                      alignment: Alignment.center,
+                      child: TextCustom(
+                        text: "Região:",
+                        size: 14.0,
+                        color: PaletteColors.primaryColor,
+                        fontWeight: FontWeight.normal,
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
                   ],
                 ),
                 Row(
                   children: [
                     SizedBox(width: width * 0.1),
                     Container(
+
                       alignment: Alignment.center,
                       child: InputRegister(
                         inputFormatters: [
@@ -381,7 +426,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ],
                         icons: Icons.height,
                         sizeIcon: 0.0,
-                        width: width * 0.8,
+                        width: width * 0.42,
                         controller: _controllerPhone,
                         hint: "(XX) XXXXX-XXXX",
                         fonts: 14.0,
@@ -390,10 +435,34 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         background: PaletteColors.greyInput,
                       ),
                     ),
+                    SizedBox(width: width * 0.05),
+                    Container(
+                      width: width * 0.26,
+                      padding: EdgeInsets.symmetric(horizontal: 8.0),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: PaletteColors.greyInput),
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton<String>(
+                          items: states
+                              .map((states) => DropdownMenuItem<String>(
+                              value: states,
+                              child: TextCustom(
+                                text: states,
+                                color: PaletteColors.grey,
+                              )))
+                              .toList(),
+                          value: selectedState,
+                          onChanged: (states) =>
+                              setState(() => selectedState = states),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ],
             ),
+
             SizedBox(height: height * 0.03),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,

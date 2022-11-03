@@ -2,6 +2,8 @@ import 'package:vistoria/Utils/exports.dart';
 import 'package:vistoria/Widgets/inputRegister.dart';
 import 'package:vistoria/Widgets/text_custom.dart';
 
+import '../Models/search_model_adress.dart';
+
 class HistoryScreen extends StatefulWidget {
   @override
   State<HistoryScreen> createState() => _HistoryScreenState();
@@ -12,11 +14,35 @@ class _HistoryScreenState extends State<HistoryScreen> {
   List list = [];
   int selectedText = 0;
   FirebaseFirestore db = FirebaseFirestore.instance;
+  List resultList = [];
   FirebaseAuth _auth = FirebaseAuth.instance;
   List<ListTileModel> items = [];
   TextEditingController _controllerSearch = TextEditingController();
-  
 
+
+  search(){
+    resultSearchList();
+  }
+
+  resultSearchList() {
+    var showResults = [];
+
+    if (_controllerSearch.text != '') {
+      for (var words in list) {
+        var brands = SearchModelAdress.fromSnapshot(words).adress.toLowerCase();
+
+        if (brands.contains(_controllerSearch.text.toLowerCase())) {
+          showResults.add(words);
+        }
+      }
+    } else {
+      showResults = List.from(list);
+    }
+    setState(() {
+      resultList = showResults;
+      print(_controllerSearch.text);
+    });
+  }
   _getList() async {
     var historyList = await db
         .collection("surveys")
@@ -26,12 +52,25 @@ class _HistoryScreenState extends State<HistoryScreen> {
     setState(() {
       list = historyList.docs;
     });
+    resultSearchList();
+    return"complete";
+  }
+  _getListStream() async {
+    final stream = db
+        .collection("surveys")
+        .where("idUser",isEqualTo: _auth.currentUser?.uid)
+        .orderBy('hourRequest', descending: true).snapshots();
+    stream.listen((history){
+      controller.add(history);
+    });
   }
 
   @override
   void initState() {
     super.initState();
     _getList();
+    _getListStream();
+    _controllerSearch.addListener(search);
   }
 
   @override
@@ -54,62 +93,91 @@ class _HistoryScreenState extends State<HistoryScreen> {
             textAlign: TextAlign.center,
           ),
         ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Padding(
-              padding:
-                  const EdgeInsets.only(right: 4,left: 22, top: 10,bottom: 14),
-              child: InputRegister(
-                  controller: _controllerSearch,
-                  hint: "Pesquisar",
-                  fonts: 14.0,
-                  keyboardType: TextInputType.text,
-                  width: width * 2.0,
-                  sizeIcon: 25.0,
-                  icons: (Icons.search_rounded),
-                  colorBorder: PaletteColors.greyInput,
-                  background: PaletteColors.greyInput),
-            ),
-
-
-            Container(
-              height: height * 0.5,
-              child: StreamBuilder (
-                  stream: controller.stream,
-                  builder: (context, snapshot) {
-                    return list.length!= 0 ?ListView.builder(
-                        itemCount: list.length,
-                        itemBuilder: (context, index) {
-                          DocumentSnapshot item = list[index];
-                          items.add(ListTileModel(
-                              text:
-                                  '${item['adress']},${item['number']},${item['district']} -${item['city']}/${item['estado']}',
-                              data: '${item['hourRequest']}',
-                              iconShow: false));
-                          return ListTileCustom(
-                            text: items[index].text,
-                            showIcons: items[index].iconShow,
-                            onTap: () {
-                              setState(() {
-                                if (selectedText == 0) {
-                                  selectedText = selectedText + 1;
-                                  items[index].iconShow = true;
-                                } else {
-                                  selectedText = selectedText - 1;
-                                  items[index].iconShow = false;
-                                }
-                              });
-                            },
-                            data: items[index].data,
-                            id: item['idSurvey'],
-                          );
-                        }):Container();
-                  }),
-            )
-          ],
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding:
+                    const EdgeInsets.only(right: 4,left: 22, top: 10,bottom: 14),
+                child: InputRegister(
+                    controller: _controllerSearch,
+                    hint: "Pesquisar",
+                    fonts: 14.0,
+                    keyboardType: TextInputType.text,
+                    width: width * 2.0,
+                    sizeIcon: 25.0,
+                    icons: (Icons.search_rounded),
+                    colorBorder: PaletteColors.greyInput,
+                    background: PaletteColors.greyInput),
+              ),
+              _controllerSearch.text.isEmpty?Container(
+                height: height * 0.5,
+                child: StreamBuilder (
+                    stream: controller.stream,
+                    builder: (context, snapshot) {
+                      return list.length!= 0 ?ListView.builder(
+                          itemCount: list.length,
+                          itemBuilder: (context, index) {
+                            DocumentSnapshot item = list[index];
+                            items.add(ListTileModel(
+                                text:
+                                    '${item['adress']},${item['number']},${item['district']} -${item['city']}/${item['estado']}',
+                                data: '${item['hourRequest']}',
+                                iconShow: false));
+                            return ListTileCustom(
+                              text: items[index].text,
+                              showIcons: items[index].iconShow,
+                              onTap: () {
+                                setState(() {
+                                  if (selectedText == 0) {
+                                    selectedText = selectedText + 1;
+                                    items[index].iconShow = true;
+                                  } else {
+                                    selectedText = selectedText - 1;
+                                    items[index].iconShow = false;
+                                  }
+                                });
+                              },
+                              data: items[index].data,
+                              id: item['idSurvey'],
+                            );
+                          }):Container();
+                    }),
+              ):Container(
+                height: height * 0.5,
+                child: resultList.length!= 0 ?ListView.builder(
+                    itemCount: resultList.length,
+                    itemBuilder: (context, index) {
+                      DocumentSnapshot item = resultList[index];
+                      items.add(ListTileModel(
+                          text:
+                          '${item['adress']},${item['number']},${item['district']} -${item['city']}/${item['estado']}',
+                          data: '${item['hourRequest']}',
+                          iconShow: false));
+                      return ListTileCustom(
+                        text: '${item['adress']},${item['number']},${item['district']} -${item['city']}/${item['estado']}',
+                        showIcons: items[index].iconShow,
+                        onTap: () {
+                          setState(() {
+                            if (selectedText == 0) {
+                              selectedText = selectedText + 1;
+                              items[index].iconShow = true;
+                            } else {
+                              selectedText = selectedText - 1;
+                              items[index].iconShow = false;
+                            }
+                          });
+                        },
+                        data: '${item['hourRequest']}',
+                        id: item['idSurvey'],
+                      );
+                    }):Container()
+              )
+            ],
+          ),
         ));
   }
 }

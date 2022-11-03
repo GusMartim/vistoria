@@ -17,6 +17,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
   int nsurvey = 0;
   List imageList = [];
   OrderModel _orderModel = OrderModel();
+  String status = "survey";
 
   getNSurvey()async{
     DocumentSnapshot snapshot = await db
@@ -47,10 +48,15 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
       _orderModel.order = order + 1;
       nsurvey= order;
       _orderModel.Nsurvey = nsurvey + 1;
+      _orderModel.status =  status;
       await db
           .collection('surveys')
           .doc(widget.idSurvey)
           .set({'Nsurvey': _orderModel.Nsurvey},SetOptions(merge: true));
+      await db
+          .collection('surveys')
+          .doc(widget.idSurvey)
+          .set({'status': _orderModel.status}, SetOptions(merge: true));
       await db
           .collection('surveyNumber')
           .doc('surveyNumber')

@@ -67,7 +67,7 @@ class ListTileCustom extends StatelessWidget {
                     iconSize: 32.0,
                     padding: EdgeInsets.zero,
                     onPressed: () =>
-                        Navigator.pushReplacement(
+                        Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (_) => Surveyscreen(

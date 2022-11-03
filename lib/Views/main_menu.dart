@@ -1,3 +1,5 @@
+import 'package:vistoria/Views/profissinals_screen.dart';
+
 import '../Utils/exports.dart';
 
 class MenuScreen extends StatefulWidget {
@@ -45,9 +47,9 @@ class _MenuScreenState extends State<MenuScreen> {
                   horizontal: 30,
                 ),
                 child: TextCustom(
-                  text: 'Olá, ' +
+                  text: FirebaseAuth.instance.currentUser != null?'Olá, ' +
                       FirebaseAuth.instance.currentUser!.displayName! +
-                      '!',
+                      '!':'Olá',
                   size: 14.0,
                   color: PaletteColors.grey,
                   fontWeight: FontWeight.bold,
@@ -105,13 +107,30 @@ class _MenuScreenState extends State<MenuScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     CustomCard(
-                        text: "Enviar Feedback",
-                        icon: Icons.comment_rounded,
-                        screen: FeedbackScreen(),
-                       ),
+                      text: "Enviar Feedback",
+                      icon: Icons.comment_rounded,
+                      screen: FeedbackScreen(),
+                    ),
+                    CustomCard(
+                        text: "Profissionais",
+                        icon: Icons.contact_mail,
+                        screen: ProfissionalScreen(),
+                        ),
                   ],
                 ),
-              )
+              ),
+
+              Spacer(),
+              Container(
+                alignment: Alignment.centerRight,
+
+                child: IconButton(
+                    icon: Icon(Icons.logout,color: PaletteColors.primaryColor,size: 30),
+                    onPressed: ()=>FirebaseAuth.instance.signOut().then((value) =>
+                            Navigator.pushReplacementNamed(context, '/login')),
+                    )),
+              SizedBox(height: height * 0.01,)
+
             ]),
       ),
     );
