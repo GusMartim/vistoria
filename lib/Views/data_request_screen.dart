@@ -23,6 +23,7 @@ class _DataRequestState extends State<DataRequest> {
   List urls = [];
   double? lat= 0.0;
   double? lng = 0.0;
+  TextEditingController _controllerObs = TextEditingController();
 
   void launchGoogleMaps() async {
     var url =
@@ -47,6 +48,7 @@ class _DataRequestState extends State<DataRequest> {
         .get();
     Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
     setState(() {
+    _controllerObs = TextEditingController(text: data?["obs"]);
     adress = data?["adress"];
     district = data?["district"];
     number = data?["number"];
@@ -75,7 +77,6 @@ class _DataRequestState extends State<DataRequest> {
     else{
       lng = double.parse(data?["lng"]);
     }
-    print("chegou12");
     local = '$adress,$number,$district\n - $city/$states';
 
     });
@@ -110,214 +111,250 @@ class _DataRequestState extends State<DataRequest> {
           textAlign: TextAlign.center,
         ),
       ),
-      body: Center(
-        child: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          physics: ScrollPhysics(),
-          child: Padding(
-            padding:
-                const EdgeInsets.symmetric(vertical: 4.0, horizontal: 22.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SizedBox(height: height * 0.1),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      child: TextCustom(
-                        text: "Local:",
-                        color: PaletteColors.grey,
-                        fontWeight: FontWeight.bold,
-                        textAlign: TextAlign.start,
-                        size: 14.0,
-                        maxLines: 2,
-                      ),
-                    ),
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      width: width * 0.7,
-                      child: TextCustom(
-                        text: '''$adress,$number,$district - $city/$states''',
-                        maxLines: 3,
-                        color: PaletteColors.grey,
-                        fontWeight: FontWeight.normal,
-                        textAlign: TextAlign.start,
-                        size: 12.0,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    TextCustom(
-                      text: "Tipo:",
-                      color: PaletteColors.grey,
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        physics: ScrollPhysics(),
+        child: Padding(
+          padding:
+              const EdgeInsets.symmetric(vertical: 4.0, horizontal: 22.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(height: height * 0.03),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+
+                    child: TextCustom(
+                      text: "Local:  ${'''$adress,$number,$district - $city/$states'''}",
+                      color: PaletteColors.bgColor,
                       fontWeight: FontWeight.bold,
                       textAlign: TextAlign.start,
                       size: 14.0,
+                      maxLines: 2,
                     ),
-                    TextCustom(
-                      text: "$type",
-                      color: PaletteColors.grey,
-                      fontWeight: FontWeight.normal,
-                      textAlign: TextAlign.start,
-                      size: 12.0,
-                    ),
-                    SizedBox(
-                      width: 4,
-                    ),
-                  ],
-                ),
-                Divider(
-                  thickness: 1,
-                ),
-                SizedBox(height: 10),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    TextCustom(
-                      text: "Anexos",
-                      color: Colors.black54,
-                      fontWeight: FontWeight.bold,
-                      textAlign: TextAlign.start,
-                      size: 14.0,
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10),
-                pdfs.length == 0? Container()
-                    :Container(
-                  width: width * 0.7,
-                  height: height* 0.2,
-                  child: ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      itemCount: pdfs.length,
-                      itemBuilder: (context, index) {
-                        return Column(
-                          children: [
-                            GestureDetector(
-                              onTap: ()async{
-                                print('${urls[index].toString()}');
+                  ),
+                  // Container(
+                  //   alignment: Alignment.centerLeft,
+                  //   width: width * 0.7,
+                  //   child: TextCustom(
+                  //     text: '''$adress,$number,$district - $city/$states''',
+                  //     maxLines: 3,
+                  //     color: PaletteColors.bgColor,
+                  //     fontWeight: FontWeight.normal,
+                  //     textAlign: TextAlign.start,
+                  //     size: 12.0,
+                  //   ),
+                  // ),
+                ],
+              ),
+              SizedBox(height: 10),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextCustom(
+                    text: "Tipo: $type",
+                    color: PaletteColors.bgColor,
+                    fontWeight: FontWeight.bold,
+                    textAlign: TextAlign.start,
+                    size: 14.0,
+                  ),
+                  // TextCustom(
+                  //   text: "$type",
+                  //   color: PaletteColors.bgColor,
+                  //   fontWeight: FontWeight.normal,
+                  //   textAlign: TextAlign.start,
+                  //   size: 12.0,
+                  // ),
+                  SizedBox(
+                    width: 4,
+                  ),
+                ],
+              ),
+              Divider(
+                thickness: 1,
+              ),
+              SizedBox(height: 10),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextCustom(
+                    text: "Anexos",
+                    color: PaletteColors.bgColor,
+                    fontWeight: FontWeight.bold,
+                    textAlign: TextAlign.start,
+                    size: 14.0,
+                  ),
+                ],
+              ),
+              SizedBox(height: 10),
+              pdfs.length == 0? Container()
+                  :Container(
+                width: width * 0.7,
+                height: height* 0.18,
+                child: ListView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    scrollDirection: Axis.vertical,
+                    itemCount: pdfs.length,
+                    itemBuilder: (context, index) {
+                      return Column(
+                        children: [
+                          GestureDetector(
+                            onTap: ()async{
+                              print('${urls[index].toString()}');
+                              if (urls.length != 0) {
+                                String url = '${urls[index].toString()}';
+                                print(Uri.parse(urls[index]));
+                                await launchUrl(Uri.parse(urls[index]),mode: LaunchMode.externalApplication);
+                              }
+                            },
+                            child: Row(
+                              children: [
+                                Container(
+                                  width: width * 0.65,
+                                  child:Text(
+                                    '${pdfs[index].toString()}',
+                                    style: TextStyle(
+                                      fontFamily: 'Nunito',
+                                      fontSize: 12.0,
+                                      color: PaletteColors.bgColor,
+                                      decoration: TextDecoration.underline,
 
-                                if (urls.length != 0) {
-                                  String url = '${urls[index].toString()}';
-                                  print(Uri.parse(urls[index]));
-                                  await launchUrl(Uri.parse(urls[index]),mode: LaunchMode.externalApplication);
-                                }
 
-                              },
-                              child: Row(
-                                children: [
-                                  Container(
-
-                                    child:Text(
-                                      '${pdfs[index].toString()}',
-                                      style: TextStyle(
-                                        fontFamily: 'Nunito',
-                                        fontSize: 12.0,
-                                        color: PaletteColors.grey,
-                                        decoration: TextDecoration.underline,
-
-                                      ),
                                     ),
-
-                                    // TextCustom(
-                                    //   text:
-                                    //   '${pdfs[index].toString()}',
-                                    //   size: 16.0,
-                                    //   color:
-                                    //   PaletteColors.primaryColor,
-                                    //   textAlign:
-                                    //   TextAlign.start,
-                                    //   fontWeight:
-                                    //   FontWeight.normal,
-                                    // ),
+                                    maxLines: 3,
                                   ),
-                                  SizedBox(height: height* 0.04)
-                                ],
-                              ),
-                            ),
-                          ],
-                        );
-                      }),
-                ),
-                SizedBox(height: 6),
-                Divider(
-                  thickness: 1,
-                ),
-                Row(
-                  children: [
-                    TextCustom(
-                      text: "Ver Mapa",
-                      color: PaletteColors.grey,
-                      fontWeight: FontWeight.bold,
-                      textAlign: TextAlign.start,
-                      size: 14.0,
-                    ),
-                    SizedBox(width: 6),
-                    Ink(
-                      decoration: ShapeDecoration(
-                        color: PaletteColors.greyInput,
-                        shape: CircleBorder(),
-                      ),
-                      child: IconButton(
-                        icon: Icon(
-                          Icons.location_on,
-                          color: PaletteColors.primaryColor,
-                        ),
-                        constraints: BoxConstraints(
-                            minHeight: 45,
-                            minWidth: 45,
-                            maxHeight: 45,
-                            maxWidth: 45),
-                        iconSize: 35.0,
-                        padding: EdgeInsets.zero,
-                        onPressed: () => launchGoogleMaps(),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: height * 0.05),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    ButtonCustom(
-                      widthCustom: 0.7,
-                      heightCustom: 0.07,
-                      onPressed: () => Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => Surveyscreen(
-                                  text: 'Vistoriar Demanda',
-                                  buttonText: 'Continuar',
-                                  id: widget.id
-                              )
-                          )
 
+                                  // TextCustom(
+                                  //   text:
+                                  //   '${pdfs[index].toString()}',
+                                  //   size: 16.0,
+                                  //   color:
+                                  //   PaletteColors.primaryColor,
+                                  //   textAlign:
+                                  //   TextAlign.start,
+                                  //   fontWeight:
+                                  //   FontWeight.normal,
+                                  // ),
+                                ),
+                                SizedBox(height: height* 0.04)
+                              ],
+                            ),
+                          ),
+                        ],
+                      );
+                    }),
+              ),
+              SizedBox(height: 6),
+              Divider(
+                thickness: 1,
+              ),
+              Row(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+
+                        child: TextCustom(
+                          text: "Obs:",
+                          color: PaletteColors.bgColor,
+                          fontWeight: FontWeight.bold,
+                          textAlign: TextAlign.start,
+                          size: 14.0,
+                          maxLines: 2,
+                        ),
                       ),
-                      text: "Vistoriar",
-                      size: 14.0,
-                      colorButton: PaletteColors.primaryColor,
-                      colorText: PaletteColors.white,
-                      colorBorder: PaletteColors.primaryColor,
+                      Container(
+
+                        child: TextCustom(
+                          text: '''${_controllerObs.text}''',
+                          color: PaletteColors.bgColor,
+                          fontWeight: FontWeight.normal,
+                          textAlign: TextAlign.start,
+                          size: 14.0,
+                          maxLines: 2,
+                        ),
+                      ),
+
+
+                    ],
+                  )
+                ],
+              ),
+              Divider(
+                thickness: 1,
+              ),
+
+              Row(
+                children: [
+                  TextCustom(
+                    text: "Ver Mapa",
+                    color: PaletteColors.bgColor,
+                    fontWeight: FontWeight.bold,
+                    textAlign: TextAlign.start,
+                    size: 14.0,
+                  ),
+                  SizedBox(width: 6),
+                  Ink(
+                    decoration: ShapeDecoration(
+                      color: PaletteColors.greyInput,
+                      shape: CircleBorder(),
                     ),
-                  ],
-                ),
-                SizedBox(height: height * 0.03),
-              ],
-            ),
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.location_on,
+                        color: PaletteColors.primaryColor,
+                      ),
+                      constraints: BoxConstraints(
+                          minHeight: 45,
+                          minWidth: 45,
+                          maxHeight: 45,
+                          maxWidth: 45),
+                      iconSize: 35.0,
+                      padding: EdgeInsets.zero,
+                      onPressed: () => launchGoogleMaps(),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: height * 0.05),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  ButtonCustom(
+                    widthCustom: 0.7,
+                    heightCustom: 0.07,
+                    onPressed: () => Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => Surveyscreen(
+                                text: 'Vistoriar Demanda',
+                                buttonText: 'Continuar',
+                                id: widget.id
+                            )
+                        )
+
+                    ),
+                    text: "Vistoriar",
+                    size: 14.0,
+                    colorButton: PaletteColors.primaryColor,
+                    colorText: PaletteColors.white,
+                    colorBorder: PaletteColors.primaryColor,
+                  ),
+                ],
+              ),
+              SizedBox(height: height * 0.03),
+            ],
           ),
         ),
       ),

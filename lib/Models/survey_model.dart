@@ -10,16 +10,12 @@ class SurveyModel{
   String estado = '';
   String cep = '';
   String typesurvey = '';
-  String latG = '';
   String lat = '';
-  String latMin = '';
-  String latSeg = '';
-  String longG = '';
   String lng = '';
-  String longMin = '';
-  String longSeg = '';
+
   String hourRequest = '';
   String idUser = '';
+  String? userName = '';
   String userCode ='';
   String status ='';
 
@@ -31,6 +27,7 @@ Map<String,dynamic> toMap(){
   Map<String,dynamic> map = {
     "hourRequest": this.hourRequest,
     "idUser"   : this.idUser,
+    "userName"   : this.userName,
     "idSurvey"  : this.idSurvey,
     "adress"    : this.adress,
     "number"   : this.number,
@@ -40,12 +37,8 @@ Map<String,dynamic> toMap(){
     "estado": this.estado,
     "cep": this.cep,
     "typesurvey": this.typesurvey,
-    "latG": this.latG,
-    "latMin": this.latMin,
-    "latSeg": this.latSeg,
-    "longG": this.longG,
-    "longMin": this.longMin,
-    "longSeg": this.longSeg,
+    "lat": this.lat,
+    "lng": this.lng,
     "userCode" : this.userCode,
     "status" : this.status
   };

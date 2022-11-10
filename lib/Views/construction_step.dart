@@ -61,11 +61,11 @@ class _ConstructionStepState extends State<ConstructionStep> {
   final Map<String, dynamic> data = HashMap();
 
 
-  Future _savePhoto() async{
-    try{
+  Future _savePhotoGallery() async {
+    try {
       final image = await ImagePicker()
-          .pickImage(source: ImageSource.camera, imageQuality: 100);
-      if(image == null) return;
+          .pickImage(source: ImageSource.gallery, imageQuality: 50);
+      if (image == null) return;
 
       final imageTemporary = File(image.path);
       setState(() {
@@ -75,11 +75,29 @@ class _ConstructionStepState extends State<ConstructionStep> {
         });
         _uploadImage();
       });
-    } on PlatformException catch (e){
+    } on PlatformException catch (e) {
       print('Error : $e');
     }
   }
+  Future _savePhotoCamera() async {
+    try {
+      final image = await ImagePicker()
+          .pickImage(source: ImageSource.camera, imageQuality: 50);
+      if (image == null) return;
 
+      final imageTemporary = File(image.path);
+      setState(() {
+        this.picture = imageTemporary;
+        setState(() {
+          Navigator.of(context).pop();
+          _sending = true;
+        });
+        _uploadImage();
+      });
+    } on PlatformException catch (e) {
+      print('Error : $e');
+    }
+  }
   Future _uploadImage() async{
     Reference pastaRaiz = storage.ref();
     Reference arquivo = pastaRaiz.child("surveys").child(selectedText+"_"+DateTime.now().toString()+".jpg");
@@ -257,13 +275,60 @@ class _ConstructionStepState extends State<ConstructionStep> {
                   minHeight: 28, minWidth: 28, maxHeight: 28, maxWidth: 28),
               iconSize: 24.0,
               padding: EdgeInsets.all(3.0),
-              onPressed: () =>_savePhoto(),
+                onPressed: () => AlertModel().alert(
+                    'Selecionar foto  da:','',
+                    PaletteColors.primaryColor,
+                    PaletteColors.primaryColor,
+                    context,[
+                  Row(
+                    children: [
+                      SizedBox(width: width * 0.03),
+                      Container(
+                        width: width * 0.65,
+                        child: ButtonCustom(
+                          widthCustom: 0.65,
+                          heightCustom: 0.095,
+                          onPressed: () => _savePhotoCamera(),
+                          text: "Câmera",
+                          size: 20.0,
+                          colorButton: PaletteColors.primaryColor,
+                          colorText: PaletteColors.white,
+                          colorBorder: PaletteColors.primaryColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: height * 0.055),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 75.0),
+                    child: Row(
+                      children: [
+                        SizedBox(width: width * 0.03),
+                        Container(
+                          width: width * 0.65,
+                          child: ButtonCustom(
+                            widthCustom: 0.65,
+                            heightCustom: 0.095,
+                            onPressed: () => _savePhotoGallery(),
+                            text: "Galeria",
+                            size: 20.0,
+                            colorButton: PaletteColors.primaryColor,
+                            colorText: PaletteColors.white,
+                            colorBorder: PaletteColors.primaryColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                ]
+                )
             ),
           ),
           SizedBox(width: width * 0.04,)
         ],
       ),
-      body: Padding(
+      body: _sending == false ?Padding(
         padding: EdgeInsets.symmetric(vertical: 24, horizontal: 24),
         child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
@@ -2094,6 +2159,19 @@ class _ConstructionStepState extends State<ConstructionStep> {
               )
             ],
           ),
+        ),
+      ):Center(
+        child: Column(
+          children: [
+            CircularProgressIndicator(
+                color: PaletteColors.primaryColor),
+            TextCustom(
+                text: 'Enviando foto...',
+                color: PaletteColors.grey,
+                fontWeight: FontWeight.normal,
+                size: 16.0),
+
+          ],
         ),
       ),
     );

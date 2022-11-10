@@ -94,10 +94,10 @@ class _CheckListApto1State extends State<CheckListApto1> {
 
   }
 
-  Future _savePhoto() async {
+  Future _savePhotoGallery() async {
     try {
       final image = await ImagePicker()
-          .pickImage(source: ImageSource.camera, imageQuality: 100);
+          .pickImage(source: ImageSource.gallery, imageQuality: 50);
       if (image == null) return;
 
       final imageTemporary = File(image.path);
@@ -105,6 +105,26 @@ class _CheckListApto1State extends State<CheckListApto1> {
         this.picture = imageTemporary;
         setState(() {
           _sending = true;
+          Navigator.of(context).pop();
+        });
+        _uploadImage();
+      });
+    } on PlatformException catch (e) {
+      print('Error : $e');
+    }
+  }
+  Future _savePhotoCamera() async {
+    try {
+      final image = await ImagePicker()
+          .pickImage(source: ImageSource.camera, imageQuality: 50);
+      if (image == null) return;
+
+      final imageTemporary = File(image.path);
+      setState(() {
+        this.picture = imageTemporary;
+        setState(() {
+          _sending = true;
+          Navigator.of(context).pop();
         });
         _uploadImage();
       });
@@ -119,17 +139,24 @@ class _CheckListApto1State extends State<CheckListApto1> {
         .child("surveys")
         .child(selectedText + "_" + DateTime.now().toString() + ".jpg");
 
-    UploadTask task = arquivo.putFile(picture!);
-
-    Future.delayed(const Duration(seconds: 5), () async {
-      String urlImage = await task.snapshot.ref.getDownloadURL();
-      if (urlImage != null) {
+    await arquivo.putFile(picture!).then((value) async{
+      value.ref.getDownloadURL().then((value) {
         setState(() {
-          _urlPhoto = urlImage;
+          _urlPhoto = value;
         });
-        _urlImageFirestore(urlImage);
-      }
-    });
+        _urlImageFirestore(value);
+
+      });
+
+
+    }
+
+
+    );
+
+
+
+
   }
 
   _urlImageFirestore(String url) {
@@ -900,13 +927,75 @@ class _CheckListApto1State extends State<CheckListApto1> {
                   minHeight: 28, minWidth: 28, maxHeight: 28, maxWidth: 28),
               iconSize: 24.0,
               padding: EdgeInsets.all(3.0),
-              onPressed: () => _savePhoto(),
+                onPressed: () => AlertModel().alert(
+                    'Selecionar foto  da:','',
+                    PaletteColors.primaryColor,
+                    PaletteColors.primaryColor,
+                    context,[
+                  Row(
+                    children: [
+                      SizedBox(width: width * 0.03),
+                      Container(
+                        width: width * 0.65,
+                        child: ButtonCustom(
+                          widthCustom: 0.65,
+                          heightCustom: 0.095,
+                          onPressed: () => _savePhotoCamera(),
+                          text: "Câmera",
+                          size: 20.0,
+                          colorButton: PaletteColors.primaryColor,
+                          colorText: PaletteColors.white,
+                          colorBorder: PaletteColors.primaryColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: height * 0.055),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 75.0),
+                    child: Row(
+                      children: [
+                        SizedBox(width: width * 0.03),
+                        Container(
+                          width: width * 0.65,
+                          child: ButtonCustom(
+                            widthCustom: 0.65,
+                            heightCustom: 0.095,
+                            onPressed: () => _savePhotoGallery(),
+                            text: "Galeria",
+                            size: 20.0,
+                            colorButton: PaletteColors.primaryColor,
+                            colorText: PaletteColors.white,
+                            colorBorder: PaletteColors.primaryColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                ]
+                )
             ),
           ),
           SizedBox(width: width * 0.04),
         ],
       ),
-      body: Padding(
+      body:_sending == true?Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            CircularProgressIndicator(
+                color: PaletteColors.primaryColor),
+            TextCustom(
+                text: 'Enviando foto...',
+                color: PaletteColors.grey,
+                fontWeight: FontWeight.normal,
+                size: 16.0),
+
+          ],
+        ),
+      ):Padding(
         padding: EdgeInsets.symmetric(vertical: 24, horizontal: 24),
         child: Center(
             child: SingleChildScrollView(

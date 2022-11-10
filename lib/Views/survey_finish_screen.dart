@@ -13,10 +13,13 @@ class SurveyFinishScreen extends StatefulWidget {
 
 class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
   FirebaseFirestore db = FirebaseFirestore.instance;
+  FirebaseAuth _auth = FirebaseAuth.instance;
   int order = 0;
   int nsurvey = 0;
+  List Nsurveys = [];
   List imageList = [];
   OrderModel _orderModel = OrderModel();
+  final Map<String, dynamic> data = HashMap();
   String status = "survey";
 
   getNSurvey()async{
@@ -40,23 +43,53 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
       order = data?["surveyNumber"] ?? 0;
 
     });
+    _getStatus();
+  }
+  _getStatus()async{
+    _orderModel.status =  status;
+    await db
+        .collection('surveys')
+        .doc(widget.idSurvey)
+        .update({'status': _orderModel.status});
+
+    _getUserNSurvey();
+
+  }
+  _getUserNSurvey()async{
+    DocumentSnapshot snapshot = await db
+        .collection('users')
+        .doc(_auth.currentUser?.uid)
+        .get();
+    Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
+    setState(() {
+      Nsurveys = data?["nsurveys"]??[];
+    });
+    print(Nsurveys.length);
+    setState(() {
+      Nsurveys.add(order + 1);
+    });
+    await db
+        .collection('users')
+        .doc(_auth.currentUser?.uid)
+        .update({
+      "nsurveys": Nsurveys.toSet().toList(),
+    });
     _NSurveyValidation();
   }
-
   _NSurveyValidation()async{
-    if(nsurvey == 0) {
+    print(order);
+    print(nsurvey);
+
+    if(nsurvey==0) {
       _orderModel.order = order + 1;
       nsurvey= order;
       _orderModel.Nsurvey = nsurvey + 1;
-      _orderModel.status =  status;
+
       await db
           .collection('surveys')
           .doc(widget.idSurvey)
           .set({'Nsurvey': _orderModel.Nsurvey},SetOptions(merge: true));
-      await db
-          .collection('surveys')
-          .doc(widget.idSurvey)
-          .set({'status': _orderModel.status}, SetOptions(merge: true));
+
       await db
           .collection('surveyNumber')
           .doc('surveyNumber')
@@ -81,16 +114,17 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
   }
 
 
-  bool loading = false;
+  bool loading = true;
   _dataImages() async {
     DocumentSnapshot snapshot =
     await db.collection("surveys").doc(widget.idSurvey).get();
     Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
     setState(() {
       imageList = data?["photoUrl"];
-      Future.delayed(Duration(seconds: 5));
-      loading = true;
+    });
 
+    setState(() {
+      loading = false;
     });
 
     }
@@ -132,7 +166,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
               SizedBox(
                 height: 20,
               ),
-              TextCustom(
+              imageList.length==0?Container():TextCustom(
                 text: "Fotos:",
                 size: 16.0,
                 color: PaletteColors.grey,
@@ -142,7 +176,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
               SizedBox(
                 height: 16,
               ),
-              loading ==true ?Column(
+              loading ==false ?Column(
                 children: [
                   Container(
                     width:  width * 0.9,
@@ -153,7 +187,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                         shrinkWrap: true,
                         gridDelegate:
                             const SliverGridDelegateWithMaxCrossAxisExtent(
-                                maxCrossAxisExtent: 160,mainAxisExtent: 120,mainAxisSpacing: 10,childAspectRatio: 1.0),
+                                maxCrossAxisExtent: 120,mainAxisExtent: 120,mainAxisSpacing: 15,crossAxisSpacing:15,childAspectRatio: 1.0),
                         itemCount: imageList.length,
                         itemBuilder: (context, index) {
                           return Container(
@@ -169,7 +203,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                CircularProgressIndicator(
+                imageList.length==0?Container():CircularProgressIndicator(
                   color: PaletteColors.primaryColor),
                 
               ],),

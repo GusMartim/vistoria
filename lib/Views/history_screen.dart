@@ -47,6 +47,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
     var historyList = await db
         .collection("surveys")
         .where("idUser",isEqualTo: _auth.currentUser?.uid)
+        .where("status",isEqualTo: "survey")
         .orderBy('hourRequest', descending: true)
         .get();
     setState(() {
@@ -59,6 +60,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
     final stream = db
         .collection("surveys")
         .where("idUser",isEqualTo: _auth.currentUser?.uid)
+        .where("status",isEqualTo: "survey")
         .orderBy('hourRequest', descending: true).snapshots();
     stream.listen((history){
       controller.add(history);

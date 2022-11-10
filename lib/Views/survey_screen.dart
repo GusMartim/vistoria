@@ -20,17 +20,12 @@ class _SurveyscreenState extends State<Surveyscreen> {
   TextEditingController _controllerDistrict = TextEditingController();
   TextEditingController _controllerCity = TextEditingController();
   TextEditingController _controllerCEP = TextEditingController();
-  TextEditingController _controllerLatG = TextEditingController();
   TextEditingController _controllerLat = TextEditingController();
-  TextEditingController _controllerLatMin = TextEditingController();
-  TextEditingController _controllerLatSeg = TextEditingController();
-  TextEditingController _controllerLongG = TextEditingController();
   TextEditingController _controllerLng = TextEditingController();
-  TextEditingController _controllerLongMin = TextEditingController();
-  TextEditingController _controllerLongSeg = TextEditingController();
   TextEditingController _controllerUserCode = TextEditingController();
   var controllerSurveyCode = TextEditingController();
   Map<String, dynamic>? data;
+  String Status= '';
   int order = 0;
   int nsurvey= 0;
   List<String> states = [
@@ -107,8 +102,8 @@ class _SurveyscreenState extends State<Surveyscreen> {
     print('lon :$lon');
 
     setState(() {
-      _controllerLatG = TextEditingController(text:'$lat' );
-      _controllerLongG = TextEditingController(text:'$lon' );
+      _controllerLat = TextEditingController(text:'$lat' );
+      _controllerLng = TextEditingController(text:'$lon' );
     });
   }
 
@@ -225,8 +220,10 @@ class _SurveyscreenState extends State<Surveyscreen> {
     _surveyModel.cep = _controllerCEP.text;
     _surveyModel.hourRequest = dateString;
     _surveyModel.idUser = FirebaseAuth.instance.currentUser!.uid;
+    _surveyModel.userName =FirebaseAuth.instance.currentUser?.displayName!;
     _surveyModel.lng = _controllerLat.text;
     _surveyModel.lat = _controllerLng.text;
+    _surveyModel.status = Status !=""?Status:'';
 
     if (widget.id != '') {
       _surveyModel.idSurvey = widget.id;
@@ -234,7 +231,26 @@ class _SurveyscreenState extends State<Surveyscreen> {
     _saveData(_surveyModel);
   }
 
-  Future _savePhoto() async {
+  Future _savePhotoGallery() async {
+    try {
+      final image = await ImagePicker()
+          .pickImage(source: ImageSource.gallery, imageQuality: 50);
+      if (image == null) return;
+
+      final imageTemporary = File(image.path);
+      setState(() {
+        this.picture = imageTemporary;
+        setState(() {
+          _sending = true;
+          Navigator.of(context).pop();
+        });
+        _uploadImage();
+      });
+    } on PlatformException catch (e) {
+      print('Error : $e');
+    }
+  }
+  Future _savePhotoCamera() async {
     try {
       final image = await ImagePicker()
           .pickImage(source: ImageSource.camera, imageQuality: 50);
@@ -245,6 +261,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
         this.picture = imageTemporary;
         setState(() {
           _sending = true;
+          Navigator.of(context).pop();
         });
         _uploadImage();
       });
@@ -252,33 +269,41 @@ class _SurveyscreenState extends State<Surveyscreen> {
       print('Error : $e');
     }
   }
+
   Future _uploadImage() async {
     Reference pastaRaiz = storage.ref();
     Reference arquivo = pastaRaiz
         .child("surveys")
         .child(selectedText + "_" + DateTime.now().toString() + ".jpg");
 
-    UploadTask task = arquivo.putFile(picture!);
-
-    Future.delayed(const Duration(seconds: 5), () async {
-      String urlImage = await task.snapshot.ref.getDownloadURL();
-      if (urlImage != null) {
+    await arquivo.putFile(picture!).then((value) async{
+      value.ref.getDownloadURL().then((value) {
         setState(() {
-          _urlPhoto = urlImage;
+          _urlPhoto = value;
         });
-        _urlImageFirestore(urlImage);
-      }
-    });
+        _urlImageFirestore(value);
+
+      });
+
+
+    }
+
+
+    );
+
+
+
+
   }
 
   _urlImageFirestore(String url) {
     Map<String, dynamic> dateUpdate = {
       'photoUrl': FieldValue.arrayUnion([url]),
-      'idSurvey': _surveyModel.idSurvey
+      'idSurvey': widget.id != '' ?widget.id :_surveyModel.idSurvey
     };
     db
         .collection("surveys")
-        .doc(_surveyModel.idSurvey)
+        .doc(widget.id != '' ?widget.id :_surveyModel.idSurvey)
         .set(dateUpdate, SetOptions(merge: true))
         .then((value) {
       setState(() {
@@ -301,9 +326,10 @@ class _SurveyscreenState extends State<Surveyscreen> {
       selectedState = data?["estado"];
       _controllerCEP = TextEditingController(text: data?["cep"]);
       selectedType = data?["typesurvey"];
-      _controllerLatG = TextEditingController(text:data?["latG"] );
-      _controllerLongG = TextEditingController(text:data?["longG"] );
+      _controllerLat = TextEditingController(text:data?["lat"] );
+      _controllerLng = TextEditingController(text:data?["lng"] );
       _controllerUserCode = TextEditingController(text:data?["userCode"]);
+      Status = data?["status"];
     });
 
   }
@@ -362,7 +388,55 @@ class _SurveyscreenState extends State<Surveyscreen> {
                   minHeight: 28, minWidth: 28, maxHeight: 28, maxWidth: 28),
               iconSize: 24.0,
               padding: EdgeInsets.all(2.0),
-              onPressed: () => _savePhoto(),
+              onPressed: () => AlertModel().alert(
+                    'Selecionar foto  da:','',
+                    PaletteColors.primaryColor,
+                    PaletteColors.primaryColor,
+                    context,[
+                  Row(
+                    children: [
+                      SizedBox(width: width * 0.03),
+                      Container(
+                        width: width * 0.65,
+                        child: ButtonCustom(
+                          widthCustom: 0.65,
+                          heightCustom: 0.095,
+                          onPressed: () => _savePhotoCamera(),
+                          text: "Câmera",
+                          size: 20.0,
+                          colorButton: PaletteColors.primaryColor,
+                          colorText: PaletteColors.white,
+                          colorBorder: PaletteColors.primaryColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: height * 0.055),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 75.0),
+                    child: Row(
+                      children: [
+                        SizedBox(width: width * 0.03),
+                        Container(
+                          width: width * 0.65,
+                          child: ButtonCustom(
+                            widthCustom: 0.65,
+                            heightCustom: 0.095,
+                            onPressed: () => _savePhotoGallery(),
+                            text: "Galeria",
+                            size: 20.0,
+                            colorButton: PaletteColors.primaryColor,
+                            colorText: PaletteColors.white,
+                            colorBorder: PaletteColors.primaryColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                ]
+                )
+
             ),
           ),
           SizedBox(width: width * 0.02),
@@ -388,7 +462,22 @@ class _SurveyscreenState extends State<Surveyscreen> {
           SizedBox(width: width * 0.04),
         ],
       ),
-      body: SingleChildScrollView(
+      body: _sending == true?Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            CircularProgressIndicator(
+                color: PaletteColors.primaryColor),
+            TextCustom(
+                text: 'Enviando foto...',
+                color: PaletteColors.grey,
+                fontWeight: FontWeight.normal,
+                size: 16.0),
+
+          ],
+        ),
+      ):SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.only(left: 6.0, top: 6.0, bottom: 6.0),
           child: Column(

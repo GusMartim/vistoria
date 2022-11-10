@@ -39,6 +39,11 @@ class _LoginScreenState extends State<LoginScreen> {
             _error = "Digite um e-mail válido!";
             showSnackBar(context, _error,Colors.red);
           });
+        }else if(e.code =="user-not-found"){
+          setState(() {
+            _error = "Usuario inválido!";
+            showSnackBar(context, _error,Colors.red);
+          });
         }else if(e.code =="wrong-password"){
           setState(() {
             _error = "Senha incorreta!";
@@ -211,25 +216,28 @@ class _LoginScreenState extends State<LoginScreen> {
                             Row(
                               children: [
                                 SizedBox(width: width * 0.04),
-                                Container(
-                                  width: width * 0.6,
-                                  child: ButtonCustom(
-                                    widthCustom: 0.5,
-                                    heightCustom: 0.085,
-                                    onPressed: () {
-                                      _auth
-                                          .sendPasswordResetEmail(email: _controllerEmail.text)
-                                          .then((value){
-                                        Navigator.of(context).pop();
-                                        showSnackBar(context, 'E-mail de redefinição de senha enviado', Colors.green);
-                                      });
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 15.0),
+                                  child: Container(
+                                    width: width * 0.6,
+                                    child: ButtonCustom(
+                                      widthCustom: 0.5,
+                                      heightCustom: 0.085,
+                                      onPressed: () {
+                                        _auth
+                                            .sendPasswordResetEmail(email: _controllerEmail.text)
+                                            .then((value){
+                                          Navigator.of(context).pop();
+                                          showSnackBar(context, 'E-mail de redefinição de senha enviado', Colors.green);
+                                        });
 
-                                    },
-                                    text: "Enviar",
-                                    size: 14.0,
-                                    colorButton: PaletteColors.primaryColor,
-                                    colorText: PaletteColors.white,
-                                    colorBorder: PaletteColors.primaryColor,
+                                      },
+                                      text: "Enviar",
+                                      size: 14.0,
+                                      colorButton: PaletteColors.primaryColor,
+                                      colorText: PaletteColors.white,
+                                      colorBorder: PaletteColors.primaryColor,
+                                    ),
                                   ),
                                 ),
                               ],

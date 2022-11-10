@@ -15,7 +15,7 @@ class ProfissionalScreen extends StatefulWidget {
 
 class _ProfissionalScreenState extends State<ProfissionalScreen> {
   FirebaseFirestore db = FirebaseFirestore.instance;
-  String name = '';
+
   List allresults= [];
   List list = [];
   List resultList = [];
@@ -212,32 +212,50 @@ class _ProfissionalScreenState extends State<ProfissionalScreen> {
                     itemBuilder: (BuildContext context, index){
                       DocumentSnapshot UserSurvey = resultList[index];
                       String name = ErrorStringModel(UserSurvey, 'name');
+                      String phone = ErrorStringModel(UserSurvey, 'phone');
                       String states = ErrorStringModel(UserSurvey, 'region');
                       return Container(
-
                         child: ListTile(
-                          title: Row(
+                          title: Column(
                             children: [
-                              Container(
-                                width: width * 0.65,
-                                child: TextCustom(
-                                  text: name,
-                                  size: 14.0,
-                                  color: PaletteColors.grey,
-                                  fontWeight: FontWeight.bold,
-                                  textAlign: TextAlign.start,
-                                ),
+                              Row(
+                                children: [
+                                  Container(
+                                    width: width * 0.65,
+                                    child: TextCustom(
+                                      text: name,
+                                      size: 14.0,
+                                      color: PaletteColors.bgColor,
+                                      fontWeight: FontWeight.bold,
+                                      textAlign: TextAlign.start,
+                                    ),
+                                  ),
+                                  Container(
+                                    width: width * 0.08,
+                                    child: TextCustom(
+                                      text: states,
+                                      size: 14.0,
+                                      color: PaletteColors.bgColor,
+                                      fontWeight: FontWeight.bold,
+                                      textAlign: TextAlign.start,
+                                    ),
+                                  )
+                                ],
                               ),
-                              Container(
-                                width: width * 0.08,
-                                child: TextCustom(
-                                  text: states,
-                                  size: 14.0,
-                                  color: PaletteColors.grey,
-                                  fontWeight: FontWeight.bold,
-                                  textAlign: TextAlign.start,
-                                ),
-                              )
+                              Row(
+                                children: [
+                                  Container(
+                                    width: width * 0.65,
+                                    child: TextCustom(
+                                      text: phone,
+                                      size: 14.0,
+                                      color: PaletteColors.bgColor,
+                                      fontWeight: FontWeight.normal,
+                                      textAlign: TextAlign.start,
+                                    ),
+                                  ),
+
+                              ],)
                             ],
                           ),
                         )
