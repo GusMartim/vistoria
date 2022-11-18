@@ -1,5 +1,6 @@
+
 import 'package:intl/intl.dart';
-import 'package:latlong_to_osgrid/latlong_to_osgrid.dart';
+
 import 'package:vistoria/Utils/exports.dart';
 
 class Surveyscreen extends StatefulWidget {
@@ -67,11 +68,21 @@ class _SurveyscreenState extends State<Surveyscreen> {
     'Infrutifera'
   ];
   String? selectedType = 'Casa';
+  List<XFile>? imageFileList = [];
   Position? position;
   double? lat = 0;
   double? lon = 0;
   double? h= 0;
-
+  FirebaseFirestore db = FirebaseFirestore.instance;
+  String _urlPhoto = '';
+  String selectedText = 'Imagens';
+  FirebaseStorage storage = FirebaseStorage.instance;
+  SurveyModel _surveyModel = SurveyModel();
+  var format = DateFormat('dd/MM/yyyy  kk:mm');
+  String _error = '';
+  File? picture;
+  String title = '';
+  List <Uint8List> images = [];
   Future<Position> _determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
@@ -92,7 +103,6 @@ class _SurveyscreenState extends State<Surveyscreen> {
     }
     return await Geolocator.getCurrentPosition();
   }
-
   _local() async {
     position = await _determinePosition();
     lat = position!.latitude;
@@ -106,17 +116,6 @@ class _SurveyscreenState extends State<Surveyscreen> {
       _controllerLng = TextEditingController(text:'$lon' );
     });
   }
-
-  FirebaseFirestore db = FirebaseFirestore.instance;
-  var format = DateFormat('dd/MM/yyyy  kk:mm');
-
-  String _error = '';
-  File? picture;
-  bool _sending = false;
-  String _urlPhoto = '';
-  String selectedText = 'Imagens';
-  FirebaseStorage storage = FirebaseStorage.instance;
-  SurveyModel _surveyModel = SurveyModel();
   _saveData(SurveyModel surveyModel) async {
     db
         .collection('surveys')
@@ -125,7 +124,6 @@ class _SurveyscreenState extends State<Surveyscreen> {
         .then((_) =>
             _surveyType(widget.id != "" ? widget.id : _surveyModel.idSurvey));
   }
-
   _createData() async {
     if (_controllerAdress.text.isNotEmpty) {
       if (_controllerNumber.text.isNotEmpty) {
@@ -178,8 +176,6 @@ class _SurveyscreenState extends State<Surveyscreen> {
       );
     }
   }
-
-  String title = '';
   getNSurvey()async{
     DocumentSnapshot snapshot = await db
         .collection('surveys')
@@ -205,8 +201,6 @@ class _SurveyscreenState extends State<Surveyscreen> {
     });
 
   }
-
-
   _createTable() async {
     var dateString = format.format(DateTime.now());
     _surveyModel.adress = _controllerAdress.text;
@@ -234,14 +228,14 @@ class _SurveyscreenState extends State<Surveyscreen> {
   Future _savePhotoGallery() async {
     try {
       final image = await ImagePicker()
-          .pickImage(source: ImageSource.gallery, imageQuality: 50);
+          .pickImage(source: ImageSource.gallery, imageQuality: 30);
       if (image == null) return;
 
       final imageTemporary = File(image.path);
       setState(() {
         this.picture = imageTemporary;
         setState(() {
-          _sending = true;
+
           Navigator.of(context).pop();
         });
         _uploadImage();
@@ -250,49 +244,81 @@ class _SurveyscreenState extends State<Surveyscreen> {
       print('Error : $e');
     }
   }
+
   Future _savePhotoCamera() async {
     try {
-      final image = await ImagePicker()
-          .pickImage(source: ImageSource.camera, imageQuality: 50);
+      final image = await ImagePicker().pickImage(
+          source: ImageSource.camera, imageQuality: 30);
       if (image == null) return;
 
       final imageTemporary = File(image.path);
       setState(() {
         this.picture = imageTemporary;
-        setState(() {
-          _sending = true;
-          Navigator.of(context).pop();
-        });
-        _uploadImage();
       });
+
+      setState(() {
+        Navigator.of(context).pop();
+      });
+
+      _uploadImage();
     } on PlatformException catch (e) {
       print('Error : $e');
     }
   }
-
   Future _uploadImage() async {
+    Uint8List? archive = await picture?.readAsBytes();
+
+
     Reference pastaRaiz = storage.ref();
     Reference arquivo = pastaRaiz
         .child("surveys")
         .child(selectedText + "_" + DateTime.now().toString() + ".jpg");
-
-    await arquivo.putFile(picture!).then((value) async{
+    await arquivo.putData(archive!,SettableMetadata(contentType:'application/octet-stream')).then((value) async{
       value.ref.getDownloadURL().then((value) {
         setState(() {
           _urlPhoto = value;
         });
         _urlImageFirestore(value);
-
       });
-
-
+    });
+  }
+  Future selectImages() async{
+    int i = 0;
+    final List<XFile>? selectedImages = await ImagePicker().pickMultiImage(imageQuality: 30);
+    if(selectedImages!.isNotEmpty){
+        imageFileList!.addAll(selectedImages);
     }
+    setState(() {
+
+    });
+    for (int i = 0; i <imageFileList!.length; i++) {
+      _uploadImages(imageFileList![i]);
+    }
+  }
+  Future<void> _uploadImages(XFile file) async{
+    print('chegou');
+   int i = 0;
+  Uint8List archive = await file.readAsBytes();
+  if(archive!.isNotEmpty){
+        Reference pastaRaiz = storage.ref();
+        Reference arquivo = pastaRaiz
+            .child("surveys")
+            .child(selectedText + "_" + DateTime.now().toString()+'.png');
+        await arquivo.putData(archive,SettableMetadata(contentType:'application/octet-stream')).then((upload) async {
+          upload.ref.getDownloadURL().then((value) {
+            Map<String, dynamic> dateUpdate = {
+              'photoUrl': FieldValue.arrayUnion([value.toString()]),
+              'idSurvey': widget.id != '' ?widget.id :_surveyModel.idSurvey
+            };
+            db
+                .collection("surveys")
+                .doc(widget.id != '' ?widget.id :_surveyModel.idSurvey)
+                .set(dateUpdate, SetOptions(merge: true));
+          });
+        });
 
 
-    );
-
-
-
+      }
 
   }
 
@@ -307,7 +333,6 @@ class _SurveyscreenState extends State<Surveyscreen> {
         .set(dateUpdate, SetOptions(merge: true))
         .then((value) {
       setState(() {
-        _sending = false;
       });
       Future.delayed(const Duration(seconds: 5));
     });
@@ -422,7 +447,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                           child: ButtonCustom(
                             widthCustom: 0.65,
                             heightCustom: 0.095,
-                            onPressed: () => _savePhotoGallery(),
+                            onPressed: () => selectImages(),
                             text: "Galeria",
                             size: 20.0,
                             colorButton: PaletteColors.primaryColor,
@@ -462,36 +487,88 @@ class _SurveyscreenState extends State<Surveyscreen> {
           SizedBox(width: width * 0.04),
         ],
       ),
-      body: _sending == true?Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            CircularProgressIndicator(
-                color: PaletteColors.primaryColor),
-            TextCustom(
-                text: 'Enviando foto...',
-                color: PaletteColors.grey,
-                fontWeight: FontWeight.normal,
-                size: 16.0),
-
-          ],
-        ),
-      ):SingleChildScrollView(
+      body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(left: 6.0, top: 6.0, bottom: 6.0),
+          padding: const EdgeInsets.only(left: 6.0,bottom: 6.0,top: 2.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              SizedBox(height: height * 0.05),
+              Container(
+                width: width * 0.9,
+                child: Row(
+                  children: [
+                    SizedBox(width: width * 0.04),
+                    Container(
+                      width: width * 0.35,
+                      child: TextCustom(
+                        text: "Tipo de vistoria",
+                        size: 14.0,
+                        color: PaletteColors.grey,
+                        fontWeight: FontWeight.bold,
+                        textAlign: TextAlign.start,
+                      ),
+                    ),
+                    SizedBox(width: width * 0.15),
+                    TextCustom(
+                      text: "Nº do Sistema:",
+                      size: 14.0,
+                      color: PaletteColors.grey,
+                      fontWeight: FontWeight.bold,
+                      textAlign: TextAlign.start,
+                    ),
+                    Container(
+                      child: TextCustom(
+                        text: title,
+                        size: 14.0,
+                        color: PaletteColors.bgColor,
+                        fontWeight: FontWeight.bold,
+                        textAlign: TextAlign.center,
+
+                      ),
+                    ),
+
+                  ],
+                ),
+              ),
+
               Row(
                 children: [
                   SizedBox(width: width * 0.04),
                   Container(
+                    width: width * 0.45,
+                    height: 40,
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 10.0, vertical: 1.0),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: PaletteColors.greyInput),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        items: type
+                            .map((type) => DropdownMenuItem<String>(
+                            value: type,
+                            child: TextCustom(
+                              text: type,
+                              color: PaletteColors.grey,
+                            )))
+                            .toList(),
+                        value: selectedType,
+                        onChanged: (type) =>
+                            setState(() => selectedType = type),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  SizedBox(width: width * 0.04),
+
+                  Container(
                     child: TextCustom(
-                      text: "Codigo Empresa",
+                      text: "Nº O.S",
                       size: 14.0,
                       color: PaletteColors.grey,
                       fontWeight: FontWeight.bold,
@@ -518,45 +595,6 @@ class _SurveyscreenState extends State<Surveyscreen> {
                   ),
                 ],
               ),
-              SizedBox(height: height * 0.02),
-              Column(
-                children: [
-                  Container(
-                    width: width * 0.9,
-                    child: Row(
-                      children: [
-                        SizedBox(width: width * 0.04),
-                        TextCustom(
-                          text: "Numero do Sistema: ",
-                          size: 14.0,
-                          color: PaletteColors.grey,
-                          fontWeight: FontWeight.bold,
-                          textAlign: TextAlign.start,
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: height * 0.01),
-                  Container(
-                    width: width * 0.9,
-                    child: Row(
-                      children: [
-                        SizedBox(width: width * 0.04),
-                        Container(
-                          child: TextCustom(
-                            text: title,
-                            size: 14.0,
-                            color: PaletteColors.grey,
-                            fontWeight: FontWeight.bold,
-                            textAlign: TextAlign.start,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: height * 0.02),
               Container(
                 width: width * 0.9,
                 child: Row(
@@ -579,7 +617,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                     width: width * 0.9,
                     child: InputRegister(
                         controller: _controllerAdress,
-                        hint: 'Rua Antonio Lopes',
+                        hint: 'Rua x',
                         fonts: 14.0,
                         keyboardType: TextInputType.text,
                         width: width * 0.83,
@@ -617,7 +655,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                               sizeIcon: 0.0,
                               width: width * 0.17,
                               controller: _controllerNumber,
-                              hint: "325",
+                              hint: "01",
                               fonts: 14.0,
                               keyboardType: TextInputType.number,
                               colorBorder: PaletteColors.greyInput,
@@ -658,7 +696,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                               sizeIcon: 0.0,
                               width: width * 0.61,
                               controller: _controllerComplement,
-                              hint: "Ex. Casa",
+                              hint: "Quadra,Lote,Nº AP",
                               fonts: 14.0,
                               keyboardType: TextInputType.text,
                               colorBorder: PaletteColors.greyInput,
@@ -698,7 +736,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                         width: width * 0.9,
                         child: InputRegister(
                             controller: _controllerDistrict,
-                            hint: 'Vila Santa Isabel',
+                            hint: 'x, y, z',
                             fonts: 14.0,
                             keyboardType: TextInputType.text,
                             width: width * 0.83,
@@ -722,7 +760,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                         children: [
                           SizedBox(width: width * 0.04),
                           Container(
-                            width: width * 0.56,
+                            width: width * 0.9,
                             child: TextCustom(
                               text: "Cidade",
                               size: 14.0,
@@ -737,11 +775,11 @@ class _SurveyscreenState extends State<Surveyscreen> {
                         children: [
                           SizedBox(width: width * 0.04),
                           Container(
-                            width: width * 0.56,
+                            width: width * 0.9,
                             child: InputRegister(
                               icons: Icons.height,
                               sizeIcon: 0.0,
-                              width: width * 0.63,
+                              width: width * 0.9,
                               controller: _controllerCity,
                               hint: "São Paulo",
                               fonts: 14.0,
@@ -754,6 +792,12 @@ class _SurveyscreenState extends State<Surveyscreen> {
                       ),
                     ],
                   ),
+
+                ],
+              ),
+              Row(
+                children: [
+                  SizedBox(width: width * 0.04),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -763,7 +807,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                         children: [
                           SizedBox(width: width * 0.01),
                           Container(
-                            width: width * 0.26,
+                            width: width * 0.35,
                             child: TextCustom(
                               text: "Estado",
                               size: 14.0,
@@ -777,8 +821,9 @@ class _SurveyscreenState extends State<Surveyscreen> {
                       Row(
                         children: [
                           Container(
-                            width: width * 0.26,
-                            padding: EdgeInsets.symmetric(horizontal: 8.0),
+                            width: width * 0.35,
+                            height: 40,
+                            padding: EdgeInsets.symmetric(horizontal: 14.0),
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(5),
                                 color: PaletteColors.greyInput),
@@ -786,11 +831,11 @@ class _SurveyscreenState extends State<Surveyscreen> {
                               child: DropdownButton<String>(
                                 items: states
                                     .map((states) => DropdownMenuItem<String>(
-                                        value: states,
-                                        child: TextCustom(
-                                          text: states,
-                                          color: PaletteColors.grey,
-                                        )))
+                                    value: states,
+                                    child: TextCustom(
+                                      text: states,
+                                      color: PaletteColors.grey,
+                                    )))
                                     .toList(),
                                 value: selectedState,
                                 onChanged: (states) =>
@@ -801,21 +846,19 @@ class _SurveyscreenState extends State<Surveyscreen> {
                         ],
                       ),
                     ],
-                  )
-                ],
-              ),
-              Row(
-                children: [
+                  ),
+                  SizedBox(width: width * 0.1),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
+
                       Row(
                         children: [
                           SizedBox(width: width * 0.04),
                           Container(
-                            width: width * 0.35,
+                            width: width * 0.4,
                             child: TextCustom(
                               text: "CEP",
                               size: 14.0,
@@ -830,7 +873,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                         children: [
                           SizedBox(width: width * 0.04),
                           Container(
-                            width: width * 0.37,
+                            width: width * 0.4,
                             child: InputRegister(
                               inputFormatters: [
                                 FilteringTextInputFormatter.digitsOnly,
@@ -838,7 +881,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                               ],
                               icons: Icons.height,
                               sizeIcon: 0.0,
-                              width: width * 0.37,
+                              width: width * 0.4,
                               controller: _controllerCEP,
                               hint: "15.000-000",
                               fonts: 14.0,
@@ -851,61 +894,14 @@ class _SurveyscreenState extends State<Surveyscreen> {
                       ),
                     ],
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Row(
-                        children: [
-                          Container(
-                            width: width * 0.48,
-                            child: TextCustom(
-                              text: "Tipo de vistoria",
-                              size: 14.0,
-                              color: PaletteColors.grey,
-                              fontWeight: FontWeight.bold,
-                              textAlign: TextAlign.start,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Container(
-                            width: width * 0.45,
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 10.0, vertical: 1.0),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                color: PaletteColors.greyInput),
-                            child: DropdownButtonHideUnderline(
-                              child: DropdownButton<String>(
-                                items: type
-                                    .map((type) => DropdownMenuItem<String>(
-                                        value: type,
-                                        child: TextCustom(
-                                          text: type,
-                                          color: PaletteColors.grey,
-                                        )))
-                                    .toList(),
-                                value: selectedType,
-                                onChanged: (type) =>
-                                    setState(() => selectedType = type),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  )
+
+
                 ],
               ),
               Divider(
                 color: PaletteColors.lightGrey,
                 thickness: 1,
               ),
-              SizedBox(height: height * 0.05),
               Row(children: [
                 SizedBox(width: width * 0.04),
                 Container(

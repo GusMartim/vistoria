@@ -66,18 +66,18 @@ class _DataRequestState extends State<DataRequest> {
     }
 
     print("chegou1");
-    if(data?["lat"] == null){
+    if(data?["lat"] == ''){
       lat =0.0;
     }
     else{
       lat = double.parse(data?["lat"]);
-    } if(data?["lng"] == null){
+    } if(data?["lng"] == ''){
       lng =0.0;
     }
     else{
       lng = double.parse(data?["lng"]);
     }
-    local = '$adress,$number,$district\n - $city/$states';
+    local = '''$adress, $number, $district - $city/$states ''';
 
     });
   }
@@ -128,14 +128,23 @@ class _DataRequestState extends State<DataRequest> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-
                     child: TextCustom(
-                      text: "Local:  ${'''$adress,$number,$district - $city/$states'''}",
+                      text: '''Local:\n ''',
                       color: PaletteColors.bgColor,
                       fontWeight: FontWeight.bold,
                       textAlign: TextAlign.start,
                       size: 14.0,
-                      maxLines: 2,
+                      maxLines: 4,
+                    ),
+                  ),
+                  Container(
+                    child: TextCustom(
+                      text: '''${''' $adress, $number, \n $district - $city/$states'''}''',
+                      color: PaletteColors.bgColor,
+                      fontWeight: FontWeight.normal,
+                      textAlign: TextAlign.start,
+                      size: 14.0,
+                      maxLines: 4,
                     ),
                   ),
                   // Container(
@@ -159,9 +168,16 @@ class _DataRequestState extends State<DataRequest> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   TextCustom(
-                    text: "Tipo: $type",
+                    text: "Tipo: ",
                     color: PaletteColors.bgColor,
                     fontWeight: FontWeight.bold,
+                    textAlign: TextAlign.start,
+                    size: 14.0,
+                  ),
+                  TextCustom(
+                    text: "$type",
+                    color: PaletteColors.bgColor,
+                    fontWeight: FontWeight.normal,
                     textAlign: TextAlign.start,
                     size: 14.0,
                   ),

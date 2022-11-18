@@ -91,38 +91,60 @@ class _CheckListUnfruitfulState extends State<CheckListUnfruitful> {
   String selectedText = 'Imagens';
   FirebaseFirestore db = FirebaseFirestore.instance;
   File? picture;
-  bool _sending = false;
-  String _urlPhoto = '';
-  Future _savePhotoGallery() async {
-    try {
-      final image = await ImagePicker()
-          .pickImage(source: ImageSource.gallery, imageQuality: 50);
-      if (image == null) return;
 
-      final imageTemporary = File(image.path);
-      setState(() {
-        this.picture = imageTemporary;
-        setState(() {
-          _sending = true;
-          Navigator.of(context).pop();
-        });
-        _uploadImage();
-      });
-    } on PlatformException catch (e) {
-      print('Error : $e');
+  String _urlPhoto = '';
+  List<XFile>? imageFileList = [];
+  Future selectImages() async{
+    int i = 0;
+    final List<XFile>? selectedImages = await ImagePicker().pickMultiImage(imageQuality: 30);
+    if(selectedImages!.isNotEmpty){
+      imageFileList!.addAll(selectedImages);
     }
+    setState(() {
+      Navigator.of(context).pop();
+
+    });
+    for (int i = 0; i <imageFileList!.length; i++) {
+      _uploadImages(imageFileList![i]);
+    }
+  }
+  Future<void> _uploadImages(XFile file) async{
+    print('chegou');
+    int i = 0;
+    Uint8List archive = await file.readAsBytes();
+    if(archive!.isNotEmpty){
+      Reference pastaRaiz = storage.ref();
+      Reference arquivo = pastaRaiz
+          .child("surveys")
+          .child(selectedText + "_" + DateTime.now().toString() + ".jpg");
+      await arquivo.putData(archive,SettableMetadata(contentType:'application/octet-stream')).then((upload) async {
+        upload.ref.getDownloadURL().then((value) {
+          Map<String, dynamic> dateUpdate = {
+            'photoUrl': FieldValue.arrayUnion([value.toString()]),
+            'idSurvey': widget.idSurvey
+          };
+          db
+              .collection("surveys")
+              .doc(widget.idSurvey)
+              .set(dateUpdate, SetOptions(merge: true));
+        });
+      });
+
+
+    }
+
   }
   Future _savePhotoCamera() async {
     try {
       final image = await ImagePicker()
-          .pickImage(source: ImageSource.camera, imageQuality: 50);
+          .pickImage(source: ImageSource.camera, imageQuality: 30);
       if (image == null) return;
 
       final imageTemporary = File(image.path);
       setState(() {
         this.picture = imageTemporary;
         setState(() {
-          _sending = true;
+
           Navigator.of(context).pop();
         });
         _uploadImage();
@@ -131,14 +153,13 @@ class _CheckListUnfruitfulState extends State<CheckListUnfruitful> {
       print('Error : $e');
     }
   }
-
   Future _uploadImage() async {
     Reference pastaRaiz = storage.ref();
     Reference arquivo = pastaRaiz
         .child("surveys")
         .child(selectedText + "_" + DateTime.now().toString() + ".jpg");
 
-    await arquivo.putFile(picture!).then((value) async{
+    await arquivo.putFile(picture!,SettableMetadata(contentType:'application/octet-stream')).then((value) async{
       value.ref.getDownloadURL().then((value) {
         setState(() {
           _urlPhoto = value;
@@ -168,7 +189,7 @@ class _CheckListUnfruitfulState extends State<CheckListUnfruitful> {
         .set(dateUpdate, SetOptions(merge: true))
         .then((value) {
       setState(() {
-        _sending = false;
+
       });
     });
   }
@@ -627,7 +648,7 @@ class _CheckListUnfruitfulState extends State<CheckListUnfruitful> {
                           child: ButtonCustom(
                             widthCustom: 0.65,
                             heightCustom: 0.095,
-                            onPressed: () => _savePhotoGallery(),
+                            onPressed: () => selectImages(),
                             text: "Galeria",
                             size: 20.0,
                             colorButton: PaletteColors.primaryColor,
@@ -646,22 +667,7 @@ class _CheckListUnfruitfulState extends State<CheckListUnfruitful> {
           SizedBox(width: width * 0.04),
         ],
       ),
-      body: _sending == true?Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            CircularProgressIndicator(
-                color: PaletteColors.primaryColor),
-            TextCustom(
-                text: 'Enviando foto...',
-                color: PaletteColors.grey,
-                fontWeight: FontWeight.normal,
-                size: 16.0),
-
-          ],
-        ),
-      ):Padding(
+      body: Padding(
         padding: EdgeInsets.symmetric(vertical: 24, horizontal: 24),
         child: Center(
           child: SingleChildScrollView(
@@ -935,7 +941,7 @@ class _CheckListUnfruitfulState extends State<CheckListUnfruitful> {
                             controller: _controllerAdress,
                             hint: " Rua Fulano, Bairro Teste, Nª404  ",
                             fonts: 14.0,
-                            keyboardType: TextInputType.number,
+                            keyboardType: TextInputType.text,
                             colorBorder: PaletteColors.greyInput,
                             background: PaletteColors.greyInput,
                           ),
@@ -974,7 +980,7 @@ class _CheckListUnfruitfulState extends State<CheckListUnfruitful> {
                             controller: _controllerContact,
                             hint: " Fulano de Tal ",
                             fonts: 14.0,
-                            keyboardType: TextInputType.number,
+                            keyboardType: TextInputType.text,
                             colorBorder: PaletteColors.greyInput,
                             background: PaletteColors.greyInput,
                           ),

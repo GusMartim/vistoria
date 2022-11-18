@@ -16,28 +16,40 @@ class CheckList1 extends StatefulWidget {
 class _CheckList1State extends State<CheckList1> {
   int nRoom = 0;
   String SRoom = '0';
+  TextEditingController _controllerRoom = TextEditingController();
   int nSocialBathroom = 0;
   String SSocialBathroom = '0';
+  TextEditingController _controllerSocialBathroom = TextEditingController();
   int nPrivateBathroom = 0;
   String SPrivateBathroom = '0';
+  TextEditingController _controllerPrivateBathroom = TextEditingController();
   int nLav = 0;
   String SLav = '0';
+  TextEditingController _controllerLavabos = TextEditingController();
   int nServiceBathroom = 0;
   String SServiceBathroom = '0';
+  TextEditingController _controllerServiceBathroom = TextEditingController();
   int nMaidRoom = 0;
   String SMaidRoom = '0';
+  TextEditingController _controllerMaidRoom = TextEditingController();
   int nBalcony = 0;
   String SBalcony = '0';
+  TextEditingController _controllerBalconys = TextEditingController();
   int nCompleteCabinets = 0;
   String SCompleteCabinets = '0';
+  TextEditingController _controllerCompleteCabinets = TextEditingController();
   int nKitchen = 0;
   String SKitchen = '0';
+  TextEditingController _controllerKitchens = TextEditingController();
   int nRestRoom = 0;
   String SRestRoom = '0';
+  TextEditingController _controllerRestRoom = TextEditingController();
   int nServiceAreaRoofed = 0;
   String SServiceAreaRoofed = '0';
+  TextEditingController _controllerServiceAreaRoofed = TextEditingController();
   int nServiceAreaUnroofed = 0;
   String SServiceAreaUnroofed = '0';
+  TextEditingController _controllerNumber = TextEditingController();
   int nOpenGarage = 0;
   String SOpenGarage = '0';
   int nClosedGarage = 0;
@@ -52,7 +64,7 @@ class _CheckList1State extends State<CheckList1> {
   String? selectedInfo = 'Oferta de Mercado';
   UnityModel _unityModel = UnityModel();
   File? picture;
-  bool _sending = false;
+
   String _urlPhoto = '';
   String selectedText = 'Imagens';
   FirebaseStorage storage = FirebaseStorage.instance;
@@ -340,37 +352,58 @@ class _CheckList1State extends State<CheckList1> {
     }
 
   }
-
-  Future _savePhotoGallery() async {
-    try {
-      final image = await ImagePicker()
-          .pickImage(source: ImageSource.gallery, imageQuality: 50);
-      if (image == null) return;
-
-      final imageTemporary = File(image.path);
-      setState(() {
-        this.picture = imageTemporary;
-        setState(() {
-          _sending = true;
-          Navigator.of(context).pop();
-        });
-        _uploadImage();
-      });
-    } on PlatformException catch (e) {
-      print('Error : $e');
+  List<XFile>? imageFileList = [];
+  Future selectImages() async{
+    int i = 0;
+    final List<XFile>? selectedImages = await ImagePicker().pickMultiImage(imageQuality: 30);
+    if(selectedImages!.isNotEmpty){
+      imageFileList!.addAll(selectedImages);
     }
+    setState(() {
+      Navigator.of(context).pop();
+
+    });
+    for (int i = 0; i <imageFileList!.length; i++) {
+      _uploadImages(imageFileList![i]);
+    }
+  }
+  Future<void> _uploadImages(XFile file) async{
+    print('chegou');
+    int i = 0;
+    Uint8List archive = await file.readAsBytes();
+    if(archive!.isNotEmpty){
+      Reference pastaRaiz = storage.ref();
+      Reference arquivo = pastaRaiz
+          .child("surveys")
+          .child(selectedText + "_" + DateTime.now().toString() + ".jpg");
+      await arquivo.putData(archive,SettableMetadata(contentType:'application/octet-stream')).then((upload) async {
+        upload.ref.getDownloadURL().then((value) {
+          Map<String, dynamic> dateUpdate = {
+            'photoUrl': FieldValue.arrayUnion([value.toString()]),
+            'idSurvey': widget.idSurvey
+          };
+          db
+              .collection("surveys")
+              .doc(widget.idSurvey)
+              .set(dateUpdate, SetOptions(merge: true));
+        });
+      });
+
+
+    }
+
   }
   Future _savePhotoCamera() async {
     try {
       final image = await ImagePicker()
-          .pickImage(source: ImageSource.camera, imageQuality: 50);
+          .pickImage(source: ImageSource.camera, imageQuality: 30);
       if (image == null) return;
 
       final imageTemporary = File(image.path);
       setState(() {
         this.picture = imageTemporary;
         setState(() {
-          _sending = true;
+
           Navigator.of(context).pop();
         });
         _uploadImage();
@@ -379,14 +412,13 @@ class _CheckList1State extends State<CheckList1> {
       print('Error : $e');
     }
   }
-
   Future _uploadImage() async {
     Reference pastaRaiz = storage.ref();
     Reference arquivo = pastaRaiz
         .child("surveys")
         .child(selectedText + "_" + DateTime.now().toString() + ".jpg");
 
-    await arquivo.putFile(picture!).then((value) async{
+    await arquivo.putFile(picture!,SettableMetadata(contentType:'application/octet-stream')).then((value) async{
       value.ref.getDownloadURL().then((value) {
         setState(() {
           _urlPhoto = value;
@@ -417,7 +449,7 @@ class _CheckList1State extends State<CheckList1> {
         .set(dateUpdate, SetOptions(merge: true))
         .then((value) {
       setState(() {
-        _sending = false;
+
       });
     });
   }
@@ -903,7 +935,7 @@ class _CheckList1State extends State<CheckList1> {
                           child: ButtonCustom(
                             widthCustom: 0.65,
                             heightCustom: 0.095,
-                            onPressed: () => _savePhotoGallery(),
+                            onPressed: () => selectImages(),
                             text: "Galeria",
                             size: 20.0,
                             colorButton: PaletteColors.primaryColor,
@@ -922,22 +954,7 @@ class _CheckList1State extends State<CheckList1> {
           SizedBox(width: width * 0.04),
         ],
       ),
-      body: _sending == true?Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            CircularProgressIndicator(
-                color: PaletteColors.primaryColor),
-            TextCustom(
-                text: 'Enviando foto...',
-                color: PaletteColors.grey,
-                fontWeight: FontWeight.normal,
-                size: 16.0),
-
-          ],
-        ),
-      ):Padding(
+      body: Padding(
         padding: EdgeInsets.symmetric(vertical: 24, horizontal: 26),
         child: Center(
           child: SingleChildScrollView(
@@ -2388,11 +2405,24 @@ class _CheckList1State extends State<CheckList1> {
                             height: 30,
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(2.0)),
+                              // child: InputRegister(
+                              //   icons: Icons.height,
+                              //   sizeIcon: 0.0,
+                              //   width: width * 0.12,
+                              //   controller: _controllerNumber,
+                              //   hint: "01",
+                              //   fonts: 14.0,
+                              //   keyboardType: TextInputType.number,
+                              //   colorBorder: PaletteColors.greyInput,
+                              //   background: PaletteColors.greyInput,
+                              // ),
                             child: TextCustom(
                               text: SRoom,
                               color: PaletteColors.grey,
                               textAlign: TextAlign.center,
-                            )),
+                            )
+
+                        ),
                         Ink(
                           decoration: ShapeDecoration(
                             color: PaletteColors.midGrey,

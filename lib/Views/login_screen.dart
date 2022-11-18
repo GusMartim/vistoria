@@ -253,11 +253,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       alignment: Alignment.topRight,
                       width: width * 0.7,
                       child: TextCustom(
-                        text: "    Esqueci a senha/resetar",
+                        text: "Esqueci a senha/resetar",
                         color: PaletteColors.primaryColor,
                         size: 12.0,
                         fontWeight: FontWeight.normal,
                         textAlign: TextAlign.end,
+                        underscore: TextDecoration.underline,
                       ),
                     ),
                   ),

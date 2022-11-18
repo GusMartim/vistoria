@@ -54,43 +54,66 @@ class _ConstructionStepState extends State<ConstructionStep> {
   String SOthers = '0';
 
   File? picture;
-  bool _sending = false;
+
   String _urlPhoto = '';
   String selectedText = 'Imagens';
   FirebaseStorage storage = FirebaseStorage.instance;
   final Map<String, dynamic> data = HashMap();
 
 
-  Future _savePhotoGallery() async {
-    try {
-      final image = await ImagePicker()
-          .pickImage(source: ImageSource.gallery, imageQuality: 50);
-      if (image == null) return;
-
-      final imageTemporary = File(image.path);
-      setState(() {
-        this.picture = imageTemporary;
-        setState(() {
-          _sending = true;
-        });
-        _uploadImage();
-      });
-    } on PlatformException catch (e) {
-      print('Error : $e');
+  List<XFile>? imageFileList = [];
+  Future selectImages() async{
+    int i = 0;
+    final List<XFile>? selectedImages = await ImagePicker().pickMultiImage(imageQuality: 30);
+    if(selectedImages!.isNotEmpty){
+      imageFileList!.addAll(selectedImages);
     }
+    setState(() {
+      Navigator.of(context).pop();
+
+    });
+    for (int i = 0; i <imageFileList!.length; i++) {
+      _uploadImages(imageFileList![i]);
+    }
+  }
+  Future<void> _uploadImages(XFile file) async{
+    print('chegou');
+    int i = 0;
+    Uint8List archive = await file.readAsBytes();
+    if(archive!.isNotEmpty){
+      Reference pastaRaiz = storage.ref();
+      Reference arquivo = pastaRaiz
+          .child("surveys")
+          .child(selectedText + "_" + DateTime.now().toString() + ".jpg");
+      await arquivo.putData(archive,SettableMetadata(contentType:'application/octet-stream')).then((upload) async {
+        upload.ref.getDownloadURL().then((value) {
+          Map<String, dynamic> dateUpdate = {
+            'photoUrl': FieldValue.arrayUnion([value.toString()]),
+            'idSurvey': widget.idSurvey
+          };
+          db
+              .collection("surveys")
+              .doc(widget.idSurvey)
+              .set(dateUpdate, SetOptions(merge: true));
+        });
+      });
+
+
+    }
+
   }
   Future _savePhotoCamera() async {
     try {
       final image = await ImagePicker()
-          .pickImage(source: ImageSource.camera, imageQuality: 50);
+          .pickImage(source: ImageSource.camera, imageQuality: 30);
       if (image == null) return;
 
       final imageTemporary = File(image.path);
       setState(() {
         this.picture = imageTemporary;
         setState(() {
+
           Navigator.of(context).pop();
-          _sending = true;
         });
         _uploadImage();
       });
@@ -98,21 +121,30 @@ class _ConstructionStepState extends State<ConstructionStep> {
       print('Error : $e');
     }
   }
-  Future _uploadImage() async{
+  Future _uploadImage() async {
     Reference pastaRaiz = storage.ref();
-    Reference arquivo = pastaRaiz.child("surveys").child(selectedText+"_"+DateTime.now().toString()+".jpg");
+    Reference arquivo = pastaRaiz
+        .child("surveys")
+        .child(selectedText + "_" + DateTime.now().toString() + ".jpg");
 
-    UploadTask task = arquivo.putFile(picture!);
-
-    Future.delayed(const Duration(seconds: 5), ()async{
-      String urlImage = await task.snapshot.ref.getDownloadURL();
-      if (urlImage != null) {
+    await arquivo.putFile(picture!,SettableMetadata(contentType:'application/octet-stream')).then((value) async{
+      value.ref.getDownloadURL().then((value) {
         setState(() {
-          _urlPhoto= urlImage;
+          _urlPhoto = value;
         });
-        _urlImageFirestore(urlImage);
-      }
-    });
+        _urlImageFirestore(value);
+
+      });
+
+
+    }
+
+
+    );
+
+
+
+
   }
   _urlImageFirestore(String url){
 
@@ -126,7 +158,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
         .set(dateUpdate,SetOptions(merge: true))
         .then((value) {
       setState(() {
-        _sending = false;
+
       });
     });
 
@@ -309,7 +341,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
                           child: ButtonCustom(
                             widthCustom: 0.65,
                             heightCustom: 0.095,
-                            onPressed: () => _savePhotoGallery(),
+                            onPressed: () => selectImages(),
                             text: "Galeria",
                             size: 20.0,
                             colorButton: PaletteColors.primaryColor,
@@ -328,7 +360,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
           SizedBox(width: width * 0.04,)
         ],
       ),
-      body: _sending == false ?Padding(
+      body: Padding(
         padding: EdgeInsets.symmetric(vertical: 24, horizontal: 24),
         child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
@@ -439,7 +471,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
                       onPressed: () {
                         setState(() {
                           if (nServices >= 0) {
-                            nServices = nServices + 5;
+                            nServices = nServices + 25;
                             SServices = "$nServices";
                           }
                         });
@@ -525,7 +557,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
                       onPressed: () {
                         setState(() {
                           if (nInfra >= 0) {
-                            nInfra = nInfra + 5;
+                            nInfra = nInfra + 25;
 
                             SInfra = "$nInfra";
                           }
@@ -612,7 +644,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
                       onPressed: () {
                         setState(() {
                           if (nSupra >= 0) {
-                            nSupra = nSupra + 5;
+                            nSupra = nSupra + 25;
                             SSupra = "$nSupra";
                           }
                         });
@@ -698,7 +730,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
                       onPressed: () {
                         setState(() {
                           if (nWalls >= 0) {
-                            nWalls = nWalls + 5;
+                            nWalls = nWalls + 25;
                             SWalls = '$nWalls';
                           }
                         });
@@ -784,7 +816,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
                       onPressed: () {
                         setState(() {
                           if (nFrames >= 0) {
-                            nFrames = nFrames + 5;
+                            nFrames = nFrames + 25;
                             SFrames = '$nFrames';
                           }
                         });
@@ -870,7 +902,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
                       onPressed: () {
                         setState(() {
                           if (nGlasses >= 0) {
-                            nGlasses = nGlasses + 5;
+                            nGlasses = nGlasses + 25;
                             SGlasses = "$nGlasses";
                           }
                         });
@@ -959,7 +991,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
                       onPressed: () {
                         setState(() {
                           if (nCeiling >= 0) {
-                            nCeiling = nCeiling + 5;
+                            nCeiling = nCeiling + 25;
                             SCeiling = "$nCeiling";
                           }
                         });
@@ -1045,7 +1077,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
                       onPressed: () {
                         setState(() {
                           if (nWaterProof >= 0) {
-                            nWaterProof = nWaterProof + 5;
+                            nWaterProof = nWaterProof + 25;
                             SWaterProof = "$nWaterProof";
                           }
                         });
@@ -1135,7 +1167,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
                       onPressed: () {
                         setState(() {
                           if (nIntern >= 0) {
-                            nIntern = nIntern + 5;
+                            nIntern = nIntern + 25;
                             SIntern = "$nIntern";
                           }
                         });
@@ -1224,7 +1256,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
                       onPressed: () {
                         setState(() {
                           if (nLinings >= 0) {
-                            nLinings = nLinings + 5;
+                            nLinings = nLinings + 25;
                             SLinings = "$nLinings";
                           }
                         });
@@ -1316,7 +1348,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
                         setState(() {
                           if (nExtern >= 0) {
                             nExtern =
-                                nExtern + 5;
+                                nExtern + 25;
                             SExtern =
                             "$nExtern";
                           }
@@ -1406,7 +1438,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
                       onPressed: () {
                         setState(() {
                           if (nPaint >= 0) {
-                            nPaint = nPaint + 5;
+                            nPaint = nPaint + 25;
                             SPaint = "$nPaint";
                           }
                         });
@@ -1492,7 +1524,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
                       onPressed: () {
                         setState(() {
                           if (nFloors >= 0) {
-                            nFloors = nFloors + 5;
+                            nFloors = nFloors + 25;
                             SFloors = "$nFloors";
                           }
                         });
@@ -1578,7 +1610,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
                       onPressed: () {
                         setState(() {
                           if (nFinishes >= 0) {
-                            nFinishes = nFinishes + 5;
+                            nFinishes = nFinishes + 25;
                             SFinishes = "$nFinishes";
                           }
                         });
@@ -1667,7 +1699,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
                       onPressed: () {
                         setState(() {
                           if (nEletric >= 0) {
-                            nEletric = nEletric + 5;
+                            nEletric = nEletric + 25;
                             SEletric = "$nEletric";
                           }
                         });
@@ -1756,7 +1788,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
                       onPressed: () {
                         setState(() {
                           if (nHidro >= 0) {
-                            nHidro = nHidro + 5;
+                            nHidro = nHidro + 25;
                             SHidro = "$nHidro";
                           }
                         });
@@ -1845,7 +1877,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
                       onPressed: () {
                         setState(() {
                           if (nSewer >= 0) {
-                            nSewer = nSewer + 5;
+                            nSewer = nSewer + 25;
                             SSewer = "$nSewer";
                           }
                         });
@@ -1934,7 +1966,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
                       onPressed: () {
                         setState(() {
                           if (nSlabs >= 0) {
-                            nSlabs = nSlabs + 5;
+                            nSlabs = nSlabs + 25;
                             SSlabs = "$nSlabs";
                           }
                         });
@@ -2023,7 +2055,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
                       onPressed: () {
                         setState(() {
                           if (nComplements >= 0) {
-                            nComplements = nComplements + 5;
+                            nComplements = nComplements + 25;
                             SComplements = "$nComplements";
                           }
                         });
@@ -2112,7 +2144,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
                       onPressed: () {
                         setState(() {
                           if (nOthers >= 0) {
-                            nOthers = nOthers + 5;
+                            nOthers = nOthers + 25;
                             SOthers = "$nOthers";
                           }
                         });
@@ -2160,20 +2192,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
             ],
           ),
         ),
-      ):Center(
-        child: Column(
-          children: [
-            CircularProgressIndicator(
-                color: PaletteColors.primaryColor),
-            TextCustom(
-                text: 'Enviando foto...',
-                color: PaletteColors.grey,
-                fontWeight: FontWeight.normal,
-                size: 16.0),
-
-          ],
-        ),
-      ),
+      )
     );
   }
 

@@ -8,6 +8,7 @@ class TextCustom extends StatelessWidget {
   final fontWeight;
   final textAlign;
   final maxLines;
+  final underscore;
 
   const TextCustom({
     required this.text,
@@ -15,7 +16,8 @@ class TextCustom extends StatelessWidget {
     required this.color,
     this.fontWeight = FontWeight.normal,
     this.textAlign = TextAlign.start,
-    this.maxLines=2
+    this.maxLines=2,
+    this.underscore,
   });
 
   @override
@@ -23,7 +25,7 @@ class TextCustom extends StatelessWidget {
     return AutoSizeText(text,
         textAlign: textAlign,
         style: TextStyle(fontFamily: 'Nunito',color: color,fontSize: size,
-          fontWeight: fontWeight,),
+          fontWeight: fontWeight,decoration: underscore ,decorationThickness: 4  ),
         minFontSize: 10,
         maxLines: maxLines,
     );

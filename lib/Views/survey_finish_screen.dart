@@ -187,13 +187,91 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                         shrinkWrap: true,
                         gridDelegate:
                             const SliverGridDelegateWithMaxCrossAxisExtent(
-                                maxCrossAxisExtent: 120,mainAxisExtent: 120,mainAxisSpacing: 15,crossAxisSpacing:15,childAspectRatio: 1.0),
+                                maxCrossAxisExtent: 120,mainAxisExtent: 160,mainAxisSpacing: 15,crossAxisSpacing:15,childAspectRatio: 1.0),
                         itemCount: imageList.length,
                         itemBuilder: (context, index) {
                           return Container(
 
 
-                              child: Image.network('${imageList[index]}'));
+                              child:Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children:[
+
+                                Ink(
+                                  decoration: ShapeDecoration(
+                                    color:  PaletteColors.white,
+                                    shape: CircleBorder(),
+
+
+                                  ),
+                                  child: IconButton(icon: Icon(
+                                    Icons.close,
+                                    color: Colors.red,
+                                  ),
+                                    constraints: BoxConstraints(minHeight: 14,
+                                        minWidth: 14,
+                                        maxHeight: 14,
+                                        maxWidth: 14),
+                                    iconSize: 14.0,
+                                    padding: EdgeInsets.zero,
+                                    onPressed: () {
+                                      AlertModel().alert(
+                                          'Deseja realmente apagar essa imagem?',
+                                          '',
+                                          PaletteColors.primaryColor,
+                                          PaletteColors.grey,
+                                          context,[
+                                        Row(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+
+                                          children: [
+                                            SizedBox(width: width * 0.04),
+                                            ButtonCustom(
+                                              widthCustom: 0.3,
+                                              heightCustom: 0.085,
+                                              onPressed: () {
+                                                db
+                                                    .collection('surveys')
+                                                    .doc(widget.idSurvey)
+                                                    .update({'photoUrl':FieldValue.arrayRemove([imageList[index]])}).then((value) =>Navigator.of(context).pop());
+                                                setState(() {
+                                                  imageList.remove(imageList[index]);
+                                                });
+                                              },
+                                              text: "Sim",
+                                              size: 14.0,
+                                              colorButton: PaletteColors.primaryColor,
+                                              colorText: PaletteColors.white,
+                                              colorBorder: PaletteColors.primaryColor,
+                                            ),
+                                            SizedBox(width: width * 0.04),
+                                            ButtonCustom(
+                                              widthCustom: 0.3,
+                                              heightCustom: 0.085,
+                                              onPressed: ()=>Navigator.of(context).pop(),
+                                              text: "Não",
+                                              size: 14.0,
+                                              colorButton: PaletteColors.white,
+                                              colorText: PaletteColors.primaryColor,
+                                              colorBorder: PaletteColors.primaryColor,
+                                            ),
+                                          ],
+                                        ),
+
+                                      ]
+                                      );
+
+
+
+                                    },
+
+                                  ),
+                                ),
+                                Image.network('${imageList[index]}'),
+
+
+                              ],)
+                          );
                         }),
                   ),
                   SizedBox(height: height * 0.01,)
