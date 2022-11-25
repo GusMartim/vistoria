@@ -1,3 +1,4 @@
+import 'package:url_launcher/url_launcher.dart';
 import 'package:vistoria/Views/profissinals_screen.dart';
 
 import '../Utils/exports.dart';
@@ -119,16 +120,48 @@ class _MenuScreenState extends State<MenuScreen> {
                   ],
                 ),
               ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(width: width * 0.04),
+                  Container(
+                      alignment: Alignment.centerRight,
+                      child: IconButton(
+                        icon: Icon(Icons.whatsapp_rounded,color: PaletteColors.primaryColor,size: 30),
+                        onPressed: () async{
+                          await launchUrl(Uri.parse('https://wa.me/5562996116494/'),mode: LaunchMode.externalApplication);
+                        },
+                      )),
+                  GestureDetector(
+                    onTap: ()async {
+                      await launchUrl(Uri.parse('https://wa.me/5562996116494/'),mode: LaunchMode.externalApplication);
+                    },
+                    child: Container(
 
-              Spacer(),
-              Container(
-                alignment: Alignment.centerRight,
+                      height: height * 0.06,
+                      alignment: Alignment.bottomCenter,
+                      child: TextCustom(
+                        text: 'Consultoria',
+                        size: 12.0,
+                        color: PaletteColors.grey,
+                        fontWeight: FontWeight.bold,
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                  Spacer(),
+                  Container(
+                      alignment: Alignment.centerRight,
 
-                child: IconButton(
-                    icon: Icon(Icons.logout,color: PaletteColors.primaryColor,size: 30),
-                    onPressed: ()=>FirebaseAuth.instance.signOut().then((value) =>
+                      child: IconButton(
+                        icon: Icon(Icons.logout,color: PaletteColors.primaryColor,size: 30),
+                        onPressed: ()=>FirebaseAuth.instance.signOut().then((value) =>
                             Navigator.pushReplacementNamed(context, '/login')),
-                    )),
+                      )),
+                ],
+              ),
+
               SizedBox(height: height * 0.01,)
 
             ]),

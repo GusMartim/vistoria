@@ -124,58 +124,6 @@ class _SurveyscreenState extends State<Surveyscreen> {
         .then((_) =>
             _surveyType(widget.id != "" ? widget.id : _surveyModel.idSurvey));
   }
-  _createData() async {
-    if (_controllerAdress.text.isNotEmpty) {
-      if (_controllerNumber.text.isNotEmpty) {
-        if (_controllerDistrict.text.isNotEmpty) {
-          if (_controllerCity.text.isNotEmpty) {
-            if (_controllerCEP.text.length == 10) {
-              setState(() {
-                _error = '';
-              });
-              _createTable();
-            } else {
-              _error = 'CEP inválido!';
-              showSnackBar(
-                context,
-                _error,
-                Colors.red
-
-              );
-            }
-          } else {
-            _error = 'Cidade inválida!';
-            showSnackBar(
-              context,
-              _error,
-                Colors.red
-            );
-          }
-        } else {
-          _error = 'Bairro inválido!';
-          showSnackBar(
-            context,
-            _error,
-              Colors.red
-          );
-        }
-      } else {
-        _error = 'Numero inválido!';
-        showSnackBar(
-          context,
-          _error,
-            Colors.red
-        );
-      }
-    } else {
-      _error = 'Endereço inválido!';
-      showSnackBar(
-        context,
-        _error,
-          Colors.red
-      );
-    }
-  }
   getNSurvey()async{
     DocumentSnapshot snapshot = await db
         .collection('surveys')
@@ -343,18 +291,18 @@ class _SurveyscreenState extends State<Surveyscreen> {
         await db.collection("surveys").doc(widget.id).get();
     Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
     setState(() {
-      _controllerAdress = TextEditingController(text: data?["adress"]);
-      _controllerNumber = TextEditingController(text: data?["number"]);
-      _controllerComplement = TextEditingController(text: data?["complement"]);
-      _controllerDistrict = TextEditingController(text: data?["district"]);
-      _controllerCity = TextEditingController(text: data?["city"]);
-      selectedState = data?["estado"];
-      _controllerCEP = TextEditingController(text: data?["cep"]);
-      selectedType = data?["typesurvey"];
-      _controllerLat = TextEditingController(text:data?["lat"] );
-      _controllerLng = TextEditingController(text:data?["lng"] );
-      _controllerUserCode = TextEditingController(text:data?["userCode"]);
-      Status = data?["status"];
+      _controllerAdress = TextEditingController(text: data?["adress"]??'');
+      _controllerNumber = TextEditingController(text: data?["number"]??'');
+      _controllerComplement = TextEditingController(text: data?["complement"]??'');
+      _controllerDistrict = TextEditingController(text: data?["district"]??'');
+      _controllerCity = TextEditingController(text: data?["city"]??'');
+      selectedState = data?["estado"]?? selectedState;
+      _controllerCEP = TextEditingController(text: data?["cep"]??'');
+      selectedType = data?["typesurvey"]??selectedType;
+      _controllerLat = TextEditingController(text:data?["lat"]??'' );
+      _controllerLng = TextEditingController(text:data?["lng"]??'' );
+      _controllerUserCode = TextEditingController(text:data?["userCode"]??'');
+      Status = data?["status"]??'';
     });
 
   }
@@ -1174,7 +1122,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                 child: ButtonCustom(
                   widthCustom: 0.80,
                   heightCustom: 0.070,
-                  onPressed: () => _createData(),
+                  onPressed: () => _createTable(),
                   text: widget.buttonText,
                   size: 14.0,
                   colorButton: PaletteColors.primaryColor,

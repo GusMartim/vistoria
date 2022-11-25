@@ -20,6 +20,7 @@ class ConstructionModel{
   String slabs = '';
   String complements = '';
   String others = '';
+  String obs = '';
   ConstructionModel();
 
   Map<String,dynamic> toMap(){
@@ -43,7 +44,9 @@ class ConstructionModel{
       "sewer"    : this.sewer,
       "slabs"   : this.slabs,
       "complements"   : this.complements,
-      "others" : this.others
+      "others" : this.others,
+      "obs" : this.obs
+
 
     };
     return map;

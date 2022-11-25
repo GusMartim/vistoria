@@ -6,7 +6,6 @@ import 'package:vistoria/Utils/exports.dart';
 class CheckList1 extends StatefulWidget {
   final String idSurvey;
 
-
   CheckList1({required this.idSurvey});
 
   @override
@@ -49,15 +48,19 @@ class _CheckList1State extends State<CheckList1> {
   TextEditingController _controllerServiceAreaRoofed = TextEditingController();
   int nServiceAreaUnroofed = 0;
   String SServiceAreaUnroofed = '0';
-  TextEditingController _controllerNumber = TextEditingController();
+  TextEditingController _controllerServiceAreaUnRoofed = TextEditingController();
   int nOpenGarage = 0;
   String SOpenGarage = '0';
+  TextEditingController _controllerOpenGarage= TextEditingController();
   int nClosedGarage = 0;
   String SClosedGarage = '0';
+  TextEditingController _controllerClosedGarage = TextEditingController();
   int nAc = 0;
   String SAc = '0';
+  TextEditingController _controllerSac= TextEditingController();
   int nPool = 0;
   String SPool = '0';
+  TextEditingController _controllerPool = TextEditingController();
   List<String> goal = ['Venda', 'Aluguel'];
   String? selectedGoal = 'Venda';
   List<String> infoOrigin = ['Oferta de Mercado', 'Transação Efetuada'];
@@ -151,46 +154,48 @@ class _CheckList1State extends State<CheckList1> {
       paint.add(
           CheckBoxModel(title: title, value: check == 'true' ? true : false));
     }
-    extern.clear();
-    for (int i = 48; i <= 51; i++) {
+    InternPaint.clear();
+    for (int i = 48; i <= 53; i++) {
       var splitted = saveChecklist[i].replaceAll("10", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      InternPaint.add(
+          CheckBoxModel(title: title, value: check == 'true' ? true : false));
+    }
+    extern.clear();
+    for (int i = 54; i <= 57; i++) {
+      var splitted = saveChecklist[i].replaceAll("11", '').split('#');
       var title = splitted[0];
       var check = splitted[1];
       extern.add(
           CheckBoxModel(title: title, value: check == 'true' ? true : false));
     }
-    floor.clear();
-    for (int i = 52; i <= 55; i++) {
-      var splitted = saveChecklist[i].replaceAll("11", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      floor.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
     Intern.clear();
-    for (int i = 56; i <= 59; i++) {
+    for (int i = 58; i <= 61; i++) {
       var splitted = saveChecklist[i].replaceAll("12", '').split('#');
       var title = splitted[0];
       var check = splitted[1];
       Intern.add(
           CheckBoxModel(title: title, value: check == 'true' ? true : false));
     }
-    Windows.clear();
-    for (int i = 60; i <= 63; i++) {
+    floor.clear();
+    for (int i = 62; i <= 65; i++) {
       var splitted = saveChecklist[i].replaceAll("13", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      floor.add(
+          CheckBoxModel(title: title, value: check == 'true' ? true : false));
+    }
+
+    Windows.clear();
+    for (int i = 66; i <= 69; i++) {
+      var splitted = saveChecklist[i].replaceAll("14", '').split('#');
       var title = splitted[0];
       var check = splitted[1];
       Windows.add(
           CheckBoxModel(title: title, value: check == 'true' ? true : false));
     }
-    InternPaint.clear();
-    for (int i = 64; i <= 69; i++) {
-      var splitted = saveChecklist[i].replaceAll("14", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      InternPaint.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
+
     balcony.clear();
     for (int i = 70; i <= 74; i++) {
       var splitted = saveChecklist[i].replaceAll("15", '').split('#');
@@ -265,118 +270,133 @@ class _CheckList1State extends State<CheckList1> {
     }
 
     setState(() {
-      _controllerAge = TextEditingController(text: data?["age"]);
-      _controllerOpenArea = TextEditingController(text: data?["OpenArea"]);
-      _controllerClosedArea = TextEditingController(text: data?["ClosedArea"]);
+      _controllerAge = TextEditingController(text: data?["age"]??'');
+      _controllerOpenArea = TextEditingController(text: data?["OpenArea"]??'');
+      _controllerClosedArea = TextEditingController(text: data?["ClosedArea"]??'');
       _controllerTerrainArea =
-          TextEditingController(text: data?["TerrainArea"]);
-      _controllerPrice = TextEditingController(text: data?["price"]);
-      _controllerPathology = TextEditingController(text: data?["Pathology"]);
-      _controllerType = TextEditingController(text: data?["type"]);
-      _controllerInfra = TextEditingController(text: data?["infra"]);
-      _controllerSituation = TextEditingController(text: data?["situation"]);
-      _controllerQuota = TextEditingController(text: data?["quota"]);
-      _controllerPosition = TextEditingController(text: data?["unPosition"]);
-      _controllerRoof = TextEditingController(text: data?["roof"]);
-      _controllerWall = TextEditingController(text: data?["wall"]);
+          TextEditingController(text: data?["TerrainArea"]??'');
+      _controllerPrice = TextEditingController(text: data?["price"]??'');
+      _controllerPathology = TextEditingController(text: data?["Pathology"]??'');
+      _controllerType = TextEditingController(text: data?["type"]??'');
+      _controllerInfra = TextEditingController(text: data?["infra"]??'');
+      _controllerSituation = TextEditingController(text: data?["situation"]??'');
+      _controllerQuota = TextEditingController(text: data?["quota"]??'');
+      _controllerPosition = TextEditingController(text: data?["unPosition"]??'');
+      _controllerRoof = TextEditingController(text: data?["roof"]??'');
+      _controllerWall = TextEditingController(text: data?["wall"]??'');
       _controllerInternPaint =
-          TextEditingController(text: data?["internPaint"]);
-      _controllerPaint = TextEditingController(text: data?["externPaint"]);
-      _controllerExtern = TextEditingController(text: data?["externDoors"]);
-      _controllerFloor = TextEditingController(text: data?["floor"]);
-      _controllerIntern = TextEditingController(text: data?["internDoors"]);
-      _controllerWindows = TextEditingController(text: data?["windowns"]);
-      _controllerBalcony = TextEditingController(text: data?["balcony"]);
+          TextEditingController(text: data?["internPaint"]??'');
+      _controllerPaint = TextEditingController(text: data?["externPaint"]??'');
+      _controllerExtern = TextEditingController(text: data?["externDoors"]??'');
+      _controllerFloor = TextEditingController(text: data?["floor"]??'');
+      _controllerIntern = TextEditingController(text: data?["internDoors"]??'');
+      _controllerWindows = TextEditingController(text: data?["windowns"]??'');
+      _controllerBalcony = TextEditingController(text: data?["balcony"]??'');
       _controllerSwitchBoard =
-          TextEditingController(text: data?["switchboard"]);
-      _controllerKitchen = TextEditingController(text: data?["kitchen"]);
-      _controllerBathroom = TextEditingController(text: data?["bathroom"]);
-      _controllerTank = TextEditingController(text: data?["tank"]);
-      _controllerPattern = TextEditingController(text: data?["pattern"]);
-      _controllerState = TextEditingController(text: data?["state"]);
-      _controllerUnityRoof = TextEditingController(text: data?["unRoof"]);
-      _controllerBlock = TextEditingController(text: data?["block"]);
-      _controllerObs = TextEditingController(text: data?["obs"]);
+          TextEditingController(text: data?["switchboard"]??'');
+      _controllerKitchen = TextEditingController(text: data?["kitchen"]??'');
+      _controllerBathroom = TextEditingController(text: data?["bathroom"]??'');
+      _controllerTank = TextEditingController(text: data?["tank"]??'');
+      _controllerPattern = TextEditingController(text: data?["pattern"]??'');
+      _controllerState = TextEditingController(text: data?["state"]??'');
+      _controllerUnityRoof = TextEditingController(text: data?["unRoof"]??'');
+      _controllerBlock = TextEditingController(text: data?["block"]??'');
+      _controllerObs = TextEditingController(text: data?["obs"]??'');
 
-      selectedGoal = data?["Goal"];
-      selectedInfo = data?["Origin"];
-      SRoom = data?["rooms"];
-      SSocialBathroom = data?["socialbathrooms"];
-      SPrivateBathroom = data?["privatebathrooms"];
-      SLav = data?["lavs"];
-      SServiceBathroom = data?["servicebathrooms"];
-      SMaidRoom = data?["maidrooms"];
-      SBalcony = data?["balconys"];
-      SCompleteCabinets = data?["completecontainers"];
-      SKitchen = data?["kitchens"];
-      SRestRoom = data?["restrooms"];
-      SServiceAreaRoofed = data?["servicearearoofed"];
-      SServiceAreaUnroofed = data?["serviceareaunroofed"];
-      SClosedGarage = data?["garageroofed"];
-      SOpenGarage = data?["garageunroofed"];
-      SAc = data?["acs"];
-      SPool = data?["pools"];
+      _controllerRoom = TextEditingController(text: data?["rooms"]??'');
+      _controllerSocialBathroom = TextEditingController(text: data?["socialbathrooms"]??'');
+      _controllerPrivateBathroom = TextEditingController(text: data?["privatebathrooms"]??'');
+      _controllerServiceBathroom = TextEditingController(text: data?["servicebathrooms"]??'');
+      _controllerLavabos = TextEditingController(text: data?["lavs"]??'');
+      _controllerMaidRoom = TextEditingController(text: data?["maidrooms"]??'');
+      _controllerBalconys = TextEditingController(text: data?["balconys"]??'');
+      _controllerCompleteCabinets = TextEditingController(text: data?["completecontainers"]??'');
+      _controllerKitchens = TextEditingController(text: data?["kitchens"]??'');
+      _controllerRestRoom = TextEditingController(text: data?["restrooms"]??'');
+      _controllerServiceAreaRoofed = TextEditingController(text: data?["servicearearoofed"]??'');
+      _controllerServiceAreaUnRoofed = TextEditingController(text: data?["serviceareaunroofed"]??'');
+      _controllerClosedGarage = TextEditingController(text: data?["garageroofed"]??'');
+      _controllerOpenGarage = TextEditingController(text: data?["garageunroofed"]??'');
+      _controllerSac = TextEditingController(text: data?["acs"]??'');
+      _controllerPool = TextEditingController(text: data?["pools"]??'');
+      selectedGoal = data?["Goal"] ?? '';
+      selectedInfo = data?["Origin"] ?? '';
+      nRoom = int.parse(data?["rooms"] ?? '');
+      nSocialBathroom = int.parse(data?["socialbathrooms"] ?? '');
+      nPrivateBathroom = int.parse(data?["privatebathrooms"] ?? '');
+      nLav = int.parse(data?["lavs"] ?? '');
+      nServiceBathroom = int.parse(data?["servicebathrooms"] ?? '');
+      nMaidRoom = int.parse(data?["maidrooms"] ?? '');
+      nBalcony = int.parse(data?["balconys"] ?? '');
+      nCompleteCabinets = int.parse(data?["completecontainers"] ?? '');
+      nKitchen = int.parse(data?["kitchens"] ?? '');
+      nRestRoom = int.parse(data?["restrooms"] ?? '');
+      nServiceAreaRoofed = int.parse(data?["servicearearoofed"] ?? '');
+      nServiceAreaUnroofed = int.parse(data?["serviceareaunroofed"] ?? '');
+      nClosedGarage = int.parse(data?["garageroofed"] ?? '');
+      nOpenGarage = int.parse(data?["garageunroofed"] ?? '');
+      nAc = int.parse(data?["acs"] ?? '');
+      nPool = int.parse(data?["pools"] ?? '');
     });
   }
-  int nsurvey=0;
+
+  int nsurvey = 0;
   String title = '';
-  getOrder()async{
-    DocumentSnapshot snapshot = await db
-        .collection('surveyNumber')
-        .doc('surveyNumber')
-        .get();
+  getOrder() async {
+    DocumentSnapshot snapshot =
+        await db.collection('surveyNumber').doc('surveyNumber').get();
     Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
     setState(() {
       order = data?["surveyNumber"] ?? 0;
       title = '${order + 1}';
-
     });
-
   }
-  getNSurvey()async{
-    DocumentSnapshot snapshot = await db
-        .collection('surveys')
-        .doc(widget.idSurvey)
-        .get();
+
+  getNSurvey() async {
+    DocumentSnapshot snapshot =
+        await db.collection('surveys').doc(widget.idSurvey).get();
     Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
     setState(() {
       nsurvey = data?["Nsurvey"] ?? 0;
     });
-    if(nsurvey== 0){
+    if (nsurvey == 0) {
       getOrder();
-    }else{
+    } else {
       setState(() {
         title = '$nsurvey';
       });
-
     }
-
   }
+
   List<XFile>? imageFileList = [];
-  Future selectImages() async{
+  Future selectImages() async {
     int i = 0;
-    final List<XFile>? selectedImages = await ImagePicker().pickMultiImage(imageQuality: 30);
-    if(selectedImages!.isNotEmpty){
+    final List<XFile>? selectedImages =
+        await ImagePicker().pickMultiImage(imageQuality: 30);
+    if (selectedImages!.isNotEmpty) {
       imageFileList!.addAll(selectedImages);
     }
     setState(() {
       Navigator.of(context).pop();
-
     });
-    for (int i = 0; i <imageFileList!.length; i++) {
+    for (int i = 0; i < imageFileList!.length; i++) {
       _uploadImages(imageFileList![i]);
     }
   }
-  Future<void> _uploadImages(XFile file) async{
+
+  Future<void> _uploadImages(XFile file) async {
     print('chegou');
     int i = 0;
     Uint8List archive = await file.readAsBytes();
-    if(archive!.isNotEmpty){
+    if (archive!.isNotEmpty) {
       Reference pastaRaiz = storage.ref();
       Reference arquivo = pastaRaiz
           .child("surveys")
           .child(selectedText + "_" + DateTime.now().toString() + ".jpg");
-      await arquivo.putData(archive,SettableMetadata(contentType:'application/octet-stream')).then((upload) async {
+      await arquivo
+          .putData(archive,
+              SettableMetadata(contentType: 'application/octet-stream'))
+          .then((upload) async {
         upload.ref.getDownloadURL().then((value) {
           Map<String, dynamic> dateUpdate = {
             'photoUrl': FieldValue.arrayUnion([value.toString()]),
@@ -388,11 +408,9 @@ class _CheckList1State extends State<CheckList1> {
               .set(dateUpdate, SetOptions(merge: true));
         });
       });
-
-
     }
-
   }
+
   Future _savePhotoCamera() async {
     try {
       final image = await ImagePicker()
@@ -403,7 +421,6 @@ class _CheckList1State extends State<CheckList1> {
       setState(() {
         this.picture = imageTemporary;
         setState(() {
-
           Navigator.of(context).pop();
         });
         _uploadImage();
@@ -412,30 +429,24 @@ class _CheckList1State extends State<CheckList1> {
       print('Error : $e');
     }
   }
+
   Future _uploadImage() async {
     Reference pastaRaiz = storage.ref();
     Reference arquivo = pastaRaiz
         .child("surveys")
         .child(selectedText + "_" + DateTime.now().toString() + ".jpg");
 
-    await arquivo.putFile(picture!,SettableMetadata(contentType:'application/octet-stream')).then((value) async{
+    await arquivo
+        .putFile(
+            picture!, SettableMetadata(contentType: 'application/octet-stream'))
+        .then((value) async {
       value.ref.getDownloadURL().then((value) {
         setState(() {
           _urlPhoto = value;
         });
         _urlImageFirestore(value);
-
       });
-
-
-    }
-
-
-    );
-
-
-
-
+    });
   }
 
   _urlImageFirestore(String url) {
@@ -448,9 +459,7 @@ class _CheckList1State extends State<CheckList1> {
         .doc(widget.idSurvey)
         .set(dateUpdate, SetOptions(merge: true))
         .then((value) {
-      setState(() {
-
-      });
+      setState(() {});
     });
   }
 
@@ -466,22 +475,22 @@ class _CheckList1State extends State<CheckList1> {
   _UnitysTable() async {
     _unityModel.Goal = selectedGoal.toString();
     _unityModel.Origin = selectedInfo.toString();
-    _unityModel.rooms = SRoom;
-    _unityModel.socialbathrooms = SSocialBathroom;
-    _unityModel.privatebathrooms = SPrivateBathroom;
-    _unityModel.lavs = SLav;
-    _unityModel.servicebathrooms = SServiceBathroom;
-    _unityModel.maidrooms = SMaidRoom;
-    _unityModel.balconys = SBalcony;
-    _unityModel.completecontainers = SCompleteCabinets;
-    _unityModel.kitchens = SKitchen;
-    _unityModel.restrooms = SRestRoom;
-    _unityModel.servicearearoofed = SServiceAreaRoofed;
-    _unityModel.serviceareaunroofed = SServiceAreaUnroofed;
-    _unityModel.garageroofed = SClosedGarage;
-    _unityModel.garageunroofed = SOpenGarage;
-    _unityModel.acs = SAc;
-    _unityModel.pools = SPool;
+    _unityModel.rooms = _controllerRoom.text;
+    _unityModel.socialbathrooms = _controllerSocialBathroom.text;
+    _unityModel.privatebathrooms = _controllerPrivateBathroom.text;
+    _unityModel.lavs = _controllerLavabos.text;
+    _unityModel.servicebathrooms = _controllerServiceBathroom.text;
+    _unityModel.maidrooms = _controllerMaidRoom.text;
+    _unityModel.balconys = _controllerBalconys.text;
+    _unityModel.completecontainers = _controllerCompleteCabinets.text;
+    _unityModel.kitchens = _controllerKitchens.text;
+    _unityModel.restrooms = _controllerRestRoom.text;
+    _unityModel.servicearearoofed = _controllerServiceAreaRoofed.text;
+    _unityModel.serviceareaunroofed = _controllerServiceAreaUnRoofed.text;
+    _unityModel.garageroofed = _controllerClosedGarage.text;
+    _unityModel.garageunroofed = _controllerOpenGarage.text;
+    _unityModel.acs = _controllerSac.text;
+    _unityModel.pools = _controllerPool.text;
     _unityModel.age = _controllerAge.text;
     _unityModel.price = _controllerPrice.text;
     _unityModel.obs = _controllerObs.text;
@@ -554,36 +563,30 @@ class _CheckList1State extends State<CheckList1> {
     for (var i = 0; i < paint.length; i++) {
       saveChecklist.add(paint[i].title + '9' + '#' + paint[i].value.toString());
     }
+    for (var i = 0; i < InternPaint.length; i++) {
+      saveChecklist.add(
+          InternPaint[i].title + '10' + '#' + InternPaint[i].value.toString());
+    }
     for (var i = 0; i < extern.length; i++) {
       saveChecklist
-          .add(extern[i].title + '10' + '#' + extern[i].value.toString());
+          .add(extern[i].title + '11' + '#' + extern[i].value.toString());
     }
-
-    for (var i = 0; i < floor.length; i++) {
-      saveChecklist
-          .add(floor[i].title + '11' + '#' + floor[i].value.toString());
-    }
-
     for (var i = 0; i < Intern.length; i++) {
       saveChecklist
           .add(Intern[i].title + '12' + '#' + Intern[i].value.toString());
     }
-
+    for (var i = 0; i < floor.length; i++) {
+      saveChecklist
+          .add(floor[i].title + '13' + '#' + floor[i].value.toString());
+    }
     for (var i = 0; i < Windows.length; i++) {
       saveChecklist
-          .add(Windows[i].title + '13' + '#' + Windows[i].value.toString());
+          .add(Windows[i].title + '14' + '#' + Windows[i].value.toString());
     }
-
-    for (var i = 0; i < InternPaint.length; i++) {
-      saveChecklist.add(
-          InternPaint[i].title + '14' + '#' + InternPaint[i].value.toString());
-    }
-
     for (var i = 0; i < balcony.length; i++) {
       saveChecklist
           .add(balcony[i].title + '15' + '#' + balcony[i].value.toString());
     }
-
     for (var i = 0; i < switchboard.length; i++) {
       saveChecklist.add(
           switchboard[i].title + '16' + '#' + switchboard[i].value.toString());
@@ -893,73 +896,71 @@ class _CheckList1State extends State<CheckList1> {
               shape: CircleBorder(),
             ),
             child: IconButton(
-              icon: Icon(
-                Icons.camera_alt,
-                color: PaletteColors.primaryColor,
-              ),
-              constraints: BoxConstraints(
-                  minHeight: 28, minWidth: 28, maxHeight: 28, maxWidth: 28),
-              iconSize: 24.0,
-              padding: EdgeInsets.all(3.0),
+                icon: Icon(
+                  Icons.camera_alt,
+                  color: PaletteColors.primaryColor,
+                ),
+                constraints: BoxConstraints(
+                    minHeight: 28, minWidth: 28, maxHeight: 28, maxWidth: 28),
+                iconSize: 24.0,
+                padding: EdgeInsets.all(3.0),
                 onPressed: () => AlertModel().alert(
-                    'Selecionar foto  da:','',
-                    PaletteColors.primaryColor,
-                    PaletteColors.primaryColor,
-                    context,[
-                  Row(
-                    children: [
-                      SizedBox(width: width * 0.03),
-                      Container(
-                        width: width * 0.65,
-                        child: ButtonCustom(
-                          widthCustom: 0.65,
-                          heightCustom: 0.095,
-                          onPressed: () => _savePhotoCamera(),
-                          text: "Câmera",
-                          size: 20.0,
-                          colorButton: PaletteColors.primaryColor,
-                          colorText: PaletteColors.white,
-                          colorBorder: PaletteColors.primaryColor,
+                        'Selecionar foto  da:',
+                        '',
+                        PaletteColors.primaryColor,
+                        PaletteColors.primaryColor,
+                        context, [
+                      Row(
+                        children: [
+                          SizedBox(width: width * 0.03),
+                          Container(
+                            width: width * 0.65,
+                            child: ButtonCustom(
+                              widthCustom: 0.65,
+                              heightCustom: 0.095,
+                              onPressed: () => _savePhotoCamera(),
+                              text: "Câmera",
+                              size: 20.0,
+                              colorButton: PaletteColors.primaryColor,
+                              colorText: PaletteColors.white,
+                              colorBorder: PaletteColors.primaryColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: height * 0.055),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 75.0),
+                        child: Row(
+                          children: [
+                            SizedBox(width: width * 0.03),
+                            Container(
+                              width: width * 0.65,
+                              child: ButtonCustom(
+                                widthCustom: 0.65,
+                                heightCustom: 0.095,
+                                onPressed: () => selectImages(),
+                                text: "Galeria",
+                                size: 20.0,
+                                colorButton: PaletteColors.primaryColor,
+                                colorText: PaletteColors.white,
+                                colorBorder: PaletteColors.primaryColor,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
-                  SizedBox(height: height * 0.055),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 75.0),
-                    child: Row(
-                      children: [
-                        SizedBox(width: width * 0.03),
-                        Container(
-                          width: width * 0.65,
-                          child: ButtonCustom(
-                            widthCustom: 0.65,
-                            heightCustom: 0.095,
-                            onPressed: () => selectImages(),
-                            text: "Galeria",
-                            size: 20.0,
-                            colorButton: PaletteColors.primaryColor,
-                            colorText: PaletteColors.white,
-                            colorBorder: PaletteColors.primaryColor,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-
-                ]
-                )
-            ),
+                    ])),
           ),
           SizedBox(width: width * 0.04),
         ],
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(vertical: 24, horizontal: 26),
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        physics: ScrollPhysics(),
         child: Center(
-          child: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            physics: ScrollPhysics(),
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 24, horizontal: 26),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -1031,7 +1032,7 @@ class _CheckList1State extends State<CheckList1> {
                             Container(
                               width: width * 0.8,
                               child: TextCustom(
-                                  text: "Área Coberta",
+                                  text: "Área Coberta/Fechada",
                                   size: 14.0,
                                   color: PaletteColors.grey,
                                   fontWeight: FontWeight.bold),
@@ -1069,7 +1070,7 @@ class _CheckList1State extends State<CheckList1> {
                             Container(
                               width: width * 0.8,
                               child: TextCustom(
-                                  text: "Área Descoberta",
+                                  text: "Área Coberta/Aberta",
                                   size: 14.0,
                                   color: PaletteColors.grey,
                                   fontWeight: FontWeight.bold),
@@ -1107,7 +1108,7 @@ class _CheckList1State extends State<CheckList1> {
                             Container(
                               width: width * 0.8,
                               child: TextCustom(
-                                  text: "Área do Terreno",
+                                  text: "Área do Terreno/Testada",
                                   size: 14.0,
                                   color: PaletteColors.grey,
                                   fontWeight: FontWeight.bold),
@@ -1121,6 +1122,44 @@ class _CheckList1State extends State<CheckList1> {
                             sizeIcon: 0.0,
                             width: width * 0.2,
                             controller: _controllerTerrainArea,
+                            hint: "   ",
+                            fonts: 14.0,
+                            keyboardType: TextInputType.number,
+                            colorBorder: PaletteColors.greyInput,
+                            background: PaletteColors.greyInput,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(height: height * 0.03),
+                Row(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                              width: width * 0.8,
+                              child: TextCustom(
+                                  text: "Área Total",
+                                  size: 14.0,
+                                  color: PaletteColors.grey,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                        Container(
+                          width: width * 0.8,
+                          child: InputRegister(
+                            icons: Icons.height,
+                            sizeIcon: 0.0,
+                            width: width * 0.2,
+                            controller: _controllerTotalArea,
                             hint: "   ",
                             fonts: 14.0,
                             keyboardType: TextInputType.number,
@@ -2345,7 +2384,6 @@ class _CheckList1State extends State<CheckList1> {
                   thickness: 1,
                   color: PaletteColors.lightGrey,
                 ),
-
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -2373,8 +2411,8 @@ class _CheckList1State extends State<CheckList1> {
                             color: PaletteColors.midGrey,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(10),
-                                    bottomLeft: Radius.circular(10))),
+                                    topLeft: Radius.circular(5),
+                                    bottomLeft: Radius.circular(5))),
                           ),
                           child: IconButton(
                             icon: Icon(
@@ -2392,44 +2430,50 @@ class _CheckList1State extends State<CheckList1> {
                               setState(() {
                                 if (nRoom > 0) {
                                   nRoom = nRoom - 1;
-
                                   SRoom = "$nRoom";
+                                  _controllerRoom.text = SRoom;
                                 }
                               });
                             },
                           ),
                         ),
                         Container(
-                            alignment: Alignment.center,
-                            width: width * 0.12,
-                            height: 30,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(2.0)),
-                              // child: InputRegister(
-                              //   icons: Icons.height,
-                              //   sizeIcon: 0.0,
-                              //   width: width * 0.12,
-                              //   controller: _controllerNumber,
-                              //   hint: "01",
-                              //   fonts: 14.0,
-                              //   keyboardType: TextInputType.number,
-                              //   colorBorder: PaletteColors.greyInput,
-                              //   background: PaletteColors.greyInput,
-                              // ),
-                            child: TextCustom(
-                              text: SRoom,
-                              color: PaletteColors.grey,
-                              textAlign: TextAlign.center,
-                            )
 
+                          color: PaletteColors.greyInput,
+                          height: 28,
+                          width: width * 0.1,
+                          child: TextFormField(
+                            inputFormatters: [LengthLimitingTextInputFormatter(3)],
+                            onFieldSubmitted: (String value) {
+                              setState(() {
+                                SRoom = value;
+                                SRoom != ''?nRoom = int.parse(SRoom):nRoom = 0;
+                                _controllerRoom.text = '$nRoom';
+                              });
+                            },
+                            
+                            controller: _controllerRoom,
+                            keyboardType: TextInputType.number,
+                            textAlignVertical: TextAlignVertical.center,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.black54,
+                              fontSize: 14.0,
+
+                            ),
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+
+                            ),
+                          ),
                         ),
                         Ink(
                           decoration: ShapeDecoration(
                             color: PaletteColors.midGrey,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(10),
-                                    bottomRight: Radius.circular(10))),
+                                    topRight: Radius.circular(5),
+                                    bottomRight: Radius.circular(5))),
                           ),
                           child: IconButton(
                             icon: Icon(
@@ -2445,9 +2489,10 @@ class _CheckList1State extends State<CheckList1> {
                             padding: EdgeInsets.zero,
                             onPressed: () {
                               setState(() {
-                                if (nRoom >= 0) {
+                                if (nRoom >= 0 && nRoom < 999 ) {
                                   nRoom = nRoom + 1;
                                   SRoom = "$nRoom";
+                                  _controllerRoom.text = SRoom;
                                 }
                               });
                             },
@@ -2461,7 +2506,7 @@ class _CheckList1State extends State<CheckList1> {
                     Row(
                       children: [
                         TextCustom(
-                          text: "Banheiros sociais",
+                          text: "Banheiros Sociais",
                           size: 16.0,
                           color: PaletteColors.grey,
                           fontWeight: FontWeight.normal,
@@ -2473,8 +2518,8 @@ class _CheckList1State extends State<CheckList1> {
                             color: PaletteColors.midGrey,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(10),
-                                    bottomLeft: Radius.circular(10))),
+                                    topLeft: Radius.circular(5),
+                                    bottomLeft: Radius.circular(5))),
                           ),
                           child: IconButton(
                             icon: Icon(
@@ -2493,29 +2538,48 @@ class _CheckList1State extends State<CheckList1> {
                                 if (nSocialBathroom > 0) {
                                   nSocialBathroom = nSocialBathroom - 1;
                                   SSocialBathroom = "$nSocialBathroom";
+                                  _controllerSocialBathroom.text = SSocialBathroom;
                                 }
                               });
                             },
                           ),
                         ),
                         Container(
-                            alignment: Alignment.center,
-                            width: width * 0.12,
-                            height: 30,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(2.0)),
-                            child: TextCustom(
-                              text: SSocialBathroom,
-                              color: PaletteColors.grey,
-                              textAlign: TextAlign.center,
-                            )),
+                          color: PaletteColors.greyInput,
+                          height: 28,
+                          width: width * 0.1,
+                          child: TextFormField(
+                            inputFormatters: [LengthLimitingTextInputFormatter(3)],
+                            onFieldSubmitted: (String value) {
+                              setState(() {
+                                SSocialBathroom = value;
+                                SSocialBathroom != ''?nSocialBathroom = int.parse(SSocialBathroom):nSocialBathroom = 0;
+                                _controllerSocialBathroom.text = '$nSocialBathroom';
+                              });
+                            },
+                            controller: _controllerSocialBathroom,
+                            keyboardType: TextInputType.number,
+                            textAlignVertical: TextAlignVertical.center,
+                            textAlign: TextAlign.center,
+
+                            style: TextStyle(
+                              color: Colors.black54,
+                              fontSize: 14.0,
+
+                            ),
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+
+                            ),
+                          ),
+                        ),
                         Ink(
                           decoration: ShapeDecoration(
                             color: PaletteColors.midGrey,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(10),
-                                    bottomRight: Radius.circular(10))),
+                                    topRight: Radius.circular(5),
+                                    bottomRight: Radius.circular(5))),
                           ),
                           child: IconButton(
                             icon: Icon(
@@ -2531,9 +2595,10 @@ class _CheckList1State extends State<CheckList1> {
                             padding: EdgeInsets.zero,
                             onPressed: () {
                               setState(() {
-                                if (nSocialBathroom >= 0) {
+                                if (nSocialBathroom >= 0 && nSocialBathroom < 999) {
                                   nSocialBathroom = nSocialBathroom + 1;
                                   SSocialBathroom = "$nSocialBathroom";
+                                  _controllerSocialBathroom.text = SSocialBathroom;
                                 }
                               });
                             },
@@ -2543,11 +2608,11 @@ class _CheckList1State extends State<CheckList1> {
                     ),
                     SizedBox(
                       height: height * 0.03,
-                    ), //Banheiros sociais
+                    ),
                     Row(
                       children: [
                         TextCustom(
-                          text: "Banheiros privativos",
+                          text: "Banheiros Privativos",
                           size: 16.0,
                           color: PaletteColors.grey,
                           fontWeight: FontWeight.normal,
@@ -2559,8 +2624,8 @@ class _CheckList1State extends State<CheckList1> {
                             color: PaletteColors.midGrey,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(10),
-                                    bottomLeft: Radius.circular(10))),
+                                    topLeft: Radius.circular(5),
+                                    bottomLeft: Radius.circular(5))),
                           ),
                           child: IconButton(
                             icon: Icon(
@@ -2579,29 +2644,48 @@ class _CheckList1State extends State<CheckList1> {
                                 if (nPrivateBathroom > 0) {
                                   nPrivateBathroom = nPrivateBathroom - 1;
                                   SPrivateBathroom = "$nPrivateBathroom";
+                                  _controllerPrivateBathroom.text = SPrivateBathroom;
                                 }
                               });
                             },
                           ),
                         ),
                         Container(
-                            alignment: Alignment.center,
-                            width: width * 0.12,
-                            height: 30,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(2.0)),
-                            child: TextCustom(
-                              text: SPrivateBathroom,
-                              color: PaletteColors.grey,
-                              textAlign: TextAlign.center,
-                            )),
+                          color: PaletteColors.greyInput,
+                          height: 28,
+                          width: width * 0.1,
+                          child: TextFormField(
+                            inputFormatters: [LengthLimitingTextInputFormatter(3)],
+                            onFieldSubmitted: (String value) {
+                              setState(() {
+                                SPrivateBathroom = value;
+                                SPrivateBathroom != ''?nPrivateBathroom = int.parse(SPrivateBathroom):nPrivateBathroom = 0;
+                                _controllerPrivateBathroom.text = '$nPrivateBathroom';
+                              });
+                            },
+                            controller: _controllerPrivateBathroom,
+                            keyboardType: TextInputType.number,
+                            textAlignVertical: TextAlignVertical.center,
+                            textAlign: TextAlign.center,
+
+                            style: TextStyle(
+                              color: Colors.black54,
+                              fontSize: 14.0,
+
+                            ),
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+
+                            ),
+                          ),
+                        ),
                         Ink(
                           decoration: ShapeDecoration(
                             color: PaletteColors.midGrey,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(10),
-                                    bottomRight: Radius.circular(10))),
+                                    topRight: Radius.circular(5),
+                                    bottomRight: Radius.circular(5))),
                           ),
                           child: IconButton(
                             icon: Icon(
@@ -2617,10 +2701,10 @@ class _CheckList1State extends State<CheckList1> {
                             padding: EdgeInsets.zero,
                             onPressed: () {
                               setState(() {
-                                if (nPrivateBathroom >= 0) {
+                                if (nPrivateBathroom >= 0 && nPrivateBathroom < 999) {
                                   nPrivateBathroom = nPrivateBathroom + 1;
-
                                   SPrivateBathroom = "$nPrivateBathroom";
+                                  _controllerPrivateBathroom.text = SPrivateBathroom;
                                 }
                               });
                             },
@@ -2630,7 +2714,112 @@ class _CheckList1State extends State<CheckList1> {
                     ),
                     SizedBox(
                       height: height * 0.03,
-                    ), //Banheiros privativos
+                    ),
+                    Row(
+                      children: [
+                        TextCustom(
+                          text: "Banheiro de Serviço",
+                          size: 16.0,
+                          color: PaletteColors.grey,
+                          fontWeight: FontWeight.normal,
+                          textAlign: TextAlign.start,
+                        ),
+                        Spacer(),
+                        Ink(
+                          decoration: ShapeDecoration(
+                            color: PaletteColors.midGrey,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(5),
+                                    bottomLeft: Radius.circular(5))),
+                          ),
+                          child: IconButton(
+                            icon: Icon(
+                              Icons.remove,
+                              color: PaletteColors.grey,
+                            ),
+                            constraints: BoxConstraints(
+                                minHeight: 28,
+                                minWidth: 28,
+                                maxHeight: 28,
+                                maxWidth: 28),
+                            iconSize: 16.0,
+                            padding: EdgeInsets.zero,
+                            onPressed: () {
+                              setState(() {
+                                if (nServiceBathroom > 0) {
+                                  nServiceBathroom = nServiceBathroom - 1;
+                                  SServiceBathroom = "$nServiceBathroom";
+                                  _controllerServiceBathroom.text = SServiceBathroom;
+                                }
+                              });
+                            },
+                          ),
+                        ),
+                        Container(
+                          color: PaletteColors.greyInput,
+                          height: 28,
+                          width: width * 0.1,
+                          child: TextFormField(
+                            inputFormatters: [LengthLimitingTextInputFormatter(3)],
+                            onFieldSubmitted: (String value) {
+                              setState(() {
+                                SServiceBathroom = value;
+                                SServiceBathroom != ''?nServiceBathroom = int.parse(SServiceBathroom):nServiceBathroom = 0;
+                                _controllerServiceBathroom.text = '$nServiceBathroom';
+                              });
+                            },
+                            controller: _controllerServiceBathroom,
+                            keyboardType: TextInputType.number,
+                            textAlignVertical: TextAlignVertical.center,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.black54,
+                              fontSize: 14.0,
+
+                            ),
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+
+                            ),
+                          ),
+                        ),
+                        Ink(
+                          decoration: ShapeDecoration(
+                            color: PaletteColors.midGrey,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                    topRight: Radius.circular(5),
+                                    bottomRight: Radius.circular(5))),
+                          ),
+                          child: IconButton(
+                            icon: Icon(
+                              Icons.add,
+                              color: PaletteColors.grey,
+                            ),
+                            constraints: BoxConstraints(
+                                minHeight: 28,
+                                minWidth: 28,
+                                maxHeight: 28,
+                                maxWidth: 28),
+                            iconSize: 16.0,
+                            padding: EdgeInsets.zero,
+                            onPressed: () {
+                              setState(() {
+                                if (nServiceBathroom >= 0 && nServiceBathroom < 999) {
+                                  nServiceBathroom = nServiceBathroom + 1;
+                                  SServiceBathroom = "$nServiceBathroom";
+                                  _controllerServiceBathroom.text = SServiceBathroom;
+                                }
+                              });
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: height * 0.03,
+                    ),
                     Row(
                       children: [
                         TextCustom(
@@ -2646,8 +2835,8 @@ class _CheckList1State extends State<CheckList1> {
                             color: PaletteColors.midGrey,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(10),
-                                    bottomLeft: Radius.circular(10))),
+                                    topLeft: Radius.circular(5),
+                                    bottomLeft: Radius.circular(5))),
                           ),
                           child: IconButton(
                             icon: Icon(
@@ -2666,29 +2855,47 @@ class _CheckList1State extends State<CheckList1> {
                                 if (nLav > 0) {
                                   nLav = nLav - 1;
                                   SLav = "$nLav";
+                                  _controllerLavabos.text = SLav;
                                 }
                               });
                             },
                           ),
                         ),
                         Container(
-                            alignment: Alignment.center,
-                            width: width * 0.12,
-                            height: 30,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(2.0)),
-                            child: TextCustom(
-                              text: SLav,
-                              color: PaletteColors.grey,
-                              textAlign: TextAlign.center,
-                            )),
+                          color: PaletteColors.greyInput,
+                          height: 28,
+                          width: width * 0.1,
+                          child: TextFormField(
+                            inputFormatters: [LengthLimitingTextInputFormatter(3)],
+                            onFieldSubmitted: (String value) {
+                              setState(() {
+                                SLav = value;
+                                SLav != ''?nLav = int.parse(SLav):nLav = 0;
+                                _controllerLavabos.text = '$nLav';
+                              });
+                            },
+                            controller: _controllerLavabos,
+                            keyboardType: TextInputType.number,
+                            textAlignVertical: TextAlignVertical.center,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.black54,
+                              fontSize: 14.0,
+
+                            ),
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+
+                            ),
+                          ),
+                        ),
                         Ink(
                           decoration: ShapeDecoration(
                             color: PaletteColors.midGrey,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(10),
-                                    bottomRight: Radius.circular(10))),
+                                    topRight: Radius.circular(5),
+                                    bottomRight: Radius.circular(5))),
                           ),
                           child: IconButton(
                             icon: Icon(
@@ -2704,9 +2911,10 @@ class _CheckList1State extends State<CheckList1> {
                             padding: EdgeInsets.zero,
                             onPressed: () {
                               setState(() {
-                                if (nLav >= 0) {
+                                if (nLav >= 0 && nLav < 999) {
                                   nLav = nLav + 1;
                                   SLav = "$nLav";
+                                  _controllerLavabos.text = SLav;
                                 }
                               });
                             },
@@ -2716,11 +2924,11 @@ class _CheckList1State extends State<CheckList1> {
                     ),
                     SizedBox(
                       height: height * 0.03,
-                    ), //Lavabos
+                    ),
                     Row(
                       children: [
                         TextCustom(
-                          text: "Banheiro de serviço",
+                          text: "Quarto de Empregada",
                           size: 16.0,
                           color: PaletteColors.grey,
                           fontWeight: FontWeight.normal,
@@ -2732,94 +2940,8 @@ class _CheckList1State extends State<CheckList1> {
                             color: PaletteColors.midGrey,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(10),
-                                    bottomLeft: Radius.circular(10))),
-                          ),
-                          child: IconButton(
-                            icon: Icon(
-                              Icons.remove,
-                              color: PaletteColors.grey,
-                            ),
-                            constraints: BoxConstraints(
-                                minHeight: 28,
-                                minWidth: 28,
-                                maxHeight: 28,
-                                maxWidth: 28),
-                            iconSize: 16.0,
-                            padding: EdgeInsets.zero,
-                            onPressed: () {
-                              setState(() {
-                                if (nServiceBathroom > 0) {
-                                  nServiceBathroom = nServiceBathroom - 1;
-                                  SServiceBathroom = '$nServiceBathroom';
-                                }
-                              });
-                            },
-                          ),
-                        ),
-                        Container(
-                            alignment: Alignment.center,
-                            width: width * 0.12,
-                            height: 30,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(2.0)),
-                            child: TextCustom(
-                              text: SServiceBathroom,
-                              color: PaletteColors.grey,
-                              textAlign: TextAlign.center,
-                            )),
-                        Ink(
-                          decoration: ShapeDecoration(
-                            color: PaletteColors.midGrey,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(10),
-                                    bottomRight: Radius.circular(10))),
-                          ),
-                          child: IconButton(
-                            icon: Icon(
-                              Icons.add,
-                              color: PaletteColors.grey,
-                            ),
-                            constraints: BoxConstraints(
-                                minHeight: 28,
-                                minWidth: 28,
-                                maxHeight: 28,
-                                maxWidth: 28),
-                            iconSize: 16.0,
-                            padding: EdgeInsets.zero,
-                            onPressed: () {
-                              setState(() {
-                                if (nServiceBathroom >= 0) {
-                                  nServiceBathroom = nServiceBathroom + 1;
-                                  SServiceBathroom = '$nServiceBathroom';
-                                }
-                              });
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: height * 0.03,
-                    ), //Banheiro de serviço
-                    Row(
-                      children: [
-                        TextCustom(
-                          text: "Quarto de empregada",
-                          size: 16.0,
-                          color: PaletteColors.grey,
-                          fontWeight: FontWeight.normal,
-                          textAlign: TextAlign.start,
-                        ),
-                        Spacer(),
-                        Ink(
-                          decoration: ShapeDecoration(
-                            color: PaletteColors.midGrey,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(10),
-                                    bottomLeft: Radius.circular(10))),
+                                    topLeft: Radius.circular(5),
+                                    bottomLeft: Radius.circular(5))),
                           ),
                           child: IconButton(
                             icon: Icon(
@@ -2838,29 +2960,47 @@ class _CheckList1State extends State<CheckList1> {
                                 if (nMaidRoom > 0) {
                                   nMaidRoom = nMaidRoom - 1;
                                   SMaidRoom = "$nMaidRoom";
+                                  _controllerMaidRoom.text = SMaidRoom;
                                 }
                               });
                             },
                           ),
                         ),
                         Container(
-                            alignment: Alignment.center,
-                            width: width * 0.12,
-                            height: 30,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(2.0)),
-                            child: TextCustom(
-                              text: SMaidRoom,
-                              color: PaletteColors.grey,
-                              textAlign: TextAlign.center,
-                            )),
+                          color: PaletteColors.greyInput,
+                          height: 28,
+                          width: width * 0.1,
+                          child: TextFormField(
+                            inputFormatters: [LengthLimitingTextInputFormatter(3)],
+                            onFieldSubmitted: (String value) {
+                              setState(() {
+                                SMaidRoom = value;
+                                SMaidRoom != ''?nMaidRoom = int.parse(SMaidRoom):nMaidRoom = 0;
+                                _controllerMaidRoom.text = '$nMaidRoom';
+                              });
+                            },
+                            controller: _controllerMaidRoom,
+                            keyboardType: TextInputType.number,
+                            textAlignVertical: TextAlignVertical.center,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.black54,
+                              fontSize: 14.0,
+
+                            ),
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+
+                            ),
+                          ),
+                        ),
                         Ink(
                           decoration: ShapeDecoration(
                             color: PaletteColors.midGrey,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(10),
-                                    bottomRight: Radius.circular(10))),
+                                    topRight: Radius.circular(5),
+                                    bottomRight: Radius.circular(5))),
                           ),
                           child: IconButton(
                             icon: Icon(
@@ -2876,9 +3016,10 @@ class _CheckList1State extends State<CheckList1> {
                             padding: EdgeInsets.zero,
                             onPressed: () {
                               setState(() {
-                                if (nMaidRoom >= 0) {
+                                if (nMaidRoom >= 0 && nMaidRoom < 999) {
                                   nMaidRoom = nMaidRoom + 1;
-                                  SMaidRoom = '$nMaidRoom';
+                                  SMaidRoom = "$nMaidRoom";
+                                  _controllerMaidRoom.text = SMaidRoom;
                                 }
                               });
                             },
@@ -2888,11 +3029,11 @@ class _CheckList1State extends State<CheckList1> {
                     ),
                     SizedBox(
                       height: height * 0.03,
-                    ), //Quarto de empregada
+                    ),
                     Row(
                       children: [
                         TextCustom(
-                          text: "Varanda/Sacada",
+                          text: "Varanda / Sacada",
                           size: 16.0,
                           color: PaletteColors.grey,
                           fontWeight: FontWeight.normal,
@@ -2904,8 +3045,8 @@ class _CheckList1State extends State<CheckList1> {
                             color: PaletteColors.midGrey,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(10),
-                                    bottomLeft: Radius.circular(10))),
+                                    topLeft: Radius.circular(5),
+                                    bottomLeft: Radius.circular(5))),
                           ),
                           child: IconButton(
                             icon: Icon(
@@ -2924,29 +3065,47 @@ class _CheckList1State extends State<CheckList1> {
                                 if (nBalcony > 0) {
                                   nBalcony = nBalcony - 1;
                                   SBalcony = "$nBalcony";
+                                  _controllerBalconys.text = SBalcony;
                                 }
                               });
                             },
                           ),
                         ),
                         Container(
-                            alignment: Alignment.center,
-                            width: width * 0.12,
-                            height: 30,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(2.0)),
-                            child: TextCustom(
-                              text: SBalcony,
-                              color: PaletteColors.grey,
-                              textAlign: TextAlign.center,
-                            )),
+                          color: PaletteColors.greyInput,
+                          height: 28,
+                          width: width * 0.1,
+                          child: TextFormField(
+                            inputFormatters: [LengthLimitingTextInputFormatter(3)],
+                            onFieldSubmitted: (String value) {
+                              setState(() {
+                                SBalcony = value;
+                                SBalcony != ''?nBalcony = int.parse(SBalcony):nBalcony = 0;
+                                _controllerBalconys.text = '$nBalcony';
+                              });
+                            },
+                            controller: _controllerBalconys,
+                            keyboardType: TextInputType.number,
+                            textAlignVertical: TextAlignVertical.center,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.black54,
+                              fontSize: 14.0,
+
+                            ),
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+
+                            ),
+                          ),
+                        ),
                         Ink(
                           decoration: ShapeDecoration(
                             color: PaletteColors.midGrey,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(10),
-                                    bottomRight: Radius.circular(10))),
+                                    topRight: Radius.circular(5),
+                                    bottomRight: Radius.circular(5))),
                           ),
                           child: IconButton(
                             icon: Icon(
@@ -2962,9 +3121,10 @@ class _CheckList1State extends State<CheckList1> {
                             padding: EdgeInsets.zero,
                             onPressed: () {
                               setState(() {
-                                if (nBalcony >= 0) {
+                                if (nBalcony >= 0 && nBalcony < 999) {
                                   nBalcony = nBalcony + 1;
                                   SBalcony = "$nBalcony";
+                                  _controllerBalconys.text = SBalcony;
                                 }
                               });
                             },
@@ -2974,18 +3134,15 @@ class _CheckList1State extends State<CheckList1> {
                     ),
                     SizedBox(
                       height: height * 0.03,
-                    ), //Varanda/sacada
+                    ),
                     Row(
                       children: [
-                        Container(
-                          width: width * 0.4,
-                          child: TextCustom(
-                            text: "Número de armários completos",
-                            size: 16.0,
-                            color: PaletteColors.grey,
-                            fontWeight: FontWeight.normal,
-                            textAlign: TextAlign.start,
-                          ),
+                        TextCustom(
+                          text: "Nº Armários Completos",
+                          size: 16.0,
+                          color: PaletteColors.grey,
+                          fontWeight: FontWeight.normal,
+                          textAlign: TextAlign.start,
                         ),
                         Spacer(),
                         Ink(
@@ -2993,8 +3150,8 @@ class _CheckList1State extends State<CheckList1> {
                             color: PaletteColors.midGrey,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(10),
-                                    bottomLeft: Radius.circular(10))),
+                                    topLeft: Radius.circular(5),
+                                    bottomLeft: Radius.circular(5))),
                           ),
                           child: IconButton(
                             icon: Icon(
@@ -3013,29 +3170,47 @@ class _CheckList1State extends State<CheckList1> {
                                 if (nCompleteCabinets > 0) {
                                   nCompleteCabinets = nCompleteCabinets - 1;
                                   SCompleteCabinets = "$nCompleteCabinets";
+                                  _controllerCompleteCabinets.text = SCompleteCabinets;
                                 }
                               });
                             },
                           ),
                         ),
                         Container(
-                            alignment: Alignment.center,
-                            width: width * 0.12,
-                            height: 30,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(2.0)),
-                            child: TextCustom(
-                              text: SCompleteCabinets,
-                              color: PaletteColors.grey,
-                              textAlign: TextAlign.center,
-                            )),
+                          color: PaletteColors.greyInput,
+                          height: 28,
+                          width: width * 0.1,
+                          child: TextFormField(
+                            inputFormatters: [LengthLimitingTextInputFormatter(3)],
+                            onFieldSubmitted: (String value) {
+                              setState(() {
+                                SCompleteCabinets = value;
+                                SCompleteCabinets != ''?nCompleteCabinets = int.parse(SCompleteCabinets):nCompleteCabinets = 0;
+                                _controllerCompleteCabinets.text = '$nCompleteCabinets';
+                              });
+                            },
+                            controller: _controllerCompleteCabinets,
+                            keyboardType: TextInputType.number,
+                            textAlignVertical: TextAlignVertical.center,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.black54,
+                              fontSize: 14.0,
+
+                            ),
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+
+                            ),
+                          ),
+                        ),
                         Ink(
                           decoration: ShapeDecoration(
                             color: PaletteColors.midGrey,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(10),
-                                    bottomRight: Radius.circular(10))),
+                                    topRight: Radius.circular(5),
+                                    bottomRight: Radius.circular(5))),
                           ),
                           child: IconButton(
                             icon: Icon(
@@ -3051,9 +3226,10 @@ class _CheckList1State extends State<CheckList1> {
                             padding: EdgeInsets.zero,
                             onPressed: () {
                               setState(() {
-                                if (nCompleteCabinets >= 0) {
+                                if (nCompleteCabinets >= 0 && nCompleteCabinets < 999) {
                                   nCompleteCabinets = nCompleteCabinets + 1;
                                   SCompleteCabinets = "$nCompleteCabinets";
+                                  _controllerCompleteCabinets.text = SCompleteCabinets;
                                 }
                               });
                             },
@@ -3063,7 +3239,7 @@ class _CheckList1State extends State<CheckList1> {
                     ),
                     SizedBox(
                       height: height * 0.03,
-                    ), //Numero de armarios completos
+                    ),
                     Row(
                       children: [
                         TextCustom(
@@ -3079,8 +3255,8 @@ class _CheckList1State extends State<CheckList1> {
                             color: PaletteColors.midGrey,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(10),
-                                    bottomLeft: Radius.circular(10))),
+                                    topLeft: Radius.circular(5),
+                                    bottomLeft: Radius.circular(5))),
                           ),
                           child: IconButton(
                             icon: Icon(
@@ -3099,29 +3275,47 @@ class _CheckList1State extends State<CheckList1> {
                                 if (nKitchen > 0) {
                                   nKitchen = nKitchen - 1;
                                   SKitchen = "$nKitchen";
+                                  _controllerKitchens.text = SKitchen;
                                 }
                               });
                             },
                           ),
                         ),
                         Container(
-                            alignment: Alignment.center,
-                            width: width * 0.12,
-                            height: 30,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(2.0)),
-                            child: TextCustom(
-                              text: SKitchen,
-                              color: PaletteColors.grey,
-                              textAlign: TextAlign.center,
-                            )),
+                          color: PaletteColors.greyInput,
+                          height: 28,
+                          width: width * 0.1,
+                          child: TextFormField(
+                            inputFormatters: [LengthLimitingTextInputFormatter(3)],
+                            onFieldSubmitted: (String value) {
+                              setState(() {
+                                SKitchen = value;
+                                SKitchen != ''?nKitchen = int.parse(SKitchen):nKitchen = 0;
+                                _controllerKitchens.text = '$nKitchen';
+                              });
+                            },
+                            controller: _controllerKitchens,
+                            keyboardType: TextInputType.number,
+                            textAlignVertical: TextAlignVertical.center,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.black54,
+                              fontSize: 14.0,
+
+                            ),
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+
+                            ),
+                          ),
+                        ),
                         Ink(
                           decoration: ShapeDecoration(
                             color: PaletteColors.midGrey,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(10),
-                                    bottomRight: Radius.circular(10))),
+                                    topRight: Radius.circular(5),
+                                    bottomRight: Radius.circular(5))),
                           ),
                           child: IconButton(
                             icon: Icon(
@@ -3137,9 +3331,10 @@ class _CheckList1State extends State<CheckList1> {
                             padding: EdgeInsets.zero,
                             onPressed: () {
                               setState(() {
-                                if (nKitchen >= 0) {
+                                if (nKitchen >= 0 && nKitchen < 999) {
                                   nKitchen = nKitchen + 1;
                                   SKitchen = "$nKitchen";
+                                  _controllerKitchens.text = SKitchen;
                                 }
                               });
                             },
@@ -3149,7 +3344,7 @@ class _CheckList1State extends State<CheckList1> {
                     ),
                     SizedBox(
                       height: height * 0.03,
-                    ), //Cozinha
+                    ),
                     Row(
                       children: [
                         TextCustom(
@@ -3165,8 +3360,8 @@ class _CheckList1State extends State<CheckList1> {
                             color: PaletteColors.midGrey,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(10),
-                                    bottomLeft: Radius.circular(10))),
+                                    topLeft: Radius.circular(5),
+                                    bottomLeft: Radius.circular(5))),
                           ),
                           child: IconButton(
                             icon: Icon(
@@ -3185,29 +3380,47 @@ class _CheckList1State extends State<CheckList1> {
                                 if (nRestRoom > 0) {
                                   nRestRoom = nRestRoom - 1;
                                   SRestRoom = "$nRestRoom";
+                                  _controllerRestRoom.text = SRestRoom;
                                 }
                               });
                             },
                           ),
                         ),
                         Container(
-                            alignment: Alignment.center,
-                            width: width * 0.12,
-                            height: 30,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(2.0)),
-                            child: TextCustom(
-                              text: SRestRoom,
-                              color: PaletteColors.grey,
-                              textAlign: TextAlign.center,
-                            )),
+                          color: PaletteColors.greyInput,
+                          height: 28,
+                          width: width * 0.1,
+                          child: TextFormField(
+                            inputFormatters: [LengthLimitingTextInputFormatter(3)],
+                            onFieldSubmitted: (String value) {
+                              setState(() {
+                                SRestRoom = value;
+                                SRestRoom != ''?nRestRoom = int.parse(SRestRoom):nRestRoom = 0;
+                                _controllerRestRoom.text = '$nRestRoom';
+                              });
+                            },
+                            controller: _controllerRestRoom,
+                            keyboardType: TextInputType.number,
+                            textAlignVertical: TextAlignVertical.center,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.black54,
+                              fontSize: 14.0,
+
+                            ),
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+
+                            ),
+                          ),
+                        ),
                         Ink(
                           decoration: ShapeDecoration(
                             color: PaletteColors.midGrey,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(10),
-                                    bottomRight: Radius.circular(10))),
+                                    topRight: Radius.circular(5),
+                                    bottomRight: Radius.circular(5))),
                           ),
                           child: IconButton(
                             icon: Icon(
@@ -3223,9 +3436,10 @@ class _CheckList1State extends State<CheckList1> {
                             padding: EdgeInsets.zero,
                             onPressed: () {
                               setState(() {
-                                if (nRestRoom >= 0) {
+                                if (nKitchen >= 0 && nKitchen < 999) {
                                   nRestRoom = nRestRoom + 1;
                                   SRestRoom = "$nRestRoom";
+                                  _controllerRestRoom.text = SRestRoom;
                                 }
                               });
                             },
@@ -3235,18 +3449,15 @@ class _CheckList1State extends State<CheckList1> {
                     ),
                     SizedBox(
                       height: height * 0.03,
-                    ), //Sala
+                    ),
                     Row(
                       children: [
-                        Container(
-                          width: width * 0.4,
-                          child: TextCustom(
-                            text: "Área de serviço coberto",
-                            size: 16.0,
-                            color: PaletteColors.grey,
-                            fontWeight: FontWeight.normal,
-                            textAlign: TextAlign.start,
-                          ),
+                        TextCustom(
+                          text: "Área de Serviço\nCoberta",
+                          size: 16.0,
+                          color: PaletteColors.grey,
+                          fontWeight: FontWeight.normal,
+                          textAlign: TextAlign.start,
                         ),
                         Spacer(),
                         Ink(
@@ -3254,8 +3465,8 @@ class _CheckList1State extends State<CheckList1> {
                             color: PaletteColors.midGrey,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(10),
-                                    bottomLeft: Radius.circular(10))),
+                                    topLeft: Radius.circular(5),
+                                    bottomLeft: Radius.circular(5))),
                           ),
                           child: IconButton(
                             icon: Icon(
@@ -3274,29 +3485,47 @@ class _CheckList1State extends State<CheckList1> {
                                 if (nServiceAreaRoofed > 0) {
                                   nServiceAreaRoofed = nServiceAreaRoofed - 1;
                                   SServiceAreaRoofed = "$nServiceAreaRoofed";
+                                  _controllerServiceAreaRoofed.text = SServiceAreaRoofed;
                                 }
                               });
                             },
                           ),
                         ),
                         Container(
-                            alignment: Alignment.center,
-                            width: width * 0.12,
-                            height: 30,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(2.0)),
-                            child: TextCustom(
-                              text: SServiceAreaRoofed,
-                              color: PaletteColors.grey,
-                              textAlign: TextAlign.center,
-                            )),
+                          color: PaletteColors.greyInput,
+                          height: 28,
+                          width: width * 0.1,
+                          child: TextFormField(
+                            inputFormatters: [LengthLimitingTextInputFormatter(3)],
+                            onFieldSubmitted: (String value) {
+                              setState(() {
+                                SServiceAreaRoofed = value;
+                                SServiceAreaRoofed != ''?nServiceAreaRoofed = int.parse(SServiceAreaRoofed):nServiceAreaRoofed = 0;
+                                _controllerRestRoom.text = '$nServiceAreaRoofed';
+                              });
+                            },
+                            controller: _controllerServiceAreaRoofed,
+                            keyboardType: TextInputType.number,
+                            textAlignVertical: TextAlignVertical.center,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.black54,
+                              fontSize: 14.0,
+
+                            ),
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+
+                            ),
+                          ),
+                        ),
                         Ink(
                           decoration: ShapeDecoration(
                             color: PaletteColors.midGrey,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(10),
-                                    bottomRight: Radius.circular(10))),
+                                    topRight: Radius.circular(5),
+                                    bottomRight: Radius.circular(5))),
                           ),
                           child: IconButton(
                             icon: Icon(
@@ -3312,9 +3541,10 @@ class _CheckList1State extends State<CheckList1> {
                             padding: EdgeInsets.zero,
                             onPressed: () {
                               setState(() {
-                                if (nServiceAreaRoofed >= 0) {
+                                if (nServiceAreaRoofed >= 0 && nServiceAreaRoofed < 999) {
                                   nServiceAreaRoofed = nServiceAreaRoofed + 1;
                                   SServiceAreaRoofed = "$nServiceAreaRoofed";
+                                  _controllerServiceAreaRoofed.text = SServiceAreaRoofed;
                                 }
                               });
                             },
@@ -3324,18 +3554,16 @@ class _CheckList1State extends State<CheckList1> {
                     ),
                     SizedBox(
                       height: height * 0.03,
-                    ), //Area de serviço coberto
+                    ),
                     Row(
                       children: [
-                        Container(
-                          width: width * 0.4,
-                          child: TextCustom(
-                            text: "Área de serviço descoberta",
-                            size: 16.0,
-                            color: PaletteColors.grey,
-                            fontWeight: FontWeight.normal,
-                            textAlign: TextAlign.start,
-                          ),
+                        TextCustom(
+                          text: "Área de Serviço\nDescoberta",
+                          size: 16.0,
+                          color: PaletteColors.grey,
+                          fontWeight: FontWeight.normal,
+                          textAlign: TextAlign.start,
+                          maxLines: 2,
                         ),
                         Spacer(),
                         Ink(
@@ -3343,8 +3571,8 @@ class _CheckList1State extends State<CheckList1> {
                             color: PaletteColors.midGrey,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(10),
-                                    bottomLeft: Radius.circular(10))),
+                                    topLeft: Radius.circular(5),
+                                    bottomLeft: Radius.circular(5))),
                           ),
                           child: IconButton(
                             icon: Icon(
@@ -3361,33 +3589,49 @@ class _CheckList1State extends State<CheckList1> {
                             onPressed: () {
                               setState(() {
                                 if (nServiceAreaUnroofed > 0) {
-                                  nServiceAreaUnroofed =
-                                      nServiceAreaUnroofed - 1;
-                                  SServiceAreaUnroofed =
-                                      "$nServiceAreaUnroofed";
+                                  nServiceAreaUnroofed = nServiceAreaUnroofed - 1;
+                                  SServiceAreaUnroofed = "$nServiceAreaUnroofed";
+                                  _controllerServiceAreaUnRoofed.text = SServiceAreaUnroofed;
                                 }
                               });
                             },
                           ),
                         ),
                         Container(
-                            alignment: Alignment.center,
-                            width: width * 0.12,
-                            height: 30,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(2.0)),
-                            child: TextCustom(
-                              text: SServiceAreaUnroofed,
-                              color: PaletteColors.grey,
-                              textAlign: TextAlign.center,
-                            )),
+                          color: PaletteColors.greyInput,
+                          height: 28,
+                          width: width * 0.1,
+                          child: TextFormField(
+                            inputFormatters: [LengthLimitingTextInputFormatter(3)],
+                            onFieldSubmitted: (String value) {
+                              setState(() {
+                                SServiceAreaUnroofed = value;
+                                SServiceAreaUnroofed != ''?nServiceAreaUnroofed = int.parse(SServiceAreaUnroofed):nServiceAreaUnroofed = 0;
+                                _controllerServiceAreaUnRoofed.text = '$nServiceAreaUnroofed';
+                              });
+                            },
+                            controller: _controllerServiceAreaUnRoofed,
+                            keyboardType: TextInputType.number,
+                            textAlignVertical: TextAlignVertical.center,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.black54,
+                              fontSize: 14.0,
+
+                            ),
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+
+                            ),
+                          ),
+                        ),
                         Ink(
                           decoration: ShapeDecoration(
                             color: PaletteColors.midGrey,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(10),
-                                    bottomRight: Radius.circular(10))),
+                                    topRight: Radius.circular(5),
+                                    bottomRight: Radius.circular(5))),
                           ),
                           child: IconButton(
                             icon: Icon(
@@ -3403,11 +3647,10 @@ class _CheckList1State extends State<CheckList1> {
                             padding: EdgeInsets.zero,
                             onPressed: () {
                               setState(() {
-                                if (nServiceAreaUnroofed >= 0) {
-                                  nServiceAreaUnroofed =
-                                      nServiceAreaUnroofed + 1;
-                                  SServiceAreaUnroofed =
-                                      "$nServiceAreaUnroofed";
+                                if (nServiceAreaUnroofed >= 0 && nServiceAreaUnroofed < 999) {
+                                  nServiceAreaUnroofed = nServiceAreaUnroofed + 1;
+                                  SServiceAreaUnroofed = "$nServiceAreaUnroofed";
+                                  _controllerServiceAreaUnRoofed.text = SServiceAreaUnroofed;
                                 }
                               });
                             },
@@ -3417,18 +3660,16 @@ class _CheckList1State extends State<CheckList1> {
                     ),
                     SizedBox(
                       height: height * 0.03,
-                    ), //Area de serviço descoberto
+                    ),
                     Row(
                       children: [
-                        Container(
-                          width: width * 0.4,
-                          child: TextCustom(
-                            text: "Garagem coberta",
-                            size: 16.0,
-                            color: PaletteColors.grey,
-                            fontWeight: FontWeight.normal,
-                            textAlign: TextAlign.start,
-                          ),
+                        TextCustom(
+                          text: "Garagem Coberta",
+                          size: 16.0,
+                          color: PaletteColors.grey,
+                          fontWeight: FontWeight.normal,
+                          textAlign: TextAlign.start,
+                          maxLines: 2,
                         ),
                         Spacer(),
                         Ink(
@@ -3436,8 +3677,8 @@ class _CheckList1State extends State<CheckList1> {
                             color: PaletteColors.midGrey,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(10),
-                                    bottomLeft: Radius.circular(10))),
+                                    topLeft: Radius.circular(5),
+                                    bottomLeft: Radius.circular(5))),
                           ),
                           child: IconButton(
                             icon: Icon(
@@ -3456,29 +3697,47 @@ class _CheckList1State extends State<CheckList1> {
                                 if (nOpenGarage > 0) {
                                   nOpenGarage = nOpenGarage - 1;
                                   SOpenGarage = "$nOpenGarage";
+                                  _controllerOpenGarage.text = SOpenGarage;
                                 }
                               });
                             },
                           ),
                         ),
                         Container(
-                            alignment: Alignment.center,
-                            width: width * 0.12,
-                            height: 30,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(2.0)),
-                            child: TextCustom(
-                              text: SOpenGarage,
-                              color: PaletteColors.grey,
-                              textAlign: TextAlign.center,
-                            )),
+                          color: PaletteColors.greyInput,
+                          height: 28,
+                          width: width * 0.1,
+                          child: TextFormField(
+                            inputFormatters: [LengthLimitingTextInputFormatter(3)],
+                            onFieldSubmitted: (String value) {
+                              setState(() {
+                                SOpenGarage = value;
+                                SOpenGarage != ''?nOpenGarage = int.parse(SOpenGarage):nOpenGarage = 0;
+                                _controllerOpenGarage.text = '$nOpenGarage';
+                              });
+                            },
+                            controller: _controllerOpenGarage,
+                            keyboardType: TextInputType.number,
+                            textAlignVertical: TextAlignVertical.center,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.black54,
+                              fontSize: 14.0,
+
+                            ),
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+
+                            ),
+                          ),
+                        ),
                         Ink(
                           decoration: ShapeDecoration(
                             color: PaletteColors.midGrey,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(10),
-                                    bottomRight: Radius.circular(10))),
+                                    topRight: Radius.circular(5),
+                                    bottomRight: Radius.circular(5))),
                           ),
                           child: IconButton(
                             icon: Icon(
@@ -3494,9 +3753,10 @@ class _CheckList1State extends State<CheckList1> {
                             padding: EdgeInsets.zero,
                             onPressed: () {
                               setState(() {
-                                if (nOpenGarage >= 0) {
+                                if (nOpenGarage >= 0 && nOpenGarage < 999) {
                                   nOpenGarage = nOpenGarage + 1;
                                   SOpenGarage = "$nOpenGarage";
+                                  _controllerOpenGarage.text = SOpenGarage;
                                 }
                               });
                             },
@@ -3506,7 +3766,7 @@ class _CheckList1State extends State<CheckList1> {
                     ),
                     SizedBox(
                       height: height * 0.03,
-                    ), //Garagem Coberta
+                    ),
                     Row(
                       children: [
                         TextCustom(
@@ -3515,6 +3775,7 @@ class _CheckList1State extends State<CheckList1> {
                           color: PaletteColors.grey,
                           fontWeight: FontWeight.normal,
                           textAlign: TextAlign.start,
+                          maxLines: 2,
                         ),
                         Spacer(),
                         Ink(
@@ -3522,8 +3783,8 @@ class _CheckList1State extends State<CheckList1> {
                             color: PaletteColors.midGrey,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(10),
-                                    bottomLeft: Radius.circular(10))),
+                                    topLeft: Radius.circular(5),
+                                    bottomLeft: Radius.circular(5))),
                           ),
                           child: IconButton(
                             icon: Icon(
@@ -3542,29 +3803,47 @@ class _CheckList1State extends State<CheckList1> {
                                 if (nClosedGarage > 0) {
                                   nClosedGarage = nClosedGarage - 1;
                                   SClosedGarage = "$nClosedGarage";
+                                  _controllerClosedGarage.text = SClosedGarage;
                                 }
                               });
                             },
                           ),
                         ),
                         Container(
-                            alignment: Alignment.center,
-                            width: width * 0.12,
-                            height: 30,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(2.0)),
-                            child: TextCustom(
-                              text: SClosedGarage,
-                              color: PaletteColors.grey,
-                              textAlign: TextAlign.center,
-                            )),
+                          color: PaletteColors.greyInput,
+                          height: 28,
+                          width: width * 0.1,
+                          child: TextFormField(
+                            inputFormatters: [LengthLimitingTextInputFormatter(3)],
+                            onFieldSubmitted: (String value) {
+                              setState(() {
+                                SClosedGarage = value;
+                                SClosedGarage != ''?nClosedGarage = int.parse(SClosedGarage):nClosedGarage = 0;
+                                _controllerClosedGarage.text = '$nClosedGarage';
+                              });
+                            },
+                            controller: _controllerClosedGarage,
+                            keyboardType: TextInputType.number,
+                            textAlignVertical: TextAlignVertical.center,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.black54,
+                              fontSize: 14.0,
+
+                            ),
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+
+                            ),
+                          ),
+                        ),
                         Ink(
                           decoration: ShapeDecoration(
                             color: PaletteColors.midGrey,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(10),
-                                    bottomRight: Radius.circular(10))),
+                                    topRight: Radius.circular(5),
+                                    bottomRight: Radius.circular(5))),
                           ),
                           child: IconButton(
                             icon: Icon(
@@ -3580,9 +3859,10 @@ class _CheckList1State extends State<CheckList1> {
                             padding: EdgeInsets.zero,
                             onPressed: () {
                               setState(() {
-                                if (nClosedGarage >= 0) {
+                                if (nClosedGarage >= 0 && nClosedGarage < 999) {
                                   nClosedGarage = nClosedGarage + 1;
                                   SClosedGarage = "$nClosedGarage";
+                                  _controllerClosedGarage.text = SClosedGarage;
                                 }
                               });
                             },
@@ -3592,7 +3872,7 @@ class _CheckList1State extends State<CheckList1> {
                     ),
                     SizedBox(
                       height: height * 0.03,
-                    ), //Garagem Descoberta
+                    ),
                     Row(
                       children: [
                         TextCustom(
@@ -3601,6 +3881,7 @@ class _CheckList1State extends State<CheckList1> {
                           color: PaletteColors.grey,
                           fontWeight: FontWeight.normal,
                           textAlign: TextAlign.start,
+                          maxLines: 2,
                         ),
                         Spacer(),
                         Ink(
@@ -3608,8 +3889,8 @@ class _CheckList1State extends State<CheckList1> {
                             color: PaletteColors.midGrey,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(10),
-                                    bottomLeft: Radius.circular(10))),
+                                    topLeft: Radius.circular(5),
+                                    bottomLeft: Radius.circular(5))),
                           ),
                           child: IconButton(
                             icon: Icon(
@@ -3628,29 +3909,47 @@ class _CheckList1State extends State<CheckList1> {
                                 if (nAc > 0) {
                                   nAc = nAc - 1;
                                   SAc = "$nAc";
+                                  _controllerSac.text = SAc;
                                 }
                               });
                             },
                           ),
                         ),
                         Container(
-                            alignment: Alignment.center,
-                            width: width * 0.12,
-                            height: 30,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(2.0)),
-                            child: TextCustom(
-                              text: SAc,
-                              color: PaletteColors.grey,
-                              textAlign: TextAlign.center,
-                            )),
+                          color: PaletteColors.greyInput,
+                          height: 28,
+                          width: width * 0.1,
+                          child: TextFormField(
+                            inputFormatters: [LengthLimitingTextInputFormatter(3)],
+                            onFieldSubmitted: (String value) {
+                              setState(() {
+                                SAc = value;
+                                SAc != ''?nAc = int.parse(SAc):nAc = 0;
+                                _controllerSac.text = '$nAc';
+                              });
+                            },
+                            controller: _controllerSac,
+                            keyboardType: TextInputType.number,
+                            textAlignVertical: TextAlignVertical.center,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.black54,
+                              fontSize: 14.0,
+
+                            ),
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+
+                            ),
+                          ),
+                        ),
                         Ink(
                           decoration: ShapeDecoration(
                             color: PaletteColors.midGrey,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(10),
-                                    bottomRight: Radius.circular(10))),
+                                    topRight: Radius.circular(5),
+                                    bottomRight: Radius.circular(5))),
                           ),
                           child: IconButton(
                             icon: Icon(
@@ -3666,9 +3965,10 @@ class _CheckList1State extends State<CheckList1> {
                             padding: EdgeInsets.zero,
                             onPressed: () {
                               setState(() {
-                                if (nAc >= 0) {
+                                if (nAc >= 0 && nAc < 999) {
                                   nAc = nAc + 1;
                                   SAc = "$nAc";
+                                  _controllerSac.text = SAc;
                                 }
                               });
                             },
@@ -3678,7 +3978,7 @@ class _CheckList1State extends State<CheckList1> {
                     ),
                     SizedBox(
                       height: height * 0.03,
-                    ), //Ar condicionado
+                    ),
                     Row(
                       children: [
                         TextCustom(
@@ -3687,6 +3987,7 @@ class _CheckList1State extends State<CheckList1> {
                           color: PaletteColors.grey,
                           fontWeight: FontWeight.normal,
                           textAlign: TextAlign.start,
+                          maxLines: 2,
                         ),
                         Spacer(),
                         Ink(
@@ -3694,8 +3995,8 @@ class _CheckList1State extends State<CheckList1> {
                             color: PaletteColors.midGrey,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(10),
-                                    bottomLeft: Radius.circular(10))),
+                                    topLeft: Radius.circular(5),
+                                    bottomLeft: Radius.circular(5))),
                           ),
                           child: IconButton(
                             icon: Icon(
@@ -3714,29 +4015,47 @@ class _CheckList1State extends State<CheckList1> {
                                 if (nPool > 0) {
                                   nPool = nPool - 1;
                                   SPool = "$nPool";
+                                  _controllerPool.text = SPool;
                                 }
                               });
                             },
                           ),
                         ),
                         Container(
-                            alignment: Alignment.center,
-                            width: width * 0.12,
-                            height: 30,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(2.0)),
-                            child: TextCustom(
-                              text: SPool,
-                              color: PaletteColors.grey,
-                              textAlign: TextAlign.center,
-                            )),
+                          color: PaletteColors.greyInput,
+                          height: 28,
+                          width: width * 0.1,
+                          child: TextFormField(
+                            inputFormatters: [LengthLimitingTextInputFormatter(3)],
+                            onFieldSubmitted: (String value) {
+                              setState(() {
+                                SPool = value;
+                                SPool != ''?nPool = int.parse(SPool):nPool = 0;
+                                _controllerPool.text = '$nPool';
+                              });
+                            },
+                            controller: _controllerPool,
+                            keyboardType: TextInputType.number,
+                            textAlignVertical: TextAlignVertical.center,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.black54,
+                              fontSize: 14.0,
+
+                            ),
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+
+                            ),
+                          ),
+                        ),
                         Ink(
                           decoration: ShapeDecoration(
                             color: PaletteColors.midGrey,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(10),
-                                    bottomRight: Radius.circular(10))),
+                                    topRight: Radius.circular(5),
+                                    bottomRight: Radius.circular(5))),
                           ),
                           child: IconButton(
                             icon: Icon(
@@ -3752,16 +4071,20 @@ class _CheckList1State extends State<CheckList1> {
                             padding: EdgeInsets.zero,
                             onPressed: () {
                               setState(() {
-                                if (nPool >= 0) {
+                                if (nPool >= 0 && nPool < 999) {
                                   nPool = nPool + 1;
                                   SPool = "$nPool";
+                                  _controllerPool.text = SPool;
                                 }
                               });
                             },
                           ),
                         ),
                       ],
-                    ), //Piscina
+                    ),
+                    SizedBox(
+                      height: height * 0.03,
+                    ),
                     Divider(
                       thickness: 1.0,
                       color: PaletteColors.lightGrey,
@@ -3846,9 +4169,7 @@ class _CheckList1State extends State<CheckList1> {
                           child: ButtonCustom(
                             widthCustom: 0.35,
                             heightCustom: 0.070,
-                            onPressed: () =>
-
-                                Navigator.pop(context),
+                            onPressed: () => Navigator.pop(context),
                             text: "Voltar",
                             size: 14.0,
                             colorButton: PaletteColors.white,

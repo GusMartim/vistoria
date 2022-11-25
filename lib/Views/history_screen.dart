@@ -126,8 +126,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
                             DocumentSnapshot item = list[index];
                             items.add(ListTileModel(
                                 text:
-                                    '${item['adress']},${item['number']},${item['district']} -${item['city']}/${item['estado']}',
-                                data: '${item['hourRequest']}',
+                                    '${item['adress']??''},${item['number']??''},${item['district']??''} -${item['city']??''}/${item['estado']??''}',
+                                data: '${item['hourRequest']??''}',
                                 iconShow: false));
                             return ListTileCustom(
                               text: items[index].text,

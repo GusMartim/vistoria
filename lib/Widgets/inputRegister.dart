@@ -13,6 +13,7 @@ class InputRegister extends StatelessWidget {
   final icons;
   final colorBorder;
   final background;
+  final onchanged;
   int? maxline = 1;
 
   InputRegister({
@@ -23,6 +24,7 @@ class InputRegister extends StatelessWidget {
     required this.width,
     this.inputFormatters,
     this.maxline,
+    this.onchanged,
     required this.sizeIcon,
     required this.icons,
     required this.colorBorder,
@@ -37,7 +39,7 @@ class InputRegister extends StatelessWidget {
     return Container(
       alignment: Alignment.topLeft,
       width: this.width,
-      height: 40,
+      height: 45,
       padding: EdgeInsets.symmetric(horizontal: 8),
       margin: EdgeInsets.only( top: 6, bottom: 6, right: 24),
       decoration: BoxDecoration(
@@ -48,6 +50,7 @@ class InputRegister extends StatelessWidget {
         children: [
           Expanded(
             child: TextFormField(
+              onFieldSubmitted: onchanged,
               controller: this.controller,
               textAlign: TextAlign.start,
               keyboardType: this.keyboardType,

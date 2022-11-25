@@ -54,12 +54,16 @@ class AptoModel{
   String PavType = '';
   String pathology = '';
   String unity = '';
+  String subs = '';
+  String blocks = '';
   String view = '';
   AptoModel();
 
   Map<String,dynamic> toMap(){
     Map<String,dynamic> map = {
       "pavs": this.pavs,
+      "subs": this.subs,
+      "blocks": this.blocks,
       "elevators"   : this.elevators,
       "estimatedAge"    : this.estimatedAge,
       "aptos"   : this.aptos,

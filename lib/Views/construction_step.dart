@@ -52,7 +52,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
   String SComplements = '0';
   int nOthers = 0;
   String SOthers = '0';
-
+  TextEditingController _controllerObs = TextEditingController();
   File? picture;
 
   String _urlPhoto = '';
@@ -192,6 +192,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
     _constructionModel.slabs = SSlabs;
     _constructionModel.complements = SComplements;
     _constructionModel.others = SOthers;
+    _constructionModel.obs = _controllerObs.text;
 
     _saveConstruction(_constructionModel);
 
@@ -228,7 +229,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
       SSlabs = data?["slabs"];
       SComplements = data?["complements"];
       SOthers = data?["others"];
-
+      _controllerObs = TextEditingController(text: data?["obs"]??'');
 
     });
   }
@@ -360,11 +361,11 @@ class _ConstructionStepState extends State<ConstructionStep> {
           SizedBox(width: width * 0.04,)
         ],
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(vertical: 24, horizontal: 24),
-        child: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          physics: ScrollPhysics(),
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        physics: ScrollPhysics(),
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 24, horizontal: 24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -470,7 +471,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
                       padding: EdgeInsets.zero,
                       onPressed: () {
                         setState(() {
-                          if (nServices >= 0) {
+                          if (nServices >= 0 && nServices <= 75) {
                             nServices = nServices + 25;
                             SServices = "$nServices";
                           }
@@ -556,7 +557,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
                       padding: EdgeInsets.zero,
                       onPressed: () {
                         setState(() {
-                          if (nInfra >= 0) {
+                          if (nInfra >= 0 && nInfra <= 75) {
                             nInfra = nInfra + 25;
 
                             SInfra = "$nInfra";
@@ -643,7 +644,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
                       padding: EdgeInsets.zero,
                       onPressed: () {
                         setState(() {
-                          if (nSupra >= 0) {
+                          if (nSupra >= 0 && nSupra  <= 75) {
                             nSupra = nSupra + 25;
                             SSupra = "$nSupra";
                           }
@@ -729,7 +730,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
                       padding: EdgeInsets.zero,
                       onPressed: () {
                         setState(() {
-                          if (nWalls >= 0) {
+                          if (nWalls >= 0 && nWalls <= 75) {
                             nWalls = nWalls + 25;
                             SWalls = '$nWalls';
                           }
@@ -815,7 +816,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
                       padding: EdgeInsets.zero,
                       onPressed: () {
                         setState(() {
-                          if (nFrames >= 0) {
+                          if (nFrames >= 0 && nFrames  <= 75) {
                             nFrames = nFrames + 25;
                             SFrames = '$nFrames';
                           }
@@ -901,7 +902,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
                       padding: EdgeInsets.zero,
                       onPressed: () {
                         setState(() {
-                          if (nGlasses >= 0) {
+                          if (nGlasses >= 0 && nGlasses  <= 75) {
                             nGlasses = nGlasses + 25;
                             SGlasses = "$nGlasses";
                           }
@@ -990,7 +991,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
                       padding: EdgeInsets.zero,
                       onPressed: () {
                         setState(() {
-                          if (nCeiling >= 0) {
+                          if (nCeiling >= 0 && nCeiling  <= 75) {
                             nCeiling = nCeiling + 25;
                             SCeiling = "$nCeiling";
                           }
@@ -1076,7 +1077,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
                       padding: EdgeInsets.zero,
                       onPressed: () {
                         setState(() {
-                          if (nWaterProof >= 0) {
+                          if (nWaterProof >= 0 && nWaterProof <= 75) {
                             nWaterProof = nWaterProof + 25;
                             SWaterProof = "$nWaterProof";
                           }
@@ -1166,7 +1167,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
                       padding: EdgeInsets.zero,
                       onPressed: () {
                         setState(() {
-                          if (nIntern >= 0) {
+                          if (nIntern >= 0 && nIntern <= 75) {
                             nIntern = nIntern + 25;
                             SIntern = "$nIntern";
                           }
@@ -1255,7 +1256,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
                       padding: EdgeInsets.zero,
                       onPressed: () {
                         setState(() {
-                          if (nLinings >= 0) {
+                          if (nLinings >= 0 && nLinings <= 75) {
                             nLinings = nLinings + 25;
                             SLinings = "$nLinings";
                           }
@@ -1346,7 +1347,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
                       padding: EdgeInsets.zero,
                       onPressed: () {
                         setState(() {
-                          if (nExtern >= 0) {
+                          if (nExtern >= 0 && nExtern <= 75) {
                             nExtern =
                                 nExtern + 25;
                             SExtern =
@@ -1437,7 +1438,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
                       padding: EdgeInsets.zero,
                       onPressed: () {
                         setState(() {
-                          if (nPaint >= 0) {
+                          if (nPaint >= 0 && nPaint  <= 75) {
                             nPaint = nPaint + 25;
                             SPaint = "$nPaint";
                           }
@@ -1523,7 +1524,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
                       padding: EdgeInsets.zero,
                       onPressed: () {
                         setState(() {
-                          if (nFloors >= 0) {
+                          if (nFloors >= 0 && nFloors <= 75) {
                             nFloors = nFloors + 25;
                             SFloors = "$nFloors";
                           }
@@ -1609,7 +1610,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
                       padding: EdgeInsets.zero,
                       onPressed: () {
                         setState(() {
-                          if (nFinishes >= 0) {
+                          if (nFinishes >= 0 && nFinishes <= 75) {
                             nFinishes = nFinishes + 25;
                             SFinishes = "$nFinishes";
                           }
@@ -1698,7 +1699,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
                       padding: EdgeInsets.zero,
                       onPressed: () {
                         setState(() {
-                          if (nEletric >= 0) {
+                          if (nEletric >= 0 && nEletric <= 75) {
                             nEletric = nEletric + 25;
                             SEletric = "$nEletric";
                           }
@@ -1787,7 +1788,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
                       padding: EdgeInsets.zero,
                       onPressed: () {
                         setState(() {
-                          if (nHidro >= 0) {
+                          if (nHidro >= 0 && nHidro <= 75) {
                             nHidro = nHidro + 25;
                             SHidro = "$nHidro";
                           }
@@ -1876,7 +1877,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
                       padding: EdgeInsets.zero,
                       onPressed: () {
                         setState(() {
-                          if (nSewer >= 0) {
+                          if (nSewer >= 0 && nSewer <= 75) {
                             nSewer = nSewer + 25;
                             SSewer = "$nSewer";
                           }
@@ -1965,7 +1966,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
                       padding: EdgeInsets.zero,
                       onPressed: () {
                         setState(() {
-                          if (nSlabs >= 0) {
+                          if (nSlabs >= 0 && nSlabs <= 75) {
                             nSlabs = nSlabs + 25;
                             SSlabs = "$nSlabs";
                           }
@@ -2054,7 +2055,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
                       padding: EdgeInsets.zero,
                       onPressed: () {
                         setState(() {
-                          if (nComplements >= 0) {
+                          if (nComplements >= 0 && nComplements <= 75) {
                             nComplements = nComplements + 25;
                             SComplements = "$nComplements";
                           }
@@ -2143,7 +2144,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
                       padding: EdgeInsets.zero,
                       onPressed: () {
                         setState(() {
-                          if (nOthers >= 0) {
+                          if (nOthers >= 0 &&  nOthers <= 75) {
                             nOthers = nOthers + 25;
                             SOthers = "$nOthers";
                           }
@@ -2155,6 +2156,36 @@ class _ConstructionStepState extends State<ConstructionStep> {
               ),
               Divider(
                 thickness: 1.0,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TextCustom(
+                    text: "Observações:",
+                    size: 16.0,
+                    color: PaletteColors.grey,
+                    fontWeight: FontWeight.bold,
+                    textAlign: TextAlign.start,
+                  ),
+                  Container(
+                    width: width * 0.9,
+                    height: height * 0.2,
+                    child: InputRegister(
+                        controller: _controllerObs,
+                        hint: ' ',
+                        fonts: 14.0,
+                        keyboardType: TextInputType.text,
+                        width: width * 0.9,
+                        sizeIcon: 0.0,
+                        icons: Icons.height,
+                        colorBorder: PaletteColors.greyInput,
+                        background: PaletteColors.greyInput),
+                  ),
+                  SizedBox(height: height * 0.1),
+                ],
+              ),
+              Divider(
+                thickness: 1.0
               ),
               Row(
                 children: [
