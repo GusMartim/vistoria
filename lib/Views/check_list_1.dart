@@ -1736,6 +1736,56 @@ class _CheckList1State extends State<CheckList1> {
                 ),
                 SizedBox(height: height * 0.03),
                 TextCustom(
+                  text: "Pintura Interna",
+                  size: 16.0,
+                  color: PaletteColors.grey,
+                  fontWeight: FontWeight.bold,
+                  textAlign: TextAlign.start,
+                ),
+                SizedBox(height: height * 0.03),
+                Container(
+                  height: InternPaint.length * 50,
+                  child: ListView.builder(
+                      itemCount: InternPaint.length,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return Row(
+                          children: [
+                            Container(
+                              width: width * 0.45,
+                              child: TextCustom(
+                                  text: InternPaint[index].title,
+                                  color: PaletteColors.grey,
+                                  fontWeight: FontWeight.normal),
+                            ),
+                            Spacer(),
+                            Checkbox(
+                                activeColor: PaletteColors.primaryColor,
+                                checkColor: Colors.white,
+                                value: InternPaint[index].value,
+                                onChanged: (checked) => setState(() {
+                                  InternPaint[index].value = checked!;
+                                })),
+                          ],
+                        );
+                      }),
+                ), //Situação
+                InputRegister(
+                    controller: _controllerInternPaint,
+                    hint: 'Especificar',
+                    fonts: 14.0,
+                    keyboardType: TextInputType.text,
+                    width: width * 0.8,
+                    sizeIcon: 0.0,
+                    icons: Icons.height,
+                    colorBorder: PaletteColors.greyInput,
+                    background: PaletteColors.greyInput),
+                Divider(
+                  thickness: 1,
+                  color: PaletteColors.lightGrey,
+                ),
+                SizedBox(height: height * 0.03),
+                TextCustom(
                   text: "Portas Externas",
                   size: 16.0,
                   color: PaletteColors.grey,
@@ -1772,6 +1822,56 @@ class _CheckList1State extends State<CheckList1> {
                 ), //Situação
                 InputRegister(
                     controller: _controllerExtern,
+                    hint: 'Especificar',
+                    fonts: 14.0,
+                    keyboardType: TextInputType.text,
+                    width: width * 0.8,
+                    sizeIcon: 0.0,
+                    icons: Icons.height,
+                    colorBorder: PaletteColors.greyInput,
+                    background: PaletteColors.greyInput),
+                Divider(
+                  thickness: 1,
+                  color: PaletteColors.lightGrey,
+                ),
+                SizedBox(height: height * 0.03),
+                TextCustom(
+                  text: "Portas Internas",
+                  size: 16.0,
+                  color: PaletteColors.grey,
+                  fontWeight: FontWeight.bold,
+                  textAlign: TextAlign.start,
+                ),
+                SizedBox(height: height * 0.03),
+                Container(
+                  height: Intern.length * 50,
+                  child: ListView.builder(
+                      itemCount: Intern.length,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return Row(
+                          children: [
+                            Container(
+                              width: width * 0.45,
+                              child: TextCustom(
+                                  text: Intern[index].title,
+                                  color: PaletteColors.grey,
+                                  fontWeight: FontWeight.normal),
+                            ),
+                            Spacer(),
+                            Checkbox(
+                                activeColor: PaletteColors.primaryColor,
+                                checkColor: Colors.white,
+                                value: Intern[index].value,
+                                onChanged: (checked) => setState(() {
+                                  Intern[index].value = checked!;
+                                })),
+                          ],
+                        );
+                      }),
+                ), //Situação
+                InputRegister(
+                    controller: _controllerIntern,
                     hint: 'Especificar',
                     fonts: 14.0,
                     keyboardType: TextInputType.text,
@@ -1836,56 +1936,6 @@ class _CheckList1State extends State<CheckList1> {
                 ),
                 SizedBox(height: height * 0.03),
                 TextCustom(
-                  text: "Portas Internas",
-                  size: 16.0,
-                  color: PaletteColors.grey,
-                  fontWeight: FontWeight.bold,
-                  textAlign: TextAlign.start,
-                ),
-                SizedBox(height: height * 0.03),
-                Container(
-                  height: Intern.length * 50,
-                  child: ListView.builder(
-                      itemCount: Intern.length,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        return Row(
-                          children: [
-                            Container(
-                              width: width * 0.45,
-                              child: TextCustom(
-                                  text: Intern[index].title,
-                                  color: PaletteColors.grey,
-                                  fontWeight: FontWeight.normal),
-                            ),
-                            Spacer(),
-                            Checkbox(
-                                activeColor: PaletteColors.primaryColor,
-                                checkColor: Colors.white,
-                                value: Intern[index].value,
-                                onChanged: (checked) => setState(() {
-                                      Intern[index].value = checked!;
-                                    })),
-                          ],
-                        );
-                      }),
-                ), //Situação
-                InputRegister(
-                    controller: _controllerIntern,
-                    hint: 'Especificar',
-                    fonts: 14.0,
-                    keyboardType: TextInputType.text,
-                    width: width * 0.8,
-                    sizeIcon: 0.0,
-                    icons: Icons.height,
-                    colorBorder: PaletteColors.greyInput,
-                    background: PaletteColors.greyInput),
-                Divider(
-                  thickness: 1,
-                  color: PaletteColors.lightGrey,
-                ),
-                SizedBox(height: height * 0.03),
-                TextCustom(
                   text: "Janelas",
                   size: 16.0,
                   color: PaletteColors.grey,
@@ -1922,56 +1972,6 @@ class _CheckList1State extends State<CheckList1> {
                 ), //Situação
                 InputRegister(
                     controller: _controllerWindows,
-                    hint: 'Especificar',
-                    fonts: 14.0,
-                    keyboardType: TextInputType.text,
-                    width: width * 0.8,
-                    sizeIcon: 0.0,
-                    icons: Icons.height,
-                    colorBorder: PaletteColors.greyInput,
-                    background: PaletteColors.greyInput),
-                Divider(
-                  thickness: 1,
-                  color: PaletteColors.lightGrey,
-                ),
-                SizedBox(height: height * 0.03),
-                TextCustom(
-                  text: "Pintura Interna",
-                  size: 16.0,
-                  color: PaletteColors.grey,
-                  fontWeight: FontWeight.bold,
-                  textAlign: TextAlign.start,
-                ),
-                SizedBox(height: height * 0.03),
-                Container(
-                  height: InternPaint.length * 50,
-                  child: ListView.builder(
-                      itemCount: InternPaint.length,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        return Row(
-                          children: [
-                            Container(
-                              width: width * 0.45,
-                              child: TextCustom(
-                                  text: InternPaint[index].title,
-                                  color: PaletteColors.grey,
-                                  fontWeight: FontWeight.normal),
-                            ),
-                            Spacer(),
-                            Checkbox(
-                                activeColor: PaletteColors.primaryColor,
-                                checkColor: Colors.white,
-                                value: InternPaint[index].value,
-                                onChanged: (checked) => setState(() {
-                                      InternPaint[index].value = checked!;
-                                    })),
-                          ],
-                        );
-                      }),
-                ), //Situação
-                InputRegister(
-                    controller: _controllerInternPaint,
                     hint: 'Especificar',
                     fonts: 14.0,
                     keyboardType: TextInputType.text,

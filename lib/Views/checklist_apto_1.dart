@@ -80,7 +80,6 @@ class _CheckListApto1State extends State<CheckListApto1> {
   TextEditingController _controllerBlocks = TextEditingController();
   int order = 0;
   File? picture;
-
   String _urlPhoto = '';
   String selectedText = 'Imagens';
   FirebaseStorage storage = FirebaseStorage.instance;
@@ -88,6 +87,8 @@ class _CheckListApto1State extends State<CheckListApto1> {
   List<XFile>? imageFileList = [];
   int nsurvey=0;
   String title = '';
+  AptoModel _aptoModel = AptoModel();
+  FirebaseFirestore db = FirebaseFirestore.instance;
   getOrder()async{
     DocumentSnapshot snapshot = await db
         .collection('surveyNumber')
@@ -120,7 +121,6 @@ class _CheckListApto1State extends State<CheckListApto1> {
     }
 
   }
-
   Future selectImages() async{
     int i = 0;
     final List<XFile>? selectedImages = await ImagePicker().pickMultiImage(imageQuality: 30);
@@ -205,7 +205,6 @@ class _CheckListApto1State extends State<CheckListApto1> {
 
 
   }
-
   _urlImageFirestore(String url) {
     Map<String, dynamic> dateUpdate = {
       'photoUrl': FieldValue.arrayUnion([url]),
@@ -221,10 +220,6 @@ class _CheckListApto1State extends State<CheckListApto1> {
       });
     });
   }
-
-  AptoModel _aptoModel = AptoModel();
-  FirebaseFirestore db = FirebaseFirestore.instance;
-
   _saveApto(AptoModel aptoModel) async {
     db
         .collection('surveys')
@@ -299,40 +294,40 @@ class _CheckListApto1State extends State<CheckListApto1> {
 
     setState(() {
       saveChecklist = data?["checklist"];
-      _controllerAge = TextEditingController(text: data?["age"]);
-      _controllerTerrainArea =TextEditingController(text: data?["TerrainArea"]);
-      _controllerPrice = TextEditingController(text: data?["price"]);
-      _controllerPathology = TextEditingController(text: data?["Pathology"]);
-      _controllerType = TextEditingController(text: data?["type"]);
-      _controllerInfra = TextEditingController(text: data?["infra"]);
-      _controllerSituation = TextEditingController(text: data?["situation"]);
-      _controllerQuota = TextEditingController(text: data?["quota"]);
-      _controllerWall = TextEditingController(text: data?["wall"]);
-      _controllerInternPaint =TextEditingController(text: data?["internPaint"]);
-      _controllerPaint = TextEditingController(text: data?["externPaint"]);
-      _controllerExtern = TextEditingController(text: data?["externDoors"]);
-      _controllerFloor = TextEditingController(text: data?["floor"]);
-      _controllerIntern = TextEditingController(text: data?["internDoors"]);
-      _controllerWindows = TextEditingController(text: data?["windowns"]);
-      _controllerBalcony = TextEditingController(text: data?["balcony"]);
-      _controllerSwitchBoard =TextEditingController(text: data?["switchboard"]);
-      _controllerKitchen = TextEditingController(text: data?["kitchen"]);
-      _controllerBathroom = TextEditingController(text: data?["bathroom"]);
-      _controllerTank = TextEditingController(text: data?["tank"]);
-      _controllerPattern = TextEditingController(text: data?["pattern"]);
-      _controllerState = TextEditingController(text: data?["state"]);
-      _controllerUnityroof = TextEditingController(text: data?["unRoof"]);
-      _controllerUnity = TextEditingController(text: data?["unity"]);
-      _controllerView = TextEditingController(text: data?["view"]);
-      _controllerBlock = TextEditingController(text: data?["block"]);
-      _controllerObs = TextEditingController(text: data?["obs"]);
-      _controllerCondPrice = TextEditingController(text: data?["condprice"]);
-      _controllerAdmin = TextEditingController(text: data?["admin"]);
-      _controllerPhone = TextEditingController(text: data?["phone"]);
+      _controllerAge = TextEditingController(text: data?["age"]??"");
+      _controllerTerrainArea =TextEditingController(text: data?["TerrainArea"]??"");
+      _controllerPrice = TextEditingController(text: data?["price"]??"");
+      _controllerPathology = TextEditingController(text: data?["Pathology"]??"");
+      _controllerType = TextEditingController(text: data?["type"]??"");
+      _controllerInfra = TextEditingController(text: data?["infra"]??"");
+      _controllerSituation = TextEditingController(text: data?["situation"]??"");
+      _controllerQuota = TextEditingController(text: data?["quota"]??"");
+      _controllerWall = TextEditingController(text: data?["wall"]??"");
+      _controllerInternPaint =TextEditingController(text: data?["internPaint"]??"");
+      _controllerPaint = TextEditingController(text: data?["externPaint"]??"");
+      _controllerExtern = TextEditingController(text: data?["externDoors"]??"");
+      _controllerFloor = TextEditingController(text: data?["floor"]??"");
+      _controllerIntern = TextEditingController(text: data?["internDoors"]??"");
+      _controllerWindows = TextEditingController(text: data?["windowns"]??"");
+      _controllerBalcony = TextEditingController(text: data?["balcony"]??"");
+      _controllerSwitchBoard =TextEditingController(text: data?["switchboard"]??"");
+      _controllerKitchen = TextEditingController(text: data?["kitchen"]??"");
+      _controllerBathroom = TextEditingController(text: data?["bathroom"]??"");
+      _controllerTank = TextEditingController(text: data?["tank"]??"");
+      _controllerPattern = TextEditingController(text: data?["pattern"]??"");
+      _controllerState = TextEditingController(text: data?["state"]??"");
+      _controllerUnityroof = TextEditingController(text: data?["unRoof"]??"");
+      _controllerUnity = TextEditingController(text: data?["unity"]??"");
+      _controllerView = TextEditingController(text: data?["view"]??"");
+      _controllerBlock = TextEditingController(text: data?["block"]??"");
+      _controllerObs = TextEditingController(text: data?["obs"]??"");
+      _controllerCondPrice = TextEditingController(text: data?["condprice"]??"");
+      _controllerAdmin = TextEditingController(text: data?["admin"]??"");
+      _controllerPhone = TextEditingController(text: data?["phone"]??"");
 
-      selectedGoal = data?["Goal"];
-      selectedInfo = data?["Origin"];
-      selectedType = data?["PavType"];
+      selectedGoal = data?["Goal"]??selectedGoal;
+      selectedInfo = data?["Origin"]??selectedInfo;
+      selectedType = data?["PavType"]??selectedType;
 
       _controllerRoom = TextEditingController(text: data?["rooms"]??'');
       _controllerSocialBathroom = TextEditingController(text: data?["socialbathrooms"]??'');
@@ -350,23 +345,22 @@ class _CheckListApto1State extends State<CheckListApto1> {
       _controllerOpenGarage = TextEditingController(text: data?["garageunroofed"]??'');
       _controllerSac = TextEditingController(text: data?["acs"]??'');
       _controllerPool = TextEditingController(text: data?["pools"]??'');
-      nRoom = int.parse(data?["rooms"] ?? '');
-      nSocialBathroom = int.parse(data?["socialbathrooms"] ?? '');
-      nPrivateBathroom = int.parse(data?["privatebathrooms"] ?? '');
-      nLav = int.parse(data?["lavs"] ?? '');
-      nServiceBathroom = int.parse(data?["servicebathrooms"] ?? '');
-      nMaidRoom = int.parse(data?["maidrooms"] ?? '');
-      nBalcony = int.parse(data?["balconys"] ?? '');
-      nCompleteCabinets = int.parse(data?["completecontainers"] ?? '');
-      nKitchen = int.parse(data?["kitchens"] ?? '');
-      nRestRoom = int.parse(data?["restrooms"] ?? '');
-      nServiceAreaRoofed = int.parse(data?["servicearearoofed"] ?? '');
-      nServiceAreaUnroofed = int.parse(data?["serviceareaunroofed"] ?? '');
-      nClosedGarage = int.parse(data?["garageroofed"] ?? '');
-      nOpenGarage = int.parse(data?["garageunroofed"] ?? '');
-      nAc = int.parse(data?["acs"] ?? '');
-      nPool = int.parse(data?["pools"] ?? '');
-
+      nRoom = int.parse(data?["rooms"] ?? 0);
+      nSocialBathroom = int.parse(data?["socialbathrooms"] ?? 0);
+      nPrivateBathroom = int.parse(data?["privatebathrooms"] ?? 0);
+      nLav = int.parse(data?["lavs"] ?? 0);
+      nServiceBathroom = int.parse(data?["servicebathrooms"] ?? 0);
+      nMaidRoom = int.parse(data?["maidrooms"] ?? 0);
+      nBalcony = int.parse(data?["balconys"] ?? 0);
+      nCompleteCabinets = int.parse(data?["completecontainers"] ?? 0);
+      nKitchen = int.parse(data?["kitchens"] ?? 0);
+      nRestRoom = int.parse(data?["restrooms"] ?? 0);
+      nServiceAreaRoofed = int.parse(data?["servicearearoofed"] ?? 0);
+      nServiceAreaUnroofed = int.parse(data?["serviceareaunroofed"] ?? 0);
+      nClosedGarage = int.parse(data?["garageroofed"] ?? 0);
+      nOpenGarage = int.parse(data?["garageunroofed"] ?? 0);
+      nAc = int.parse(data?["acs"] ?? 0);
+      nPool = int.parse(data?["pools"] ??0);
       _controllerPavs = TextEditingController(text: data?["pavs"]??'');
       _controllerElevators = TextEditingController(text: data?["elevators"]??'');
       _controllerAges = TextEditingController(text: data?["estimatedAge"]??'');
@@ -374,13 +368,13 @@ class _CheckListApto1State extends State<CheckListApto1> {
       _controllerBlocks = TextEditingController(text: data?["blocks"]??'');
       _controllerAptos = TextEditingController(text: data?["aptos"]??'');
       _controllerUnitys = TextEditingController(text: data?["unitys"]??'');
-      nUnitys =int.parse(data?["unitys"]??'');
-      nAptos =int.parse(data?["aptos"]??'');
-      nAge =int.parse(data?["estimatedAge"]??'');
-      nElevators =int.parse(data?["elevators"]??'');
-      nPavs =int.parse(data?["pavs"]??'');
-      nSubs =int.parse(data?["subs"]??'');
-      nBlocks =int.parse(data?["blocks"]??'');
+      nUnitys =int.parse(data?["unitys"]??0);
+      nAptos =int.parse(data?["aptos"]??0);
+      nAge =int.parse(data?["estimatedAge"]??0);
+      nElevators =int.parse(data?["elevators"]??0);
+      nPavs =int.parse(data?["pavs"]??0);
+      nSubs =int.parse(data?["subs"]??0);
+      nBlocks =int.parse(data?["blocks"]??0);
     });
     pathology.clear();
     for (int i = 0; i <= 5; i++) {
@@ -680,7 +674,6 @@ class _CheckListApto1State extends State<CheckListApto1> {
     });
     _AptoTable();
   }
-
   final type = [
     CheckBoxModel(title: 'Residencial'),
     CheckBoxModel(title: 'Comercial'),
@@ -702,7 +695,6 @@ class _CheckListApto1State extends State<CheckListApto1> {
     CheckBoxModel(title: 'Outro:'),
   ];
   TextEditingController _controllerInfra = TextEditingController();
-
   final situation = [
     CheckBoxModel(title: 'Meio de Quadra'),
     CheckBoxModel(title: 'Esquina'),
@@ -1666,6 +1658,106 @@ class _CheckListApto1State extends State<CheckListApto1> {
               ),
               SizedBox(height: height * 0.03),
               TextCustom(
+                text: "Pintura Interna",
+                size: 16.0,
+                color: PaletteColors.grey,
+                fontWeight: FontWeight.bold,
+                textAlign: TextAlign.start,
+              ),
+              SizedBox(height: height * 0.03),
+              Container(
+                height: InternPaint.length * 50,
+                child: ListView.builder(
+                    itemCount: InternPaint.length,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return Row(
+                        children: [
+                          Container(
+                            width: width * 0.45,
+                            child: TextCustom(
+                                text: InternPaint[index].title,
+                                color: PaletteColors.grey,
+                                fontWeight: FontWeight.normal),
+                          ),
+                          Spacer(),
+                          Checkbox(
+                              activeColor: PaletteColors.primaryColor,
+                              checkColor: Colors.white,
+                              value: InternPaint[index].value,
+                              onChanged: (checked) => setState(() {
+                                InternPaint[index].value = checked!;
+                              })),
+                        ],
+                      );
+                    }),
+              ), //Situação
+              InputRegister(
+                  controller: _controllerInternPaint,
+                  hint: 'Especificar',
+                  fonts: 14.0,
+                  keyboardType: TextInputType.text,
+                  width: width * 0.8,
+                  sizeIcon: 0.0,
+                  icons: Icons.height,
+                  colorBorder: PaletteColors.greyInput,
+                  background: PaletteColors.greyInput),
+              Divider(
+                thickness: 1,
+                color: PaletteColors.lightGrey,
+              ),
+              SizedBox(height: height * 0.03),
+              TextCustom(
+                text: "Portas Internas",
+                size: 16.0,
+                color: PaletteColors.grey,
+                fontWeight: FontWeight.bold,
+                textAlign: TextAlign.start,
+              ),
+              SizedBox(height: height * 0.03),
+              Container(
+                height: Intern.length * 50,
+                child: ListView.builder(
+                    itemCount: Intern.length,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return Row(
+                        children: [
+                          Container(
+                            width: width * 0.45,
+                            child: TextCustom(
+                                text: Intern[index].title,
+                                color: PaletteColors.grey,
+                                fontWeight: FontWeight.normal),
+                          ),
+                          Spacer(),
+                          Checkbox(
+                              activeColor: PaletteColors.primaryColor,
+                              checkColor: Colors.white,
+                              value: Intern[index].value,
+                              onChanged: (checked) => setState(() {
+                                Intern[index].value = checked!;
+                              })),
+                        ],
+                      );
+                    }),
+              ), //Situação
+              InputRegister(
+                  controller: _controllerIntern,
+                  hint: 'Especificar',
+                  fonts: 14.0,
+                  keyboardType: TextInputType.text,
+                  width: width * 0.8,
+                  sizeIcon: 0.0,
+                  icons: Icons.height,
+                  colorBorder: PaletteColors.greyInput,
+                  background: PaletteColors.greyInput),
+              Divider(
+                thickness: 1,
+                color: PaletteColors.lightGrey,
+              ),
+              SizedBox(height: height * 0.03),
+              TextCustom(
                 text: "Portas Externas",
                 size: 16.0,
                 color: PaletteColors.grey,
@@ -1766,56 +1858,6 @@ class _CheckListApto1State extends State<CheckListApto1> {
               ),
               SizedBox(height: height * 0.03),
               TextCustom(
-                text: "Portas Internas",
-                size: 16.0,
-                color: PaletteColors.grey,
-                fontWeight: FontWeight.bold,
-                textAlign: TextAlign.start,
-              ),
-              SizedBox(height: height * 0.03),
-              Container(
-                height: Intern.length * 50,
-                child: ListView.builder(
-                    itemCount: Intern.length,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      return Row(
-                        children: [
-                          Container(
-                            width: width * 0.45,
-                            child: TextCustom(
-                                text: Intern[index].title,
-                                color: PaletteColors.grey,
-                                fontWeight: FontWeight.normal),
-                          ),
-                          Spacer(),
-                          Checkbox(
-                              activeColor: PaletteColors.primaryColor,
-                              checkColor: Colors.white,
-                              value: Intern[index].value,
-                              onChanged: (checked) => setState(() {
-                                    Intern[index].value = checked!;
-                                  })),
-                        ],
-                      );
-                    }),
-              ), //Situação
-              InputRegister(
-                  controller: _controllerIntern,
-                  hint: 'Especificar',
-                  fonts: 14.0,
-                  keyboardType: TextInputType.text,
-                  width: width * 0.8,
-                  sizeIcon: 0.0,
-                  icons: Icons.height,
-                  colorBorder: PaletteColors.greyInput,
-                  background: PaletteColors.greyInput),
-              Divider(
-                thickness: 1,
-                color: PaletteColors.lightGrey,
-              ),
-              SizedBox(height: height * 0.03),
-              TextCustom(
                 text: "Janelas",
                 size: 16.0,
                 color: PaletteColors.grey,
@@ -1852,56 +1894,6 @@ class _CheckListApto1State extends State<CheckListApto1> {
               ), //Situação
               InputRegister(
                   controller: _controllerWindows,
-                  hint: 'Especificar',
-                  fonts: 14.0,
-                  keyboardType: TextInputType.text,
-                  width: width * 0.8,
-                  sizeIcon: 0.0,
-                  icons: Icons.height,
-                  colorBorder: PaletteColors.greyInput,
-                  background: PaletteColors.greyInput),
-              Divider(
-                thickness: 1,
-                color: PaletteColors.lightGrey,
-              ),
-              SizedBox(height: height * 0.03),
-              TextCustom(
-                text: "Pintura Interna",
-                size: 16.0,
-                color: PaletteColors.grey,
-                fontWeight: FontWeight.bold,
-                textAlign: TextAlign.start,
-              ),
-              SizedBox(height: height * 0.03),
-              Container(
-                height: InternPaint.length * 50,
-                child: ListView.builder(
-                    itemCount: InternPaint.length,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      return Row(
-                        children: [
-                          Container(
-                            width: width * 0.45,
-                            child: TextCustom(
-                                text: InternPaint[index].title,
-                                color: PaletteColors.grey,
-                                fontWeight: FontWeight.normal),
-                          ),
-                          Spacer(),
-                          Checkbox(
-                              activeColor: PaletteColors.primaryColor,
-                              checkColor: Colors.white,
-                              value: InternPaint[index].value,
-                              onChanged: (checked) => setState(() {
-                                    InternPaint[index].value = checked!;
-                                  })),
-                        ],
-                      );
-                    }),
-              ), //Situação
-              InputRegister(
-                  controller: _controllerInternPaint,
                   hint: 'Especificar',
                   fonts: 14.0,
                   keyboardType: TextInputType.text,

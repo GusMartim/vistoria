@@ -1,7 +1,10 @@
+import 'package:flutter_full_pdf_viewer/full_pdf_viewer_scaffold.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:share_extend/share_extend.dart';
 import 'package:vistoria/Models/order_model.dart';
 import 'package:vistoria/Utils/exports.dart';
 import 'package:vistoria/Widgets/text_custom.dart';
-
+import 'package:pdf/widgets.dart' as pdfLib;
 class SurveyFinishScreen extends StatefulWidget {
   final String idSurvey;
 
@@ -12,17 +15,464 @@ class SurveyFinishScreen extends StatefulWidget {
 }
 
 class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
+  var Cod = '';
+  var street='';
+  var number='';
+  var complement='';
+  var district ='';
+  var city ='';
+  var states= '';
+  var cep = '';
+  var sPathology = '';
+  var sType = '';
+  var sInfra= '';
+  var sSituation= '';
+  var sQuota= '';
+  var sPosition= '';
+  var sRoof= '';
+  var sWall= '';
+  var sInternPaint= '';
+  var sPaint= '';
+  var sExtern= '';
+  var sFloor= '';
+  var sIntern= '';
+  var sWindows= '';
+  var sBalcony= '';
+  var sSwitchBoard= '';
+  var sKitchen= '';
+  var sBathroom= '';
+  var sTank= '';
+  var sPattern= '';
+  var sState= '';
+  var sUnityroof= '';
+  var sBlock= '';
+  var obs= '';
+  var age= '' ;
+  var price= '';
+  var lat= '';
+  var lng= '';
+  var date= '';
+  var user= '';
+  var adress= '';
+  var SRoom= '';
+  var SSocialBathroom= '';
+  var SPrivateBathroom= '';
+  var SLav= '';
+  var SServiceBathroom= '';
+  var SMaidRoom= '';
+  var SBalcony= '';
+  var SCompleteCabinets= '';
+  var SKitchen= '';
+  var SRestRoom= '';
+  var SServiceAreaRoofed= '';
+  var SServiceAreaUnroofed= '';
+  var SOpenGarage= '';
+  var SClosedGarage= '';
+  var SAc= '';
+  var SPool= '';
+  var AreaC= '';
+  var AreaD= '';
+  var AreaT= '';
+  var Goal= '';
+  var Origin= '';
+
+  List imageList = [];
+  List pathology = [];
+  List paint = [];
+  List wall = [];
+  List roof = [];
+  List position = [];
+  List quota = [];
+  List situation = [];
+  List infra = [];
+  List type = [];
+  List switchboard = [];
+  List balcony = [];
+  List internpaint = [];
+  List windows = [];
+  List intern = [];
+  List floor = [];
+  List extern = [];
+  List unityroof = [];
+  List state = [];
+  List pattern = [];
+  List tank = [];
+  List bathroom = [];
+  List kitchen = [];
+  List block = [];
+  List saveChecklist = [];
+  final storageRef =FirebaseStorage.instance.ref();
+  Uint8List? bytes;
+
   FirebaseFirestore db = FirebaseFirestore.instance;
   FirebaseAuth _auth = FirebaseAuth.instance;
   int order = 0;
   int nsurvey = 0;
   List Nsurveys = [];
-  List imageList = [];
   OrderModel _orderModel = OrderModel();
   final Map<String, dynamic> data = HashMap();
   String status = "survey";
+  _getData() async {
+    DocumentSnapshot snapshot =
+    await db.collection("surveys").doc(widget.idSurvey).get();
+    Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
 
+    setState(() {
+      saveChecklist = data?["checklist"];
+      print('pegou o checklist');
+      print(saveChecklist.length);
+    });
+    pathology.clear();
+    for (int i = 0; i <= 5; i++) {
+      var splitted = saveChecklist[i].replaceAll("1", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      if(check == 'true'){
+        pathology.add(title);
+      }
+    }type.clear();
+    for (int i = 6; i <= 9; i++) {
+      var splitted = saveChecklist[i].replaceAll("2", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      if(check == 'true'){
+        type.add(title);
+      }
+    }infra.clear();
+    for (int i = 10; i <= 18; i++) {
+      var splitted = saveChecklist[i].replaceAll("3", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      if(check == 'true'){
+        infra.add(title);
+      }
+    }situation.clear();
+    for (int i = 19; i <= 22; i++) {
+      var splitted = saveChecklist[i].replaceAll("4", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      if(check == 'true'){
+        situation.add(title);
+      }
+    }quota.clear();
+    for (int i = 23; i <= 26; i++) {
+      var splitted = saveChecklist[i].replaceAll("5", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      if(check == 'true'){
+        quota.add(title);
+      }
+    }position.clear();
+    for (int i = 27; i <= 32; i++) {
+      var splitted = saveChecklist[i].replaceAll("6", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      if(check == 'true'){
+        position.add(title);
+      }
+    }roof.clear();
+    for (int i = 33; i <= 37; i++) {
+      var splitted = saveChecklist[i].replaceAll("7", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      if(check == 'true'){
+        roof.add(title);
+      }
+    }wall.clear();
+    for (int i = 38; i <= 41; i++) {
+      var splitted = saveChecklist[i].replaceAll("8", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      if(check == 'true'){
+        wall.add(title);
+      }
+    }paint.clear();
+    for (int i = 42; i <= 47; i++) {
+      var splitted = saveChecklist[i].replaceAll("9", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      if(check == 'true'){
+        paint.add(title);
+      }
+    }extern.clear();
+    for (int i = 48; i <= 51; i++) {
+      var splitted = saveChecklist[i].replaceAll("10", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      if(check == 'true'){
+        extern.add(title);
+      }
+    }floor.clear();
+    for (int i = 52; i <= 55; i++) {
+      var splitted = saveChecklist[i].replaceAll("11", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      if(check == 'true'){
+        floor.add(title);
+      }
+    }intern.clear();
+    for (int i = 56; i <= 59; i++) {
+      var splitted = saveChecklist[i].replaceAll("12", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      if(check == 'true'){
+        intern.add(title);
+      }
+    }windows.clear();
+    for (int i = 60; i <= 63; i++) {
+      var splitted = saveChecklist[i].replaceAll("13", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      if(check == 'true'){
+        windows.add(title);
+      }
+    }internpaint.clear();
+    for (int i = 64; i <= 69; i++) {
+      var splitted = saveChecklist[i].replaceAll("14", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      if(check == 'true'){
+        internpaint.add(title);
+      }
+    }balcony.clear();
+    for (int i = 70; i <= 74; i++) {
+      var splitted = saveChecklist[i].replaceAll("15", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      if(check == 'true'){
+        balcony.add(title);
+      }
+    }switchboard.clear();
+    for (int i = 75; i <= 80; i++) {
+      var splitted = saveChecklist[i].replaceAll("16", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      if(check == 'true'){
+        switchboard.add(title);
+      }
+    }kitchen.clear();
+    for (int i = 81; i <= 86; i++) {
+      var splitted = saveChecklist[i].replaceAll("17", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      if(check == 'true'){
+        kitchen.add(title);
+      }
+    }bathroom.clear();
+    for (int i = 87; i <= 92; i++) {
+      var splitted = saveChecklist[i].replaceAll("18", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      if(check == 'true'){
+        bathroom.add(title);
+      }
+    }tank.clear();
+    for (int i = 93; i <= 98; i++) {
+      var splitted = saveChecklist[i].replaceAll("19", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      if(check == 'true'){
+        tank.add(title);
+      }
+    }pattern.clear();
+    for (int i = 99; i <= 106; i++) {
+      var splitted = saveChecklist[i].replaceAll("20", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      if(check == 'true'){
+        pattern.add(title);
+      }
+    }state.clear();
+    for (int i = 107; i <= 113; i++) {
+      var splitted = saveChecklist[i].replaceAll("21", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      if(check == 'true'){
+        state.add(title);
+      }
+    }unityroof.clear();
+    for (int i = 114; i <= 119; i++) {
+      var splitted = saveChecklist[i].replaceAll("22", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      if(check == 'true'){
+        unityroof.add(title);
+      }
+    }block.clear();
+    for (int i = 120; i <= 134; i++) {
+      var splitted = saveChecklist[i].replaceAll("23", '').split('#');
+      var title = splitted[0];
+      var check = splitted[1];
+      if(check == 'true'){
+        block.add(title);
+      }
+    }
+    setState(() {
+      age = data?["age"]??"";
+      price = data?["price"]??"";
+      sPathology = data?["Pathology"]??"";
+      sType = data?["type"]??"";
+      sInfra = data?["infra"]??"";
+      sSituation = data?["situation"]??"";
+      sQuota = data?["quota"]??"";
+      sPosition = data?["unPosition"]??"";
+      sRoof = data?["roof"]??"";
+      sWall = data?["wall"]??"";
+      sInternPaint = data?["internPaint"]??"";
+      sPaint = data?["externPaint"]??"";
+      sExtern = data?["externDoors"]??"";
+      sFloor = data?["floor"]??"";
+      sIntern = data?["internDoors"]??"";
+      sWindows = data?["windowns"]??"";
+      sBalcony = data?["balcony"]??"";
+      sSwitchBoard = data?["switchboard"]??"";
+      sKitchen = data?["kitchen"]??"";
+      sBathroom = data?["bathroom"]??"";
+      sTank = data?["tank"]??"";
+      sPattern = data?["pattern"]??"";
+      sState = data?["state"]??"";
+      sUnityroof = data?["unRoof"]??"";
+      sBlock = data?["block"]??"";
+      obs = data?["obs"]??"";
+      date = data?["hourRequest"]??"";
+      user = data?["userName"]??"";
+      lat = data?["lat"]??"";
+      lng = data?["lng"]??"";
+      SRoom = data?["rooms"]??"";
+      SSocialBathroom = data?["socialbathrooms"]??"";
+      SPrivateBathroom = data?["privatebathrooms"]??"";
+      SLav = data?["lavs"]??"";
+      SServiceBathroom = data?["servicebathrooms"]??"";
+      SMaidRoom = data?["maidrooms"]??"";
+      SBalcony = data?["balconys"]??"";
+      SCompleteCabinets = data?["completecontainers"]??"";
+      SKitchen = data?["kitchens"]??"";
+      SRestRoom = data?["restrooms"]??"";
+      SServiceAreaRoofed = data?["servicearearoofed"]??"";
+      SServiceAreaUnroofed = data?["serviceareaunroofed"]??"";
+      SClosedGarage = data?["garageroofed"]??"";
+      SOpenGarage = data?["garageunroofed"]??"";
+      SAc = data?["acs"];
+      SPool = data?["pools"];
+      street =data?["adress"]??"";
+      complement =data?["complement"]??"";
+      number =data?["number"]??"";
+      district=data?["district"]??"";
+      city=data?["city"]??"";
+      states=data?["estado"]??"";
+      cep=data?["cep"]??"";
+      imageList = data?["photoUrl"]??[];
+      Cod = data?["userCode"]??'';
+      AreaT = data?["TerrainArea"]??'';
+      AreaD = data?["OpenArea"]??'';
+      AreaC = data?["ClosedArea"]??'';
+
+      Goal = data?["Goal"]??'';
+      Origin = data?["Origin"]??'';
+    });
+    print('saiu do get');
+
+
+  }
+  FirebaseStorage storage = FirebaseStorage.instance;
+  _createPdf(BuildContext context)async{
+    print('entrou');
+    final pdfLib.Document pdf = pdfLib.Document(deflate: zlib.encode);
+    double width = 80;
+    final font = await rootBundle.load("assets/fonts/Nunito-Regular.ttf");
+    final ttf = pdfLib.Font.ttf(font);
+    int lines = 32;
+    int pages = (saveChecklist.length/lines).round()+1;
+    print('lenght');
+    print(saveChecklist.length);
+    int pag = 0;
+      pdf.addPage(pdfLib.MultiPage(
+        orientation: pdfLib.PageOrientation.landscape,
+        build: (context) =>[
+          pdfLib.Container(
+              padding: pdfLib.EdgeInsets.symmetric(vertical: 4),
+              child: pdfLib.Text('Vistoria de Casa',style: pdfLib.TextStyle(fontSize: 14,font: ttf))
+          ),
+          pdfLib.Row(
+            mainAxisAlignment: pdfLib.MainAxisAlignment.start,
+            crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
+            children: [
+              pdfLib.Container(
+                child: pdfLib.Text(
+                  'Data:',
+                  style: pdfLib.TextStyle(fontSize: 8.0,fontWeight:pdfLib.FontWeight.bold),
+
+                ),
+              ),
+              pdfLib.Container(
+                child: pdfLib.Text(
+                  ' $date',
+                  style: pdfLib.TextStyle(fontSize: 8.0,fontWeight:pdfLib.FontWeight.bold),
+
+                ),
+              ),
+
+
+            ],
+          ),
+        ]
+      ));
+      pag= pag+lines;
+
+    final String dir = (await getApplicationDocumentsDirectory()).path;
+    final String path = '$dir/Vistoria$order.pdf';
+    final File file = File(path);
+
+    file.writeAsBytesSync(pdf.save());
+    Uint8List archive = await file.readAsBytes();
+    if (archive!.isNotEmpty) {
+      Reference pastaRaiz = storage.ref();
+      Reference arquivo = pastaRaiz
+          .child("surveys")
+          .child("_" + DateTime.now().toString() + ".pdf");
+      await arquivo
+          .putData(archive,
+          SettableMetadata(contentType: 'application/octet-stream'))
+          .then((upload) async {
+        upload.ref.getDownloadURL().then((value) {
+          Map<String, dynamic> dateUpdate = {
+            'pdfUrl': FieldValue.arrayUnion([value.toString()]),
+            'idSurvey': widget.idSurvey
+          };
+          db
+              .collection("surveys")
+              .doc(widget.idSurvey)
+              .set(dateUpdate, SetOptions(merge: true));
+        });
+      });
+    }
+
+    Navigator.push(context,MaterialPageRoute(builder: (context)=>PDFScreen(path)));
+  }
+  salvarpdfweb(file) async {
+    var arquivo = XFile.fromData(file);
+    Uint8List archive =await arquivo.readAsBytes();
+
+    if(archive != null){
+
+      FirebaseStorage storage = FirebaseStorage.instance;
+      Reference pastaRaiz = storage.ref();
+      Reference storageRef = pastaRaiz.child("surveys").child(DateTime.now().toString()+"$order");
+
+      await storageRef.putData(archive).then((upload) async{
+        upload.ref.getDownloadURL().then((value) {
+          db.collection("surveys").doc(widget.idSurvey).update({
+            'pdfUrl': FieldValue.arrayUnion([value.toString()])
+          });
+        });
+        print(upload);
+
+      });
+    }
+
+  }
   getNSurvey()async{
+
     DocumentSnapshot snapshot = await db
         .collection('surveys')
         .doc(widget.idSurvey)
@@ -109,6 +559,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
     // TODO: implement initState
     super.initState();
     _dataImages();
+    _getData();
 
 
   }
@@ -308,7 +759,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                           maxWidth: 46),
                       iconSize: 32.0,
                       padding: EdgeInsets.zero,
-                      onPressed: () {},
+                      onPressed: ()=>saveChecklist.length!=0?_createPdf(context):showSnackBar(context, 'erro',Colors.red),
                     ),
                   ),
                   SizedBox(
@@ -345,7 +796,9 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                           maxWidth: 46),
                       iconSize: 32.0,
                       padding: EdgeInsets.zero,
-                      onPressed: () {},
+                      onPressed: () {
+
+                      }
                     ),
                   ),
                   SizedBox(
@@ -378,6 +831,29 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
           ),
         ),
       ),
+    );
+  }
+}
+class PDFScreen extends StatelessWidget {
+  PDFScreen(this.pathPDF);
+
+  final String pathPDF;
+
+  @override
+  Widget build(BuildContext context) {
+    return PDFViewerScaffold(
+        appBar:AppBar(
+          title: Text('Vistoria'),
+          actions: [
+            IconButton(
+                onPressed: (){
+                  ShareExtend.share(pathPDF, 'file',sharePanelTitle: "Enviar PDF");
+                },
+                icon: Icon(Icons.share)
+            )
+          ],
+        ) ,
+        path: pathPDF
     );
   }
 }
