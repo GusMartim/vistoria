@@ -116,6 +116,7 @@ class _CheckListApto1State extends State<CheckListApto1> {
     }else{
       setState(() {
         title = '$nsurvey';
+        _getData();
       });
 
     }
@@ -291,91 +292,10 @@ class _CheckListApto1State extends State<CheckListApto1> {
     DocumentSnapshot snapshot =
         await db.collection("surveys").doc(widget.idSurvey).get();
     Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
-
-    setState(() {
+    setState((){
       saveChecklist = data?["checklist"];
-      _controllerAge = TextEditingController(text: data?["age"]??"");
-      _controllerTerrainArea =TextEditingController(text: data?["TerrainArea"]??"");
-      _controllerPrice = TextEditingController(text: data?["price"]??"");
-      _controllerPathology = TextEditingController(text: data?["Pathology"]??"");
-      _controllerType = TextEditingController(text: data?["type"]??"");
-      _controllerInfra = TextEditingController(text: data?["infra"]??"");
-      _controllerSituation = TextEditingController(text: data?["situation"]??"");
-      _controllerQuota = TextEditingController(text: data?["quota"]??"");
-      _controllerWall = TextEditingController(text: data?["wall"]??"");
-      _controllerInternPaint =TextEditingController(text: data?["internPaint"]??"");
-      _controllerPaint = TextEditingController(text: data?["externPaint"]??"");
-      _controllerExtern = TextEditingController(text: data?["externDoors"]??"");
-      _controllerFloor = TextEditingController(text: data?["floor"]??"");
-      _controllerIntern = TextEditingController(text: data?["internDoors"]??"");
-      _controllerWindows = TextEditingController(text: data?["windowns"]??"");
-      _controllerBalcony = TextEditingController(text: data?["balcony"]??"");
-      _controllerSwitchBoard =TextEditingController(text: data?["switchboard"]??"");
-      _controllerKitchen = TextEditingController(text: data?["kitchen"]??"");
-      _controllerBathroom = TextEditingController(text: data?["bathroom"]??"");
-      _controllerTank = TextEditingController(text: data?["tank"]??"");
-      _controllerPattern = TextEditingController(text: data?["pattern"]??"");
-      _controllerState = TextEditingController(text: data?["state"]??"");
-      _controllerUnityroof = TextEditingController(text: data?["unRoof"]??"");
-      _controllerUnity = TextEditingController(text: data?["unity"]??"");
-      _controllerView = TextEditingController(text: data?["view"]??"");
-      _controllerBlock = TextEditingController(text: data?["block"]??"");
-      _controllerObs = TextEditingController(text: data?["obs"]??"");
-      _controllerCondPrice = TextEditingController(text: data?["condprice"]??"");
-      _controllerAdmin = TextEditingController(text: data?["admin"]??"");
-      _controllerPhone = TextEditingController(text: data?["phone"]??"");
-
-      selectedGoal = data?["Goal"]??selectedGoal;
-      selectedInfo = data?["Origin"]??selectedInfo;
-      selectedType = data?["PavType"]??selectedType;
-
-      _controllerRoom = TextEditingController(text: data?["rooms"]??'');
-      _controllerSocialBathroom = TextEditingController(text: data?["socialbathrooms"]??'');
-      _controllerPrivateBathroom = TextEditingController(text: data?["privatebathrooms"]??'');
-      _controllerServiceBathroom = TextEditingController(text: data?["servicebathrooms"]??'');
-      _controllerLavabos = TextEditingController(text: data?["lavs"]??'');
-      _controllerMaidRoom = TextEditingController(text: data?["maidrooms"]??'');
-      _controllerBalconys = TextEditingController(text: data?["balconys"]??'');
-      _controllerCompleteCabinets = TextEditingController(text: data?["completecontainers"]??'');
-      _controllerKitchens = TextEditingController(text: data?["kitchens"]??'');
-      _controllerRestRoom = TextEditingController(text: data?["restrooms"]??'');
-      _controllerServiceAreaRoofed = TextEditingController(text: data?["servicearearoofed"]??'');
-      _controllerServiceAreaUnRoofed = TextEditingController(text: data?["serviceareaunroofed"]??'');
-      _controllerClosedGarage = TextEditingController(text: data?["garageroofed"]??'');
-      _controllerOpenGarage = TextEditingController(text: data?["garageunroofed"]??'');
-      _controllerSac = TextEditingController(text: data?["acs"]??'');
-      _controllerPool = TextEditingController(text: data?["pools"]??'');
-      nRoom = int.parse(data?["rooms"] ?? 0);
-      nSocialBathroom = int.parse(data?["socialbathrooms"] ?? 0);
-      nPrivateBathroom = int.parse(data?["privatebathrooms"] ?? 0);
-      nLav = int.parse(data?["lavs"] ?? 0);
-      nServiceBathroom = int.parse(data?["servicebathrooms"] ?? 0);
-      nMaidRoom = int.parse(data?["maidrooms"] ?? 0);
-      nBalcony = int.parse(data?["balconys"] ?? 0);
-      nCompleteCabinets = int.parse(data?["completecontainers"] ?? 0);
-      nKitchen = int.parse(data?["kitchens"] ?? 0);
-      nRestRoom = int.parse(data?["restrooms"] ?? 0);
-      nServiceAreaRoofed = int.parse(data?["servicearearoofed"] ?? 0);
-      nServiceAreaUnroofed = int.parse(data?["serviceareaunroofed"] ?? 0);
-      nClosedGarage = int.parse(data?["garageroofed"] ?? 0);
-      nOpenGarage = int.parse(data?["garageunroofed"] ?? 0);
-      nAc = int.parse(data?["acs"] ?? 0);
-      nPool = int.parse(data?["pools"] ??0);
-      _controllerPavs = TextEditingController(text: data?["pavs"]??'');
-      _controllerElevators = TextEditingController(text: data?["elevators"]??'');
-      _controllerAges = TextEditingController(text: data?["estimatedAge"]??'');
-      _controllerSubs = TextEditingController(text: data?["subs"]??'');
-      _controllerBlocks = TextEditingController(text: data?["blocks"]??'');
-      _controllerAptos = TextEditingController(text: data?["aptos"]??'');
-      _controllerUnitys = TextEditingController(text: data?["unitys"]??'');
-      nUnitys =int.parse(data?["unitys"]??0);
-      nAptos =int.parse(data?["aptos"]??0);
-      nAge =int.parse(data?["estimatedAge"]??0);
-      nElevators =int.parse(data?["elevators"]??0);
-      nPavs =int.parse(data?["pavs"]??0);
-      nSubs =int.parse(data?["subs"]??0);
-      nBlocks =int.parse(data?["blocks"]??0);
     });
+
     pathology.clear();
     for (int i = 0; i <= 5; i++) {
       var splitted = saveChecklist[i].replaceAll("1", '').split('#');
@@ -555,20 +475,99 @@ class _CheckListApto1State extends State<CheckListApto1> {
           CheckBoxModel(title: title, value: check == 'true' ? true : false));
     }
     block.clear();
-    for (int i = 122; i <= 136; i++) {
+    for (int i = 116; i <= 130; i++) {
       var splitted = saveChecklist[i].replaceAll("23", '').split('#');
       var title = splitted[0];
       var check = splitted[1];
       block.add(
           CheckBoxModel(title: title, value: check == 'true' ? true : false));
     }
-
     setState(() {
+      _controllerAge = TextEditingController(text: data?["age"]??"");
+      _controllerTerrainArea =TextEditingController(text: data?["TerrainArea"]??"");
+      _controllerPrice = TextEditingController(text: data?["price"]??"");
+      _controllerPathology = TextEditingController(text: data?["Pathology"]??"");
+      _controllerType = TextEditingController(text: data?["type"]??"");
+      _controllerInfra = TextEditingController(text: data?["infra"]??"");
+      _controllerSituation = TextEditingController(text: data?["situation"]??"");
+      _controllerQuota = TextEditingController(text: data?["quota"]??"");
+      _controllerWall = TextEditingController(text: data?["wall"]??"");
+      _controllerInternPaint =TextEditingController(text: data?["internPaint"]??"");
+      _controllerPaint = TextEditingController(text: data?["externPaint"]??"");
+      _controllerExtern = TextEditingController(text: data?["externDoors"]??"");
+      _controllerFloor = TextEditingController(text: data?["floor"]??"");
+      _controllerIntern = TextEditingController(text: data?["internDoors"]??"");
+      _controllerWindows = TextEditingController(text: data?["windowns"]??"");
+      _controllerBalcony = TextEditingController(text: data?["balcony"]??"");
+      _controllerSwitchBoard =TextEditingController(text: data?["switchboard"]??"");
+      _controllerKitchen = TextEditingController(text: data?["kitchen"]??"");
+      _controllerBathroom = TextEditingController(text: data?["bathroom"]??"");
+      _controllerTank = TextEditingController(text: data?["tank"]??"");
+      _controllerPattern = TextEditingController(text: data?["pattern"]??"");
+      _controllerState = TextEditingController(text: data?["state"]??"");
+      _controllerUnityroof = TextEditingController(text: data?["unRoof"]??"");
+      _controllerUnity = TextEditingController(text: data?["unity"]??"");
+      _controllerView = TextEditingController(text: data?["view"]??"");
+      _controllerBlock = TextEditingController(text: data?["block"]??"");
+      _controllerObs = TextEditingController(text: data?["obs"]??"");
+      _controllerCondPrice = TextEditingController(text: data?["condprice"]??"");
+      _controllerAdmin = TextEditingController(text: data?["admin"]??"");
+      _controllerPhone = TextEditingController(text: data?["phone"]??"");
 
+      selectedGoal = data?["Goal"]??selectedGoal;
+      selectedInfo = data?["Origin"]??selectedInfo;
+      selectedType = data?["PavType"]??selectedType;
+
+      _controllerRoom = TextEditingController(text: data?["rooms"]??'');
+      _controllerSocialBathroom = TextEditingController(text: data?["socialbathrooms"]??'');
+      _controllerPrivateBathroom = TextEditingController(text: data?["privatebathrooms"]??'');
+      _controllerServiceBathroom = TextEditingController(text: data?["servicebathrooms"]??'');
+      _controllerLavabos = TextEditingController(text: data?["lavs"]??'');
+      _controllerMaidRoom = TextEditingController(text: data?["maidrooms"]??'');
+      _controllerBalconys = TextEditingController(text: data?["balconys"]??'');
+      _controllerCompleteCabinets = TextEditingController(text: data?["completecontainers"]??'');
+      _controllerKitchens = TextEditingController(text: data?["kitchens"]??'');
+      _controllerRestRoom = TextEditingController(text: data?["restrooms"]??'');
+      _controllerServiceAreaRoofed = TextEditingController(text: data?["servicearearoofed"]??'');
+      _controllerServiceAreaUnRoofed = TextEditingController(text: data?["serviceareaunroofed"]??'');
+      _controllerClosedGarage = TextEditingController(text: data?["garageroofed"]??'');
+      _controllerOpenGarage = TextEditingController(text: data?["garageunroofed"]??'');
+      _controllerSac = TextEditingController(text: data?["acs"]??'');
+      _controllerPool = TextEditingController(text: data?["pools"]??'');
+      _controllerPavs = TextEditingController(text: data?["pavs"]??'');
+      _controllerElevators = TextEditingController(text: data?["elevators"]??'');
+      _controllerAges = TextEditingController(text: data?["estimatedAge"]??'');
+      _controllerSubs = TextEditingController(text: data?["subs"]??'');
+      _controllerBlocks = TextEditingController(text: data?["blocks"]??'');
+      _controllerAptos = TextEditingController(text: data?["aptos"]??'');
+      _controllerUnitys = TextEditingController(text: data?["unitys"]??'');
+      nRoom = int.parse(data?["rooms"] ?? 0);
+      nSocialBathroom = int.parse(data?["socialbathrooms"] ?? 0);
+      nPrivateBathroom = int.parse(data?["privatebathrooms"] ?? 0);
+      nLav = int.parse(data?["lavs"] ?? 0);
+      nServiceBathroom = int.parse(data?["servicebathrooms"] ?? 0);
+      nMaidRoom = int.parse(data?["maidrooms"] ?? 0);
+      nBalcony = int.parse(data?["balconys"] ?? 0);
+      nCompleteCabinets = int.parse(data?["completecontainers"] ?? 0);
+      nKitchen = int.parse(data?["kitchens"] ?? 0);
+      nRestRoom = int.parse(data?["restrooms"] ?? 0);
+      nServiceAreaRoofed = int.parse(data?["servicearearoofed"] ?? 0);
+      nServiceAreaUnroofed = int.parse(data?["serviceareaunroofed"] ?? 0);
+      nClosedGarage = int.parse(data?["garageroofed"] ?? 0);
+      nOpenGarage = int.parse(data?["garageunroofed"] ?? 0);
+      nAc = int.parse(data?["acs"] ?? 0);
+      nPool = int.parse(data?["pools"] ?? 0);
+      nUnitys =int.parse(data?["unitys"]??0);
+      nAptos =int.parse(data?["aptos"]??0);
+      nAge =int.parse(data?["estimatedAge"]??0);
+      nElevators =int.parse(data?["elevators"]??0);
+      nPavs =int.parse(data?["pavs"]??0);
+      nSubs =int.parse(data?["subs"]??0);
+      nBlocks =int.parse(data?["blocks"]??0);
     });
+
   }
   _saveCheckList() async {
-    saveChecklist.clear();
     for (var i = 0; i < pathology.length; i++) {
       saveChecklist
           .add(pathology[i].title + '1' + '#' + pathology[i].value.toString());
@@ -943,7 +942,6 @@ class _CheckListApto1State extends State<CheckListApto1> {
     // TODO: implement initState
     super.initState();
     getNSurvey();
-    _getData();
   }
 
   @override

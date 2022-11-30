@@ -306,19 +306,16 @@ class _SurveyscreenState extends State<Surveyscreen> {
     });
 
   }
-
   @override
   void initState() {
     super.initState();
-    _getData();
-
-
     if (widget.id == '') {
       _surveyModel = SurveyModel.createId();
       getOrder();
     }
     if (widget.text == 'Editar Vistoria') {
       getNSurvey();
+      _getData();
     }
     if(widget.text == 'Vistoriar Demanda'){
       getOrder();

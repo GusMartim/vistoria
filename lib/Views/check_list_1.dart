@@ -80,11 +80,12 @@ class _CheckList1State extends State<CheckList1> {
     Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
 
     setState(() {
-      saveChecklist = data?["checklist"];
+      saveChecklist = data?["checklist"]??[];
     });
+
     pathology.clear();
     for (int i = 0; i <= 5; i++) {
-      var splitted = saveChecklist[i].replaceAll("1", '').split('#');
+      var splitted = saveChecklist[i].replaceAll("1",'').split('#');
       var title = splitted[0];
       var check = splitted[1];
       pathology.add(
@@ -319,24 +320,9 @@ class _CheckList1State extends State<CheckList1> {
       _controllerOpenGarage = TextEditingController(text: data?["garageunroofed"]??'');
       _controllerSac = TextEditingController(text: data?["acs"]??'');
       _controllerPool = TextEditingController(text: data?["pools"]??'');
-      selectedGoal = data?["Goal"] ?? '';
-      selectedInfo = data?["Origin"] ?? '';
-      nRoom = int.parse(data?["rooms"] ?? '');
-      nSocialBathroom = int.parse(data?["socialbathrooms"] ?? '');
-      nPrivateBathroom = int.parse(data?["privatebathrooms"] ?? '');
-      nLav = int.parse(data?["lavs"] ?? '');
-      nServiceBathroom = int.parse(data?["servicebathrooms"] ?? '');
-      nMaidRoom = int.parse(data?["maidrooms"] ?? '');
-      nBalcony = int.parse(data?["balconys"] ?? '');
-      nCompleteCabinets = int.parse(data?["completecontainers"] ?? '');
-      nKitchen = int.parse(data?["kitchens"] ?? '');
-      nRestRoom = int.parse(data?["restrooms"] ?? '');
-      nServiceAreaRoofed = int.parse(data?["servicearearoofed"] ?? '');
-      nServiceAreaUnroofed = int.parse(data?["serviceareaunroofed"] ?? '');
-      nClosedGarage = int.parse(data?["garageroofed"] ?? '');
-      nOpenGarage = int.parse(data?["garageunroofed"] ?? '');
-      nAc = int.parse(data?["acs"] ?? '');
-      nPool = int.parse(data?["pools"] ?? '');
+      selectedGoal = data?["Goal"] ?? selectedGoal;
+      selectedInfo = data?["Origin"] ?? selectedInfo;
+
     });
   }
 
