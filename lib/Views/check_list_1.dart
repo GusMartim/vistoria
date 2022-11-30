@@ -3,6 +3,8 @@ import 'dart:collection';
 import 'package:flutter/services.dart';
 import 'package:vistoria/Utils/exports.dart';
 
+import '../Models/ErrorIntModel.dart';
+
 class CheckList1 extends StatefulWidget {
   final String idSurvey;
 
@@ -322,7 +324,22 @@ class _CheckList1State extends State<CheckList1> {
       _controllerPool = TextEditingController(text: data?["pools"]??'');
       selectedGoal = data?["Goal"] ?? selectedGoal;
       selectedInfo = data?["Origin"] ?? selectedInfo;
-
+      nRoom = int.parse(_controllerRoom.text.isNotEmpty?_controllerRoom.text: '0');
+      nSocialBathroom = int.parse(_controllerSocialBathroom.text.isNotEmpty?_controllerSocialBathroom.text: '0');
+      nPrivateBathroom = int.parse(_controllerPrivateBathroom.text.isNotEmpty?_controllerPrivateBathroom.text: '0');
+      nLav = int.parse(_controllerLavabos.text.isNotEmpty?_controllerLavabos.text:'0');
+      nServiceBathroom = int.parse(_controllerServiceBathroom.text.isNotEmpty?_controllerServiceBathroom.text:'0');
+      nMaidRoom = int.parse(_controllerMaidRoom.text.isNotEmpty?_controllerMaidRoom.text:'0');
+      nBalcony = int.parse(_controllerBalcony.text.isNotEmpty?_controllerBalcony.text:'0');
+      nCompleteCabinets = int.parse(_controllerCompleteCabinets.text.isNotEmpty?_controllerCompleteCabinets.text:'0');
+      nKitchen = int.parse(_controllerKitchen.text.isNotEmpty?_controllerKitchen.text:'0');
+      nRestRoom = int.parse(_controllerRestRoom.text.isNotEmpty?_controllerRestRoom.text:'0');
+      nServiceAreaRoofed = int.parse(_controllerServiceAreaRoofed.text.isNotEmpty?_controllerServiceAreaRoofed.text:'0');
+      nServiceAreaUnroofed = int.parse(_controllerServiceAreaUnRoofed.text.isNotEmpty?_controllerServiceAreaUnRoofed.text:'0');
+      nClosedGarage = int.parse(_controllerClosedGarage.text.isNotEmpty?_controllerClosedGarage.text:'0');
+      nOpenGarage = int.parse(_controllerOpenGarage.text.isNotEmpty?_controllerOpenGarage.text:'0');
+      nAc = int.parse(_controllerSac.text.isNotEmpty?_controllerSac.text:'0');
+      nPool = int.parse(_controllerPool.text.isNotEmpty?_controllerPool.text:'0');
     });
   }
 

@@ -193,18 +193,9 @@ class _CheckListApto1State extends State<CheckListApto1> {
           _urlPhoto = value;
         });
         _urlImageFirestore(value);
-
       });
-
-
     }
-
-
     );
-
-
-
-
   }
   _urlImageFirestore(String url) {
     Map<String, dynamic> dateUpdate = {
@@ -541,23 +532,23 @@ class _CheckListApto1State extends State<CheckListApto1> {
       _controllerBlocks = TextEditingController(text: data?["blocks"]??'');
       _controllerAptos = TextEditingController(text: data?["aptos"]??'');
       _controllerUnitys = TextEditingController(text: data?["unitys"]??'');
-      nRoom = int.parse(data?["rooms"] ?? 0);
-      nSocialBathroom = int.parse(data?["socialbathrooms"] ?? 0);
-      nPrivateBathroom = int.parse(data?["privatebathrooms"] ?? 0);
-      nLav = int.parse(data?["lavs"] ?? 0);
-      nServiceBathroom = int.parse(data?["servicebathrooms"] ?? 0);
-      nMaidRoom = int.parse(data?["maidrooms"] ?? 0);
-      nBalcony = int.parse(data?["balconys"] ?? 0);
-      nCompleteCabinets = int.parse(data?["completecontainers"] ?? 0);
-      nKitchen = int.parse(data?["kitchens"] ?? 0);
-      nRestRoom = int.parse(data?["restrooms"] ?? 0);
-      nServiceAreaRoofed = int.parse(data?["servicearearoofed"] ?? 0);
-      nServiceAreaUnroofed = int.parse(data?["serviceareaunroofed"] ?? 0);
-      nClosedGarage = int.parse(data?["garageroofed"] ?? 0);
-      nOpenGarage = int.parse(data?["garageunroofed"] ?? 0);
-      nAc = int.parse(data?["acs"] ?? 0);
-      nPool = int.parse(data?["pools"] ?? 0);
-      nUnitys =int.parse(data?["unitys"]??0);
+      nRoom = int.parse(_controllerRoom.text.isNotEmpty?_controllerRoom.text: '0');
+      nSocialBathroom = int.parse(_controllerSocialBathroom.text.isNotEmpty?_controllerSocialBathroom.text: '0');
+      nPrivateBathroom = int.parse(_controllerPrivateBathroom.text.isNotEmpty?_controllerPrivateBathroom.text: '0');
+      nLav = int.parse(_controllerLavabos.text.isNotEmpty?_controllerLavabos.text:'0');
+      nServiceBathroom = int.parse(_controllerServiceBathroom.text.isNotEmpty?_controllerServiceBathroom.text:'0');
+      nMaidRoom = int.parse(_controllerMaidRoom.text.isNotEmpty?_controllerMaidRoom.text:'0');
+      nBalcony = int.parse(_controllerBalcony.text.isNotEmpty?_controllerBalcony.text:'0');
+      nCompleteCabinets = int.parse(_controllerCompleteCabinets.text.isNotEmpty?_controllerCompleteCabinets.text:'0');
+      nKitchen = int.parse(_controllerKitchen.text.isNotEmpty?_controllerKitchen.text:'0');
+      nRestRoom = int.parse(_controllerRestRoom.text.isNotEmpty?_controllerRestRoom.text:'0');
+      nServiceAreaRoofed = int.parse(_controllerServiceAreaRoofed.text.isNotEmpty?_controllerServiceAreaRoofed.text:'0');
+      nServiceAreaUnroofed = int.parse(_controllerServiceAreaUnRoofed.text.isNotEmpty?_controllerServiceAreaUnRoofed.text:'0');
+      nClosedGarage = int.parse(_controllerClosedGarage.text.isNotEmpty?_controllerClosedGarage.text:'0');
+      nOpenGarage = int.parse(_controllerOpenGarage.text.isNotEmpty?_controllerOpenGarage.text:'0');
+      nAc = int.parse(_controllerSac.text.isNotEmpty?_controllerSac.text:'0');
+      nPool = int.parse(_controllerPool.text.isNotEmpty?_controllerPool.text:'0');
+      nUnitys =int.parse(_controllerUnitys.text.isNotEmpty?_controllerPool.text:'0');
       nAptos =int.parse(data?["aptos"]??0);
       nAge =int.parse(data?["estimatedAge"]??0);
       nElevators =int.parse(data?["elevators"]??0);

@@ -409,8 +409,6 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
     print(saveChecklist.length);
     int pag = 0;
     pdf.addPage(pdfLib.MultiPage(
-        mainAxisAlignment: pdfLib.MainAxisAlignment.start,
-        crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
         orientation: pdfLib.PageOrientation.landscape,
         build: (context) => [
               pdfLib.Container(
