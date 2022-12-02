@@ -529,7 +529,7 @@ class _SurveyFinishScreenExtraState extends State<SurveyFinishScreenExtra> {
                           style: pdfLib.TextStyle(
                               fontSize: 8.0,
                               font: ttf,
-                              fontWeight: pdfLib.FontWeight.bold),
+                              fontWeight: pdfLib.FontWeight.normal),
                         ),
                       ),
                     ]),
@@ -551,7 +551,7 @@ class _SurveyFinishScreenExtraState extends State<SurveyFinishScreenExtra> {
                           style: pdfLib.TextStyle(
                               fontSize: 8.0,
                               font: ttf,
-                              fontWeight: pdfLib.FontWeight.bold),
+                              fontWeight: pdfLib.FontWeight.normal),
                         ),
                       ),
                     ]),
