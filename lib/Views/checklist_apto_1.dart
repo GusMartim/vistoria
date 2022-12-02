@@ -217,7 +217,7 @@ class _CheckListApto1State extends State<CheckListApto1> {
         .collection('surveys')
         .doc(widget.idSurvey)
         .update(aptoModel.toMap())
-        .then((_) => Navigator.pushNamed(context, '/finished',
+        .then((_) => Navigator.pushNamed(context, '/finishedAPT',
             arguments: widget.idSurvey));
   }
   _AptoTable() async {
@@ -375,7 +375,6 @@ class _CheckListApto1State extends State<CheckListApto1> {
       floor.add(
           CheckBoxModel(title: title, value: check == 'true' ? true : false));
     }
-
     Windows.clear();
     for (int i = 55; i <= 58; i++) {
       var splitted = saveChecklist[i].replaceAll("12", '').split('#');
@@ -538,9 +537,9 @@ class _CheckListApto1State extends State<CheckListApto1> {
       nLav = int.parse(_controllerLavabos.text.isNotEmpty?_controllerLavabos.text:'0');
       nServiceBathroom = int.parse(_controllerServiceBathroom.text.isNotEmpty?_controllerServiceBathroom.text:'0');
       nMaidRoom = int.parse(_controllerMaidRoom.text.isNotEmpty?_controllerMaidRoom.text:'0');
-      nBalcony = int.parse(_controllerBalcony.text.isNotEmpty?_controllerBalcony.text:'0');
+      nBalcony = int.parse(_controllerBalconys.text.isNotEmpty?_controllerBalconys.text:'0');
       nCompleteCabinets = int.parse(_controllerCompleteCabinets.text.isNotEmpty?_controllerCompleteCabinets.text:'0');
-      nKitchen = int.parse(_controllerKitchen.text.isNotEmpty?_controllerKitchen.text:'0');
+      nKitchen = int.parse(_controllerKitchens.text.isNotEmpty?_controllerKitchens.text:'0');
       nRestRoom = int.parse(_controllerRestRoom.text.isNotEmpty?_controllerRestRoom.text:'0');
       nServiceAreaRoofed = int.parse(_controllerServiceAreaRoofed.text.isNotEmpty?_controllerServiceAreaRoofed.text:'0');
       nServiceAreaUnroofed = int.parse(_controllerServiceAreaUnRoofed.text.isNotEmpty?_controllerServiceAreaUnRoofed.text:'0');
@@ -548,13 +547,13 @@ class _CheckListApto1State extends State<CheckListApto1> {
       nOpenGarage = int.parse(_controllerOpenGarage.text.isNotEmpty?_controllerOpenGarage.text:'0');
       nAc = int.parse(_controllerSac.text.isNotEmpty?_controllerSac.text:'0');
       nPool = int.parse(_controllerPool.text.isNotEmpty?_controllerPool.text:'0');
-      nUnitys =int.parse(_controllerUnitys.text.isNotEmpty?_controllerPool.text:'0');
-      nAptos =int.parse(data?["aptos"]??0);
-      nAge =int.parse(data?["estimatedAge"]??0);
-      nElevators =int.parse(data?["elevators"]??0);
-      nPavs =int.parse(data?["pavs"]??0);
-      nSubs =int.parse(data?["subs"]??0);
-      nBlocks =int.parse(data?["blocks"]??0);
+      nUnitys =int.parse(_controllerUnitys.text.isNotEmpty?_controllerUnitys.text:'0');
+      nAptos =int.parse(_controllerAptos.text.isNotEmpty?_controllerAptos.text:'0');
+      nAge =int.parse(_controllerAges.text.isNotEmpty?_controllerAges.text:'0');
+      nElevators =int.parse(_controllerElevators.text.isNotEmpty?_controllerElevators.text:'0');
+      nPavs =int.parse(_controllerPavs.text.isNotEmpty?_controllerPavs.text:'0');
+      nSubs =int.parse(_controllerSubs.text.isNotEmpty?_controllerSubs.text:'0');
+      nBlocks =int.parse(_controllerBlocks.text.isNotEmpty?_controllerBlocks.text:'0');
     });
 
   }

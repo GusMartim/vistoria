@@ -330,9 +330,9 @@ class _CheckList1State extends State<CheckList1> {
       nLav = int.parse(_controllerLavabos.text.isNotEmpty?_controllerLavabos.text:'0');
       nServiceBathroom = int.parse(_controllerServiceBathroom.text.isNotEmpty?_controllerServiceBathroom.text:'0');
       nMaidRoom = int.parse(_controllerMaidRoom.text.isNotEmpty?_controllerMaidRoom.text:'0');
-      nBalcony = int.parse(_controllerBalcony.text.isNotEmpty?_controllerBalcony.text:'0');
+      nBalcony = int.parse(_controllerBalconys.text.isNotEmpty?_controllerBalconys.text:'0');
       nCompleteCabinets = int.parse(_controllerCompleteCabinets.text.isNotEmpty?_controllerCompleteCabinets.text:'0');
-      nKitchen = int.parse(_controllerKitchen.text.isNotEmpty?_controllerKitchen.text:'0');
+      nKitchen = int.parse(_controllerKitchens.text.isNotEmpty?_controllerKitchens.text:'0');
       nRestRoom = int.parse(_controllerRestRoom.text.isNotEmpty?_controllerRestRoom.text:'0');
       nServiceAreaRoofed = int.parse(_controllerServiceAreaRoofed.text.isNotEmpty?_controllerServiceAreaRoofed.text:'0');
       nServiceAreaUnroofed = int.parse(_controllerServiceAreaUnRoofed.text.isNotEmpty?_controllerServiceAreaUnRoofed.text:'0');
@@ -367,6 +367,7 @@ class _CheckList1State extends State<CheckList1> {
     } else {
       setState(() {
         title = '$nsurvey';
+        _getData();
       });
     }
   }
@@ -868,7 +869,7 @@ class _CheckList1State extends State<CheckList1> {
   @override
   void initState() {
     super.initState();
-    _getData();
+
     getNSurvey();
   }
 

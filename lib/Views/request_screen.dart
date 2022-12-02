@@ -112,7 +112,7 @@ class _RequestScreenState extends State<RequestScreen> {
                     background: PaletteColors.greyInput),
               ),
               Container(
-                height: height * 0.5,
+                height: height * 0.8,
                 child:resultList.length!= 0 ?ListView.builder(
                           itemCount: resultList.length,
                           itemBuilder: (context, index) {
@@ -143,7 +143,7 @@ class _RequestScreenState extends State<RequestScreen> {
               //   child: Column(
               //     children: [
               //       Container(
-              //         height: height * 0.5,
+              //         height: height * 0.8,
               //         child: ListView.builder(
               //           // scrollDirection: Axis.vertical,
               //           // physics: NeverScrollableScrollPhysics(),

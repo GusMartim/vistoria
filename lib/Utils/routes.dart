@@ -5,6 +5,9 @@ import 'package:vistoria/Views/checklist_apto_1.dart';
 import 'package:vistoria/Views/checklist_lote_1.dart';
 import 'package:vistoria/Views/construction_step.dart';
 import 'package:vistoria/Views/data_request_screen.dart';
+import 'package:vistoria/Views/finish_apt.dart';
+import 'package:vistoria/Views/finish_lote.dart';
+import 'package:vistoria/Views/finish_obra.dart';
 import 'package:vistoria/Views/history_screen.dart';
 import 'package:vistoria/Views/login_screen.dart';
 import 'package:vistoria/Views/main_menu.dart';
@@ -13,6 +16,8 @@ import 'package:vistoria/Views/register_screen.dart';
 import 'package:vistoria/Views/request_screen.dart';
 import 'package:vistoria/Views/survey_finish_screen.dart';
 import 'package:vistoria/Views/survey_screen.dart';
+
+import '../Views/finish_extra.dart';
 
 
 
@@ -75,8 +80,19 @@ class Routes {
         return MaterialPageRoute(
             builder: (_) => SurveyFinishScreen(idSurvey: args as String)
         );
-
-
+        case "/finishedAPT":
+        return MaterialPageRoute(
+            builder: (_) => SurveyFinishScreenApt(idSurvey: args as String)
+        );case "/finishedExtra":
+        return MaterialPageRoute(
+            builder: (_) => SurveyFinishScreenExtra(idSurvey: args as String)
+        );case "/finishedObra":
+        return MaterialPageRoute(
+            builder: (_) => SurveyFinishScreenObra(idSurvey: args as String)
+        );case "/finishedLote":
+        return MaterialPageRoute(
+            builder: (_) => SurveyFinishScreenLote(idSurvey: args as String)
+        );
       default :
         _erroRota();
     }

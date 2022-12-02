@@ -48,7 +48,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
         .collection("surveys")
         .where("idUser",isEqualTo: _auth.currentUser?.uid)
         .where("status",isEqualTo: "survey")
-        .orderBy('hourRequest', descending: true)
+        .orderBy('Nsurvey', descending: true)
         .get();
     setState(() {
       list = historyList.docs;
@@ -80,6 +80,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
+
         backgroundColor: PaletteColors.white,
         appBar: AppBar(
           backgroundColor: PaletteColors.bgColor,
@@ -96,14 +97,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
           ),
         ),
         body: SingleChildScrollView(
+          physics: NeverScrollableScrollPhysics(),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
             children: [
               Padding(
                 padding:
-                    const EdgeInsets.only(right: 4,left: 22, top: 10,bottom: 14),
+                    const EdgeInsets.only(right: 4,left: 22, top: 10,bottom: 8),
                 child: InputRegister(
                     controller: _controllerSearch,
                     hint: "Pesquisar",
@@ -116,41 +115,46 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     background: PaletteColors.greyInput),
               ),
               _controllerSearch.text.isEmpty?Container(
-                height: height * 0.5,
+                height: height * 0.63,
                 child: StreamBuilder (
                     stream: controller.stream,
                     builder: (context, snapshot) {
-                      return list.length!= 0 ?ListView.builder(
-                          itemCount: list.length,
-                          itemBuilder: (context, index) {
-                            DocumentSnapshot item = list[index];
-                            items.add(ListTileModel(
-                                text:
-                                    '${item['adress']??''},${item['number']??''},${item['district']??''} -${item['city']??''}/${item['estado']??''}',
-                                data: '${item['hourRequest']??''}',
-                                iconShow: false));
-                            return ListTileCustom(
-                              text: items[index].text,
-                              showIcons: items[index].iconShow,
-                              onTap: () {
-                                setState(() {
-                                  if (selectedText == 0) {
-                                    selectedText = selectedText + 1;
-                                    items[index].iconShow = true;
-                                  } else {
-                                    selectedText = selectedText - 1;
-                                    items[index].iconShow = false;
-                                  }
-                                });
-                              },
-                              data: items[index].data,
-                              id: item['idSurvey'],
-                            );
-                          }):Container();
+                      return list.length!= 0 ?Container(
+                        height: height ,
+                        child: ListView.builder(
+                            
+                            itemCount: list.length,
+                            itemBuilder: (context, index) {
+                              DocumentSnapshot item = list[index];
+                              items.add(ListTileModel(
+                                  text:
+                                      '${item['adress']??''},${item['number']??''},${item['district']??''} -${item['city']??''}/${item['estado']??''}',
+                                  data: '${item['hourRequest']??''}',
+                                  iconShow: false));
+                              return ListTileCustom(
+                                text: items[index].text,
+                                showIcons: items[index].iconShow,
+                                onTap: () {
+                                  setState(() {
+                                    if (selectedText == 0) {
+                                      selectedText = selectedText + 1;
+                                      items[index].iconShow = true;
+                                    } else {
+                                      selectedText = selectedText - 1;
+                                      items[index].iconShow = false;
+                                    }
+                                  });
+                                },
+                                data: items[index].data,
+                                id: item['idSurvey'],
+                              );
+                            }),
+                      ):Container();
                     }),
               ):Container(
-                height: height * 0.5,
+                height: height * 0.63,
                 child: resultList.length!= 0 ?ListView.builder(
+                    
                     itemCount: resultList.length,
                     itemBuilder: (context, index) {
                       DocumentSnapshot item = resultList[index];
@@ -159,25 +163,32 @@ class _HistoryScreenState extends State<HistoryScreen> {
                           '${item['adress']},${item['number']},${item['district']} -${item['city']}/${item['estado']}',
                           data: '${item['hourRequest']}',
                           iconShow: false));
-                      return ListTileCustom(
-                        text: '${item['adress']},${item['number']},${item['district']} -${item['city']}/${item['estado']}',
-                        showIcons: items[index].iconShow,
-                        onTap: () {
-                          setState(() {
-                            if (selectedText == 0) {
-                              selectedText = selectedText + 1;
-                              items[index].iconShow = true;
-                            } else {
-                              selectedText = selectedText - 1;
-                              items[index].iconShow = false;
-                            }
-                          });
-                        },
-                        data: '${item['hourRequest']}',
-                        id: item['idSurvey'],
+                      return Column(
+                        children: [
+                          ListTileCustom(
+                            text: '${item['adress']},${item['number']},${item['district']} -${item['city']}/${item['estado']}',
+                            showIcons: items[index].iconShow,
+                            onTap: () {
+                              setState(() {
+                                if (selectedText == 0) {
+                                  selectedText = selectedText + 1;
+                                  items[index].iconShow = true;
+                                } else {
+                                  selectedText = selectedText - 1;
+                                  items[index].iconShow = false;
+                                }
+                              });
+                            },
+                            data: '${item['hourRequest']}',
+                            id: item['idSurvey'],
+                          ),
+
+                        ],
                       );
                     }):Container()
-              )
+              ),
+
+
             ],
           ),
         ));

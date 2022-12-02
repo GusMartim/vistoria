@@ -251,7 +251,7 @@ class _CheckListLote1State extends State<CheckListLote1> {
         .doc(widget.idSurvey)
         .update(loteModel.toMap())
         .then((_) =>
-        Navigator.pushNamed(context, '/finished',
+        Navigator.pushNamed(context, '/finishedLote',
             arguments: widget.idSurvey));
   }
 
@@ -282,8 +282,8 @@ class _CheckListLote1State extends State<CheckListLote1> {
     Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
 
     setState(() {
-      saveCheckList = data?["checklist"];
-      saveratings = data?["ratings"];
+      saveCheckList = data?["checklist"]??[];
+      saveratings = data?["ratings"]??[];
     });
     type.clear();
     for (int i = 0; i <= 3; i++) {
@@ -506,6 +506,7 @@ class _CheckListLote1State extends State<CheckListLote1> {
         getOrder();
       } else {
         setState(() {
+          _getData();
           title = '$nsurvey';
         });
       }
@@ -516,7 +517,7 @@ class _CheckListLote1State extends State<CheckListLote1> {
       // TODO: implement initState
       super.initState();
       getNSurvey();
-      _getData();
+
     }
 
     @override

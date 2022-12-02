@@ -169,7 +169,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
         .collection('surveys')
         .doc(widget.idSurvey)
         .update(constructionModel.toMap())
-        .then((_) => Navigator.pushNamed(context, '/finished',arguments: widget.idSurvey));
+        .then((_) => Navigator.pushNamed(context, '/finishedObra',arguments: widget.idSurvey));
   }
   _tableConstruction() async{
     _constructionModel.services = SServices;
@@ -259,6 +259,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
       getOrder();
     }else{
       setState(() {
+        _getData();
         title = '$nsurvey';
       });
 
@@ -270,7 +271,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
     // TODO: implement initState
     super.initState();
     getNSurvey();
-    _getData();
+
   }
 
   @override

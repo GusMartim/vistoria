@@ -150,7 +150,6 @@ class _SurveyscreenState extends State<Surveyscreen> {
 
   }
   _createTable() async {
-    var dateString = format.format(DateTime.now());
     _surveyModel.adress = _controllerAdress.text;
     _surveyModel.number = _controllerNumber.text;
     _surveyModel.complement = _controllerComplement.text;
@@ -160,7 +159,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
     _surveyModel.typesurvey = selectedType.toString();
     _surveyModel.userCode =_controllerUserCode.text;
     _surveyModel.cep = _controllerCEP.text;
-    _surveyModel.hourRequest = dateString;
+    _surveyModel.hourRequest = format.format(DateTime.now());
     _surveyModel.idUser = FirebaseAuth.instance.currentUser!.uid;
     _surveyModel.userName =FirebaseAuth.instance.currentUser?.displayName!;
     _surveyModel.lng = _controllerLat.text;

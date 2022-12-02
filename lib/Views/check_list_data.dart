@@ -98,6 +98,7 @@ class _CheckListDataState extends State<CheckListData> {
     }else{
       setState(() {
         title = '$nsurvey';
+        _getData();
       });
 
     }
@@ -215,7 +216,7 @@ class _CheckListDataState extends State<CheckListData> {
         .collection('surveys')
         .doc(widget.idSurvey)
         .update(dataModel.toMap())
-        .then((_) => Navigator.pushNamed(context, '/finished',
+        .then((_) => Navigator.pushNamed(context, '/finishedExtra',
             arguments: widget.idSurvey));
   }
 
@@ -397,22 +398,22 @@ class _CheckListDataState extends State<CheckListData> {
       _controllerOpenGarage = TextEditingController(text: data?["garageunroofed"]??'');
       _controllerSac = TextEditingController(text: data?["acs"]??'');
       _controllerPool = TextEditingController(text: data?["pools"]??'');
-      nRoom = int.parse(data?["rooms"] ?? '');
-      nSocialBathroom = int.parse(data?["socialbathrooms"] ?? '');
-      nPrivateBathroom = int.parse(data?["privatebathrooms"] ?? '');
-      nLav = int.parse(data?["lavs"] ?? '');
-      nServiceBathroom = int.parse(data?["servicebathrooms"] ?? '');
-      nMaidRoom = int.parse(data?["maidrooms"] ?? '');
-      nBalcony = int.parse(data?["balconys"] ?? '');
-      nCompleteCabinets = int.parse(data?["completecontainers"] ?? '');
-      nKitchen = int.parse(data?["kitchens"] ?? '');
-      nRestRoom = int.parse(data?["restrooms"] ?? '');
-      nServiceAreaRoofed = int.parse(data?["servicearearoofed"] ?? '');
-      nServiceAreaUnroofed = int.parse(data?["serviceareaunroofed"] ?? '');
-      nClosedGarage = int.parse(data?["garageroofed"] ?? '');
-      nOpenGarage = int.parse(data?["garageunroofed"] ?? '');
-      nAc = int.parse(data?["acs"] ?? '');
-      nPool = int.parse(data?["pools"] ?? '');
+      nRoom = int.parse(_controllerRoom.text.isNotEmpty?_controllerRoom.text: '0');
+      nSocialBathroom = int.parse(_controllerSocialBathroom.text.isNotEmpty?_controllerSocialBathroom.text: '0');
+      nPrivateBathroom = int.parse(_controllerPrivateBathroom.text.isNotEmpty?_controllerPrivateBathroom.text: '0');
+      nLav = int.parse(_controllerLavabos.text.isNotEmpty?_controllerLavabos.text:'0');
+      nServiceBathroom = int.parse(_controllerServiceBathroom.text.isNotEmpty?_controllerServiceBathroom.text:'0');
+      nMaidRoom = int.parse(_controllerMaidRoom.text.isNotEmpty?_controllerMaidRoom.text:'0');
+      nBalcony = int.parse(_controllerBalconys.text.isNotEmpty?_controllerBalconys.text:'0');
+      nCompleteCabinets = int.parse(_controllerCompleteCabinets.text.isNotEmpty?_controllerCompleteCabinets.text:'0');
+      nKitchen = int.parse(_controllerKitchens.text.isNotEmpty?_controllerKitchens.text:'0');
+      nRestRoom = int.parse(_controllerRestRoom.text.isNotEmpty?_controllerRestRoom.text:'0');
+      nServiceAreaRoofed = int.parse(_controllerServiceAreaRoofed.text.isNotEmpty?_controllerServiceAreaRoofed.text:'0');
+      nServiceAreaUnroofed = int.parse(_controllerServiceAreaUnRoofed.text.isNotEmpty?_controllerServiceAreaUnRoofed.text:'0');
+      nClosedGarage = int.parse(_controllerClosedGarage.text.isNotEmpty?_controllerClosedGarage.text:'0');
+      nOpenGarage = int.parse(_controllerOpenGarage.text.isNotEmpty?_controllerOpenGarage.text:'0');
+      nAc = int.parse(_controllerSac.text.isNotEmpty?_controllerSac.text:'0');
+      nPool = int.parse(_controllerPool.text.isNotEmpty?_controllerPool.text:'0');
 
       selectedGoal = data?["Goal"] ?? '';
       selectedInfo = data?["Origin"] ?? '';
@@ -606,7 +607,7 @@ class _CheckListDataState extends State<CheckListData> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _getData();
+
     getNSurvey();
 
 

@@ -12,7 +12,6 @@ class SurveyModel{
   String typesurvey = '';
   String lat = '';
   String lng = '';
-
   String hourRequest = '';
   String idUser = '';
   String? userName = '';

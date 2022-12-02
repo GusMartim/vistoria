@@ -26,6 +26,7 @@ class ListTileCustom extends StatelessWidget {
     
     return Center(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           GestureDetector(
             onTap: onTap,
@@ -43,126 +44,119 @@ class ListTileCustom extends StatelessWidget {
 
             ),
           ),
-          showIcons==true?Padding(
-            padding: const EdgeInsets.all(10.0),
-
-            child: Row(
-              children: [
-                SizedBox(width: 10),
-                Ink(
-                  decoration: ShapeDecoration(
-                    color:  PaletteColors.greyInput,
-                    shape: CircleBorder(),
+          showIcons==true?Row(
+            children: [
+              SizedBox(width: 15),
+              Ink(
+                decoration: ShapeDecoration(
+                  color:  PaletteColors.greyInput,
+                  shape: CircleBorder(),
 
 
-                  ),
-                  child: IconButton(icon: Icon(
-                    Icons.edit,
-                    color: PaletteColors.primaryColor,
-                  ),
-                    constraints: BoxConstraints(minHeight: 46,
-                        minWidth: 46,
-                        maxHeight: 46,
-                        maxWidth: 46),
-                    iconSize: 32.0,
-                    padding: EdgeInsets.zero,
-                    onPressed: () =>
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => Surveyscreen(
-                                    text: 'Editar Vistoria',
-                                    buttonText: 'Continuar',
-                                    id: id
-                                )
-                            )
-
-                        ),
-                  ),
                 ),
-                SizedBox(width: 10),
-                Ink(
-                  decoration: ShapeDecoration(
-                    color:  PaletteColors.greyInput,
-                    shape: CircleBorder(),
-
-
-                  ),
-                  child: IconButton(icon: Icon(
-                    Icons.sim_card_download,
-                    color: PaletteColors.primaryColor,
-                  ),
-                    constraints: BoxConstraints(minHeight: 46,
-                        minWidth: 46,
-                        maxHeight: 46,
-                        maxWidth: 46),
-                    iconSize: 32.0,
-                    padding: EdgeInsets.zero,
-                    onPressed: () {},
-                  ),
+                child: IconButton(icon: Icon(
+                  Icons.edit,
+                  color: PaletteColors.primaryColor,
                 ),
-                SizedBox(width: 10),
-                Ink(
-                  decoration: ShapeDecoration(
-                    color:  PaletteColors.greyInput,
-                    shape: CircleBorder(),
+                  constraints: BoxConstraints(minHeight: 30,
+                      minWidth: 30,
+                      maxHeight: 30,
+                      maxWidth: 30),
+                  iconSize: 20.0,
+                  padding: EdgeInsets.zero,
+                  onPressed: () =>
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => Surveyscreen(
+                                  text: 'Editar Vistoria',
+                                  buttonText: 'Continuar',
+                                  id: id
+                              )
+                          )
 
-
-                  ),
-                  child: IconButton(icon: Icon(
-                    Icons.shortcut_rounded,
-                    color: PaletteColors.primaryColor,
-                  ),
-                    constraints: BoxConstraints(minHeight: 46,
-                        minWidth: 46,
-                        maxHeight: 46,
-                        maxWidth: 46),
-                    iconSize: 32.0,
-                    padding: EdgeInsets.zero,
-                    onPressed: () {},
-                  ),
+                      ),
                 ),
-                SizedBox(width: 10),
-                Ink(
-                  decoration: ShapeDecoration(
-                    color:  PaletteColors.greyInput,
-                    shape: CircleBorder(),
+              ),
+              SizedBox(width: 15),
+              Ink(
+                decoration: ShapeDecoration(
+                  color:  PaletteColors.greyInput,
+                  shape: CircleBorder(),
 
 
-                  ),
-                  child: IconButton(icon: Icon(
-                    Icons.delete_forever,
-                    color: PaletteColors.grey,
-                  ),
-                    constraints: BoxConstraints(minHeight: 46,
-                        minWidth: 46,
-                        maxHeight: 46,
-                        maxWidth: 46),
-                    iconSize: 32.0,
-                    padding: EdgeInsets.zero,
-                    onPressed: () {
-                    db
-                        .collection('surveys')
-                        .doc(id)
-                        .delete().then((value) => Navigator.pushReplacement(context,
-                        MaterialPageRoute(
-                            builder: (_) => HistoryScreen()
-                        )
-                    )
-                    );
-                    },
-                  ),
                 ),
+                child: IconButton(icon: Icon(
+                  Icons.sim_card_download,
+                  color: PaletteColors.primaryColor,
+                ),
+                  constraints: BoxConstraints(minHeight: 30,
+                      minWidth: 30,
+                      maxHeight: 30,
+                      maxWidth: 30),
+                  iconSize: 20.0,
+                  padding: EdgeInsets.zero,
+                  onPressed: () {},
+                ),
+              ),
+              SizedBox(width: 15),
+              Ink(
+                decoration: ShapeDecoration(
+                  color:  PaletteColors.greyInput,
+                  shape: CircleBorder(),
+
+
+                ),
+                child: IconButton(icon: Icon(
+                  Icons.shortcut_rounded,
+                  color: PaletteColors.primaryColor,
+                ),
+                  constraints: BoxConstraints(minHeight: 30,
+                      minWidth: 30,
+                      maxHeight: 30,
+                      maxWidth: 30),
+                  iconSize: 20.0,
+                  padding: EdgeInsets.zero,
+                  onPressed: () {},
+                ),
+              ),
+              SizedBox(width: 15),
+              Ink(
+                decoration: ShapeDecoration(
+                  color:  PaletteColors.greyInput,
+                  shape: CircleBorder(),
+
+
+                ),
+                child: IconButton(icon: Icon(
+                  Icons.delete_forever,
+                  color: PaletteColors.grey,
+                ),
+                  constraints: BoxConstraints(minHeight: 30,
+                      minWidth: 30,
+                      maxHeight: 30,
+                      maxWidth: 30),
+                  iconSize: 20.0,
+                  padding: EdgeInsets.zero,
+                  onPressed: () {
+                  db
+                      .collection('surveys')
+                      .doc(id)
+                      .delete().then((value) => Navigator.pushReplacement(context,
+                      MaterialPageRoute(
+                          builder: (_) => HistoryScreen()
+                      )
+                  )
+                  );
+                  },
+                ),
+              ),
 
 
 
-              ],
+            ],
 
-            ),
-
-
-
-          ):Divider(thickness: 1),
+          ):Divider(),
         ],
 
       )
