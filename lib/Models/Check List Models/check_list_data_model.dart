@@ -79,9 +79,9 @@ class DataModel{
       "TotalArea" : this.TotalArea,
       "Origin" : this.Origin,
       "Goal" : this.Goal,
-      "phone" : this.phone,
+      "telefone" : this.phone,
       "completeAdress" : this.completeAdress,
-      "contact" : this.contact,
+      "contato" : this.contact,
 
     };
     return map;

@@ -1,3 +1,4 @@
+import 'package:url_launcher/url_launcher.dart';
 import 'package:vistoria/Utils/exports.dart';
 import 'package:vistoria/Widgets/inputRegister.dart';
 import 'package:vistoria/Widgets/text_custom.dart';
@@ -53,6 +54,8 @@ class _ConstructionStepState extends State<ConstructionStep> {
   int nOthers = 0;
   String SOthers = '0';
   TextEditingController _controllerObs = TextEditingController();
+  TextEditingController _controllerContato = TextEditingController();
+  TextEditingController _controllerTelefoneContato = TextEditingController();
   File? picture;
 
   String _urlPhoto = '';
@@ -209,27 +212,29 @@ class _ConstructionStepState extends State<ConstructionStep> {
     await db.collection("surveys").doc(widget.idSurvey).get();
     Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
     setState(() {
-      SServices = data?["services"];
-      SInfra = data?["infra"];
-      SSupra = data?["supra"];
-      SWalls = data?["walls"];
-      SFrames = data?["frames"];
-      SGlasses = data?["glasses"];
-      SCeiling = data?["ceiling"];
-      SWaterProof = data?["waterproof"];
-      SIntern = data?["intern"];
-      SLinings = data?["linings"];
-      SExtern = data?["extern"];
-      SPaint = data?["paints"];
-      SFloors = data?["floors"];
-      SFinishes = data?["finishes"];
-      SEletric = data?["electric"];
-      SHidro = data?["hidro"];
-      SSewer = data?["sewer"];
-      SSlabs = data?["slabs"];
-      SComplements = data?["complements"];
-      SOthers = data?["others"];
+      SServices = data?["services"]??'';
+      SInfra = data?["infra"]??'';
+      SSupra = data?["supra"]??'';
+      SWalls = data?["walls"]??'';
+      SFrames = data?["frames"]??'';
+      SGlasses = data?["glasses"]??'';
+      SCeiling = data?["ceiling"]??'';
+      SWaterProof = data?["waterproof"]??'';
+      SIntern = data?["intern"]??'';
+      SLinings = data?["linings"]??'';
+      SExtern = data?["extern"]??'';
+      SPaint = data?["paints"]??'';
+      SFloors = data?["floors"]??'';
+      SFinishes = data?["finishes"]??'';
+      SEletric = data?["electric"]??'';
+      SHidro = data?["hidro"]??'';
+      SSewer = data?["sewer"]??'';
+      SSlabs = data?["slabs"]??'';
+      SComplements = data?["complements"]??'';
+      SOthers = data?["others"]??'';
       _controllerObs = TextEditingController(text: data?["obs"]??'');
+      _controllerContato = TextEditingController(text: data?["contato"]??'');
+      _controllerTelefoneContato = TextEditingController(text: data?["telefone"]??'');
 
     });
   }
@@ -259,7 +264,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
       getOrder();
     }else{
       setState(() {
-        _getData();
+
         title = '$nsurvey';
       });
 
@@ -271,7 +276,7 @@ class _ConstructionStepState extends State<ConstructionStep> {
     // TODO: implement initState
     super.initState();
     getNSurvey();
-
+    _getData();
   }
 
   @override
@@ -301,19 +306,21 @@ class _ConstructionStepState extends State<ConstructionStep> {
               shape: CircleBorder(),
             ),
             child: IconButton(
-              icon: Icon(
-                Icons.camera_alt,
-                color: PaletteColors.primaryColor,
-              ),
-              constraints: BoxConstraints(
-                  minHeight: 28, minWidth: 28, maxHeight: 28, maxWidth: 28),
-              iconSize: 24.0,
-              padding: EdgeInsets.all(3.0),
+                icon: Icon(
+                  Icons.camera_alt,
+                  color: PaletteColors.primaryColor,
+                ),
+                constraints: BoxConstraints(
+                    minHeight: 28, minWidth: 28, maxHeight: 28, maxWidth: 28),
+                iconSize: 24.0,
+                alignment: Alignment.center,
+                padding: EdgeInsets.all(0.0),
                 onPressed: () => AlertModel().alert(
-                    'Selecionar foto  da:','',
+                    'Selecionar foto  da:',
+                    '',
                     PaletteColors.primaryColor,
                     PaletteColors.primaryColor,
-                    context,[
+                    context, [
                   Row(
                     children: [
                       SizedBox(width: width * 0.03),
@@ -354,12 +361,38 @@ class _ConstructionStepState extends State<ConstructionStep> {
                       ],
                     ),
                   ),
+                ])),
+          ),
+          SizedBox(width: width * 0.01),
+          Ink(
+            decoration: ShapeDecoration(
+              color: PaletteColors.white,
+              shape: CircleBorder(),
+            ),
+            child: IconButton(
+                icon: Icon(
+                  Icons.phone,
+                  color: PaletteColors.primaryColor,
+                ),
+                constraints: BoxConstraints(
+                    minHeight: 28, minWidth: 28, maxHeight: 28, maxWidth: 28),
+                iconSize: 24.0,
+                alignment: Alignment.center,
+                padding: EdgeInsets.all(0.0),
+                onPressed: ()async{
+                  if(_controllerTelefoneContato.text.isNotEmpty){
 
-                ]
-                )
+                    var splitted = _controllerTelefoneContato.text.replaceAll('-','').replaceAll('(','').replaceAll(')','').trim();
+                    var url ="tel:+55$splitted";
+                    await launchUrl(Uri.parse(url));
+                  }else{
+                    showSnackBar(context, 'Preencha o campo Telefone',Colors.red);
+                  }
+                }
+
             ),
           ),
-          SizedBox(width: width * 0.04,)
+          SizedBox(width: width * 0.03),
         ],
       ),
       body: SingleChildScrollView(
@@ -372,6 +405,70 @@ class _ConstructionStepState extends State<ConstructionStep> {
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
+              Row(
+                children: [
+                  Container(
+                    width: width * 0.5,
+                    child: TextCustom(
+                      text: "Contato",
+                      size: 14.0,
+                      color: PaletteColors.grey,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+
+                ],
+              ),
+              Row(children: [
+                Container(
+                  child: InputRegister(
+                    icons: Icons.height,
+                    sizeIcon: 0.0,
+                    width: width * 0.75,
+                    controller: _controllerContato,
+                    hint: "",
+                    fonts: 14.0,
+                    keyboardType: TextInputType.text,
+                    colorBorder: PaletteColors.greyInput,
+                    background: PaletteColors.greyInput,
+                  ),
+                ),
+
+              ]),
+              SizedBox(height: height * 0.03),
+              Row(
+                children: [
+                  Container(
+                    width: width * 0.4,
+                    child: TextCustom(
+                        text: "Telefone",
+                        size: 14.0,
+                        color: PaletteColors.grey,
+                        fontWeight: FontWeight.bold),
+                  ),
+
+                ],
+              ),
+              Row(children: [
+                Container(
+                  child: InputRegister(
+                    inputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly,
+                      TelefoneInputFormatter()
+                    ],
+                    icons: Icons.height,
+                    sizeIcon: 0.0,
+                    width: width * 0.4,
+                    controller: _controllerTelefoneContato,
+                    hint: '',
+                    fonts: 14.0,
+                    keyboardType: TextInputType.number,
+                    colorBorder: PaletteColors.greyInput,
+                    background: PaletteColors.greyInput,
+                  ),
+                ),
+              ]),
+              SizedBox(height: height * 0.03),
               Row(
                 children: [
                   TextCustom(

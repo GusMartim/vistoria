@@ -10,6 +10,8 @@ class AptoModel{
   String socialbathrooms = '';
   String privatebathrooms = '';
   String lavs = '';
+  String Telefone = '';
+  String Contato = '';
   String servicebathrooms = '';
   String maidrooms = '';
   String balconys = '';
@@ -57,10 +59,13 @@ class AptoModel{
   String subs = '';
   String blocks = '';
   String view = '';
+
   AptoModel();
 
   Map<String,dynamic> toMap(){
     Map<String,dynamic> map = {
+      "contato"    : this.Contato,
+      "telefone"    : this.Telefone,
       "pavs": this.pavs,
       "subs": this.subs,
       "blocks": this.blocks,

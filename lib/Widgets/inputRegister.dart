@@ -39,9 +39,9 @@ class InputRegister extends StatelessWidget {
     return Container(
       alignment: Alignment.topLeft,
       width: this.width,
-      height: 45,
-      padding: EdgeInsets.symmetric(horizontal: 8),
-      margin: EdgeInsets.only( top: 6, bottom: 6, right: 24),
+      height: 42,
+      padding: EdgeInsets.symmetric(horizontal: 8.0),
+      margin: EdgeInsets.only( top: 4, bottom: 4, right: 24),
       decoration: BoxDecoration(
           color: background,
           borderRadius: BorderRadius.circular(4),

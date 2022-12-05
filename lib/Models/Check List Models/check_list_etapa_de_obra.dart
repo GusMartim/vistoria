@@ -21,10 +21,14 @@ class ConstructionModel{
   String complements = '';
   String others = '';
   String obs = '';
+  String Telefone = '';
+  String Contato = '';
   ConstructionModel();
 
   Map<String,dynamic> toMap(){
     Map<String,dynamic> map = {
+      "contato"    : this.Contato,
+      "telefone"    : this.Telefone,
       "services": this.services,
       "infra"   : this.infra,
       "supra"    : this.supra,

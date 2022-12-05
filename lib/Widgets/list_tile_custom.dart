@@ -1,18 +1,23 @@
+import 'package:url_launcher/url_launcher.dart';
 import 'package:vistoria/Utils/exports.dart';
 
 class ListTileCustom extends StatelessWidget {
   final onTap;
+  final onTapPdf;
   bool showIcons;
   final text;
   final data;
   final id;
+  final pdf;
 
   ListTileCustom({
     required this.text,
     required this.onTap,
+    required this.onTapPdf,
     this.showIcons = false,
     required this.data,
     required this.id,
+    this.pdf = '',
 });
 
 
@@ -96,28 +101,7 @@ class ListTileCustom extends StatelessWidget {
                       maxWidth: 30),
                   iconSize: 20.0,
                   padding: EdgeInsets.zero,
-                  onPressed: () {},
-                ),
-              ),
-              SizedBox(width: 15),
-              Ink(
-                decoration: ShapeDecoration(
-                  color:  PaletteColors.greyInput,
-                  shape: CircleBorder(),
-
-
-                ),
-                child: IconButton(icon: Icon(
-                  Icons.shortcut_rounded,
-                  color: PaletteColors.primaryColor,
-                ),
-                  constraints: BoxConstraints(minHeight: 30,
-                      minWidth: 30,
-                      maxHeight: 30,
-                      maxWidth: 30),
-                  iconSize: 20.0,
-                  padding: EdgeInsets.zero,
-                  onPressed: () {},
+                  onPressed: onTapPdf
                 ),
               ),
               SizedBox(width: 15),

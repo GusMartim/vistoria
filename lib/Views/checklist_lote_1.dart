@@ -1,3 +1,4 @@
+import 'package:url_launcher/url_launcher.dart';
 import 'package:vistoria/Models/check_box_model_ratings.dart';
 import 'package:vistoria/Utils/exports.dart';
 import 'package:vistoria/Widgets/inputRegister.dart';
@@ -131,7 +132,8 @@ class _CheckListLote1State extends State<CheckListLote1> {
   TextEditingController _controllerTransport = TextEditingController();
 
   TextEditingController _controllerTerrainArea = TextEditingController();
-
+  TextEditingController _controllerContato = TextEditingController();
+  TextEditingController _controllerTelefoneContato = TextEditingController();
   TextEditingController _controllerPrice = TextEditingController();
   TextEditingController _controllerObs = TextEditingController();
   FirebaseFirestore db = FirebaseFirestore.instance;
@@ -266,6 +268,8 @@ class _CheckListLote1State extends State<CheckListLote1> {
     _loteModel.use = _controllerUse.text;
     _loteModel.pattern = _controllerPattern.text;
     _loteModel.TerrainArea = _controllerTerrainArea.text;
+    _loteModel.Contato = _controllerContato.text;
+    _loteModel.Telefone = _controllerTelefoneContato.text;
     _loteModel.transport = _controllerTransport.text;
     _loteModel.shape = _controllerShape.text;
     _loteModel.rating = _controllerEvaluation.text;
@@ -285,109 +289,114 @@ class _CheckListLote1State extends State<CheckListLote1> {
       saveCheckList = data?["checklist"]??[];
       saveratings = data?["ratings"]??[];
     });
-    type.clear();
-    for (int i = 0; i <= 3; i++) {
-      var splitted = saveCheckList[i].replaceAll("1", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      type.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
-    shape.clear();
-    for (int i = 4; i <= 8; i++) {
-      var splitted = saveCheckList[i].replaceAll("2", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      shape.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
-    situation.clear();
-    for (int i = 9; i <= 12; i++) {
-      var splitted = saveCheckList[i].replaceAll("3", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      situation.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
+    if(saveCheckList.length != 0){
+      type.clear();
+      for (int i = 0; i <= 3; i++) {
+        var splitted = saveCheckList[i].replaceAll("1", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        type.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
+      shape.clear();
+      for (int i = 4; i <= 8; i++) {
+        var splitted = saveCheckList[i].replaceAll("2", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        shape.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
+      situation.clear();
+      for (int i = 9; i <= 12; i++) {
+        var splitted = saveCheckList[i].replaceAll("3", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        situation.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
 
-    topography.clear();
-    for (int i = 13; i <= 20; i++) {
-      var splitted = saveCheckList[i].replaceAll("4", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      topography.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      topography.clear();
+      for (int i = 13; i <= 20; i++) {
+        var splitted = saveCheckList[i].replaceAll("4", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        topography.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
+      terrain.clear();
+      for (int i = 21; i <= 25; i++) {
+        var splitted = saveCheckList[i].replaceAll("5", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        terrain.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
+      location.clear();
+      for (int i = 26; i <= 29; i++) {
+        var splitted = saveCheckList[i].replaceAll("6", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        location.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
+      use.clear();
+      for (int i = 30; i <= 34; i++) {
+        var splitted = saveCheckList[i].replaceAll("7", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        use.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
+      pattern.clear();
+      for (int i = 35; i <= 39; i++) {
+        var splitted = saveCheckList[i].replaceAll("8", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        pattern.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
+      evaluation.clear();
+      for (int i = 40; i <= 43; i++) {
+        var splitted = saveCheckList[i].replaceAll("9", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        evaluation.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
+      density.clear();
+      for (int i = 44; i <= 47; i++) {
+        var splitted = saveCheckList[i].replaceAll("10", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        density.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
+      transport.clear();
+      for (int i = 48; i <= 52; i++) {
+        var splitted = saveCheckList[i].replaceAll("11", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        transport.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
     }
-    terrain.clear();
-    for (int i = 21; i <= 25; i++) {
-      var splitted = saveCheckList[i].replaceAll("5", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      terrain.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
-    location.clear();
-    for (int i = 26; i <= 29; i++) {
-      var splitted = saveCheckList[i].replaceAll("6", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      location.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
-    use.clear();
-    for (int i = 30; i <= 34; i++) {
-      var splitted = saveCheckList[i].replaceAll("7", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      use.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
-    pattern.clear();
-    for (int i = 35; i <= 39; i++) {
-      var splitted = saveCheckList[i].replaceAll("8", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      pattern.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
-    evaluation.clear();
-    for (int i = 40; i <= 43; i++) {
-      var splitted = saveCheckList[i].replaceAll("9", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      evaluation.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
-    density.clear();
-    for (int i = 44; i <= 47; i++) {
-      var splitted = saveCheckList[i].replaceAll("10", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      density.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
-    transport.clear();
-    for (int i = 48; i <= 52; i++) {
-      var splitted = saveCheckList[i].replaceAll("11", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      transport.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
-    ratings.clear();
-    for( int i = 0; i < saveratings.length; i++){
-      var splitted = saveratings[i].split('#');
-      var check1 = splitted[1];
-      var check2 = splitted[2];
-      var check3 = splitted[3];
-      ratings.add(
+    if(saveratings.length != 0){
+      ratings.clear();
+      for( int i = 0; i < saveratings.length; i++){
+        var splitted = saveratings[i].split('#');
+        var check1 = splitted[1];
+        var check2 = splitted[2];
+        var check3 = splitted[3];
+        ratings.add(
             CheckBoxModelRatings(satisfactory: check1== 'true' ? true : false,
-            precary: check2== 'true' ? true : false,
-            notAvaiable: check3== 'true' ? true : false
-        ));
+                precary: check2== 'true' ? true : false,
+                notAvaiable: check3== 'true' ? true : false
+            ));
 
 
+      }
     }
+
   setState(() {
     _controllerPrice = TextEditingController(text: data?["price"]);
     _controllerTerrainArea = TextEditingController(text: data?["TerrainArea"]);
@@ -404,6 +413,8 @@ class _CheckListLote1State extends State<CheckListLote1> {
     _controllerTransport = TextEditingController(text: data?["transport"]);
     _controllerFactors = TextEditingController(text: data?["factors"]);
     _controllerObs = TextEditingController(text: data?["obs"]);
+    _controllerContato = TextEditingController(text: data?["contato"]??'');
+    _controllerTelefoneContato = TextEditingController(text: data?["telefone"]??'');
   });
   }
 
@@ -506,7 +517,7 @@ class _CheckListLote1State extends State<CheckListLote1> {
         getOrder();
       } else {
         setState(() {
-          _getData();
+
           title = '$nsurvey';
         });
       }
@@ -517,7 +528,7 @@ class _CheckListLote1State extends State<CheckListLote1> {
       // TODO: implement initState
       super.initState();
       getNSurvey();
-
+      _getData();
     }
 
     @override
@@ -553,19 +564,21 @@ class _CheckListLote1State extends State<CheckListLote1> {
                 shape: CircleBorder(),
               ),
               child: IconButton(
-                icon: Icon(
-                  Icons.camera_alt,
-                  color: PaletteColors.primaryColor,
-                ),
-                constraints: BoxConstraints(
-                    minHeight: 28, minWidth: 28, maxHeight: 28, maxWidth: 28),
-                iconSize: 24.0,
-                padding: EdgeInsets.all(3.0),
+                  icon: Icon(
+                    Icons.camera_alt,
+                    color: PaletteColors.primaryColor,
+                  ),
+                  constraints: BoxConstraints(
+                      minHeight: 28, minWidth: 28, maxHeight: 28, maxWidth: 28),
+                  iconSize: 24.0,
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.all(0.0),
                   onPressed: () => AlertModel().alert(
-                      'Selecionar foto  da:','',
+                      'Selecionar foto  da:',
+                      '',
                       PaletteColors.primaryColor,
                       PaletteColors.primaryColor,
-                      context,[
+                      context, [
                     Row(
                       children: [
                         SizedBox(width: width * 0.03),
@@ -606,14 +619,38 @@ class _CheckListLote1State extends State<CheckListLote1> {
                         ],
                       ),
                     ),
+                  ])),
+            ),
+            SizedBox(width: width * 0.01),
+            Ink(
+              decoration: ShapeDecoration(
+                color: PaletteColors.white,
+                shape: CircleBorder(),
+              ),
+              child: IconButton(
+                  icon: Icon(
+                    Icons.phone,
+                    color: PaletteColors.primaryColor,
+                  ),
+                  constraints: BoxConstraints(
+                      minHeight: 28, minWidth: 28, maxHeight: 28, maxWidth: 28),
+                  iconSize: 24.0,
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.all(0.0),
+                  onPressed: ()async{
+                    if(_controllerTelefoneContato.text.isNotEmpty){
 
-                  ]
-                  )
+                      var splitted = _controllerTelefoneContato.text.replaceAll('-','').replaceAll('(','').replaceAll(')','').trim();
+                      var url ="tel:+55$splitted";
+                      await launchUrl(Uri.parse(url));
+                    }else{
+                      showSnackBar(context, 'Preencha o campo Telefone',Colors.red);
+                    }
+                  }
+
               ),
             ),
-            SizedBox(
-              width: width * 0.04,
-            )
+            SizedBox(width: width * 0.03),
           ],
         ),
         body: Padding(
@@ -628,77 +665,134 @@ class _CheckListLote1State extends State<CheckListLote1> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   SizedBox(height: height * 0.01),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
+                  Row(
                     children: [
-                      Row(
-                        children: [
-                          Container(
-                            width: width * 0.60,
-                            child: TextCustom(
-                                text: "Valor",
-                                size: 14.0,
-                                color: PaletteColors.grey,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                      Row(children: [
-                        Container(
-                          child: InputRegister(
-                            inputFormatters: [
-                              FilteringTextInputFormatter.digitsOnly,
-                              RealInputFormatter(moeda: true)
-                            ],
-                            icons: Icons.height,
-                            sizeIcon: 0.0,
-                            width: width * 0.60,
-                            controller: _controllerPrice,
-                            hint: 'R\$100.000.00',
-                            fonts: 14.0,
-                            keyboardType: TextInputType.number,
-                            colorBorder: PaletteColors.greyInput,
-                            background: PaletteColors.greyInput,
-                          ),
+                      Container(
+                        width: width * 0.5,
+                        child: TextCustom(
+                          text: "Contato",
+                          size: 14.0,
+                          color: PaletteColors.grey,
+                          fontWeight: FontWeight.bold,
                         ),
-                      ]),
-                      SizedBox(height: height * 0.03),
-                      Row(
+                      ),
+
+                    ],
+                  ),
+                  Row(children: [
+                    Container(
+                      child: InputRegister(
+                        icons: Icons.height,
+                        sizeIcon: 0.0,
+                        width: width * 0.75,
+                        controller: _controllerContato,
+                        hint: "",
+                        fonts: 14.0,
+                        keyboardType: TextInputType.text,
+                        colorBorder: PaletteColors.greyInput,
+                        background: PaletteColors.greyInput,
+                      ),
+                    ),
+
+                  ]),
+                  SizedBox(height: height * 0.03),
+                  Row(
+                    children: [
+                      Container(
+                        width: width * 0.4,
+                        child: TextCustom(
+                            text: "Telefone",
+                            size: 14.0,
+                            color: PaletteColors.grey,
+                            fontWeight: FontWeight.bold),
+                      ),
+
+                    ],
+                  ),
+                  Row(children: [
+                    Container(
+                      child: InputRegister(
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                          TelefoneInputFormatter()
+                        ],
+                        icons: Icons.height,
+                        sizeIcon: 0.0,
+                        width: width * 0.4,
+                        controller: _controllerTelefoneContato,
+                        hint: '',
+                        fonts: 14.0,
+                        keyboardType: TextInputType.number,
+                        colorBorder: PaletteColors.greyInput,
+                        background: PaletteColors.greyInput,
+                      ),
+                    ),
+                  ]),
+                  SizedBox(height: height * 0.03),
+                  Row(
+                    children: [
+                      Container(
+                        width: width * 0.60,
+                        child: TextCustom(
+                            text: "Valor",
+                            size: 14.0,
+                            color: PaletteColors.grey,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                  Row(children: [
+                    Container(
+                      child: InputRegister(
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                          RealInputFormatter(moeda: true)
+                        ],
+                        icons: Icons.height,
+                        sizeIcon: 0.0,
+                        width: width * 0.60,
+                        controller: _controllerPrice,
+                        hint: 'R\$100.000.00',
+                        fonts: 14.0,
+                        keyboardType: TextInputType.number,
+                        colorBorder: PaletteColors.greyInput,
+                        background: PaletteColors.greyInput,
+                      ),
+                    ),
+                  ]),
+                  SizedBox(height: height * 0.03),
+                  Row(
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
                         children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
+                          Row(
                             children: [
-                              Row(
-                                children: [
-                                  Container(
-                                    width: width * 0.8,
-                                    child: TextCustom(
-                                        text: "Área do Terreno",
-                                        size: 14.0,
-                                        color: PaletteColors.grey,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ],
-                              ),
                               Container(
                                 width: width * 0.8,
-                                child: InputRegister(
-                                  icons: Icons.height,
-                                  sizeIcon: 0.0,
-                                  width: width * 0.2,
-                                  controller: _controllerTerrainArea,
-                                  hint: "   ",
-                                  fonts: 14.0,
-                                  keyboardType: TextInputType.number,
-                                  colorBorder: PaletteColors.greyInput,
-                                  background: PaletteColors.greyInput,
-                                ),
+                                child: TextCustom(
+                                    text: "Área do Terreno/Testada",
+                                    size: 14.0,
+                                    color: PaletteColors.grey,
+                                    fontWeight: FontWeight.bold),
                               ),
                             ],
+                          ),
+                          Container(
+                            width: width * 0.8,
+                            child: InputRegister(
+                              icons: Icons.height,
+                              sizeIcon: 0.0,
+                              width: width * 0.2,
+                              controller: _controllerTerrainArea,
+                              hint: "   ",
+                              fonts: 14.0,
+                              keyboardType: TextInputType.number,
+                              colorBorder: PaletteColors.greyInput,
+                              background: PaletteColors.greyInput,
+                            ),
                           ),
                         ],
                       ),

@@ -2405,7 +2405,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
           .then((upload) async {
         upload.ref.getDownloadURL().then((value) {
           Map<String, dynamic> dateUpdate = {
-            'pdfUrl': value.toString(),
+            'savedPdf': value.toString(),
             'idSurvey': widget.idSurvey
           };
           db
@@ -2713,42 +2713,6 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                   ),
                   TextCustom(
                     text: "Salvar Documento",
-                    size: 16.0,
-                    color: PaletteColors.grey,
-                    fontWeight: FontWeight.normal,
-                    textAlign: TextAlign.start,
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 12,
-              ),
-              Row(
-                children: [
-                  Ink(
-                    decoration: ShapeDecoration(
-                      color: PaletteColors.greyInput,
-                      shape: CircleBorder(),
-                    ),
-                    child: IconButton(
-                        icon: Icon(
-                          Icons.shortcut_rounded,
-                          color: PaletteColors.primaryColor,
-                        ),
-                        constraints: BoxConstraints(
-                            minHeight: 46,
-                            minWidth: 46,
-                            maxHeight: 46,
-                            maxWidth: 46),
-                        iconSize: 32.0,
-                        padding: EdgeInsets.zero,
-                        onPressed: () {}),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  TextCustom(
-                    text: "Compartilhar",
                     size: 16.0,
                     color: PaletteColors.grey,
                     fontWeight: FontWeight.normal,

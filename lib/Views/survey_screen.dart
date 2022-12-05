@@ -24,6 +24,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
   TextEditingController _controllerLat = TextEditingController();
   TextEditingController _controllerLng = TextEditingController();
   TextEditingController _controllerUserCode = TextEditingController();
+  String pdf = '';
   var controllerSurveyCode = TextEditingController();
   Map<String, dynamic>? data;
   String Status= '';
@@ -122,7 +123,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
         .doc(widget.id != "" ? widget.id : _surveyModel.idSurvey)
         .set(surveyModel.toMap(), SetOptions(merge: true))
         .then((_) =>
-            _surveyType(widget.id != "" ? widget.id : _surveyModel.idSurvey));
+        _surveyType(widget.id != "" ? widget.id : _surveyModel.idSurvey));
   }
   getNSurvey()async{
     DocumentSnapshot snapshot = await db
@@ -145,11 +146,15 @@ class _SurveyscreenState extends State<Surveyscreen> {
     setState(() {
       order = data?["surveyNumber"] ?? 0;
       title = '${order + 1}';
+      if(widget.text =='Vistoriar Demanda'){
+        nsurvey = order;
+      }
 
     });
 
   }
   _createTable() async {
+    _surveyModel.adress = _controllerAdress.text;
     _surveyModel.adress = _controllerAdress.text;
     _surveyModel.number = _controllerNumber.text;
     _surveyModel.complement = _controllerComplement.text;
@@ -164,6 +169,8 @@ class _SurveyscreenState extends State<Surveyscreen> {
     _surveyModel.userName =FirebaseAuth.instance.currentUser?.displayName!;
     _surveyModel.lng = _controllerLat.text;
     _surveyModel.lat = _controllerLng.text;
+    _surveyModel.pdf = pdf;
+    _surveyModel.nsurvey = nsurvey;
     _surveyModel.status = Status !=""?Status:'';
 
     if (widget.id != '') {
@@ -233,7 +240,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
     int i = 0;
     final List<XFile>? selectedImages = await ImagePicker().pickMultiImage(imageQuality: 30);
     if(selectedImages!.isNotEmpty){
-        imageFileList!.addAll(selectedImages);
+      imageFileList!.addAll(selectedImages);
     }
     setState(() {
 
@@ -244,28 +251,28 @@ class _SurveyscreenState extends State<Surveyscreen> {
   }
   Future<void> _uploadImages(XFile file) async{
     print('chegou');
-   int i = 0;
-  Uint8List archive = await file.readAsBytes();
-  if(archive!.isNotEmpty){
-        Reference pastaRaiz = storage.ref();
-        Reference arquivo = pastaRaiz
-            .child("surveys")
-            .child(selectedText + "_" + DateTime.now().toString()+'.png');
-        await arquivo.putData(archive,SettableMetadata(contentType:'application/octet-stream')).then((upload) async {
-          upload.ref.getDownloadURL().then((value) {
-            Map<String, dynamic> dateUpdate = {
-              'photoUrl': FieldValue.arrayUnion([value.toString()]),
-              'idSurvey': widget.id != '' ?widget.id :_surveyModel.idSurvey
-            };
-            db
-                .collection("surveys")
-                .doc(widget.id != '' ?widget.id :_surveyModel.idSurvey)
-                .set(dateUpdate, SetOptions(merge: true));
-          });
+    int i = 0;
+    Uint8List archive = await file.readAsBytes();
+    if(archive!.isNotEmpty){
+      Reference pastaRaiz = storage.ref();
+      Reference arquivo = pastaRaiz
+          .child("surveys")
+          .child(selectedText + "_" + DateTime.now().toString()+'.png');
+      await arquivo.putData(archive,SettableMetadata(contentType:'application/octet-stream')).then((upload) async {
+        upload.ref.getDownloadURL().then((value) {
+          Map<String, dynamic> dateUpdate = {
+            'photoUrl': FieldValue.arrayUnion([value.toString()]),
+            'idSurvey': widget.id != '' ?widget.id :_surveyModel.idSurvey
+          };
+          db
+              .collection("surveys")
+              .doc(widget.id != '' ?widget.id :_surveyModel.idSurvey)
+              .set(dateUpdate, SetOptions(merge: true));
         });
+      });
 
 
-      }
+    }
 
   }
 
@@ -287,7 +294,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
 
   _getData() async {
     DocumentSnapshot snapshot =
-        await db.collection("surveys").doc(widget.id).get();
+    await db.collection("surveys").doc(widget.id).get();
     Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
     setState(() {
       _controllerAdress = TextEditingController(text: data?["adress"]??'');
@@ -301,7 +308,9 @@ class _SurveyscreenState extends State<Surveyscreen> {
       _controllerLat = TextEditingController(text:data?["lat"]??'' );
       _controllerLng = TextEditingController(text:data?["lng"]??'' );
       _controllerUserCode = TextEditingController(text:data?["userCode"]??'');
+
       Status = data?["status"]??'';
+      pdf = data?["savedPdf"]??'';
     });
 
   }
@@ -318,6 +327,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
     }
     if(widget.text == 'Vistoriar Demanda'){
       getOrder();
+      _getData();
     }
   }
 
@@ -349,15 +359,15 @@ class _SurveyscreenState extends State<Surveyscreen> {
               shape: CircleBorder(),
             ),
             child: IconButton(
-              icon: Icon(
-                Icons.camera_alt,
-                color: PaletteColors.primaryColor,
-              ),
-              constraints: BoxConstraints(
-                  minHeight: 28, minWidth: 28, maxHeight: 28, maxWidth: 28),
-              iconSize: 24.0,
-              padding: EdgeInsets.all(2.0),
-              onPressed: () => AlertModel().alert(
+                icon: Icon(
+                  Icons.camera_alt,
+                  color: PaletteColors.primaryColor,
+                ),
+                constraints: BoxConstraints(
+                    minHeight: 28, minWidth: 28, maxHeight: 28, maxWidth: 28),
+                iconSize: 24.0,
+                padding: EdgeInsets.all(2.0),
+                onPressed: () => AlertModel().alert(
                     'Selecionar foto  da:','',
                     PaletteColors.primaryColor,
                     PaletteColors.primaryColor,
@@ -424,7 +434,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
               iconSize: 24.0,
               padding: EdgeInsets.all(2.0),
               onPressed: () {
-                 _local();
+                _local();
               },
             ),
           ),
@@ -447,8 +457,8 @@ class _SurveyscreenState extends State<Surveyscreen> {
                     Container(
                       width: width * 0.35,
                       child: TextCustom(
-                        text: "Tipo de vistoria",
-                        size: 14.0,
+                        text: "Tipo de Vistoria:",
+                        size: 12.0,
                         color: PaletteColors.grey,
                         fontWeight: FontWeight.bold,
                         textAlign: TextAlign.start,
@@ -457,7 +467,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                     SizedBox(width: width * 0.15),
                     TextCustom(
                       text: "Nº do Sistema:",
-                      size: 14.0,
+                      size: 12.0,
                       color: PaletteColors.grey,
                       fontWeight: FontWeight.bold,
                       textAlign: TextAlign.start,
@@ -465,7 +475,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                     Container(
                       child: TextCustom(
                         text: title,
-                        size: 14.0,
+                        size: 12.0,
                         color: PaletteColors.bgColor,
                         fontWeight: FontWeight.bold,
                         textAlign: TextAlign.center,
@@ -480,7 +490,15 @@ class _SurveyscreenState extends State<Surveyscreen> {
               Row(
                 children: [
                   SizedBox(width: width * 0.04),
-                  Container(
+                  widget.text == 'Editar Vistoria'?Container(
+                    child: TextCustom(
+                      text: selectedType,
+                      size: 12.0,
+                      color: PaletteColors.bgColor,
+                      fontWeight: FontWeight.bold,
+                      textAlign: TextAlign.start,
+                    ),
+                  ):Container(
                     width: width * 0.45,
                     height: 40,
                     padding: EdgeInsets.symmetric(
@@ -513,7 +531,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                   Container(
                     child: TextCustom(
                       text: "Nº O.S",
-                      size: 14.0,
+                      size: 12.0,
                       color: PaletteColors.grey,
                       fontWeight: FontWeight.bold,
                       textAlign: TextAlign.start,
@@ -546,7 +564,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                     SizedBox(width: width * 0.04),
                     TextCustom(
                       text: "Endereço",
-                      size: 14.0,
+                      size: 12.0,
                       color: PaletteColors.grey,
                       fontWeight: FontWeight.bold,
                       textAlign: TextAlign.start,
@@ -583,7 +601,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                         width: width * 0.25,
                         child: TextCustom(
                           text: "Número",
-                          size: 14.0,
+                          size: 12.0,
                           color: PaletteColors.grey,
                           fontWeight: FontWeight.bold,
                           textAlign: TextAlign.center,
@@ -622,7 +640,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                             width: width * 0.65,
                             child: TextCustom(
                               text: "Complemento",
-                              size: 14.0,
+                              size: 12.0,
                               color: PaletteColors.grey,
                               fontWeight: FontWeight.bold,
                               textAlign: TextAlign.start,
@@ -665,7 +683,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                         width: width * 0.86,
                         child: TextCustom(
                           text: "Bairro",
-                          size: 14.0,
+                          size: 12.0,
                           color: PaletteColors.grey,
                           fontWeight: FontWeight.bold,
                           textAlign: TextAlign.start,
@@ -707,7 +725,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                             width: width * 0.9,
                             child: TextCustom(
                               text: "Cidade",
-                              size: 14.0,
+                              size: 12.0,
                               color: PaletteColors.grey,
                               fontWeight: FontWeight.bold,
                               textAlign: TextAlign.start,
@@ -754,7 +772,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                             width: width * 0.35,
                             child: TextCustom(
                               text: "Estado",
-                              size: 14.0,
+                              size: 12.0,
                               color: PaletteColors.grey,
                               fontWeight: FontWeight.bold,
                               textAlign: TextAlign.start,
@@ -805,7 +823,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                             width: width * 0.4,
                             child: TextCustom(
                               text: "CEP",
-                              size: 14.0,
+                              size: 12.0,
                               color: PaletteColors.grey,
                               fontWeight: FontWeight.bold,
                               textAlign: TextAlign.start,
@@ -851,7 +869,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                 Container(
                   child: TextCustom(
                     text: "Coordenadas:",
-                    size: 14.0,
+                    size: 12.0,
                     color: PaletteColors.grey,
                     fontWeight: FontWeight.bold,
                     textAlign: TextAlign.center,
@@ -865,7 +883,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                   width: width * 0.3,
                   child: TextCustom(
                     text: "Latitude",
-                    size: 14.0,
+                    size: 12.0,
                     color: PaletteColors.grey,
                     fontWeight: FontWeight.bold,
                     textAlign: TextAlign.start,
@@ -893,7 +911,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                   width: width * 0.3,
                   child: TextCustom(
                     text: "Longitude",
-                    size: 14.0,
+                    size: 12.0,
                     color: PaletteColors.grey,
                     fontWeight: FontWeight.bold,
                     textAlign: TextAlign.start,
@@ -931,7 +949,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                         width: width * 0.27,
                         child: TextCustom(
                           text: "Coordenadas:",
-                          size: 14.0,
+                          size: 12.0,
                           color: PaletteColors.grey,
                           fontWeight: FontWeight.bold,
                           textAlign: TextAlign.center,
@@ -941,7 +959,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                         width: width * 0.26,
                         child: TextCustom(
                           text: "Graus",
-                          size: 14.0,
+                          size: 12.0,
                           color: PaletteColors.grey,
                           fontWeight: FontWeight.bold,
                           textAlign: TextAlign.start,
@@ -951,7 +969,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                         width: width * 0.25,
                         child: TextCustom(
                           text: "Min",
-                          size: 14.0,
+                          size: 12.0,
                           color: PaletteColors.grey,
                           fontWeight: FontWeight.bold,
                           textAlign: TextAlign.start,
@@ -961,7 +979,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                         width: width * 0.20,
                         child: TextCustom(
                           text: "Seg",
-                          size: 14.0,
+                          size: 12.0,
                           color: PaletteColors.grey,
                           fontWeight: FontWeight.bold,
                           textAlign: TextAlign.start,
@@ -985,7 +1003,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                           width: width * 0.24,
                           child: TextCustom(
                             text: " Latitude",
-                            size: 14.0,
+                            size: 12.0,
                             color: PaletteColors.grey,
                             fontWeight: FontWeight.bold,
                             textAlign: TextAlign.start,
@@ -1053,7 +1071,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                           width: width * 0.24,
                           child: TextCustom(
                             text: " Longitude",
-                            size: 14.0,
+                            size: 12.0,
                             color: PaletteColors.grey,
                             fontWeight: FontWeight.bold,
                             textAlign: TextAlign.start,
@@ -1120,7 +1138,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
                   heightCustom: 0.070,
                   onPressed: () => _createTable(),
                   text: widget.buttonText,
-                  size: 14.0,
+                  size: 12.0,
                   colorButton: PaletteColors.primaryColor,
                   colorText: PaletteColors.white,
                   colorBorder: PaletteColors.primaryColor,

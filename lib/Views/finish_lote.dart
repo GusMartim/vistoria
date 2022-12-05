@@ -1149,7 +1149,7 @@ class _SurveyFinishScreenLoteState extends State<SurveyFinishScreenLote> {
           .then((upload) async {
         upload.ref.getDownloadURL().then((value) {
           Map<String, dynamic> dateUpdate = {
-            'pdfUrl': value.toString(),
+            'savedPdf': value.toString(),
             'idSurvey': widget.idSurvey
           };
           db
@@ -1164,28 +1164,6 @@ class _SurveyFinishScreenLoteState extends State<SurveyFinishScreenLote> {
         context, MaterialPageRoute(builder: (context) => PDFScreen(path)));
   }
 
-  salvarpdfweb(file) async {
-    var arquivo = XFile.fromData(file);
-    Uint8List archive = await arquivo.readAsBytes();
-
-    if (archive != null) {
-      FirebaseStorage storage = FirebaseStorage.instance;
-      Reference pastaRaiz = storage.ref();
-      Reference storageRef = pastaRaiz
-          .child("surveys")
-          .child(DateTime.now().toString() + 'Vistoria' + "$order");
-
-      await storageRef.putData(archive).then((upload) async {
-        upload.ref.getDownloadURL().then((value) {
-          db
-              .collection("surveys")
-              .doc(widget.idSurvey)
-              .update({'pdfUrl': value.toString()});
-        });
-        print(upload);
-      });
-    }
-  }
 
   getNSurvey() async {
     DocumentSnapshot snapshot =
@@ -1486,42 +1464,7 @@ class _SurveyFinishScreenLoteState extends State<SurveyFinishScreenLote> {
                   ),
                 ],
               ),
-              SizedBox(
-                height: 12,
-              ),
-              Row(
-                children: [
-                  Ink(
-                    decoration: ShapeDecoration(
-                      color: PaletteColors.greyInput,
-                      shape: CircleBorder(),
-                    ),
-                    child: IconButton(
-                        icon: Icon(
-                          Icons.shortcut_rounded,
-                          color: PaletteColors.primaryColor,
-                        ),
-                        constraints: BoxConstraints(
-                            minHeight: 46,
-                            minWidth: 46,
-                            maxHeight: 46,
-                            maxWidth: 46),
-                        iconSize: 32.0,
-                        padding: EdgeInsets.zero,
-                        onPressed: () {}),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  TextCustom(
-                    text: "Compartilhar",
-                    size: 16.0,
-                    color: PaletteColors.grey,
-                    fontWeight: FontWeight.normal,
-                    textAlign: TextAlign.start,
-                  ),
-                ],
-              ),
+
               SizedBox(height: 40),
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 0.1, horizontal: 26.0),

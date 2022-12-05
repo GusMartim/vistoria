@@ -18,6 +18,8 @@ class LoteModel{
   String TerrainArea = '';
   String Price = '';
   String factors = '';
+  String Telefone = '';
+  String Contato = '';
 
 
 
@@ -25,6 +27,8 @@ class LoteModel{
 
   Map<String,dynamic> toMap(){
     Map<String,dynamic> map = {
+      "contato"    : this.Contato,
+      "telefone"    : this.Telefone,
       "obs"   : this.obs,
       "factors"   : this.factors,
       "price"   : this.Price,

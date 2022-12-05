@@ -1,3 +1,4 @@
+import 'package:url_launcher/url_launcher.dart';
 import 'package:vistoria/Utils/exports.dart';
 
 class CheckListApto1 extends StatefulWidget {
@@ -116,7 +117,7 @@ class _CheckListApto1State extends State<CheckListApto1> {
     }else{
       setState(() {
         title = '$nsurvey';
-        _getData();
+
       });
 
     }
@@ -225,6 +226,8 @@ class _CheckListApto1State extends State<CheckListApto1> {
     _aptoModel.Origin = selectedInfo.toString();
     _aptoModel.PavType = selectedType.toString();
     _aptoModel.TerrainArea = _controllerTerrainArea.text;
+    _aptoModel.Telefone = _controllerTelefoneContato.text;
+    _aptoModel.Contato = _controllerContato.text;
     _aptoModel.pathology = _controllerPathology.text;
     _aptoModel.type = _controllerType.text;
     _aptoModel.infra = _controllerInfra.text;
@@ -284,195 +287,201 @@ class _CheckListApto1State extends State<CheckListApto1> {
         await db.collection("surveys").doc(widget.idSurvey).get();
     Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
     setState((){
-      saveChecklist = data?["checklist"];
+      print('entrou 1');
+      saveChecklist = data?["checklist"]??[];
     });
+    if(saveChecklist.length != 0){
+      print('entrou2');
+      pathology.clear();
+      for (int i = 0; i <= 5; i++) {
+        var splitted = saveChecklist[i].replaceAll("1", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        pathology.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
+      type.clear();
+      for (int i = 6; i <= 9; i++) {
+        var splitted = saveChecklist[i].replaceAll("2", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        type.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
+      infra.clear();
+      for (int i = 10; i <= 18; i++) {
+        var splitted = saveChecklist[i].replaceAll("3", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        infra.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
+      situation.clear();
+      for (int i = 19; i <= 22; i++) {
+        var splitted = saveChecklist[i].replaceAll("4", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        situation.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
+      quota.clear();
+      for (int i = 23; i <= 26; i++) {
+        var splitted = saveChecklist[i].replaceAll("5", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        quota.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
+      wall.clear();
+      for (int i = 27; i <= 30; i++) {
+        var splitted = saveChecklist[i].replaceAll("6", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        wall.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
+      paint.clear();
+      for (int i = 31; i <= 36; i++) {
+        var splitted = saveChecklist[i].replaceAll("7", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        paint.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
+      InternPaint.clear();
+      for (int i = 37; i <= 42; i++) {
+        var splitted = saveChecklist[i].replaceAll("8", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        InternPaint.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
+      extern.clear();
+      for (int i = 43; i <= 46; i++) {
+        var splitted = saveChecklist[i].replaceAll("9", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        extern.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
+      Intern.clear();
+      for (int i = 47; i <= 50; i++) {
+        var splitted = saveChecklist[i].replaceAll("10", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        Intern.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
+      floor.clear();
+      for (int i = 51; i <= 54; i++) {
+        var splitted = saveChecklist[i].replaceAll("11", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        floor.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
+      Windows.clear();
+      for (int i = 55; i <= 58; i++) {
+        var splitted = saveChecklist[i].replaceAll("12", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        Windows.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
 
-    pathology.clear();
-    for (int i = 0; i <= 5; i++) {
-      var splitted = saveChecklist[i].replaceAll("1", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      pathology.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
-    type.clear();
-    for (int i = 6; i <= 9; i++) {
-      var splitted = saveChecklist[i].replaceAll("2", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      type.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
-    infra.clear();
-    for (int i = 10; i <= 18; i++) {
-      var splitted = saveChecklist[i].replaceAll("3", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      infra.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
-    situation.clear();
-    for (int i = 19; i <= 22; i++) {
-      var splitted = saveChecklist[i].replaceAll("4", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      situation.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
-    quota.clear();
-    for (int i = 23; i <= 26; i++) {
-      var splitted = saveChecklist[i].replaceAll("5", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      quota.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
-    wall.clear();
-    for (int i = 27; i <= 30; i++) {
-      var splitted = saveChecklist[i].replaceAll("6", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      wall.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
-    paint.clear();
-    for (int i = 31; i <= 36; i++) {
-      var splitted = saveChecklist[i].replaceAll("7", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      paint.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
-    InternPaint.clear();
-    for (int i = 37; i <= 42; i++) {
-      var splitted = saveChecklist[i].replaceAll("8", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      InternPaint.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
-    extern.clear();
-    for (int i = 43; i <= 46; i++) {
-      var splitted = saveChecklist[i].replaceAll("9", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      extern.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
-    Intern.clear();
-    for (int i = 47; i <= 50; i++) {
-      var splitted = saveChecklist[i].replaceAll("10", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      Intern.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
-    floor.clear();
-    for (int i = 51; i <= 54; i++) {
-      var splitted = saveChecklist[i].replaceAll("11", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      floor.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
-    Windows.clear();
-    for (int i = 55; i <= 58; i++) {
-      var splitted = saveChecklist[i].replaceAll("12", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      Windows.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      balcony.clear();
+      for (int i = 59; i <= 63; i++) {
+        var splitted = saveChecklist[i].replaceAll("13", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        balcony.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
+      switchboard.clear();
+      for (int i = 64; i <= 69; i++) {
+        var splitted = saveChecklist[i].replaceAll("14", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        switchboard.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
+      kitchen.clear();
+      for (int i = 70; i <= 75; i++) {
+        var splitted = saveChecklist[i].replaceAll("15", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        kitchen.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
+      bathroom.clear();
+      for (int i = 76; i <= 81; i++) {
+        var splitted = saveChecklist[i].replaceAll("16", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        bathroom.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
+      tank.clear();
+      for (int i = 82; i <= 87; i++) {
+        var splitted = saveChecklist[i].replaceAll("17", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        tank.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
+      pattern.clear();
+      for (int i = 88; i <= 95; i++) {
+        var splitted = saveChecklist[i].replaceAll("18", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        pattern.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
+      state.clear();
+      for (int i = 96; i <= 102; i++) {
+        var splitted = saveChecklist[i].replaceAll("19", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        state.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
+      Unityroof.clear();
+      for (int i = 103; i <= 108; i++) {
+        var splitted = saveChecklist[i].replaceAll("20", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        Unityroof.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
+      unity.clear();
+      for (int i = 109; i <= 111; i++) {
+        var splitted = saveChecklist[i].replaceAll("21", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        unity.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
+      view.clear();
+      for (int i = 112; i <= 115; i++) {
+        var splitted = saveChecklist[i].replaceAll("22", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        view.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
+      block.clear();
+      for (int i = 116; i <= 130; i++) {
+        var splitted = saveChecklist[i].replaceAll("23", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        block.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
     }
 
-    balcony.clear();
-    for (int i = 59; i <= 63; i++) {
-      var splitted = saveChecklist[i].replaceAll("13", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      balcony.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
-    switchboard.clear();
-    for (int i = 64; i <= 69; i++) {
-      var splitted = saveChecklist[i].replaceAll("14", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      switchboard.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
-    kitchen.clear();
-    for (int i = 70; i <= 75; i++) {
-      var splitted = saveChecklist[i].replaceAll("15", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      kitchen.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
-    bathroom.clear();
-    for (int i = 76; i <= 81; i++) {
-      var splitted = saveChecklist[i].replaceAll("16", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      bathroom.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
-    tank.clear();
-    for (int i = 82; i <= 87; i++) {
-      var splitted = saveChecklist[i].replaceAll("17", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      tank.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
-    pattern.clear();
-    for (int i = 88; i <= 95; i++) {
-      var splitted = saveChecklist[i].replaceAll("18", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      pattern.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
-    state.clear();
-    for (int i = 96; i <= 102; i++) {
-      var splitted = saveChecklist[i].replaceAll("19", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      state.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
-    Unityroof.clear();
-    for (int i = 103; i <= 108; i++) {
-      var splitted = saveChecklist[i].replaceAll("20", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      Unityroof.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
-    unity.clear();
-    for (int i = 109; i <= 111; i++) {
-      var splitted = saveChecklist[i].replaceAll("21", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      unity.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
-    view.clear();
-    for (int i = 112; i <= 115; i++) {
-      var splitted = saveChecklist[i].replaceAll("22", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      view.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
-    block.clear();
-    for (int i = 116; i <= 130; i++) {
-      var splitted = saveChecklist[i].replaceAll("23", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      block.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
     setState(() {
+      _controllerContato = TextEditingController(text: data?["contato"]??'');
+      _controllerTelefoneContato = TextEditingController(text: data?["telefone"]??'');
       _controllerAge = TextEditingController(text: data?["age"]??"");
       _controllerTerrainArea =TextEditingController(text: data?["TerrainArea"]??"");
       _controllerPrice = TextEditingController(text: data?["price"]??"");
@@ -893,6 +902,8 @@ class _CheckListApto1State extends State<CheckListApto1> {
   TextEditingController _controllerBlock = TextEditingController();
 
   TextEditingController _controllerTerrainArea = TextEditingController();
+  TextEditingController _controllerContato = TextEditingController();
+  TextEditingController _controllerTelefoneContato = TextEditingController();
   List<String> goal = ['Venda', 'Aluguel'];
   String? selectedGoal = 'Venda';
   List<String> infoOrigin = ['Oferta de Mercado', 'Transação Efetuada'];
@@ -932,6 +943,7 @@ class _CheckListApto1State extends State<CheckListApto1> {
     // TODO: implement initState
     super.initState();
     getNSurvey();
+    _getData();
   }
 
   @override
@@ -961,19 +973,21 @@ class _CheckListApto1State extends State<CheckListApto1> {
               shape: CircleBorder(),
             ),
             child: IconButton(
-              icon: Icon(
-                Icons.camera_alt,
-                color: PaletteColors.primaryColor,
-              ),
-              constraints: BoxConstraints(
-                  minHeight: 28, minWidth: 28, maxHeight: 28, maxWidth: 28),
-              iconSize: 24.0,
-              padding: EdgeInsets.all(3.0),
+                icon: Icon(
+                  Icons.camera_alt,
+                  color: PaletteColors.primaryColor,
+                ),
+                constraints: BoxConstraints(
+                    minHeight: 28, minWidth: 28, maxHeight: 28, maxWidth: 28),
+                iconSize: 24.0,
+                alignment: Alignment.center,
+                padding: EdgeInsets.all(0.0),
                 onPressed: () => AlertModel().alert(
-                    'Selecionar foto  da:','',
+                    'Selecionar foto  da:',
+                    '',
                     PaletteColors.primaryColor,
                     PaletteColors.primaryColor,
-                    context,[
+                    context, [
                   Row(
                     children: [
                       SizedBox(width: width * 0.03),
@@ -1014,12 +1028,38 @@ class _CheckListApto1State extends State<CheckListApto1> {
                       ],
                     ),
                   ),
+                ])),
+          ),
+          SizedBox(width: width * 0.01),
+          Ink(
+            decoration: ShapeDecoration(
+              color: PaletteColors.white,
+              shape: CircleBorder(),
+            ),
+            child: IconButton(
+                icon: Icon(
+                  Icons.phone,
+                  color: PaletteColors.primaryColor,
+                ),
+                constraints: BoxConstraints(
+                    minHeight: 28, minWidth: 28, maxHeight: 28, maxWidth: 28),
+                iconSize: 24.0,
+                alignment: Alignment.center,
+                padding: EdgeInsets.all(0.0),
+                onPressed: ()async{
+                  if(_controllerTelefoneContato.text.isNotEmpty){
 
-                ]
-                )
+                    var splitted = _controllerTelefoneContato.text.replaceAll('-','').replaceAll('(','').replaceAll(')','').trim();
+                    var url ="tel:+55$splitted";
+                    await launchUrl(Uri.parse(url));
+                  }else{
+                    showSnackBar(context, 'Preencha o campo Telefone',Colors.red);
+                  }
+                }
+
             ),
           ),
-          SizedBox(width: width * 0.04),
+          SizedBox(width: width * 0.03),
         ],
       ),
       body:SingleChildScrollView(
@@ -1033,6 +1073,70 @@ class _CheckListApto1State extends State<CheckListApto1> {
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
+              Row(
+                children: [
+                  Container(
+                    width: width * 0.5,
+                    child: TextCustom(
+                      text: "Contato",
+                      size: 14.0,
+                      color: PaletteColors.grey,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+
+                ],
+              ),
+              Row(children: [
+                Container(
+                  child: InputRegister(
+                    icons: Icons.height,
+                    sizeIcon: 0.0,
+                    width: width * 0.75,
+                    controller: _controllerContato,
+                    hint: "",
+                    fonts: 14.0,
+                    keyboardType: TextInputType.text,
+                    colorBorder: PaletteColors.greyInput,
+                    background: PaletteColors.greyInput,
+                  ),
+                ),
+
+              ]),
+              SizedBox(height: height * 0.03),
+              Row(
+                children: [
+                  Container(
+                    width: width * 0.4,
+                    child: TextCustom(
+                        text: "Telefone",
+                        size: 14.0,
+                        color: PaletteColors.grey,
+                        fontWeight: FontWeight.bold),
+                  ),
+
+                ],
+              ),
+              Row(children: [
+                Container(
+                  child: InputRegister(
+                    inputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly,
+                      TelefoneInputFormatter()
+                    ],
+                    icons: Icons.height,
+                    sizeIcon: 0.0,
+                    width: width * 0.4,
+                    controller: _controllerTelefoneContato,
+                    hint: '',
+                    fonts: 14.0,
+                    keyboardType: TextInputType.number,
+                    colorBorder: PaletteColors.greyInput,
+                    background: PaletteColors.greyInput,
+                  ),
+                ),
+              ]),
+              SizedBox(height: height * 0.03),
               Row(
                 children: [
                   Container(

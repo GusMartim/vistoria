@@ -2,6 +2,7 @@ import 'dart:collection';
 
 import 'package:flutter/services.dart';
 import 'package:vistoria/Utils/exports.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../Models/ErrorIntModel.dart';
 
@@ -63,6 +64,8 @@ class _CheckList1State extends State<CheckList1> {
   int nPool = 0;
   String SPool = '0';
   TextEditingController _controllerPool = TextEditingController();
+  TextEditingController _controllerContato = TextEditingController();
+  TextEditingController _controllerTelefoneContato = TextEditingController();
   List<String> goal = ['Venda', 'Aluguel'];
   String? selectedGoal = 'Venda';
   List<String> infoOrigin = ['Oferta de Mercado', 'Transação Efetuada'];
@@ -84,193 +87,195 @@ class _CheckList1State extends State<CheckList1> {
     setState(() {
       saveChecklist = data?["checklist"]??[];
     });
+    if(saveChecklist.length != 0){
+      pathology.clear();
+      for (int i = 0; i <= 5; i++) {
+        var splitted = saveChecklist[i].replaceAll("1",'').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        pathology.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
+      type.clear();
+      for (int i = 6; i <= 9; i++) {
+        var splitted = saveChecklist[i].replaceAll("2", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        type.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
+      infra.clear();
+      for (int i = 10; i <= 18; i++) {
+        var splitted = saveChecklist[i].replaceAll("3", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        infra.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
+      situation.clear();
+      for (int i = 19; i <= 22; i++) {
+        var splitted = saveChecklist[i].replaceAll("4", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        situation.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
+      quota.clear();
+      for (int i = 23; i <= 26; i++) {
+        var splitted = saveChecklist[i].replaceAll("5", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        quota.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
+      position.clear();
+      for (int i = 27; i <= 32; i++) {
+        var splitted = saveChecklist[i].replaceAll("6", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        position.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
+      roof.clear();
+      for (int i = 33; i <= 37; i++) {
+        var splitted = saveChecklist[i].replaceAll("7", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        roof.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
+      wall.clear();
+      for (int i = 38; i <= 41; i++) {
+        var splitted = saveChecklist[i].replaceAll("8", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        wall.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
+      paint.clear();
+      for (int i = 42; i <= 47; i++) {
+        var splitted = saveChecklist[i].replaceAll("9", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        paint.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
+      InternPaint.clear();
+      for (int i = 48; i <= 53; i++) {
+        var splitted = saveChecklist[i].replaceAll("10", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        InternPaint.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
+      extern.clear();
+      for (int i = 54; i <= 57; i++) {
+        var splitted = saveChecklist[i].replaceAll("11", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        extern.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
+      Intern.clear();
+      for (int i = 58; i <= 61; i++) {
+        var splitted = saveChecklist[i].replaceAll("12", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        Intern.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
+      floor.clear();
+      for (int i = 62; i <= 65; i++) {
+        var splitted = saveChecklist[i].replaceAll("13", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        floor.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
 
-    pathology.clear();
-    for (int i = 0; i <= 5; i++) {
-      var splitted = saveChecklist[i].replaceAll("1",'').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      pathology.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
-    type.clear();
-    for (int i = 6; i <= 9; i++) {
-      var splitted = saveChecklist[i].replaceAll("2", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      type.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
-    infra.clear();
-    for (int i = 10; i <= 18; i++) {
-      var splitted = saveChecklist[i].replaceAll("3", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      infra.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
-    situation.clear();
-    for (int i = 19; i <= 22; i++) {
-      var splitted = saveChecklist[i].replaceAll("4", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      situation.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
-    quota.clear();
-    for (int i = 23; i <= 26; i++) {
-      var splitted = saveChecklist[i].replaceAll("5", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      quota.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
-    position.clear();
-    for (int i = 27; i <= 32; i++) {
-      var splitted = saveChecklist[i].replaceAll("6", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      position.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
-    roof.clear();
-    for (int i = 33; i <= 37; i++) {
-      var splitted = saveChecklist[i].replaceAll("7", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      roof.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
-    wall.clear();
-    for (int i = 38; i <= 41; i++) {
-      var splitted = saveChecklist[i].replaceAll("8", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      wall.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
-    paint.clear();
-    for (int i = 42; i <= 47; i++) {
-      var splitted = saveChecklist[i].replaceAll("9", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      paint.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
-    InternPaint.clear();
-    for (int i = 48; i <= 53; i++) {
-      var splitted = saveChecklist[i].replaceAll("10", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      InternPaint.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
-    extern.clear();
-    for (int i = 54; i <= 57; i++) {
-      var splitted = saveChecklist[i].replaceAll("11", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      extern.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
-    Intern.clear();
-    for (int i = 58; i <= 61; i++) {
-      var splitted = saveChecklist[i].replaceAll("12", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      Intern.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
-    floor.clear();
-    for (int i = 62; i <= 65; i++) {
-      var splitted = saveChecklist[i].replaceAll("13", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      floor.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      Windows.clear();
+      for (int i = 66; i <= 69; i++) {
+        var splitted = saveChecklist[i].replaceAll("14", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        Windows.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
+
+      balcony.clear();
+      for (int i = 70; i <= 74; i++) {
+        var splitted = saveChecklist[i].replaceAll("15", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        balcony.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
+      switchboard.clear();
+      for (int i = 75; i <= 80; i++) {
+        var splitted = saveChecklist[i].replaceAll("16", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        switchboard.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
+      kitchen.clear();
+      for (int i = 81; i <= 86; i++) {
+        var splitted = saveChecklist[i].replaceAll("17", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        kitchen.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
+      bathroom.clear();
+      for (int i = 87; i <= 92; i++) {
+        var splitted = saveChecklist[i].replaceAll("18", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        bathroom.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
+      tank.clear();
+      for (int i = 93; i <= 98; i++) {
+        var splitted = saveChecklist[i].replaceAll("19", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        tank.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
+      pattern.clear();
+      for (int i = 99; i <= 106; i++) {
+        var splitted = saveChecklist[i].replaceAll("20", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        pattern.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
+      state.clear();
+      for (int i = 107; i <= 113; i++) {
+        var splitted = saveChecklist[i].replaceAll("21", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        state.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
+      unityroof.clear();
+      for (int i = 114; i <= 119; i++) {
+        var splitted = saveChecklist[i].replaceAll("22", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        unityroof.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
+      block.clear();
+      for (int i = 120; i <= 134; i++) {
+        var splitted = saveChecklist[i].replaceAll("23", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        block.add(
+            CheckBoxModel(title: title, value: check == 'true' ? true : false));
+      }
     }
 
-    Windows.clear();
-    for (int i = 66; i <= 69; i++) {
-      var splitted = saveChecklist[i].replaceAll("14", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      Windows.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
-
-    balcony.clear();
-    for (int i = 70; i <= 74; i++) {
-      var splitted = saveChecklist[i].replaceAll("15", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      balcony.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
-    switchboard.clear();
-    for (int i = 75; i <= 80; i++) {
-      var splitted = saveChecklist[i].replaceAll("16", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      switchboard.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
-    kitchen.clear();
-    for (int i = 81; i <= 86; i++) {
-      var splitted = saveChecklist[i].replaceAll("17", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      kitchen.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
-    bathroom.clear();
-    for (int i = 87; i <= 92; i++) {
-      var splitted = saveChecklist[i].replaceAll("18", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      bathroom.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
-    tank.clear();
-    for (int i = 93; i <= 98; i++) {
-      var splitted = saveChecklist[i].replaceAll("19", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      tank.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
-    pattern.clear();
-    for (int i = 99; i <= 106; i++) {
-      var splitted = saveChecklist[i].replaceAll("20", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      pattern.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
-    state.clear();
-    for (int i = 107; i <= 113; i++) {
-      var splitted = saveChecklist[i].replaceAll("21", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      state.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
-    unityroof.clear();
-    for (int i = 114; i <= 119; i++) {
-      var splitted = saveChecklist[i].replaceAll("22", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      unityroof.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
-    block.clear();
-    for (int i = 120; i <= 134; i++) {
-      var splitted = saveChecklist[i].replaceAll("23", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      block.add(
-          CheckBoxModel(title: title, value: check == 'true' ? true : false));
-    }
 
     setState(() {
       _controllerAge = TextEditingController(text: data?["age"]??'');
@@ -322,6 +327,8 @@ class _CheckList1State extends State<CheckList1> {
       _controllerOpenGarage = TextEditingController(text: data?["garageunroofed"]??'');
       _controllerSac = TextEditingController(text: data?["acs"]??'');
       _controllerPool = TextEditingController(text: data?["pools"]??'');
+      _controllerContato = TextEditingController(text: data?["contato"]??'');
+      _controllerTelefoneContato = TextEditingController(text: data?["telefone"]??'');
       selectedGoal = data?["Goal"] ?? selectedGoal;
       selectedInfo = data?["Origin"] ?? selectedInfo;
       nRoom = int.parse(_controllerRoom.text.isNotEmpty?_controllerRoom.text: '0');
@@ -367,7 +374,6 @@ class _CheckList1State extends State<CheckList1> {
     } else {
       setState(() {
         title = '$nsurvey';
-        _getData();
       });
     }
   }
@@ -480,6 +486,8 @@ class _CheckList1State extends State<CheckList1> {
     _unityModel.Goal = selectedGoal.toString();
     _unityModel.Origin = selectedInfo.toString();
     _unityModel.rooms = _controllerRoom.text;
+    _unityModel.Contato = _controllerContato.text;
+    _unityModel.Telefone = _controllerTelefoneContato.text;
     _unityModel.socialbathrooms = _controllerSocialBathroom.text;
     _unityModel.privatebathrooms = _controllerPrivateBathroom.text;
     _unityModel.lavs = _controllerLavabos.text;
@@ -869,8 +877,8 @@ class _CheckList1State extends State<CheckList1> {
   @override
   void initState() {
     super.initState();
-
     getNSurvey();
+    _getData();
   }
 
   @override
@@ -891,7 +899,7 @@ class _CheckList1State extends State<CheckList1> {
           size: 20.0,
           color: PaletteColors.white,
           fontWeight: FontWeight.bold,
-          textAlign: TextAlign.center,
+          textAlign: TextAlign.start,
         ),
         actions: <Widget>[
           Ink(
@@ -907,7 +915,8 @@ class _CheckList1State extends State<CheckList1> {
                 constraints: BoxConstraints(
                     minHeight: 28, minWidth: 28, maxHeight: 28, maxWidth: 28),
                 iconSize: 24.0,
-                padding: EdgeInsets.all(3.0),
+                alignment: Alignment.center,
+                padding: EdgeInsets.all(0.0),
                 onPressed: () => AlertModel().alert(
                         'Selecionar foto  da:',
                         '',
@@ -956,7 +965,36 @@ class _CheckList1State extends State<CheckList1> {
                       ),
                     ])),
           ),
-          SizedBox(width: width * 0.04),
+          SizedBox(width: width * 0.01),
+          Ink(
+            decoration: ShapeDecoration(
+              color: PaletteColors.white,
+              shape: CircleBorder(),
+            ),
+            child: IconButton(
+                icon: Icon(
+                  Icons.phone,
+                  color: PaletteColors.primaryColor,
+                ),
+                constraints: BoxConstraints(
+                    minHeight: 28, minWidth: 28, maxHeight: 28, maxWidth: 28),
+                iconSize: 24.0,
+                alignment: Alignment.center,
+                padding: EdgeInsets.all(0.0),
+                onPressed: ()async{
+                    if(_controllerTelefoneContato.text.isNotEmpty){
+
+                      var splitted = _controllerTelefoneContato.text.replaceAll('-','').replaceAll('(','').replaceAll(')','').trim();
+                      var url ="tel:+55$splitted";
+                       await launchUrl(Uri.parse(url));
+                     }else{
+                      showSnackBar(context, 'Preencha o campo Telefone',Colors.red);
+                    }
+                }
+
+          ),
+          ),
+          SizedBox(width: width * 0.03),
         ],
       ),
       body: SingleChildScrollView(
@@ -970,6 +1008,70 @@ class _CheckList1State extends State<CheckList1> {
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [
+                Row(
+                  children: [
+                    Container(
+                      width: width * 0.5,
+                      child: TextCustom(
+                        text: "Contato",
+                        size: 14.0,
+                        color: PaletteColors.grey,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+
+                  ],
+                ),
+                Row(children: [
+                  Container(
+                    child: InputRegister(
+                      icons: Icons.height,
+                      sizeIcon: 0.0,
+                      width: width * 0.75,
+                      controller: _controllerContato,
+                      hint: "",
+                      fonts: 14.0,
+                      keyboardType: TextInputType.text,
+                      colorBorder: PaletteColors.greyInput,
+                      background: PaletteColors.greyInput,
+                    ),
+                  ),
+
+                ]),
+                SizedBox(height: height * 0.03),
+                Row(
+                  children: [
+                    Container(
+                      width: width * 0.4,
+                      child: TextCustom(
+                          text: "Telefone",
+                          size: 14.0,
+                          color: PaletteColors.grey,
+                          fontWeight: FontWeight.bold),
+                    ),
+
+                  ],
+                ),
+                Row(children: [
+                  Container(
+                    child: InputRegister(
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                        TelefoneInputFormatter()
+                      ],
+                      icons: Icons.height,
+                      sizeIcon: 0.0,
+                      width: width * 0.4,
+                      controller: _controllerTelefoneContato,
+                      hint: '',
+                      fonts: 14.0,
+                      keyboardType: TextInputType.number,
+                      colorBorder: PaletteColors.greyInput,
+                      background: PaletteColors.greyInput,
+                    ),
+                  ),
+                ]),
+                SizedBox(height: height * 0.03),
                 Row(
                   children: [
                     Container(
@@ -1048,6 +1150,14 @@ class _CheckList1State extends State<CheckList1> {
                           child: InputRegister(
                             icons: Icons.height,
                             sizeIcon: 0.0,
+                            onchanged: (String value){
+                              setState(() {
+                                if(_controllerOpenArea.text.isNotEmpty && _controllerClosedArea.text.isNotEmpty){
+                                  int area = int.parse(_controllerOpenArea.text)+int.parse(value);
+                                  _controllerTotalArea.text = '$area';
+                                }
+                              });
+                            },
                             width: width * 0.2,
                             controller: _controllerClosedArea,
                             hint: "   ",
@@ -1085,6 +1195,15 @@ class _CheckList1State extends State<CheckList1> {
                           width: width * 0.8,
                           child: InputRegister(
                             icons: Icons.height,
+                            onchanged: (String value){
+                              setState(() {
+                                if(_controllerOpenArea.text.isNotEmpty && _controllerClosedArea.text.isNotEmpty){
+                                  int area = int.parse(value)+int.parse(_controllerClosedArea.text);
+                                  _controllerTotalArea.text = '$area';
+                                }
+
+                              });
+                            },
                             sizeIcon: 0.0,
                             width: width * 0.2,
                             controller: _controllerOpenArea,

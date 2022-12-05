@@ -1,3 +1,4 @@
+import 'package:url_launcher/url_launcher.dart';
 import 'package:vistoria/Utils/exports.dart';
 import 'package:vistoria/Widgets/inputRegister.dart';
 import 'package:vistoria/Widgets/text_custom.dart';
@@ -130,7 +131,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                   text:
                                       '${item['adress']??''},${item['number']??''},${item['district']??''} -${item['city']??''}/${item['estado']??''}',
                                   data: '${item['hourRequest']??''}',
-                                  iconShow: false));
+                                  iconShow: false, pdfUrl: '${item['savedPdf']??''}'));
                               return ListTileCustom(
                                 text: items[index].text,
                                 showIcons: items[index].iconShow,
@@ -147,6 +148,13 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                 },
                                 data: items[index].data,
                                 id: item['idSurvey'],
+                                onTapPdf: () async {
+                                  if (items[index].pdfUrl != '') {
+                                    await launchUrl(Uri.parse(items[index].pdfUrl),mode:LaunchMode.externalNonBrowserApplication);
+                                  }else{
+                                    showSnackBar(context, 'Não há documento salvo',Colors.red);
+                                  }
+                                },
                               );
                             }),
                       ):Container();
@@ -162,7 +170,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                           text:
                           '${item['adress']},${item['number']},${item['district']} -${item['city']}/${item['estado']}',
                           data: '${item['hourRequest']}',
-                          iconShow: false));
+                          iconShow: false, pdfUrl: '${item['savedPdf']??''}'));
                       return Column(
                         children: [
                           ListTileCustom(
@@ -181,6 +189,11 @@ class _HistoryScreenState extends State<HistoryScreen> {
                             },
                             data: '${item['hourRequest']}',
                             id: item['idSurvey'],
+                            onTapPdf: () async {
+                            if (items[index].pdfUrl != null) {
+                              await launchUrl(Uri.parse(items[index].pdfUrl),mode:LaunchMode.externalApplication);
+                            }
+                          },
                           ),
 
                         ],

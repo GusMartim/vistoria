@@ -17,6 +17,8 @@ class SurveyModel{
   String? userName = '';
   String userCode ='';
   String status ='';
+  String pdf ='';
+  int nsurvey= 0;
 
 
 
@@ -25,6 +27,7 @@ class SurveyModel{
 Map<String,dynamic> toMap(){
   Map<String,dynamic> map = {
     "hourRequest": this.hourRequest,
+    "savedPdf": this.pdf,
     "idUser"   : this.idUser,
     "userName"   : this.userName,
     "idSurvey"  : this.idSurvey,
@@ -39,7 +42,8 @@ Map<String,dynamic> toMap(){
     "lat": this.lat,
     "lng": this.lng,
     "userCode" : this.userCode,
-    "status" : this.status
+    "status" : this.status,
+    "Nsurvey":this.nsurvey,
   };
   return map;
 

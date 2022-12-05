@@ -19,6 +19,8 @@ class _DataRequestState extends State<DataRequest> {
   String adress ='';
   String type ='';
   String city ='';
+  String contato ='';
+  String telefone ='';
   List pdfs =[];
   List urls = [];
   double? lat= 0.0;
@@ -48,13 +50,15 @@ class _DataRequestState extends State<DataRequest> {
         .get();
     Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
     setState(() {
-    _controllerObs = TextEditingController(text: data?["obs"]);
-    adress = data?["adress"];
-    district = data?["district"];
-    number = data?["number"];
-    states = data?["estado"];
-    city = data?["city"];
-    type = data?["typesurvey"];
+    _controllerObs = TextEditingController(text: data?["obs"]??'');
+    adress = data?["adress"]??'';
+    district = data?["district"]??'';
+    number = data?["number"]??'';
+    states = data?["estado"]??'';
+    telefone = data?["telefone"]??'';
+    contato = data?["contato"]??'';
+    city = data?["city"]??'';
+    type = data?["typesurvey"]??'';
     if(data?["pdfs"] == null){
       pdfs = [];
     }else{
@@ -138,6 +142,7 @@ class _DataRequestState extends State<DataRequest> {
                     ),
                   ),
                   Container(
+                    width: width * 0.7,
                     child: TextCustom(
                       text: '''${''' $adress, $number, \n $district - $city/$states'''}''',
                       color: PaletteColors.bgColor,
@@ -215,7 +220,7 @@ class _DataRequestState extends State<DataRequest> {
               pdfs.length == 0? Container()
                   :Container(
                 width: width * 0.7,
-                height: height* 0.18,
+                height:pdfs.length * height * 0.07,
                 child: ListView.builder(
                     physics: NeverScrollableScrollPhysics(),
                     scrollDirection: Axis.vertical,
@@ -309,6 +314,78 @@ class _DataRequestState extends State<DataRequest> {
               Divider(
                 thickness: 1,
               ),
+              Row(
+                children: [
+                  TextCustom(
+                    text: "Contato:",
+                    color: PaletteColors.bgColor,
+                    fontWeight: FontWeight.bold,
+                    textAlign: TextAlign.start,
+                    size: 14.0,
+                  ),
+                  TextCustom(
+                    text: "$contato",
+                    color: PaletteColors.bgColor,
+                    fontWeight: FontWeight.normal,
+                    textAlign: TextAlign.start,
+                    size: 14.0,
+                  ),
+                ],
+              ),
+              Divider(
+                thickness: 1,
+              ),
+
+              Row(
+                children: [
+                  TextCustom(
+                    text: "Telefone:",
+                    color: PaletteColors.bgColor,
+                    fontWeight: FontWeight.bold,
+                    textAlign: TextAlign.start,
+                    size: 14.0,
+                  ),
+                  TextCustom(
+                    text: "$telefone",
+                    color: PaletteColors.bgColor,
+                    fontWeight: FontWeight.normal,
+                    textAlign: TextAlign.start,
+                    size: 14.0,
+                  ),
+                  SizedBox(width: 6),
+                  Ink(
+                    decoration: ShapeDecoration(
+                      color: PaletteColors.greyInput,
+                      shape: CircleBorder(),
+                    ),
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.phone,
+                        color: PaletteColors.primaryColor,
+                      ),
+                      constraints: BoxConstraints(
+                          minHeight: 35,
+                          minWidth: 35,
+                          maxHeight: 35,
+                          maxWidth: 35),
+                      iconSize: 25.0,
+                      padding: EdgeInsets.zero,
+                      onPressed: () async {
+                        if(telefone!=''){
+                          var splitted = telefone.replaceAll('-','').replaceAll('(','').replaceAll(')','').trim();
+                          var url ="tel:+55$splitted";
+                          await launchUrl(Uri.parse(url));
+                        }else{
+                          showSnackBar(context, 'Preencha o campo Telefone',Colors.red);
+                        }
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              Divider(
+                thickness: 1,
+              ),
 
               Row(
                 children: [
@@ -331,11 +408,11 @@ class _DataRequestState extends State<DataRequest> {
                         color: PaletteColors.primaryColor,
                       ),
                       constraints: BoxConstraints(
-                          minHeight: 45,
-                          minWidth: 45,
-                          maxHeight: 45,
-                          maxWidth: 45),
-                      iconSize: 35.0,
+                          minHeight: 35,
+                          minWidth: 35,
+                          maxHeight: 35,
+                          maxWidth: 35),
+                      iconSize: 25.0,
                       padding: EdgeInsets.zero,
                       onPressed: () => launchGoogleMaps(),
                     ),

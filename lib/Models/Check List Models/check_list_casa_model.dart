@@ -46,6 +46,8 @@ class UnityModel{
   String OpenArea = '';
   String TotalArea =  '';
   String Origin = '';
+  String Telefone = '';
+  String Contato = '';
   String Goal = '';
   String pathology = '';
   String idSurvey = '';
@@ -53,6 +55,8 @@ class UnityModel{
 
   Map<String,dynamic> toMap(){
     Map<String,dynamic> map = {
+      "contato"    : this.Contato,
+      "telefone"    : this.Telefone,
       "rooms": this.rooms,
       "socialbathrooms"   : this.socialbathrooms,
       "privatebathrooms"    : this.privatebathrooms,
