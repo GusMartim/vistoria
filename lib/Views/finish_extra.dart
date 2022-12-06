@@ -23,6 +23,7 @@ class _SurveyFinishScreenExtraState extends State<SurveyFinishScreenExtra> {
   int order = 0;
   int nsurvey = 0;
   List Nsurveys = [];
+  var path = '';
   OrderModel _orderModel = OrderModel();
   final Map<String, dynamic> data = HashMap();
   String status = "survey";
@@ -111,103 +112,105 @@ class _SurveyFinishScreenExtraState extends State<SurveyFinishScreenExtra> {
     setState(() {
       saveChecklist = data?["checklist"];
     });
-    infra.clear();
-    for (int i = 0; i <= 8; i++) {
-      var splitted = saveChecklist[i].replaceAll("1", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        infra.add(title);
+    if(saveChecklist.length != 0){
+      infra.clear();
+      for (int i = 0; i <= 8; i++) {
+        var splitted = saveChecklist[i].replaceAll("1", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        if (check == 'true') {
+          infra.add(title);
+        }
       }
-    }
-    situation.clear();
-    for (int i = 9; i <= 12; i++) {
-      var splitted = saveChecklist[i].replaceAll("2", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        situation.add(title);
+      situation.clear();
+      for (int i = 9; i <= 12; i++) {
+        var splitted = saveChecklist[i].replaceAll("2", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        if (check == 'true') {
+          situation.add(title);
+        }
       }
-    }
-    quota.clear();
-    for (int i = 13; i <= 16; i++) {
-      var splitted = saveChecklist[i].replaceAll("3", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        quota.add(title);
+      quota.clear();
+      for (int i = 13; i <= 16; i++) {
+        var splitted = saveChecklist[i].replaceAll("3", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        if (check == 'true') {
+          quota.add(title);
+        }
       }
-    }
-    position.clear();
-    for (int i = 17; i <= 22; i++) {
-      var splitted = saveChecklist[i].replaceAll("4", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        position.add(title);
+      position.clear();
+      for (int i = 17; i <= 22; i++) {
+        var splitted = saveChecklist[i].replaceAll("4", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        if (check == 'true') {
+          position.add(title);
+        }
       }
-    }
-    roof.clear();
-    for (int i = 23; i <= 27; i++) {
-      var splitted = saveChecklist[i].replaceAll("5", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        roof.add(title);
+      roof.clear();
+      for (int i = 23; i <= 27; i++) {
+        var splitted = saveChecklist[i].replaceAll("5", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        if (check == 'true') {
+          roof.add(title);
+        }
       }
-    }
-    wall.clear();
-    for (int i = 28; i <= 31; i++) {
-      var splitted = saveChecklist[i].replaceAll("6", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        wall.add(title);
+      wall.clear();
+      for (int i = 28; i <= 31; i++) {
+        var splitted = saveChecklist[i].replaceAll("6", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        if (check == 'true') {
+          wall.add(title);
+        }
       }
-    }
-    paint.clear();
-    for (int i = 32; i <= 37; i++) {
-      var splitted = saveChecklist[i].replaceAll("7", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        paint.add(title);
+      paint.clear();
+      for (int i = 32; i <= 37; i++) {
+        var splitted = saveChecklist[i].replaceAll("7", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        if (check == 'true') {
+          paint.add(title);
+        }
       }
-    }
-    internpaint.clear();
-    for (int i = 38; i <= 43; i++) {
-      var splitted = saveChecklist[i].replaceAll("8", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        internpaint.add(title);
+      internpaint.clear();
+      for (int i = 38; i <= 43; i++) {
+        var splitted = saveChecklist[i].replaceAll("8", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        if (check == 'true') {
+          internpaint.add(title);
+        }
       }
-    }
-    windows.clear();
-    for (int i = 44; i <= 47; i++) {
-      var splitted = saveChecklist[i].replaceAll("9", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        windows.add(title);
+      windows.clear();
+      for (int i = 44; i <= 47; i++) {
+        var splitted = saveChecklist[i].replaceAll("9", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        if (check == 'true') {
+          windows.add(title);
+        }
       }
-    }
-    state.clear();
-    for (int i = 48; i <= 54; i++) {
-      var splitted = saveChecklist[i].replaceAll("10", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        state.add(title);
+      state.clear();
+      for (int i = 48; i <= 54; i++) {
+        var splitted = saveChecklist[i].replaceAll("10", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        if (check == 'true') {
+          state.add(title);
+        }
       }
-    }
-    pattern.clear();
-    for (int i = 55; i <= 62; i++) {
-      var splitted = saveChecklist[i].replaceAll("11", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        pattern.add(title);
+      pattern.clear();
+      for (int i = 55; i <= 62; i++) {
+        var splitted = saveChecklist[i].replaceAll("11", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        if (check == 'true') {
+          pattern.add(title);
+        }
       }
     }
     setState(() {
@@ -277,6 +280,7 @@ class _SurveyFinishScreenExtraState extends State<SurveyFinishScreenExtra> {
       contact = data?["contact"] ?? '';
       complement = data?["complement"] ?? '';
     });
+    _createPdf(context);
   }
 
   FirebaseStorage storage = FirebaseStorage.instance;
@@ -1714,7 +1718,7 @@ class _SurveyFinishScreenExtraState extends State<SurveyFinishScreenExtra> {
     pag = pag + lines;
 
     final String dir = (await getApplicationDocumentsDirectory()).path;
-    final String path = '$dir/Vistoria$surveyType.pdf';
+    path = '$dir/Vistoria$surveyType.pdf';
     final File file = File(path);
 
     file.writeAsBytesSync(pdf.save());
@@ -1739,9 +1743,6 @@ class _SurveyFinishScreenExtraState extends State<SurveyFinishScreenExtra> {
         });
       });
     }
-
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => PDFScreen(path)));
   }
   getNSurvey() async {
     DocumentSnapshot snapshot =
@@ -1819,6 +1820,7 @@ class _SurveyFinishScreenExtraState extends State<SurveyFinishScreenExtra> {
     super.initState();
     _dataImages();
     _getData();
+
   }
 
   bool loading = true;
@@ -2025,9 +2027,8 @@ class _SurveyFinishScreenExtraState extends State<SurveyFinishScreenExtra> {
                           maxWidth: 46),
                       iconSize: 32.0,
                       padding: EdgeInsets.zero,
-                      onPressed: () => saveChecklist.length != 0
-                          ? _createPdf(context)
-                          : showSnackBar(context, 'erro', Colors.red),
+                      onPressed: () => Navigator.push(
+                          context,MaterialPageRoute(builder: (context) => PDFScreen(path))),
                     ),
                   ),
                   SizedBox(

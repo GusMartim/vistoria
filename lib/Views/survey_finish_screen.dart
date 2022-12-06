@@ -18,6 +18,7 @@ class SurveyFinishScreen extends StatefulWidget {
 
 class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
   var Cod = '';
+  var path = '';
   var street = '';
   var number = '';
   var complement = '';
@@ -125,213 +126,215 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
       print('pegou o checklist');
       print(saveChecklist.length);
     });
-    pathology.clear();
-    for (int i = 0; i <= 5; i++) {
-      var splitted = saveChecklist[i].replaceAll("1", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        pathology.add(title);
-      }
-    }
-    type.clear();
-    for (int i = 6; i <= 9; i++) {
-      var splitted = saveChecklist[i].replaceAll("2", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        type.add(title);
-      }
-    }
-    infra.clear();
-    for (int i = 10; i <= 18; i++) {
-      var splitted = saveChecklist[i].replaceAll("3", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        infra.add(title);
-      }
-    }
-    situation.clear();
-    for (int i = 19; i <= 22; i++) {
-      var splitted = saveChecklist[i].replaceAll("4", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        situation.add(title);
-      }
-    }
-    quota.clear();
-    for (int i = 23; i <= 26; i++) {
-      var splitted = saveChecklist[i].replaceAll("5", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        quota.add(title);
-      }
-    }
-    position.clear();
-    for (int i = 27; i <= 32; i++) {
-      var splitted = saveChecklist[i].replaceAll("6", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        position.add(title);
-      }
-    }
-    roof.clear();
-    for (int i = 33; i <= 37; i++) {
-      var splitted = saveChecklist[i].replaceAll("7", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        roof.add(title);
-      }
-    }
-    wall.clear();
-    for (int i = 38; i <= 41; i++) {
-      var splitted = saveChecklist[i].replaceAll("8", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        wall.add(title);
-      }
-    }
-    paint.clear();
-    for (int i = 42; i <= 47; i++) {
-      var splitted = saveChecklist[i].replaceAll("9", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        paint.add(title);
-      }
-    }
-    internpaint.clear();
-    for (int i = 48; i <= 53; i++) {
-      var splitted = saveChecklist[i].replaceAll("10", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        internpaint.add(title);
-      }
-    }
-    extern.clear();
-    for (int i = 54; i <= 57; i++) {
-      var splitted = saveChecklist[i].replaceAll("11", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        extern.add(title);
-      }
-    }
-    intern.clear();
-    for (int i = 58; i <= 61; i++) {
-      var splitted = saveChecklist[i].replaceAll("12", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        intern.add(title);
-      }
-    }
-    floor.clear();
-    for (int i = 62; i <= 65; i++) {
-      var splitted = saveChecklist[i].replaceAll("13", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        floor.add(title);
-      }
-    }
-    windows.clear();
-    for (int i = 66; i <= 69; i++) {
-      var splitted = saveChecklist[i].replaceAll("14", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        windows.add(title);
-      }
-    }
-    balcony.clear();
-    for (int i = 70; i <= 74; i++) {
-      var splitted = saveChecklist[i].replaceAll("15", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        balcony.add(title);
-      }
-    }
-    switchboard.clear();
-    for (int i = 75; i <= 80; i++) {
-      var splitted = saveChecklist[i].replaceAll("16", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        switchboard.add(title);
-      }
-    }
-    kitchen.clear();
-    for (int i = 81; i <= 86; i++) {
-      var splitted = saveChecklist[i].replaceAll("17", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        kitchen.add(title);
-      }
-    }
-    bathroom.clear();
-    for (int i = 87; i <= 92; i++) {
-      var splitted = saveChecklist[i].replaceAll("18", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        bathroom.add(title);
-      }
-    }
-    tank.clear();
-    for (int i = 93; i <= 98; i++) {
-      var splitted = saveChecklist[i].replaceAll("19", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        tank.add(title);
-      }
-    }
-    pattern.clear();
-    for (int i = 99; i <= 106; i++) {
-      var splitted = saveChecklist[i].replaceAll("20", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        pattern.add(title);
-      }
-    }
-    state.clear();
-    for (int i = 107; i <= 113; i++) {
-      var splitted = saveChecklist[i].replaceAll("21", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        state.add(title);
-      }
-    }
-    unityroof.clear();
-    for (int i = 114; i <= 119; i++) {
-      var splitted = saveChecklist[i].replaceAll("22", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        unityroof.add(title);
-      }
-    }
-    block.clear();
-    for (int i = 120; i <= 134; i++) {
-      var splitted = saveChecklist[i].replaceAll("23", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        block.add(title);
-      }
-    }
+   if(saveChecklist.length != 0 ){
+     pathology.clear();
+     for (int i = 0; i <= 5; i++) {
+       var splitted = saveChecklist[i].replaceAll("1", '').split('#');
+       var title = splitted[0];
+       var check = splitted[1];
+       if (check == 'true') {
+         pathology.add(title);
+       }
+     }
+     type.clear();
+     for (int i = 6; i <= 9; i++) {
+       var splitted = saveChecklist[i].replaceAll("2", '').split('#');
+       var title = splitted[0];
+       var check = splitted[1];
+       if (check == 'true') {
+         type.add(title);
+       }
+     }
+     infra.clear();
+     for (int i = 10; i <= 18; i++) {
+       var splitted = saveChecklist[i].replaceAll("3", '').split('#');
+       var title = splitted[0];
+       var check = splitted[1];
+       if (check == 'true') {
+         infra.add(title);
+       }
+     }
+     situation.clear();
+     for (int i = 19; i <= 22; i++) {
+       var splitted = saveChecklist[i].replaceAll("4", '').split('#');
+       var title = splitted[0];
+       var check = splitted[1];
+       if (check == 'true') {
+         situation.add(title);
+       }
+     }
+     quota.clear();
+     for (int i = 23; i <= 26; i++) {
+       var splitted = saveChecklist[i].replaceAll("5", '').split('#');
+       var title = splitted[0];
+       var check = splitted[1];
+       if (check == 'true') {
+         quota.add(title);
+       }
+     }
+     position.clear();
+     for (int i = 27; i <= 32; i++) {
+       var splitted = saveChecklist[i].replaceAll("6", '').split('#');
+       var title = splitted[0];
+       var check = splitted[1];
+       if (check == 'true') {
+         position.add(title);
+       }
+     }
+     roof.clear();
+     for (int i = 33; i <= 37; i++) {
+       var splitted = saveChecklist[i].replaceAll("7", '').split('#');
+       var title = splitted[0];
+       var check = splitted[1];
+       if (check == 'true') {
+         roof.add(title);
+       }
+     }
+     wall.clear();
+     for (int i = 38; i <= 41; i++) {
+       var splitted = saveChecklist[i].replaceAll("8", '').split('#');
+       var title = splitted[0];
+       var check = splitted[1];
+       if (check == 'true') {
+         wall.add(title);
+       }
+     }
+     paint.clear();
+     for (int i = 42; i <= 47; i++) {
+       var splitted = saveChecklist[i].replaceAll("9", '').split('#');
+       var title = splitted[0];
+       var check = splitted[1];
+       if (check == 'true') {
+         paint.add(title);
+       }
+     }
+     internpaint.clear();
+     for (int i = 48; i <= 53; i++) {
+       var splitted = saveChecklist[i].replaceAll("10", '').split('#');
+       var title = splitted[0];
+       var check = splitted[1];
+       if (check == 'true') {
+         internpaint.add(title);
+       }
+     }
+     extern.clear();
+     for (int i = 54; i <= 57; i++) {
+       var splitted = saveChecklist[i].replaceAll("11", '').split('#');
+       var title = splitted[0];
+       var check = splitted[1];
+       if (check == 'true') {
+         extern.add(title);
+       }
+     }
+     intern.clear();
+     for (int i = 58; i <= 61; i++) {
+       var splitted = saveChecklist[i].replaceAll("12", '').split('#');
+       var title = splitted[0];
+       var check = splitted[1];
+       if (check == 'true') {
+         intern.add(title);
+       }
+     }
+     floor.clear();
+     for (int i = 62; i <= 65; i++) {
+       var splitted = saveChecklist[i].replaceAll("13", '').split('#');
+       var title = splitted[0];
+       var check = splitted[1];
+       if (check == 'true') {
+         floor.add(title);
+       }
+     }
+     windows.clear();
+     for (int i = 66; i <= 69; i++) {
+       var splitted = saveChecklist[i].replaceAll("14", '').split('#');
+       var title = splitted[0];
+       var check = splitted[1];
+       if (check == 'true') {
+         windows.add(title);
+       }
+     }
+     balcony.clear();
+     for (int i = 70; i <= 74; i++) {
+       var splitted = saveChecklist[i].replaceAll("15", '').split('#');
+       var title = splitted[0];
+       var check = splitted[1];
+       if (check == 'true') {
+         balcony.add(title);
+       }
+     }
+     switchboard.clear();
+     for (int i = 75; i <= 80; i++) {
+       var splitted = saveChecklist[i].replaceAll("16", '').split('#');
+       var title = splitted[0];
+       var check = splitted[1];
+       if (check == 'true') {
+         switchboard.add(title);
+       }
+     }
+     kitchen.clear();
+     for (int i = 81; i <= 86; i++) {
+       var splitted = saveChecklist[i].replaceAll("17", '').split('#');
+       var title = splitted[0];
+       var check = splitted[1];
+       if (check == 'true') {
+         kitchen.add(title);
+       }
+     }
+     bathroom.clear();
+     for (int i = 87; i <= 92; i++) {
+       var splitted = saveChecklist[i].replaceAll("18", '').split('#');
+       var title = splitted[0];
+       var check = splitted[1];
+       if (check == 'true') {
+         bathroom.add(title);
+       }
+     }
+     tank.clear();
+     for (int i = 93; i <= 98; i++) {
+       var splitted = saveChecklist[i].replaceAll("19", '').split('#');
+       var title = splitted[0];
+       var check = splitted[1];
+       if (check == 'true') {
+         tank.add(title);
+       }
+     }
+     pattern.clear();
+     for (int i = 99; i <= 106; i++) {
+       var splitted = saveChecklist[i].replaceAll("20", '').split('#');
+       var title = splitted[0];
+       var check = splitted[1];
+       if (check == 'true') {
+         pattern.add(title);
+       }
+     }
+     state.clear();
+     for (int i = 107; i <= 113; i++) {
+       var splitted = saveChecklist[i].replaceAll("21", '').split('#');
+       var title = splitted[0];
+       var check = splitted[1];
+       if (check == 'true') {
+         state.add(title);
+       }
+     }
+     unityroof.clear();
+     for (int i = 114; i <= 119; i++) {
+       var splitted = saveChecklist[i].replaceAll("22", '').split('#');
+       var title = splitted[0];
+       var check = splitted[1];
+       if (check == 'true') {
+         unityroof.add(title);
+       }
+     }
+     block.clear();
+     for (int i = 120; i <= 134; i++) {
+       var splitted = saveChecklist[i].replaceAll("23", '').split('#');
+       var title = splitted[0];
+       var check = splitted[1];
+       if (check == 'true') {
+         block.add(title);
+       }
+     }
+   }
     setState(() {
       age = data?["age"] ?? "";
       price = data?["price"] ?? "";
@@ -396,7 +399,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
       Goal = data?["Goal"] ?? '';
       Origin = data?["Origin"] ?? '';
     });
-    print('saiu do get');
+    _createPdf(context);
   }
 
   FirebaseStorage storage = FirebaseStorage.instance;
@@ -2390,7 +2393,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
               )
             ]));
     final String dir = (await getApplicationDocumentsDirectory()).path;
-    final String path = '$dir/Vistoria$surveyType.pdf';
+    path = '$dir/Vistoria$surveyType.pdf';
     final File file = File(path);
 
     file.writeAsBytesSync(pdf.save());
@@ -2416,8 +2419,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
       });
     }
 
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => PDFScreen(path)));
+
   }
 
 
@@ -2497,6 +2499,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
     super.initState();
     _dataImages();
     _getData();
+
   }
 
   bool loading = true;
@@ -2703,9 +2706,8 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                           maxWidth: 46),
                       iconSize: 32.0,
                       padding: EdgeInsets.zero,
-                      onPressed: () => saveChecklist.length != 0
-                          ? _createPdf(context)
-                          : showSnackBar(context, 'erro', Colors.red),
+                      onPressed: () => Navigator.push(
+                          context,MaterialPageRoute(builder: (context) => PDFScreen(path))),
                     ),
                   ),
                   SizedBox(

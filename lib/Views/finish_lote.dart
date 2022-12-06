@@ -22,6 +22,7 @@ class _SurveyFinishScreenLoteState extends State<SurveyFinishScreenLote> {
   FirebaseAuth _auth = FirebaseAuth.instance;
   int order = 0;
   int nsurvey = 0;
+  var path = '';
   List Nsurveys = [];
   OrderModel _orderModel = OrderModel();
   final Map<String, dynamic> data = HashMap();
@@ -82,124 +83,129 @@ class _SurveyFinishScreenLoteState extends State<SurveyFinishScreenLote> {
       saveChecklist = data?["checklist"];
       saveRatings = data?["ratings"];
     });
-    terrainType.clear();
-    for (int i = 0; i <= 3; i++) {
-      var splitted = saveChecklist[i].replaceAll("1", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if(check == 'true'){
-        terrainType.add(title);
+    if(saveChecklist.length != 0){
+      terrainType.clear();
+      for (int i = 0; i <= 3; i++) {
+        var splitted = saveChecklist[i].replaceAll("1", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        if(check == 'true'){
+          terrainType.add(title);
+        }
+      }
+      terrainShape.clear();
+      for (int i = 4; i <= 8; i++) {
+        var splitted = saveChecklist[i].replaceAll("2", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        if(check == 'true'){
+          terrainShape.add(title);
+        }
+      }
+      terrainSituation.clear();
+      for (int i = 9; i <= 12; i++) {
+        var splitted = saveChecklist[i].replaceAll("3", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        if(check == 'true'){
+          terrainSituation.add(title);
+        }
+      }
+      topography.clear();
+      for (int i = 13; i <= 20; i++) {
+        var splitted = saveChecklist[i].replaceAll("4", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        if(check == 'true'){
+          topography.add(title);
+        }
+      }
+      terrainClosing.clear();
+      for (int i = 21; i <= 25; i++) {
+        var splitted = saveChecklist[i].replaceAll("5", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        if(check == 'true'){
+          terrainClosing.add(title);
+        }
+      }
+      localization.clear();
+      for (int i = 26; i <= 29; i++) {
+        var splitted = saveChecklist[i].replaceAll("6", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        if(check == 'true'){
+          localization.add(title);
+        }
+      }
+      use.clear();
+      for (int i = 30; i <= 34; i++) {
+        var splitted = saveChecklist[i].replaceAll("7", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        if(check == 'true'){
+          use.add(title);
+        }
+      }
+      pattern.clear();
+      for (int i = 35; i <= 39; i++) {
+        var splitted = saveChecklist[i].replaceAll("8", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        if(check == 'true'){
+          pattern.add(title);
+        }
+      }
+      ratings.clear();
+      for (int i = 40; i <= 43; i++) {
+        var splitted = saveChecklist[i].replaceAll("9", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        if(check == 'true'){
+          ratings.add(title);
+        }
+      }
+      density.clear();
+      for (int i = 44; i <= 47; i++) {
+        var splitted = saveChecklist[i].replaceAll("10", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        if(check == 'true'){
+          density.add(title);
+        }
+      }
+      transport.clear();
+      for (int i = 48; i <= 52; i++) {
+        var splitted = saveChecklist[i].replaceAll("11", '').split('#');
+        var title = splitted[0];
+        var check = splitted[1];
+        if(check == 'true'){
+          transport.add(title);
+        }
       }
     }
-    terrainShape.clear();
-    for (int i = 4; i <= 8; i++) {
-      var splitted = saveChecklist[i].replaceAll("2", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if(check == 'true'){
-        terrainShape.add(title);
-      }
-    }
-    terrainSituation.clear();
-    for (int i = 9; i <= 12; i++) {
-      var splitted = saveChecklist[i].replaceAll("3", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if(check == 'true'){
-        terrainSituation.add(title);
-      }
-    }
-    topography.clear();
-    for (int i = 13; i <= 20; i++) {
-      var splitted = saveChecklist[i].replaceAll("4", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if(check == 'true'){
-        topography.add(title);
-      }
-    }
-    terrainClosing.clear();
-    for (int i = 21; i <= 25; i++) {
-      var splitted = saveChecklist[i].replaceAll("5", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if(check == 'true'){
-        terrainClosing.add(title);
-      }
-    }
-    localization.clear();
-    for (int i = 26; i <= 29; i++) {
-      var splitted = saveChecklist[i].replaceAll("6", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if(check == 'true'){
-        localization.add(title);
-      }
-    }
-    use.clear();
-    for (int i = 30; i <= 34; i++) {
-      var splitted = saveChecklist[i].replaceAll("7", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if(check == 'true'){
-        use.add(title);
-      }
-    }
-    pattern.clear();
-    for (int i = 35; i <= 39; i++) {
-      var splitted = saveChecklist[i].replaceAll("8", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if(check == 'true'){
-        pattern.add(title);
-      }
-    }
-    ratings.clear();
-    for (int i = 40; i <= 43; i++) {
-      var splitted = saveChecklist[i].replaceAll("9", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if(check == 'true'){
-        ratings.add(title);
-      }
-    }
-    density.clear();
-    for (int i = 44; i <= 47; i++) {
-      var splitted = saveChecklist[i].replaceAll("10", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if(check == 'true'){
-        density.add(title);
-      }
-    }
-    transport.clear();
-    for (int i = 48; i <= 52; i++) {
-      var splitted = saveChecklist[i].replaceAll("11", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if(check == 'true'){
-        transport.add(title);
-      }
-    }
-    rates.clear();
-    for( int i = 0; i < saveRatings.length; i++){
-      var splitted = saveRatings[i].split('#');
-      var title =  splitted[0];
-      var check1 = splitted[1];
-      var check2 = splitted[2];
-      var check3 = splitted[3];
-      if(check1 == 'true'){
-        rates.add(title + ' - ' +'Satisfatório');
-      };
-      if(check2 == 'true'){
-        rates.add(title + ' - ' +'Precário');
-      };
-      if(check3 == 'true'){
-        rates.add(title + ' - ' +'Não disponível');
-      };
+    if (saveRatings.length != 0) {
+      rates.clear();
+      for( int i = 0; i < saveRatings.length; i++){
+        var splitted = saveRatings[i].split('#');
+        var title =  splitted[0];
+        var check1 = splitted[1];
+        var check2 = splitted[2];
+        var check3 = splitted[3];
+        if(check1 == 'true'){
+          rates.add(title + ' - ' +'Satisfatório');
+        };
+        if(check2 == 'true'){
+          rates.add(title + ' - ' +'Precário');
+        };
+        if(check3 == 'true'){
+          rates.add(title + ' - ' +'Não disponível');
+        };
 
 
+      }
     }
+
     setState(() {
       age = data?["age"]??"";
       complement = data?["complement"]??"";
@@ -232,7 +238,7 @@ class _SurveyFinishScreenLoteState extends State<SurveyFinishScreenLote> {
       sRatings= data?["rating"]??'';
       factors = data?["factors"]??"";
     });
-
+    _createPdf(context);
 
   }
 
@@ -1134,7 +1140,7 @@ class _SurveyFinishScreenLoteState extends State<SurveyFinishScreenLote> {
     pag = pag + lines;
 
     final String dir = (await getApplicationDocumentsDirectory()).path;
-    final String path = '$dir/Vistoria$surveyType.pdf';
+    path = '$dir/Vistoria$surveyType.pdf';
     final File file = File(path);
 
     file.writeAsBytesSync(pdf.save());
@@ -1159,9 +1165,6 @@ class _SurveyFinishScreenLoteState extends State<SurveyFinishScreenLote> {
         });
       });
     }
-
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => PDFScreen(path)));
   }
 
 
@@ -1241,6 +1244,7 @@ class _SurveyFinishScreenLoteState extends State<SurveyFinishScreenLote> {
     super.initState();
     _dataImages();
     _getData();
+
   }
 
   bool loading = true;
@@ -1447,9 +1451,8 @@ class _SurveyFinishScreenLoteState extends State<SurveyFinishScreenLote> {
                           maxWidth: 46),
                       iconSize: 32.0,
                       padding: EdgeInsets.zero,
-                      onPressed: () => saveChecklist.length != 0
-                          ? _createPdf(context)
-                          : showSnackBar(context, 'erro', Colors.red),
+                      onPressed: () => Navigator.push(
+                          context,MaterialPageRoute(builder: (context) => PDFScreen(path))),
                     ),
                   ),
                   SizedBox(

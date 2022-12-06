@@ -16,78 +16,78 @@ class SurveyFinishScreenApt extends StatefulWidget {
 }
 
 class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
-  var street;
-  var Cod;
-  var number;
-  var district;
-  var city;
-  var states;
-  var surveyType;
-  var cep;
-  var sPathology;
-  var sType;
-  var sInfra;
-  var sSituation;
-  var sQuota;
-  var sPosition;
-  var sRoof;
-  var sWall;
-  var sInternPaint;
-  var sPaint;
-  var sExtern;
-  var sFloor;
-  var sIntern;
-  var sWindows;
-  var sBalcony;
-  var sSwitchBoard;
-  var sKitchen;
-  var sBathroom;
-  var sUnity;
-  var sView;
-  var sUnPosition;
-  var sTank;
-  var sPattern;
-  var sState;
-  var sUnityroof;
-  var sBlock;
-  var age;
-  var price;
-  var lat;
-  var lng;
-  var date;
-  var user;
-  var adress;
-  var SRoom;
-  var SPavs;
-  var SElevators;
-  var SAge;
-  var SAptos;
-  var SUnitys;
-  var SSocialBathroom;
-  var SPrivateBathroom;
-  var SLav;
-  var SServiceBathroom;
-  var SMaidRoom;
-  var SBalcony;
-  var SCompleteCabinets;
-  var SKitchen;
-  var SRestRoom;
-  var SServiceAreaRoofed;
-  var SServiceAreaUnroofed;
-  var SOpenGarage;
-  var SClosedGarage;
-  var SAc;
-  var SPool;
-  var condPrice;
-  var admin;
-  var phone;
-  var Origin;
-  var Final;
-  var IPavs;
-  var Area;
-  var Obs;
-  var complement;
-
+  String street = '';
+  String Cod= '';
+  String number= '';
+  String district= '';
+  String city= '';
+  String states= '';
+  String surveyType= '';
+  String cep= '';
+  String sPathology= '';
+  String sType= '';
+  String sInfra= '';
+  String sSituation= '';
+  String sQuota= '';
+  String sPosition= '';
+  String sRoof= '';
+  String sWall= '';
+  String sInternPaint= '';
+  String sPaint= '';
+  String sExtern= '';
+  String sFloor= '';
+  String sIntern= '';
+  String sWindows= '';
+  String sBalcony= '';
+  String sSwitchBoard= '';
+  String sKitchen= '';
+  String sBathroom= '';
+  String sUnity= '';
+  String sView= '';
+  String sUnPosition= '';
+  String sTank= '';
+  String sPattern= '';
+  String sState= '';
+  String sUnityroof= '';
+  String sBlock= '';
+  String age= '';
+  String price= '';
+  String lat= '';
+  String lng= '';
+  String date= '';
+  String user= '';
+  String adress= '';
+  String SRoom= '';
+  String SPavs= '';
+  String SElevators= '';
+  String SAge= '';
+  String SAptos= '';
+  String SUnitys= '';
+  String SSocialBathroom= '';
+  String SPrivateBathroom= '';
+  String SLav= '';
+  String SServiceBathroom= '';
+  String SMaidRoom= '';
+  String SBalcony= '';
+  String SCompleteCabinets= '';
+  String SKitchen= '';
+  String SRestRoom= '';
+  String SServiceAreaRoofed= '';
+  String SServiceAreaUnroofed= '';
+  String SOpenGarage= '';
+  String SClosedGarage= '';
+  String SAc= '';
+  String SPool= '';
+  String condPrice= '';
+  String admin= '';
+  String phone= '';
+  String Origin= '';
+  String Final= '';
+  String IPavs= '';
+  String Area= '';
+  String Obs= '';
+  String complement= '';
+  String path = '';
   List imageList = [];
   List pathology = [];
   List paint = [];
@@ -133,217 +133,219 @@ class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
     Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
 
     setState(() {
-      saveChecklist = data?["checklist"];
+      saveChecklist = data?["checklist"]??[];
     });
-    pathology.clear();
-    for (int i = 0; i <= 5; i++) {
-      var splitted = saveChecklist[i].replaceAll("1", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        pathology.add(title);
-      }
-    }
-    type.clear();
-    for (int i = 6; i <= 9; i++) {
-      var splitted = saveChecklist[i].replaceAll("2", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        type.add(title);
-      }
-    }
-    infra.clear();
-    for (int i = 10; i <= 18; i++) {
-      var splitted = saveChecklist[i].replaceAll("3", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        infra.add(title);
-      }
-    }
-    situation.clear();
-    for (int i = 19; i <= 22; i++) {
-      var splitted = saveChecklist[i].replaceAll("4", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        situation.add(title);
-      }
-    }
-    quota.clear();
-    for (int i = 23; i <= 26; i++) {
-      var splitted = saveChecklist[i].replaceAll("5", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        quota.add(title);
-      }
-    }
-    wall.clear();
-    for (int i = 27; i <= 30; i++) {
-      var splitted = saveChecklist[i].replaceAll("6", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        wall.add(title);
-      }
-    }
-    paint.clear();
-    for (int i = 31; i <= 36; i++) {
-      var splitted = saveChecklist[i].replaceAll("7", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        paint.add(title);
-      }
-    }
-    internpaint.clear();
-    for (int i = 37; i <= 42; i++) {
-      var splitted = saveChecklist[i].replaceAll("8", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        internpaint.add(title);
-      }
-    }
-    extern.clear();
-    for (int i = 43; i <= 46; i++) {
-      var splitted = saveChecklist[i].replaceAll("9", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        extern.add(title);
-      }
-    }
-    intern.clear();
-    for (int i = 47; i <= 50; i++) {
-      var splitted = saveChecklist[i].replaceAll("10", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        intern.add(title);
-      }
-    }
-    floor.clear();
-    for (int i = 51; i <= 54; i++) {
-      var splitted = saveChecklist[i].replaceAll("11", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        floor.add(title);
-      }
-    }
-    windows.clear();
-    for (int i = 55; i <= 58; i++) {
-      var splitted = saveChecklist[i].replaceAll("12", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        windows.add(title);
-      }
-    }
+   if(saveChecklist.length != 0){
+     pathology.clear();
+     for (int i = 0; i <= 5; i++) {
+       var splitted = saveChecklist[i].replaceAll("1", '').split('#');
+       var title = splitted[0];
+       var check = splitted[1];
+       if (check == 'true') {
+         pathology.add(title);
+       }
+     }
+     type.clear();
+     for (int i = 6; i <= 9; i++) {
+       var splitted = saveChecklist[i].replaceAll("2", '').split('#');
+       var title = splitted[0];
+       var check = splitted[1];
+       if (check == 'true') {
+         type.add(title);
+       }
+     }
+     infra.clear();
+     for (int i = 10; i <= 18; i++) {
+       var splitted = saveChecklist[i].replaceAll("3", '').split('#');
+       var title = splitted[0];
+       var check = splitted[1];
+       if (check == 'true') {
+         infra.add(title);
+       }
+     }
+     situation.clear();
+     for (int i = 19; i <= 22; i++) {
+       var splitted = saveChecklist[i].replaceAll("4", '').split('#');
+       var title = splitted[0];
+       var check = splitted[1];
+       if (check == 'true') {
+         situation.add(title);
+       }
+     }
+     quota.clear();
+     for (int i = 23; i <= 26; i++) {
+       var splitted = saveChecklist[i].replaceAll("5", '').split('#');
+       var title = splitted[0];
+       var check = splitted[1];
+       if (check == 'true') {
+         quota.add(title);
+       }
+     }
+     wall.clear();
+     for (int i = 27; i <= 30; i++) {
+       var splitted = saveChecklist[i].replaceAll("6", '').split('#');
+       var title = splitted[0];
+       var check = splitted[1];
+       if (check == 'true') {
+         wall.add(title);
+       }
+     }
+     paint.clear();
+     for (int i = 31; i <= 36; i++) {
+       var splitted = saveChecklist[i].replaceAll("7", '').split('#');
+       var title = splitted[0];
+       var check = splitted[1];
+       if (check == 'true') {
+         paint.add(title);
+       }
+     }
+     internpaint.clear();
+     for (int i = 37; i <= 42; i++) {
+       var splitted = saveChecklist[i].replaceAll("8", '').split('#');
+       var title = splitted[0];
+       var check = splitted[1];
+       if (check == 'true') {
+         internpaint.add(title);
+       }
+     }
+     extern.clear();
+     for (int i = 43; i <= 46; i++) {
+       var splitted = saveChecklist[i].replaceAll("9", '').split('#');
+       var title = splitted[0];
+       var check = splitted[1];
+       if (check == 'true') {
+         extern.add(title);
+       }
+     }
+     intern.clear();
+     for (int i = 47; i <= 50; i++) {
+       var splitted = saveChecklist[i].replaceAll("10", '').split('#');
+       var title = splitted[0];
+       var check = splitted[1];
+       if (check == 'true') {
+         intern.add(title);
+       }
+     }
+     floor.clear();
+     for (int i = 51; i <= 54; i++) {
+       var splitted = saveChecklist[i].replaceAll("11", '').split('#');
+       var title = splitted[0];
+       var check = splitted[1];
+       if (check == 'true') {
+         floor.add(title);
+       }
+     }
+     windows.clear();
+     for (int i = 55; i <= 58; i++) {
+       var splitted = saveChecklist[i].replaceAll("12", '').split('#');
+       var title = splitted[0];
+       var check = splitted[1];
+       if (check == 'true') {
+         windows.add(title);
+       }
+     }
 
-    balcony.clear();
-    for (int i = 59; i <= 63; i++) {
-      var splitted = saveChecklist[i].replaceAll("13", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        balcony.add(title);
-      }
-    }
-    switchboard.clear();
-    for (int i = 64; i <= 69; i++) {
-      var splitted = saveChecklist[i].replaceAll("14", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        switchboard.add(title);
-      }
-    }
-    kitchen.clear();
-    for (int i = 70; i <= 75; i++) {
-      var splitted = saveChecklist[i].replaceAll("15", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        kitchen.add(title);
-      }
-    }
-    bathroom.clear();
-    for (int i = 76; i <= 81; i++) {
-      var splitted = saveChecklist[i].replaceAll("16", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        bathroom.add(title);
-      }
-    }
-    tank.clear();
-    for (int i = 82; i <= 87; i++) {
-      var splitted = saveChecklist[i].replaceAll("17", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        tank.add(title);
-      }
-    }
-    pattern.clear();
-    for (int i = 88; i <= 95; i++) {
-      var splitted = saveChecklist[i].replaceAll("18", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        pattern.add(title);
-      }
-    }
-    state.clear();
-    for (int i = 96; i <= 102; i++) {
-      var splitted = saveChecklist[i].replaceAll("19", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        state.add(title);
-      }
-    }
-    unityroof.clear();
-    for (int i = 103; i <= 108; i++) {
-      var splitted = saveChecklist[i].replaceAll("20", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        unityroof.add(title);
-      }
-    }
-    unity.clear();
-    for (int i = 109; i <= 111; i++) {
-      var splitted = saveChecklist[i].replaceAll("21", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        unity.add(title);
-      }
-    }
-    view.clear();
-    for (int i = 112; i <= 115; i++) {
-      var splitted = saveChecklist[i].replaceAll("22", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        view.add(title);
-      }
-    }
+     balcony.clear();
+     for (int i = 59; i <= 63; i++) {
+       var splitted = saveChecklist[i].replaceAll("13", '').split('#');
+       var title = splitted[0];
+       var check = splitted[1];
+       if (check == 'true') {
+         balcony.add(title);
+       }
+     }
+     switchboard.clear();
+     for (int i = 64; i <= 69; i++) {
+       var splitted = saveChecklist[i].replaceAll("14", '').split('#');
+       var title = splitted[0];
+       var check = splitted[1];
+       if (check == 'true') {
+         switchboard.add(title);
+       }
+     }
+     kitchen.clear();
+     for (int i = 70; i <= 75; i++) {
+       var splitted = saveChecklist[i].replaceAll("15", '').split('#');
+       var title = splitted[0];
+       var check = splitted[1];
+       if (check == 'true') {
+         kitchen.add(title);
+       }
+     }
+     bathroom.clear();
+     for (int i = 76; i <= 81; i++) {
+       var splitted = saveChecklist[i].replaceAll("16", '').split('#');
+       var title = splitted[0];
+       var check = splitted[1];
+       if (check == 'true') {
+         bathroom.add(title);
+       }
+     }
+     tank.clear();
+     for (int i = 82; i <= 87; i++) {
+       var splitted = saveChecklist[i].replaceAll("17", '').split('#');
+       var title = splitted[0];
+       var check = splitted[1];
+       if (check == 'true') {
+         tank.add(title);
+       }
+     }
+     pattern.clear();
+     for (int i = 88; i <= 95; i++) {
+       var splitted = saveChecklist[i].replaceAll("18", '').split('#');
+       var title = splitted[0];
+       var check = splitted[1];
+       if (check == 'true') {
+         pattern.add(title);
+       }
+     }
+     state.clear();
+     for (int i = 96; i <= 102; i++) {
+       var splitted = saveChecklist[i].replaceAll("19", '').split('#');
+       var title = splitted[0];
+       var check = splitted[1];
+       if (check == 'true') {
+         state.add(title);
+       }
+     }
+     unityroof.clear();
+     for (int i = 103; i <= 108; i++) {
+       var splitted = saveChecklist[i].replaceAll("20", '').split('#');
+       var title = splitted[0];
+       var check = splitted[1];
+       if (check == 'true') {
+         unityroof.add(title);
+       }
+     }
+     unity.clear();
+     for (int i = 109; i <= 111; i++) {
+       var splitted = saveChecklist[i].replaceAll("21", '').split('#');
+       var title = splitted[0];
+       var check = splitted[1];
+       if (check == 'true') {
+         unity.add(title);
+       }
+     }
+     view.clear();
+     for (int i = 112; i <= 115; i++) {
+       var splitted = saveChecklist[i].replaceAll("22", '').split('#');
+       var title = splitted[0];
+       var check = splitted[1];
+       if (check == 'true') {
+         view.add(title);
+       }
+     }
 
-    block.clear();
-    for (int i = 116; i <= 130; i++) {
-      var splitted = saveChecklist[i].replaceAll("23", '').split('#');
-      var title = splitted[0];
-      var check = splitted[1];
-      if (check == 'true') {
-        block.add(title);
-      }
-    }
+     block.clear();
+     for (int i = 116; i <= 130; i++) {
+       var splitted = saveChecklist[i].replaceAll("23", '').split('#');
+       var title = splitted[0];
+       var check = splitted[1];
+       if (check == 'true') {
+         block.add(title);
+       }
+     }
+   }
     setState(() {
       age = data?["age"] ?? '';
       price = data?["price"] ?? '';
@@ -417,12 +419,7 @@ class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
       Origin = data?["Origin"] ?? '';
       complement = data?["complement"] ?? '';
     });
-    print(street);
-    print(number);
-    print(district);
-    print(city);
-    print(states);
-    print(cep);
+    _createPdf(context);
   }
 
   FirebaseStorage storage = FirebaseStorage.instance;
@@ -2589,7 +2586,7 @@ class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
               )
             ]));
     final String dir = (await getApplicationDocumentsDirectory()).path;
-    final String path = '$dir/Vistoria$surveyType.pdf';
+    path = '$dir/Vistoria$surveyType.pdf';
     final File file = File(path);
 
     file.writeAsBytesSync(pdf.save());
@@ -2614,9 +2611,6 @@ class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
         });
       });
     }
-
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => PDFScreen(path)));
   }
 
 
@@ -2696,6 +2690,7 @@ class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
     super.initState();
     _dataImages();
     _getData();
+
   }
 
   bool loading = true;
@@ -2902,9 +2897,8 @@ class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
                           maxWidth: 46),
                       iconSize: 32.0,
                       padding: EdgeInsets.zero,
-                      onPressed: () => saveChecklist.length != 0
-                          ? _createPdf(context)
-                          : showSnackBar(context, 'erro', Colors.red),
+                      onPressed: () => Navigator.push(
+                          context,MaterialPageRoute(builder: (context) => PDFScreen(path))),
                     ),
                   ),
                   SizedBox(

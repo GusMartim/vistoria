@@ -30,6 +30,7 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
   var Cod = '';
   var complement = '';
   var obs = '';
+  var path = '';
   var street = '';
   var number = '';
   var district = '';
@@ -106,17 +107,15 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
       SOthers = data?["others"] ?? '';
       surveyType = data?["typesurvey"] ?? '';
     });
+    _createPdf(context);
   }
 
   FirebaseStorage storage = FirebaseStorage.instance;
   _createPdf(BuildContext context) async {
-    print('entrou');
     final pdfLib.Document pdf = pdfLib.Document(deflate: zlib.encode);
-    double width = 80;
     final font = await rootBundle.load("assets/fonts/Nunito-Regular.ttf");
     final ttf = pdfLib.Font.ttf(font);
     int lines = 32;
-
     print('lenght');
 
     int pag = 0;
@@ -871,7 +870,7 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
             ]));
     pag = pag + lines;
     final String dir = (await getApplicationDocumentsDirectory()).path;
-    final String path = '$dir/Vistoria$surveyType.pdf';
+    path = '$dir/Vistoria$surveyType.pdf';
     final File file = File(path);
     file.writeAsBytesSync(pdf.save());
     Uint8List archive = await file.readAsBytes();
@@ -895,8 +894,7 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
         });
       });
     }
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => PDFScreen(path)));
+
   }
 
 
@@ -976,6 +974,7 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
     super.initState();
     _dataImages();
     _getData();
+
   }
 
   bool loading = true;
@@ -1182,7 +1181,8 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
                           maxWidth: 46),
                       iconSize: 32.0,
                       padding: EdgeInsets.zero,
-                      onPressed: () => _createPdf(context),
+                      onPressed: () => Navigator.push(
+                          context,MaterialPageRoute(builder: (context) => PDFScreen(path))),
                     ),
                   ),
                   SizedBox(
