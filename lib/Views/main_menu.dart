@@ -35,136 +35,139 @@ class _MenuScreenState extends State<MenuScreen> {
               ),
             ],
           )),
-      body: Padding(
-        padding: const EdgeInsets.all(2.5),
-        child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 2,
-                  horizontal: 30,
+      body: SingleChildScrollView(
+        physics: NeverScrollableScrollPhysics(),
+        child: Padding(
+          padding: const EdgeInsets.all(2.5),
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 2,
+                    horizontal: 30,
+                  ),
+                  child: TextCustom(
+                    text: FirebaseAuth.instance.currentUser != null?'Olá, ' +
+                        FirebaseAuth.instance.currentUser!.displayName! +
+                        '!':'Olá',
+                    size: 14.0,
+                    color: PaletteColors.grey,
+                    fontWeight: FontWeight.bold,
+                    textAlign: TextAlign.start,
+                  ),
                 ),
-                child: TextCustom(
-                  text: FirebaseAuth.instance.currentUser != null?'Olá, ' +
-                      FirebaseAuth.instance.currentUser!.displayName! +
-                      '!':'Olá',
-                  size: 14.0,
-                  color: PaletteColors.grey,
-                  fontWeight: FontWeight.bold,
-                  textAlign: TextAlign.start,
-                ),
-              ),
-              Container(
-                alignment: Alignment.center,
-                width: width * 1.5,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    CustomCard(
-                        text: "Demandas",
-                        icon: Icons.add_location_rounded,
-                        screen: RequestScreen()),
-                    CustomCard(
-                      text: "Nova Vistoria",
-                      icon: Icons.list_rounded,
-                      screen: Surveyscreen(
-                          text: 'Nova Vistoria',
-                          buttonText: 'Prosseguir',
-                          id: ''),
+                Container(
+                  alignment: Alignment.center,
+                  width: width * 1.5,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      CustomCard(
+                          text: "Demandas",
+                          icon: Icons.add_location_rounded,
+                          screen: RequestScreen()),
+                      CustomCard(
+                        text: "Nova Vistoria",
+                        icon: Icons.list_rounded,
+                        screen: Surveyscreen(
+                            text: 'Nova Vistoria',
+                            buttonText: 'Prosseguir',
+                            id: ''),
 
-                    )
-                  ],
+                      )
+                    ],
+                  ),
                 ),
-              ),
-              Container(
-                alignment: Alignment.center,
-                width: width * 1.5,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                Container(
+                  alignment: Alignment.center,
+                  width: width * 1.5,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      CustomCard(
+                          text: "Historico",
+                          icon: Icons.window_outlined,
+                          screen: HistoryScreen(),
+                          ),
+                      CustomCard(
+                          text: "Tutorial",
+                          icon: Icons.branding_watermark_rounded,
+                          screen: TutorialScreen(),
+                          ),
+                    ],
+                  ),
+                ),
+                Container(
+                  alignment: Alignment.center,
+                  width: width * 1.5,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      CustomCard(
+                        text: "Enviar Feedback",
+                        icon: Icons.comment_rounded,
+                        screen: FeedbackScreen(),
+                      ),
+                      CustomCard(
+                          text: "Profissionais",
+                          icon: Icons.contact_mail,
+                          screen: ProfissionalScreen(),
+                          ),
+                    ],
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CustomCard(
-                        text: "Historico",
-                        icon: Icons.window_outlined,
-                        screen: HistoryScreen(),
-                        ),
-                    CustomCard(
-                        text: "Tutorial",
-                        icon: Icons.branding_watermark_rounded,
-                        screen: TutorialScreen(),
-                        ),
-                  ],
-                ),
-              ),
-              Container(
-                alignment: Alignment.center,
-                width: width * 1.5,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    CustomCard(
-                      text: "Enviar Feedback",
-                      icon: Icons.comment_rounded,
-                      screen: FeedbackScreen(),
-                    ),
-                    CustomCard(
-                        text: "Profissionais",
-                        icon: Icons.contact_mail,
-                        screen: ProfissionalScreen(),
-                        ),
-                  ],
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(width: width * 0.04),
-                  Container(
-                      alignment: Alignment.centerRight,
-                      child: IconButton(
-                        icon: Icon(Icons.whatsapp_rounded,color: PaletteColors.primaryColor,size: 30),
-                        onPressed: () async{
-                          await launchUrl(Uri.parse('https://wa.me/5562996116494/'),mode: LaunchMode.externalApplication);
-                        },
-                      )),
-                  GestureDetector(
-                    onTap: ()async {
-                      await launchUrl(Uri.parse('https://wa.me/5562996116494/'),mode: LaunchMode.externalApplication);
-                    },
-                    child: Container(
+                    SizedBox(width: width * 0.04),
+                    Container(
+                        alignment: Alignment.centerRight,
+                        child: IconButton(
+                          icon: Icon(Icons.whatsapp_rounded,color: PaletteColors.primaryColor,size: 30),
+                          onPressed: () async{
+                            await launchUrl(Uri.parse('https://wa.me/5562996116494/'),mode: LaunchMode.externalApplication);
+                          },
+                        )),
+                    GestureDetector(
+                      onTap: ()async {
+                        await launchUrl(Uri.parse('https://wa.me/5562996116494/'),mode: LaunchMode.externalApplication);
+                      },
+                      child: Container(
 
-                      height: height * 0.06,
-                      alignment: Alignment.bottomCenter,
-                      child: TextCustom(
-                        text: 'Consultoria',
-                        size: 12.0,
-                        color: PaletteColors.grey,
-                        fontWeight: FontWeight.bold,
-                        textAlign: TextAlign.center,
+                        height: height * 0.06,
+                        alignment: Alignment.bottomCenter,
+                        child: TextCustom(
+                          text: 'Consultoria',
+                          size: 12.0,
+                          color: PaletteColors.grey,
+                          fontWeight: FontWeight.bold,
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                     ),
-                  ),
-                  Spacer(),
-                  Container(
-                      alignment: Alignment.centerRight,
+                    Spacer(),
+                    Container(
+                        alignment: Alignment.centerRight,
 
-                      child: IconButton(
-                        icon: Icon(Icons.logout,color: PaletteColors.primaryColor,size: 30),
-                        onPressed: ()=>FirebaseAuth.instance.signOut().then((value) =>
-                            Navigator.pushReplacementNamed(context, '/login')),
-                      )),
-                ],
-              ),
+                        child: IconButton(
+                          icon: Icon(Icons.logout,color: PaletteColors.primaryColor,size: 30),
+                          onPressed: ()=>FirebaseAuth.instance.signOut().then((value) =>
+                              Navigator.pushReplacementNamed(context, '/login')),
+                        )),
+                  ],
+                ),
 
-              SizedBox(height: height * 0.01,)
+                SizedBox(height: height * 0.01,)
 
-            ]),
+              ]),
+        ),
       ),
     );
   }

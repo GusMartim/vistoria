@@ -285,64 +285,43 @@ class _ConstructionStepState extends State<ConstructionStep> {
     double height = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      backgroundColor: PaletteColors.white,
-      appBar: AppBar(
-        backgroundColor: PaletteColors.bgColor,
-        iconTheme: IconThemeData(
-          color: PaletteColors.white,
-        ),
-        elevation: 0,
-        title: TextCustom(
-          text: 'Vistoria Nª ${title}',
-          size: 20.0,
-          color: PaletteColors.white,
-          fontWeight: FontWeight.bold,
-          textAlign: TextAlign.center,
-        ),
-        actions: <Widget>[
-          Ink(
-            decoration: ShapeDecoration(
-              color: PaletteColors.white,
-              shape: CircleBorder(),
-            ),
-            child: IconButton(
-                icon: Icon(
-                  Icons.camera_alt,
-                  color: PaletteColors.primaryColor,
-                ),
-                constraints: BoxConstraints(
-                    minHeight: 28, minWidth: 28, maxHeight: 28, maxWidth: 28),
-                iconSize: 24.0,
-                alignment: Alignment.center,
-                padding: EdgeInsets.all(0.0),
-                onPressed: () => AlertModel().alert(
-                    'Selecionar foto  da:',
-                    '',
-                    PaletteColors.primaryColor,
-                    PaletteColors.primaryColor,
-                    context, [
-                  Row(
-                    children: [
-                      SizedBox(width: width * 0.03),
-                      Container(
-                        width: width * 0.65,
-                        child: ButtonCustom(
-                          widthCustom: 0.65,
-                          heightCustom: 0.095,
-                          onPressed: () => _savePhotoCamera(),
-                          text: "Câmera",
-                          size: 20.0,
-                          colorButton: PaletteColors.primaryColor,
-                          colorText: PaletteColors.white,
-                          colorBorder: PaletteColors.primaryColor,
-                        ),
-                      ),
-                    ],
+        backgroundColor: PaletteColors.white,
+        appBar: AppBar(
+          backgroundColor: PaletteColors.bgColor,
+          iconTheme: IconThemeData(
+            color: PaletteColors.white,
+          ),
+          elevation: 0,
+          title: TextCustom(
+            text: 'Vistoria Nª ${title}',
+            size: 20.0,
+            color: PaletteColors.white,
+            fontWeight: FontWeight.bold,
+            textAlign: TextAlign.center,
+          ),
+          actions: <Widget>[
+            Ink(
+              decoration: ShapeDecoration(
+                color: PaletteColors.white,
+                shape: CircleBorder(),
+              ),
+              child: IconButton(
+                  icon: Icon(
+                    Icons.camera_alt,
+                    color: PaletteColors.primaryColor,
                   ),
-                  SizedBox(height: height * 0.055),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 75.0),
-                    child: Row(
+                  constraints: BoxConstraints(
+                      minHeight: 28, minWidth: 28, maxHeight: 28, maxWidth: 28),
+                  iconSize: 24.0,
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.all(0.0),
+                  onPressed: () => AlertModel().alert(
+                      'Selecionar foto  da:',
+                      '',
+                      PaletteColors.primaryColor,
+                      PaletteColors.primaryColor,
+                      context, [
+                    Row(
                       children: [
                         SizedBox(width: width * 0.03),
                         Container(
@@ -350,8 +329,8 @@ class _ConstructionStepState extends State<ConstructionStep> {
                           child: ButtonCustom(
                             widthCustom: 0.65,
                             heightCustom: 0.095,
-                            onPressed: () => selectImages(),
-                            text: "Galeria",
+                            onPressed: () => _savePhotoCamera(),
+                            text: "Câmera",
                             size: 20.0,
                             colorButton: PaletteColors.primaryColor,
                             colorText: PaletteColors.white,
@@ -360,1980 +339,2001 @@ class _ConstructionStepState extends State<ConstructionStep> {
                         ),
                       ],
                     ),
-                  ),
-                ])),
-          ),
-          SizedBox(width: width * 0.01),
-          Ink(
-            decoration: ShapeDecoration(
-              color: PaletteColors.white,
-              shape: CircleBorder(),
-            ),
-            child: IconButton(
-                icon: Icon(
-                  Icons.phone,
-                  color: PaletteColors.primaryColor,
-                ),
-                constraints: BoxConstraints(
-                    minHeight: 28, minWidth: 28, maxHeight: 28, maxWidth: 28),
-                iconSize: 24.0,
-                alignment: Alignment.center,
-                padding: EdgeInsets.all(0.0),
-                onPressed: ()async{
-                  if(_controllerTelefoneContato.text.isNotEmpty){
-
-                    var splitted = _controllerTelefoneContato.text.replaceAll('-','').replaceAll('(','').replaceAll(')','').trim();
-                    var url ="tel:+55$splitted";
-                    await launchUrl(Uri.parse(url));
-                  }else{
-                    showSnackBar(context, 'Preencha o campo Telefone',Colors.red);
-                  }
-                }
-
-            ),
-          ),
-          SizedBox(width: width * 0.03),
-        ],
-      ),
-      body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        physics: ScrollPhysics(),
-        child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 24, horizontal: 24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Row(
-                children: [
-                  Container(
-                    width: width * 0.5,
-                    child: TextCustom(
-                      text: "Contato",
-                      size: 14.0,
-                      color: PaletteColors.grey,
-                      fontWeight: FontWeight.bold,
+                    SizedBox(height: height * 0.055),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 75.0),
+                      child: Row(
+                        children: [
+                          SizedBox(width: width * 0.03),
+                          Container(
+                            width: width * 0.65,
+                            child: ButtonCustom(
+                              widthCustom: 0.65,
+                              heightCustom: 0.095,
+                              onPressed: () => selectImages(),
+                              text: "Galeria",
+                              size: 20.0,
+                              colorButton: PaletteColors.primaryColor,
+                              colorText: PaletteColors.white,
+                              colorBorder: PaletteColors.primaryColor,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-
-                ],
+                  ])),
+            ),
+            SizedBox(width: width * 0.01),
+            Ink(
+              decoration: ShapeDecoration(
+                color: PaletteColors.white,
+                shape: CircleBorder(),
               ),
-              Row(children: [
-                Container(
-                  child: InputRegister(
-                    icons: Icons.height,
-                    sizeIcon: 0.0,
-                    width: width * 0.75,
-                    controller: _controllerContato,
-                    hint: "",
-                    fonts: 14.0,
-                    keyboardType: TextInputType.text,
-                    colorBorder: PaletteColors.greyInput,
-                    background: PaletteColors.greyInput,
+              child: IconButton(
+                  icon: Icon(
+                    Icons.phone,
+                    color: PaletteColors.primaryColor,
                   ),
-                ),
+                  constraints: BoxConstraints(
+                      minHeight: 28, minWidth: 28, maxHeight: 28, maxWidth: 28),
+                  iconSize: 24.0,
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.all(0.0),
+                  onPressed: ()async{
+                    if(_controllerTelefoneContato.text.isNotEmpty){
 
-              ]),
-              SizedBox(height: height * 0.03),
-              Row(
-                children: [
-                  Container(
-                    width: width * 0.4,
-                    child: TextCustom(
-                        text: "Telefone",
+                      var splitted = _controllerTelefoneContato.text.replaceAll('-','').replaceAll('(','').replaceAll(')','').trim();
+                      var url ="tel:+55$splitted";
+                      await launchUrl(Uri.parse(url));
+                    }else{
+                      showSnackBar(context, 'Preencha o campo Telefone',Colors.red);
+                    }
+                  }
+
+              ),
+            ),
+            SizedBox(width: width * 0.03),
+          ],
+        ),
+        body: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          physics: ScrollPhysics(),
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 24, horizontal: 24),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      width: width * 0.5,
+                      child: TextCustom(
+                        text: "Contato",
                         size: 14.0,
                         color: PaletteColors.grey,
-                        fontWeight: FontWeight.bold),
-                  ),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
 
-                ],
-              ),
-              Row(children: [
-                Container(
-                  child: InputRegister(
-                    inputFormatters: [
-                      FilteringTextInputFormatter.digitsOnly,
-                      TelefoneInputFormatter()
-                    ],
-                    icons: Icons.height,
-                    sizeIcon: 0.0,
-                    width: width * 0.4,
-                    controller: _controllerTelefoneContato,
-                    hint: '',
-                    fonts: 14.0,
-                    keyboardType: TextInputType.number,
-                    colorBorder: PaletteColors.greyInput,
-                    background: PaletteColors.greyInput,
-                  ),
+                  ],
                 ),
-              ]),
-              SizedBox(height: height * 0.03),
-              Row(
-                children: [
-                  TextCustom(
-                    text: "Serviços",
-                    size: 16.0,
-                    color: PaletteColors.grey,
-                    fontWeight: FontWeight.bold,
-                    textAlign: TextAlign.start,
-                  ),
-                  Spacer(),
-                  TextCustom(
-                    text: "%",
-                    size: 16.0,
-                    color: PaletteColors.grey,
-                    fontWeight: FontWeight.bold,
-                    textAlign: TextAlign.end,
-                  ),
-                  SizedBox(width: width * 0.12),
-                ],
-              ),
-              SizedBox(
-                height: height * 0.01,
-              ),
-              Row(
-                children: [
+                Row(children: [
                   Container(
-                    width: width * 0.4,
-                    child: TextCustom(
-                      text: "Serviços Preliminares e Gerais",
-                      size: 16.0,
-                      color: PaletteColors.grey,
-                      fontWeight: FontWeight.normal,
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                  Spacer(),
-                  Ink(
-                    decoration: ShapeDecoration(
-                      color: PaletteColors.midGrey,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(10),
-                              bottomLeft: Radius.circular(10))),
-                    ),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.remove,
-                        color: PaletteColors.grey,
-                      ),
-                      constraints: BoxConstraints(
-                          minHeight: 28,
-                          minWidth: 28,
-                          maxHeight: 28,
-                          maxWidth: 28),
-                      iconSize: 16.0,
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        setState(() {
-                          if (nServices > 0) {
-                            nServices = nServices - 5;
-                            SServices = "$nServices";
-                          }
-                        });
-                      },
-                    ),
-                  ),
-                  Container(
-                      alignment: Alignment.center,
-                      width: width * 0.12,
-                      height: 30,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(2.0)),
-                      child: TextCustom(
-                        text: SServices,
-                        color: PaletteColors.grey,
-                        textAlign: TextAlign.center,
-                      )
-                  ),
-                  Ink(
-                    decoration: ShapeDecoration(
-                      color: PaletteColors.midGrey,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(10),
-                              bottomRight: Radius.circular(10))),
-                    ),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.add,
-                        color: PaletteColors.grey,
-                      ),
-                      constraints: BoxConstraints(
-                          minHeight: 28,
-                          minWidth: 28,
-                          maxHeight: 28,
-                          maxWidth: 28),
-                      iconSize: 16.0,
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        setState(() {
-                          if (nServices >= 0 && nServices <= 75) {
-                            nServices = nServices + 25;
-                            SServices = "$nServices";
-                          }
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: height * 0.01,
-              ),
-              Row(
-                children: [
-                  TextCustom(
-                    text: "Infraestrutura",
-                    size: 16.0,
-                    color: PaletteColors.grey,
-                    fontWeight: FontWeight.normal,
-                    textAlign: TextAlign.start,
-                  ),
-                  Spacer(),
-                  Ink(
-                    decoration: ShapeDecoration(
-                      color: PaletteColors.midGrey,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(10),
-                              bottomLeft: Radius.circular(10))),
-                    ),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.remove,
-                        color: PaletteColors.grey,
-                      ),
-                      constraints: BoxConstraints(
-                          minHeight: 28,
-                          minWidth: 28,
-                          maxHeight: 28,
-                          maxWidth: 28),
-                      iconSize: 16.0,
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        setState(() {
-                          if (nInfra > 0) {
-                            nInfra = nInfra - 5;
-                            SInfra = "$nInfra";
-                          }
-                        });
-                      },
-                    ),
-                  ),
-                  Container(
-                      alignment: Alignment.center,
-                      width: width * 0.12,
-                      height: 30,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(2.0)),
-                      child: TextCustom(
-                        text: SInfra,
-                        color: PaletteColors.grey,
-                        textAlign: TextAlign.center,
-                      )),
-                  Ink(
-                    decoration: ShapeDecoration(
-                      color: PaletteColors.midGrey,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(10),
-                              bottomRight: Radius.circular(10))),
-                    ),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.add,
-                        color: PaletteColors.grey,
-                      ),
-                      constraints: BoxConstraints(
-                          minHeight: 28,
-                          minWidth: 28,
-                          maxHeight: 28,
-                          maxWidth: 28),
-                      iconSize: 16.0,
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        setState(() {
-                          if (nInfra >= 0 && nInfra <= 75) {
-                            nInfra = nInfra + 25;
-
-                            SInfra = "$nInfra";
-                          }
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: height * 0.01,
-              ),
-              Row(
-                children: [
-                  TextCustom(
-                    text: "Supra-estrutura",
-                    size: 16.0,
-                    color: PaletteColors.grey,
-                    fontWeight: FontWeight.normal,
-                    textAlign: TextAlign.start,
-                  ),
-                  Spacer(),
-                  Ink(
-                    decoration: ShapeDecoration(
-                      color: PaletteColors.midGrey,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(10),
-                              bottomLeft: Radius.circular(10))),
-                    ),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.remove,
-                        color: PaletteColors.grey,
-                      ),
-                      constraints: BoxConstraints(
-                          minHeight: 28,
-                          minWidth: 28,
-                          maxHeight: 28,
-                          maxWidth: 28),
-                      iconSize: 16.0,
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        setState(() {
-                          if (nSupra > 0) {
-                            nSupra = nSupra - 5;
-                            SSupra = "$nSupra";
-                          }
-                        });
-                      },
-                    ),
-                  ),
-                  Container(
-                      alignment: Alignment.center,
-                      width: width * 0.12,
-                      height: 30,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(2.0)),
-                      child: TextCustom(
-                        text: SSupra,
-                        color: PaletteColors.grey,
-                        textAlign: TextAlign.center,
-                      )),
-                  Ink(
-                    decoration: ShapeDecoration(
-                      color: PaletteColors.midGrey,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(10),
-                              bottomRight: Radius.circular(10))),
-                    ),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.add,
-                        color: PaletteColors.grey,
-                      ),
-                      constraints: BoxConstraints(
-                          minHeight: 28,
-                          minWidth: 28,
-                          maxHeight: 28,
-                          maxWidth: 28),
-                      iconSize: 16.0,
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        setState(() {
-                          if (nSupra >= 0 && nSupra  <= 75) {
-                            nSupra = nSupra + 25;
-                            SSupra = "$nSupra";
-                          }
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: height * 0.01,
-              ),
-              Row(
-                children: [
-                  TextCustom(
-                    text: "Paredes e painéis",
-                    size: 16.0,
-                    color: PaletteColors.grey,
-                    fontWeight: FontWeight.normal,
-                    textAlign: TextAlign.start,
-                  ),
-                  Spacer(),
-                  Ink(
-                    decoration: ShapeDecoration(
-                      color: PaletteColors.midGrey,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(10),
-                              bottomLeft: Radius.circular(10))),
-                    ),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.remove,
-                        color: PaletteColors.grey,
-                      ),
-                      constraints: BoxConstraints(
-                          minHeight: 28,
-                          minWidth: 28,
-                          maxHeight: 28,
-                          maxWidth: 28),
-                      iconSize: 16.0,
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        setState(() {
-                          if (nWalls > 0) {
-                            nWalls = nWalls - 5;
-                            SWalls = '$nWalls';
-                          }
-                        });
-                      },
-                    ),
-                  ),
-                  Container(
-                      alignment: Alignment.center,
-                      width: width * 0.12,
-                      height: 30,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(2.0)),
-                      child: TextCustom(
-                        text: SWalls,
-                        color: PaletteColors.grey,
-                        textAlign: TextAlign.center,
-                      )),
-                  Ink(
-                    decoration: ShapeDecoration(
-                      color: PaletteColors.midGrey,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(10),
-                              bottomRight: Radius.circular(10))),
-                    ),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.add,
-                        color: PaletteColors.grey,
-                      ),
-                      constraints: BoxConstraints(
-                          minHeight: 28,
-                          minWidth: 28,
-                          maxHeight: 28,
-                          maxWidth: 28),
-                      iconSize: 16.0,
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        setState(() {
-                          if (nWalls >= 0 && nWalls <= 75) {
-                            nWalls = nWalls + 25;
-                            SWalls = '$nWalls';
-                          }
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: height * 0.01,
-              ),
-              Row(
-                children: [
-                  TextCustom(
-                    text: "Esquadrias",
-                    size: 16.0,
-                    color: PaletteColors.grey,
-                    fontWeight: FontWeight.normal,
-                    textAlign: TextAlign.start,
-                  ),
-                  Spacer(),
-                  Ink(
-                    decoration: ShapeDecoration(
-                      color: PaletteColors.midGrey,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(10),
-                              bottomLeft: Radius.circular(10))),
-                    ),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.remove,
-                        color: PaletteColors.grey,
-                      ),
-                      constraints: BoxConstraints(
-                          minHeight: 28,
-                          minWidth: 28,
-                          maxHeight: 28,
-                          maxWidth: 28),
-                      iconSize: 16.0,
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        setState(() {
-                          if (nFrames > 0) {
-                            nFrames = nFrames - 5;
-                            SFrames = "$nFrames";
-                          }
-                        });
-                      },
-                    ),
-                  ),
-                  Container(
-                      alignment: Alignment.center,
-                      width: width * 0.12,
-                      height: 30,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(2.0)),
-                      child: TextCustom(
-                        text: SFrames,
-                        color: PaletteColors.grey,
-                        textAlign: TextAlign.center,
-                      )),
-                  Ink(
-                    decoration: ShapeDecoration(
-                      color: PaletteColors.midGrey,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(10),
-                              bottomRight: Radius.circular(10))),
-                    ),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.add,
-                        color: PaletteColors.grey,
-                      ),
-                      constraints: BoxConstraints(
-                          minHeight: 28,
-                          minWidth: 28,
-                          maxHeight: 28,
-                          maxWidth: 28),
-                      iconSize: 16.0,
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        setState(() {
-                          if (nFrames >= 0 && nFrames  <= 75) {
-                            nFrames = nFrames + 25;
-                            SFrames = '$nFrames';
-                          }
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: height * 0.01,
-              ),
-              Row(
-                children: [
-                  TextCustom(
-                    text: "Vidros e plásticos",
-                    size: 16.0,
-                    color: PaletteColors.grey,
-                    fontWeight: FontWeight.normal,
-                    textAlign: TextAlign.start,
-                  ),
-                  Spacer(),
-                  Ink(
-                    decoration: ShapeDecoration(
-                      color: PaletteColors.midGrey,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(10),
-                              bottomLeft: Radius.circular(10))),
-                    ),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.remove,
-                        color: PaletteColors.grey,
-                      ),
-                      constraints: BoxConstraints(
-                          minHeight: 28,
-                          minWidth: 28,
-                          maxHeight: 28,
-                          maxWidth: 28),
-                      iconSize: 16.0,
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        setState(() {
-                          if (nGlasses > 0) {
-                            nGlasses = nGlasses - 5;
-                            SGlasses = "$nGlasses";
-                          }
-                        });
-                      },
-                    ),
-                  ),
-                  Container(
-                      alignment: Alignment.center,
-                      width: width * 0.12,
-                      height: 30,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(2.0)),
-                      child: TextCustom(
-                        text: SGlasses,
-                        color: PaletteColors.grey,
-                        textAlign: TextAlign.center,
-                      )),
-                  Ink(
-                    decoration: ShapeDecoration(
-                      color: PaletteColors.midGrey,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(10),
-                              bottomRight: Radius.circular(10))),
-                    ),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.add,
-                        color: PaletteColors.grey,
-                      ),
-                      constraints: BoxConstraints(
-                          minHeight: 28,
-                          minWidth: 28,
-                          maxHeight: 28,
-                          maxWidth: 28),
-                      iconSize: 16.0,
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        setState(() {
-                          if (nGlasses >= 0 && nGlasses  <= 75) {
-                            nGlasses = nGlasses + 25;
-                            SGlasses = "$nGlasses";
-                          }
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: height * 0.01,
-              ), 
-              Row(
-                children: [
-                  Container(
-                  
-                    child: TextCustom(
-                      text: "Coberturas",
-                      size: 16.0,
-                      color: PaletteColors.grey,
-                      fontWeight: FontWeight.normal,
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                  Spacer(),
-                  Ink(
-                    decoration: ShapeDecoration(
-                      color: PaletteColors.midGrey,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(10),
-                              bottomLeft: Radius.circular(10))),
-                    ),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.remove,
-                        color: PaletteColors.grey,
-                      ),
-                      constraints: BoxConstraints(
-                          minHeight: 28,
-                          minWidth: 28,
-                          maxHeight: 28,
-                          maxWidth: 28),
-                      iconSize: 16.0,
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        setState(() {
-                          if (nCeiling > 0) {
-                            nCeiling = nCeiling - 5;
-                            SCeiling = "$nCeiling";
-                          }
-                        });
-                      },
-                    ),
-                  ),
-                  Container(
-                      alignment: Alignment.center,
-                      width: width * 0.12,
-                      height: 30,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(2.0)),
-                      child: TextCustom(
-                        text: SCeiling,
-                        color: PaletteColors.grey,
-                        textAlign: TextAlign.center,
-                      )),
-                  Ink(
-                    decoration: ShapeDecoration(
-                      color: PaletteColors.midGrey,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(10),
-                              bottomRight: Radius.circular(10))),
-                    ),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.add,
-                        color: PaletteColors.grey,
-                      ),
-                      constraints: BoxConstraints(
-                          minHeight: 28,
-                          minWidth: 28,
-                          maxHeight: 28,
-                          maxWidth: 28),
-                      iconSize: 16.0,
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        setState(() {
-                          if (nCeiling >= 0 && nCeiling  <= 75) {
-                            nCeiling = nCeiling + 25;
-                            SCeiling = "$nCeiling";
-                          }
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: height * 0.01,
-              ), 
-              Row(
-                children: [
-                  TextCustom(
-                    text: "Impermeabilizações",
-                    size: 16.0,
-                    color: PaletteColors.grey,
-                    fontWeight: FontWeight.normal,
-                    textAlign: TextAlign.start,
-                  ),
-                  Spacer(),
-                  Ink(
-                    decoration: ShapeDecoration(
-                      color: PaletteColors.midGrey,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(10),
-                              bottomLeft: Radius.circular(10))),
-                    ),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.remove,
-                        color: PaletteColors.grey,
-                      ),
-                      constraints: BoxConstraints(
-                          minHeight: 28,
-                          minWidth: 28,
-                          maxHeight: 28,
-                          maxWidth: 28),
-                      iconSize: 16.0,
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        setState(() {
-                          if (nWaterProof > 0) {
-                            nWaterProof = nWaterProof - 5;
-                            SWaterProof = "$nWaterProof";
-                          }
-                        });
-                      },
-                    ),
-                  ),
-                  Container(
-                      alignment: Alignment.center,
-                      width: width * 0.12,
-                      height: 30,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(2.0)),
-                      child: TextCustom(
-                        text: SWaterProof,
-                        color: PaletteColors.grey,
-                        textAlign: TextAlign.center,
-                      )),
-                  Ink(
-                    decoration: ShapeDecoration(
-                      color: PaletteColors.midGrey,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(10),
-                              bottomRight: Radius.circular(10))),
-                    ),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.add,
-                        color: PaletteColors.grey,
-                      ),
-                      constraints: BoxConstraints(
-                          minHeight: 28,
-                          minWidth: 28,
-                          maxHeight: 28,
-                          maxWidth: 28),
-                      iconSize: 16.0,
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        setState(() {
-                          if (nWaterProof >= 0 && nWaterProof <= 75) {
-                            nWaterProof = nWaterProof + 25;
-                            SWaterProof = "$nWaterProof";
-                          }
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: height * 0.01,
-              ), 
-              Row(
-                children: [
-                  Container(
-                    width: width * 0.4,
-                    child: TextCustom(
-                      text: "Revestimentos Internos",
-                      size: 16.0,
-                      color: PaletteColors.grey,
-                      fontWeight: FontWeight.normal,
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-
-                  Spacer(),
-                  Ink(
-                    decoration: ShapeDecoration(
-                      color: PaletteColors.midGrey,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(10),
-                              bottomLeft: Radius.circular(10))),
-                    ),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.remove,
-                        color: PaletteColors.grey,
-                      ),
-                      constraints: BoxConstraints(
-                          minHeight: 28,
-                          minWidth: 28,
-                          maxHeight: 28,
-                          maxWidth: 28),
-                      iconSize: 16.0,
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        setState(() {
-                          if (nIntern > 0) {
-                            nIntern = nIntern - 5;
-                            SIntern = "$nIntern";
-                          }
-                        });
-                      },
-                    ),
-                  ),
-                  Container(
-                      alignment: Alignment.center,
-                      width: width * 0.12,
-                      height: 30,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(2.0)),
-                      child: TextCustom(
-                        text: SIntern,
-                        color: PaletteColors.grey,
-                        textAlign: TextAlign.center,
-                      )),
-                  Ink(
-                    decoration: ShapeDecoration(
-                      color: PaletteColors.midGrey,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(10),
-                              bottomRight: Radius.circular(10))),
-                    ),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.add,
-                        color: PaletteColors.grey,
-                      ),
-                      constraints: BoxConstraints(
-                          minHeight: 28,
-                          minWidth: 28,
-                          maxHeight: 28,
-                          maxWidth: 28),
-                      iconSize: 16.0,
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        setState(() {
-                          if (nIntern >= 0 && nIntern <= 75) {
-                            nIntern = nIntern + 25;
-                            SIntern = "$nIntern";
-                          }
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: height * 0.01,
-              ),
-              Row(
-                children: [
-                  Container(
-
-                    child: TextCustom(
-                      text: "Forros",
-                      size: 16.0,
-                      color: PaletteColors.grey,
-                      fontWeight: FontWeight.normal,
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                  Spacer(),
-                  Ink(
-                    decoration: ShapeDecoration(
-                      color: PaletteColors.midGrey,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(10),
-                              bottomLeft: Radius.circular(10))),
-                    ),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.remove,
-                        color: PaletteColors.grey,
-                      ),
-                      constraints: BoxConstraints(
-                          minHeight: 28,
-                          minWidth: 28,
-                          maxHeight: 28,
-                          maxWidth: 28),
-                      iconSize: 16.0,
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        setState(() {
-                          if (nLinings > 0) {
-                            nLinings = nLinings - 5;
-                            SLinings = "$nLinings";
-                          }
-                        });
-                      },
-                    ),
-                  ),
-                  Container(
-                      alignment: Alignment.center,
-                      width: width * 0.12,
-                      height: 30,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(2.0)),
-                      child: TextCustom(
-                        text: SLinings,
-                        color: PaletteColors.grey,
-                        textAlign: TextAlign.center,
-                      )),
-                  Ink(
-                    decoration: ShapeDecoration(
-                      color: PaletteColors.midGrey,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(10),
-                              bottomRight: Radius.circular(10))),
-                    ),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.add,
-                        color: PaletteColors.grey,
-                      ),
-                      constraints: BoxConstraints(
-                          minHeight: 28,
-                          minWidth: 28,
-                          maxHeight: 28,
-                          maxWidth: 28),
-                      iconSize: 16.0,
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        setState(() {
-                          if (nLinings >= 0 && nLinings <= 75) {
-                            nLinings = nLinings + 25;
-                            SLinings = "$nLinings";
-                          }
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: height * 0.01,
-              ),
-              Row(
-                children: [
-                  Container(
-                    width: width * 0.4,
-                    child: TextCustom(
-                      text: "Revestimentos externos",
-                      size: 16.0,
-                      color: PaletteColors.grey,
-                      fontWeight: FontWeight.normal,
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                  Spacer(),
-                  Ink(
-                    decoration: ShapeDecoration(
-                      color: PaletteColors.midGrey,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(10),
-                              bottomLeft: Radius.circular(10))),
-                    ),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.remove,
-                        color: PaletteColors.grey,
-                      ),
-                      constraints: BoxConstraints(
-                          minHeight: 28,
-                          minWidth: 28,
-                          maxHeight: 28,
-                          maxWidth: 28),
-                      iconSize: 16.0,
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        setState(() {
-                          if (nExtern > 0) {
-                            nExtern =
-                                nExtern - 5;
-                            SExtern =
-                            "$nExtern";
-                          }
-                        });
-                      },
-                    ),
-                  ),
-                  Container(
-                      alignment: Alignment.center,
-                      width: width * 0.12,
-                      height: 30,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(2.0)),
-                      child: TextCustom(
-                        text: SExtern,
-                        color: PaletteColors.grey,
-                        textAlign: TextAlign.center,
-                      )),
-                  Ink(
-                    decoration: ShapeDecoration(
-                      color: PaletteColors.midGrey,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(10),
-                              bottomRight: Radius.circular(10))),
-                    ),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.add,
-                        color: PaletteColors.grey,
-                      ),
-                      constraints: BoxConstraints(
-                          minHeight: 28,
-                          minWidth: 28,
-                          maxHeight: 28,
-                          maxWidth: 28),
-                      iconSize: 16.0,
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        setState(() {
-                          if (nExtern >= 0 && nExtern <= 75) {
-                            nExtern =
-                                nExtern + 25;
-                            SExtern =
-                            "$nExtern";
-                          }
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: height * 0.01,
-              ), 
-              Row(
-                children: [
-                  Container(
-                    width: width * 0.4,
-                    child: TextCustom(
-                      text: "Pintura",
-                      size: 16.0,
-                      color: PaletteColors.grey,
-                      fontWeight: FontWeight.normal,
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                  Spacer(),
-                  Ink(
-                    decoration: ShapeDecoration(
-                      color: PaletteColors.midGrey,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(10),
-                              bottomLeft: Radius.circular(10))),
-                    ),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.remove,
-                        color: PaletteColors.grey,
-                      ),
-                      constraints: BoxConstraints(
-                          minHeight: 28,
-                          minWidth: 28,
-                          maxHeight: 28,
-                          maxWidth: 28),
-                      iconSize: 16.0,
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        setState(() {
-                          if (nPaint > 0) {
-                            nPaint = nPaint - 5;
-                            SPaint = "$nPaint";
-                          }
-                        });
-                      },
-                    ),
-                  ),
-                  Container(
-                      alignment: Alignment.center,
-                      width: width * 0.12,
-                      height: 30,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(2.0)),
-                      child: TextCustom(
-                        text: SPaint,
-                        color: PaletteColors.grey,
-                        textAlign: TextAlign.center,
-                      )),
-                  Ink(
-                    decoration: ShapeDecoration(
-                      color: PaletteColors.midGrey,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(10),
-                              bottomRight: Radius.circular(10))),
-                    ),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.add,
-                        color: PaletteColors.grey,
-                      ),
-                      constraints: BoxConstraints(
-                          minHeight: 28,
-                          minWidth: 28,
-                          maxHeight: 28,
-                          maxWidth: 28),
-                      iconSize: 16.0,
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        setState(() {
-                          if (nPaint >= 0 && nPaint  <= 75) {
-                            nPaint = nPaint + 25;
-                            SPaint = "$nPaint";
-                          }
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: height * 0.01,
-              ), 
-              Row(
-                children: [
-                  TextCustom(
-                    text: "Pisos",
-                    size: 16.0,
-                    color: PaletteColors.grey,
-                    fontWeight: FontWeight.normal,
-                    textAlign: TextAlign.start,
-                  ),
-                  Spacer(),
-                  Ink(
-                    decoration: ShapeDecoration(
-                      color: PaletteColors.midGrey,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(10),
-                              bottomLeft: Radius.circular(10))),
-                    ),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.remove,
-                        color: PaletteColors.grey,
-                      ),
-                      constraints: BoxConstraints(
-                          minHeight: 28,
-                          minWidth: 28,
-                          maxHeight: 28,
-                          maxWidth: 28),
-                      iconSize: 16.0,
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        setState(() {
-                          if (nFloors > 0) {
-                            nFloors = nFloors - 5;
-                            SFloors = "$nFloors";
-                          }
-                        });
-                      },
-                    ),
-                  ),
-                  Container(
-                      alignment: Alignment.center,
-                      width: width * 0.12,
-                      height: 30,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(2.0)),
-                      child: TextCustom(
-                        text: SFloors,
-                        color: PaletteColors.grey,
-                        textAlign: TextAlign.center,
-                      )),
-                  Ink(
-                    decoration: ShapeDecoration(
-                      color: PaletteColors.midGrey,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(10),
-                              bottomRight: Radius.circular(10))),
-                    ),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.add,
-                        color: PaletteColors.grey,
-                      ),
-                      constraints: BoxConstraints(
-                          minHeight: 28,
-                          minWidth: 28,
-                          maxHeight: 28,
-                          maxWidth: 28),
-                      iconSize: 16.0,
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        setState(() {
-                          if (nFloors >= 0 && nFloors <= 75) {
-                            nFloors = nFloors + 25;
-                            SFloors = "$nFloors";
-                          }
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: height * 0.01,
-              ),
-              Row(
-                children: [
-                  TextCustom(
-                    text: "Acabamentos",
-                    size: 16.0,
-                    color: PaletteColors.grey,
-                    fontWeight: FontWeight.normal,
-                    textAlign: TextAlign.start,
-                  ),
-                  Spacer(),
-                  Ink(
-                    decoration: ShapeDecoration(
-                      color: PaletteColors.midGrey,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(10),
-                              bottomLeft: Radius.circular(10))),
-                    ),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.remove,
-                        color: PaletteColors.grey,
-                      ),
-                      constraints: BoxConstraints(
-                          minHeight: 28,
-                          minWidth: 28,
-                          maxHeight: 28,
-                          maxWidth: 28),
-                      iconSize: 16.0,
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        setState(() {
-                          if (nFinishes > 0) {
-                            nFinishes = nFinishes - 5;
-                            SFinishes = "$nFinishes";
-                          }
-                        });
-                      },
-                    ),
-                  ),
-                  Container(
-                      alignment: Alignment.center,
-                      width: width * 0.12,
-                      height: 30,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(2.0)),
-                      child: TextCustom(
-                        text: SFinishes,
-                        color: PaletteColors.grey,
-                        textAlign: TextAlign.center,
-                      )),
-                  Ink(
-                    decoration: ShapeDecoration(
-                      color: PaletteColors.midGrey,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(10),
-                              bottomRight: Radius.circular(10))),
-                    ),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.add,
-                        color: PaletteColors.grey,
-                      ),
-                      constraints: BoxConstraints(
-                          minHeight: 28,
-                          minWidth: 28,
-                          maxHeight: 28,
-                          maxWidth: 28),
-                      iconSize: 16.0,
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        setState(() {
-                          if (nFinishes >= 0 && nFinishes <= 75) {
-                            nFinishes = nFinishes + 25;
-                            SFinishes = "$nFinishes";
-                          }
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: height * 0.01,
-              ), 
-              Row(
-                children: [
-                  Container(
-                    width: width * 0.4,
-                    child: TextCustom(
-                      text: "Inst. elétricas e telefônicas",
-                      size: 16.0,
-                      color: PaletteColors.grey,
-                      fontWeight: FontWeight.normal,
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                  Spacer(),
-                  Ink(
-                    decoration: ShapeDecoration(
-                      color: PaletteColors.midGrey,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(10),
-                              bottomLeft: Radius.circular(10))),
-                    ),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.remove,
-                        color: PaletteColors.grey,
-                      ),
-                      constraints: BoxConstraints(
-                          minHeight: 28,
-                          minWidth: 28,
-                          maxHeight: 28,
-                          maxWidth: 28),
-                      iconSize: 16.0,
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        setState(() {
-                          if (nEletric > 0) {
-                            nEletric = nEletric - 5;
-                            SEletric = "$nEletric";
-                          }
-                        });
-                      },
-                    ),
-                  ),
-                  Container(
-                      alignment: Alignment.center,
-                      width: width * 0.12,
-                      height: 30,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(2.0)),
-                      child: TextCustom(
-                        text: SEletric,
-                        color: PaletteColors.grey,
-                        textAlign: TextAlign.center,
-                      )),
-                  Ink(
-                    decoration: ShapeDecoration(
-                      color: PaletteColors.midGrey,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(10),
-                              bottomRight: Radius.circular(10))),
-                    ),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.add,
-                        color: PaletteColors.grey,
-                      ),
-                      constraints: BoxConstraints(
-                          minHeight: 28,
-                          minWidth: 28,
-                          maxHeight: 28,
-                          maxWidth: 28),
-                      iconSize: 16.0,
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        setState(() {
-                          if (nEletric >= 0 && nEletric <= 75) {
-                            nEletric = nEletric + 25;
-                            SEletric = "$nEletric";
-                          }
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: height * 0.01,
-              ),
-              Row(
-                children: [
-                  Container(
-                    width: width * 0.4,
-                    child: TextCustom(
-                      text: "Inst. hidráulicas",
-                      size: 16.0,
-                      color: PaletteColors.grey,
-                      fontWeight: FontWeight.normal,
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                  Spacer(),
-                  Ink(
-                    decoration: ShapeDecoration(
-                      color: PaletteColors.midGrey,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(10),
-                              bottomLeft: Radius.circular(10))),
-                    ),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.remove,
-                        color: PaletteColors.grey,
-                      ),
-                      constraints: BoxConstraints(
-                          minHeight: 28,
-                          minWidth: 28,
-                          maxHeight: 28,
-                          maxWidth: 28),
-                      iconSize: 16.0,
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        setState(() {
-                          if (nHidro > 0) {
-                            nHidro = nHidro - 5;
-                            SHidro = "$nHidro";
-                          }
-                        });
-                      },
-                    ),
-                  ),
-                  Container(
-                      alignment: Alignment.center,
-                      width: width * 0.12,
-                      height: 30,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(2.0)),
-                      child: TextCustom(
-                        text: SHidro,
-                        color: PaletteColors.grey,
-                        textAlign: TextAlign.center,
-                      )),
-                  Ink(
-                    decoration: ShapeDecoration(
-                      color: PaletteColors.midGrey,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(10),
-                              bottomRight: Radius.circular(10))),
-                    ),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.add,
-                        color: PaletteColors.grey,
-                      ),
-                      constraints: BoxConstraints(
-                          minHeight: 28,
-                          minWidth: 28,
-                          maxHeight: 28,
-                          maxWidth: 28),
-                      iconSize: 16.0,
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        setState(() {
-                          if (nHidro >= 0 && nHidro <= 75) {
-                            nHidro = nHidro + 25;
-                            SHidro = "$nHidro";
-                          }
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: height * 0.01,
-              ),
-              Row(
-                children: [
-                  Container(
-                    width: width * 0.4,
-                    child: TextCustom(
-                      text: "Inst. esgoto e águas pluviais",
-                      size: 16.0,
-                      color: PaletteColors.grey,
-                      fontWeight: FontWeight.normal,
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                  Spacer(),
-                  Ink(
-                    decoration: ShapeDecoration(
-                      color: PaletteColors.midGrey,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(10),
-                              bottomLeft: Radius.circular(10))),
-                    ),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.remove,
-                        color: PaletteColors.grey,
-                      ),
-                      constraints: BoxConstraints(
-                          minHeight: 28,
-                          minWidth: 28,
-                          maxHeight: 28,
-                          maxWidth: 28),
-                      iconSize: 16.0,
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        setState(() {
-                          if (nSewer > 0) {
-                            nSewer = nSewer - 5;
-                            SSewer = "$nSewer";
-                          }
-                        });
-                      },
-                    ),
-                  ),
-                  Container(
-                      alignment: Alignment.center,
-                      width: width * 0.12,
-                      height: 30,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(2.0)),
-                      child: TextCustom(
-                        text: SSewer,
-                        color: PaletteColors.grey,
-                        textAlign: TextAlign.center,
-                      )),
-                  Ink(
-                    decoration: ShapeDecoration(
-                      color: PaletteColors.midGrey,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(10),
-                              bottomRight: Radius.circular(10))),
-                    ),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.add,
-                        color: PaletteColors.grey,
-                      ),
-                      constraints: BoxConstraints(
-                          minHeight: 28,
-                          minWidth: 28,
-                          maxHeight: 28,
-                          maxWidth: 28),
-                      iconSize: 16.0,
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        setState(() {
-                          if (nSewer >= 0 && nSewer <= 75) {
-                            nSewer = nSewer + 25;
-                            SSewer = "$nSewer";
-                          }
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: height * 0.01,
-              ),
-              Row(
-                children: [
-                  Container(
-
-                    child: TextCustom(
-                      text: "Louças e metais",
-                      size: 16.0,
-                      color: PaletteColors.grey,
-                      fontWeight: FontWeight.normal,
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                  Spacer(),
-                  Ink(
-                    decoration: ShapeDecoration(
-                      color: PaletteColors.midGrey,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(10),
-                              bottomLeft: Radius.circular(10))),
-                    ),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.remove,
-                        color: PaletteColors.grey,
-                      ),
-                      constraints: BoxConstraints(
-                          minHeight: 28,
-                          minWidth: 28,
-                          maxHeight: 28,
-                          maxWidth: 28),
-                      iconSize: 16.0,
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        setState(() {
-                          if (nSlabs > 0) {
-                            nSlabs = nSlabs - 5;
-                            SSlabs = "$nSlabs";
-                          }
-                        });
-                      },
-                    ),
-                  ),
-                  Container(
-                      alignment: Alignment.center,
-                      width: width * 0.12,
-                      height: 30,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(2.0)),
-                      child: TextCustom(
-                        text: SSlabs,
-                        color: PaletteColors.grey,
-                        textAlign: TextAlign.center,
-                      )),
-                  Ink(
-                    decoration: ShapeDecoration(
-                      color: PaletteColors.midGrey,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(10),
-                              bottomRight: Radius.circular(10))),
-                    ),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.add,
-                        color: PaletteColors.grey,
-                      ),
-                      constraints: BoxConstraints(
-                          minHeight: 28,
-                          minWidth: 28,
-                          maxHeight: 28,
-                          maxWidth: 28),
-                      iconSize: 16.0,
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        setState(() {
-                          if (nSlabs >= 0 && nSlabs <= 75) {
-                            nSlabs = nSlabs + 25;
-                            SSlabs = "$nSlabs";
-                          }
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: height * 0.01,
-              ),
-              Row(
-                children: [
-                  Container(
-
-                    child: TextCustom(
-                      text: "Complementos",
-                      size: 16.0,
-                      color: PaletteColors.grey,
-                      fontWeight: FontWeight.normal,
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                  Spacer(),
-                  Ink(
-                    decoration: ShapeDecoration(
-                      color: PaletteColors.midGrey,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(10),
-                              bottomLeft: Radius.circular(10))),
-                    ),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.remove,
-                        color: PaletteColors.grey,
-                      ),
-                      constraints: BoxConstraints(
-                          minHeight: 28,
-                          minWidth: 28,
-                          maxHeight: 28,
-                          maxWidth: 28),
-                      iconSize: 16.0,
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        setState(() {
-                          if (nComplements > 0) {
-                            nComplements = nComplements - 5;
-                            SComplements = "$nComplements";
-                          }
-                        });
-                      },
-                    ),
-                  ),
-                  Container(
-                      alignment: Alignment.center,
-                      width: width * 0.12,
-                      height: 30,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(2.0)),
-                      child: TextCustom(
-                        text: SComplements,
-                        color: PaletteColors.grey,
-                        textAlign: TextAlign.center,
-                      )),
-                  Ink(
-                    decoration: ShapeDecoration(
-                      color: PaletteColors.midGrey,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(10),
-                              bottomRight: Radius.circular(10))),
-                    ),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.add,
-                        color: PaletteColors.grey,
-                      ),
-                      constraints: BoxConstraints(
-                          minHeight: 28,
-                          minWidth: 28,
-                          maxHeight: 28,
-                          maxWidth: 28),
-                      iconSize: 16.0,
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        setState(() {
-                          if (nComplements >= 0 && nComplements <= 75) {
-                            nComplements = nComplements + 25;
-                            SComplements = "$nComplements";
-                          }
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: height * 0.01,
-              ),
-              Row(
-                children: [
-                  Container(
-
-                    child: TextCustom(
-                      text: "Outros serviços",
-                      size: 16.0,
-                      color: PaletteColors.grey,
-                      fontWeight: FontWeight.normal,
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                  Spacer(),
-                  Ink(
-                    decoration: ShapeDecoration(
-                      color: PaletteColors.midGrey,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(10),
-                              bottomLeft: Radius.circular(10))),
-                    ),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.remove,
-                        color: PaletteColors.grey,
-                      ),
-                      constraints: BoxConstraints(
-                          minHeight: 28,
-                          minWidth: 28,
-                          maxHeight: 28,
-                          maxWidth: 28),
-                      iconSize: 16.0,
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        setState(() {
-                          if (nOthers > 0) {
-                            nOthers = nOthers - 5;
-                            SOthers = "$nOthers";
-                          }
-                        });
-                      },
-                    ),
-                  ),
-                  Container(
-                      alignment: Alignment.center,
-                      width: width * 0.12,
-                      height: 30,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(2.0)),
-                      child: TextCustom(
-                        text: SOthers,
-                        color: PaletteColors.grey,
-                        textAlign: TextAlign.center,
-                      )),
-                  Ink(
-                    decoration: ShapeDecoration(
-                      color: PaletteColors.midGrey,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(10),
-                              bottomRight: Radius.circular(10))),
-                    ),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.add,
-                        color: PaletteColors.grey,
-                      ),
-                      constraints: BoxConstraints(
-                          minHeight: 28,
-                          minWidth: 28,
-                          maxHeight: 28,
-                          maxWidth: 28),
-                      iconSize: 16.0,
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        setState(() {
-                          if (nOthers >= 0 &&  nOthers <= 75) {
-                            nOthers = nOthers + 25;
-                            SOthers = "$nOthers";
-                          }
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              Divider(
-                thickness: 1.0,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TextCustom(
-                    text: "Observações:",
-                    size: 16.0,
-                    color: PaletteColors.grey,
-                    fontWeight: FontWeight.bold,
-                    textAlign: TextAlign.start,
-                  ),
-                  Container(
-                    width: width * 0.9,
-                    height: height * 0.2,
                     child: InputRegister(
-                        controller: _controllerObs,
-                        hint: ' ',
-                        fonts: 14.0,
-                        keyboardType: TextInputType.text,
-                        width: width * 0.9,
-                        sizeIcon: 0.0,
-                        icons: Icons.height,
-                        colorBorder: PaletteColors.greyInput,
-                        background: PaletteColors.greyInput),
+                      icons: Icons.height,
+                      sizeIcon: 0.0,
+                      width: width * 0.75,
+                      controller: _controllerContato,
+                      hint: "",
+                      fonts: 14.0,
+                      keyboardType: TextInputType.text,
+                      colorBorder: PaletteColors.greyInput,
+                      background: PaletteColors.greyInput,
+                    ),
                   ),
-                  SizedBox(height: height * 0.1),
-                ],
-              ),
-              Divider(
-                thickness: 1.0
-              ),
-              Row(
-                children: [
-                  Container(
-                    width: width * 0.35,
-                    child: ButtonCustom(
-                      widthCustom: 0.3,
-                      heightCustom: 0.070,
-                      onPressed: () =>
 
-                          Navigator.pop(context),
-                      text: "Voltar",
-                      size: 14.0,
-                      colorButton: PaletteColors.white,
-                      colorText: PaletteColors.primaryColor,
-                      colorBorder: PaletteColors.primaryColor,
+                ]),
+                SizedBox(height: height * 0.03),
+                Row(
+                  children: [
+                    Container(
+                      width: width * 0.4,
+                      child: TextCustom(
+                          text: "Telefone",
+                          size: 14.0,
+                          color: PaletteColors.grey,
+                          fontWeight: FontWeight.bold),
                     ),
-                  ),
-                  SizedBox(width: width * 0.15),
+
+                  ],
+                ),
+                Row(children: [
                   Container(
-                    width: width * 0.35,
-                    child: ButtonCustom(
-                      widthCustom: 0.3,
-                      heightCustom: 0.070,
-                      onPressed: () => _tableConstruction(),
-                      text: "Concluir",
-                      size: 14.0,
-                      colorButton: PaletteColors.primaryColor,
-                      colorText: PaletteColors.white,
-                      colorBorder: PaletteColors.primaryColor,
+                    child: InputRegister(
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                        TelefoneInputFormatter()
+                      ],
+                      icons: Icons.height,
+                      sizeIcon: 0.0,
+                      width: width * 0.4,
+                      controller: _controllerTelefoneContato,
+                      hint: '',
+                      fonts: 14.0,
+                      keyboardType: TextInputType.number,
+                      colorBorder: PaletteColors.greyInput,
+                      background: PaletteColors.greyInput,
                     ),
                   ),
-                ],
-              )
-            ],
+                ]),
+                SizedBox(height: height * 0.03),
+                Row(
+                  children: [
+                    TextCustom(
+                      text: "Serviços",
+                      size: 16.0,
+                      color: PaletteColors.grey,
+                      fontWeight: FontWeight.bold,
+                      textAlign: TextAlign.start,
+                    ),
+                    Spacer(),
+                    TextCustom(
+                      text: "%",
+                      size: 16.0,
+                      color: PaletteColors.grey,
+                      fontWeight: FontWeight.bold,
+                      textAlign: TextAlign.end,
+                    ),
+                    SizedBox(width: width * 0.12),
+                  ],
+                ),
+                SizedBox(
+                  height: height * 0.01,
+                ),
+                Row(
+                  children: [
+                    Container(
+                      width: width * 0.4,
+                      child: TextCustom(
+                        text: "Serviços Preliminares e Gerais",
+                        size: 16.0,
+                        color: PaletteColors.grey,
+                        fontWeight: FontWeight.normal,
+                        textAlign: TextAlign.start,
+                      ),
+                    ),
+                    Spacer(),
+                    Ink(
+                      decoration: ShapeDecoration(
+                        color: PaletteColors.midGrey,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(10),
+                                bottomLeft: Radius.circular(10))),
+                      ),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.remove,
+                          color: PaletteColors.grey,
+                        ),
+                        constraints: BoxConstraints(
+                            minHeight: 28,
+                            minWidth: 28,
+                            maxHeight: 28,
+                            maxWidth: 28),
+                        iconSize: 16.0,
+                        padding: EdgeInsets.zero,
+                        onPressed: () {
+                          setState(() {
+                            if (nServices > 0) {
+                              nServices = nServices - 5;
+                              SServices = "$nServices";
+                            }
+                          });
+                        },
+                      ),
+                    ),
+                    Container(
+                        alignment: Alignment.center,
+                        width: width * 0.12,
+                        height: 30,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(2.0)),
+                        child: TextCustom(
+                          text: SServices,
+                          color: PaletteColors.grey,
+                          textAlign: TextAlign.center,
+                        )
+                    ),
+                    Ink(
+                      decoration: ShapeDecoration(
+                        color: PaletteColors.midGrey,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(10),
+                                bottomRight: Radius.circular(10))),
+                      ),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.add,
+                          color: PaletteColors.grey,
+                        ),
+                        constraints: BoxConstraints(
+                            minHeight: 28,
+                            minWidth: 28,
+                            maxHeight: 28,
+                            maxWidth: 28),
+                        iconSize: 16.0,
+                        padding: EdgeInsets.zero,
+                        onPressed: () {
+                          setState(() {
+                            if (nServices >= 0 && nServices <= 75) {
+                              nServices = nServices + 25;
+                              SServices = "$nServices";
+                            }
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: height * 0.01,
+                ),
+                Row(
+                  children: [
+                    TextCustom(
+                      text: "Infraestrutura",
+                      size: 16.0,
+                      color: PaletteColors.grey,
+                      fontWeight: FontWeight.normal,
+                      textAlign: TextAlign.start,
+                    ),
+                    Spacer(),
+                    Ink(
+                      decoration: ShapeDecoration(
+                        color: PaletteColors.midGrey,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(10),
+                                bottomLeft: Radius.circular(10))),
+                      ),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.remove,
+                          color: PaletteColors.grey,
+                        ),
+                        constraints: BoxConstraints(
+                            minHeight: 28,
+                            minWidth: 28,
+                            maxHeight: 28,
+                            maxWidth: 28),
+                        iconSize: 16.0,
+                        padding: EdgeInsets.zero,
+                        onPressed: () {
+                          setState(() {
+                            if (nInfra > 0) {
+                              nInfra = nInfra - 5;
+                              SInfra = "$nInfra";
+                            }
+                          });
+                        },
+                      ),
+                    ),
+                    Container(
+                        alignment: Alignment.center,
+                        width: width * 0.12,
+                        height: 30,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(2.0)),
+                        child: TextCustom(
+                          text: SInfra,
+                          color: PaletteColors.grey,
+                          textAlign: TextAlign.center,
+                        )),
+                    Ink(
+                      decoration: ShapeDecoration(
+                        color: PaletteColors.midGrey,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(10),
+                                bottomRight: Radius.circular(10))),
+                      ),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.add,
+                          color: PaletteColors.grey,
+                        ),
+                        constraints: BoxConstraints(
+                            minHeight: 28,
+                            minWidth: 28,
+                            maxHeight: 28,
+                            maxWidth: 28),
+                        iconSize: 16.0,
+                        padding: EdgeInsets.zero,
+                        onPressed: () {
+                          setState(() {
+                            if (nInfra >= 0 && nInfra <= 75) {
+                              nInfra = nInfra + 25;
+
+                              SInfra = "$nInfra";
+                            }
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: height * 0.01,
+                ),
+                Row(
+                  children: [
+                    TextCustom(
+                      text: "Supra-estrutura",
+                      size: 16.0,
+                      color: PaletteColors.grey,
+                      fontWeight: FontWeight.normal,
+                      textAlign: TextAlign.start,
+                    ),
+                    Spacer(),
+                    Ink(
+                      decoration: ShapeDecoration(
+                        color: PaletteColors.midGrey,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(10),
+                                bottomLeft: Radius.circular(10))),
+                      ),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.remove,
+                          color: PaletteColors.grey,
+                        ),
+                        constraints: BoxConstraints(
+                            minHeight: 28,
+                            minWidth: 28,
+                            maxHeight: 28,
+                            maxWidth: 28),
+                        iconSize: 16.0,
+                        padding: EdgeInsets.zero,
+                        onPressed: () {
+                          setState(() {
+                            if (nSupra > 0) {
+                              nSupra = nSupra - 5;
+                              SSupra = "$nSupra";
+                            }
+                          });
+                        },
+                      ),
+                    ),
+                    Container(
+                        alignment: Alignment.center,
+                        width: width * 0.12,
+                        height: 30,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(2.0)),
+                        child: TextCustom(
+                          text: SSupra,
+                          color: PaletteColors.grey,
+                          textAlign: TextAlign.center,
+                        )),
+                    Ink(
+                      decoration: ShapeDecoration(
+                        color: PaletteColors.midGrey,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(10),
+                                bottomRight: Radius.circular(10))),
+                      ),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.add,
+                          color: PaletteColors.grey,
+                        ),
+                        constraints: BoxConstraints(
+                            minHeight: 28,
+                            minWidth: 28,
+                            maxHeight: 28,
+                            maxWidth: 28),
+                        iconSize: 16.0,
+                        padding: EdgeInsets.zero,
+                        onPressed: () {
+                          setState(() {
+                            if (nSupra >= 0 && nSupra  <= 75) {
+                              nSupra = nSupra + 25;
+                              SSupra = "$nSupra";
+                            }
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: height * 0.01,
+                ),
+                Row(
+                  children: [
+                    TextCustom(
+                      text: "Paredes e painéis",
+                      size: 16.0,
+                      color: PaletteColors.grey,
+                      fontWeight: FontWeight.normal,
+                      textAlign: TextAlign.start,
+                    ),
+                    Spacer(),
+                    Ink(
+                      decoration: ShapeDecoration(
+                        color: PaletteColors.midGrey,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(10),
+                                bottomLeft: Radius.circular(10))),
+                      ),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.remove,
+                          color: PaletteColors.grey,
+                        ),
+                        constraints: BoxConstraints(
+                            minHeight: 28,
+                            minWidth: 28,
+                            maxHeight: 28,
+                            maxWidth: 28),
+                        iconSize: 16.0,
+                        padding: EdgeInsets.zero,
+                        onPressed: () {
+                          setState(() {
+                            if (nWalls > 0) {
+                              nWalls = nWalls - 5;
+                              SWalls = '$nWalls';
+                            }
+                          });
+                        },
+                      ),
+                    ),
+                    Container(
+                        alignment: Alignment.center,
+                        width: width * 0.12,
+                        height: 30,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(2.0)),
+                        child: TextCustom(
+                          text: SWalls,
+                          color: PaletteColors.grey,
+                          textAlign: TextAlign.center,
+                        )),
+                    Ink(
+                      decoration: ShapeDecoration(
+                        color: PaletteColors.midGrey,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(10),
+                                bottomRight: Radius.circular(10))),
+                      ),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.add,
+                          color: PaletteColors.grey,
+                        ),
+                        constraints: BoxConstraints(
+                            minHeight: 28,
+                            minWidth: 28,
+                            maxHeight: 28,
+                            maxWidth: 28),
+                        iconSize: 16.0,
+                        padding: EdgeInsets.zero,
+                        onPressed: () {
+                          setState(() {
+                            if (nWalls >= 0 && nWalls <= 75) {
+                              nWalls = nWalls + 25;
+                              SWalls = '$nWalls';
+                            }
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: height * 0.01,
+                ),
+                Row(
+                  children: [
+                    TextCustom(
+                      text: "Esquadrias",
+                      size: 16.0,
+                      color: PaletteColors.grey,
+                      fontWeight: FontWeight.normal,
+                      textAlign: TextAlign.start,
+                    ),
+                    Spacer(),
+                    Ink(
+                      decoration: ShapeDecoration(
+                        color: PaletteColors.midGrey,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(10),
+                                bottomLeft: Radius.circular(10))),
+                      ),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.remove,
+                          color: PaletteColors.grey,
+                        ),
+                        constraints: BoxConstraints(
+                            minHeight: 28,
+                            minWidth: 28,
+                            maxHeight: 28,
+                            maxWidth: 28),
+                        iconSize: 16.0,
+                        padding: EdgeInsets.zero,
+                        onPressed: () {
+                          setState(() {
+                            if (nFrames > 0) {
+                              nFrames = nFrames - 5;
+                              SFrames = "$nFrames";
+                            }
+                          });
+                        },
+                      ),
+                    ),
+                    Container(
+                        alignment: Alignment.center,
+                        width: width * 0.12,
+                        height: 30,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(2.0)),
+                        child: TextCustom(
+                          text: SFrames,
+                          color: PaletteColors.grey,
+                          textAlign: TextAlign.center,
+                        )),
+                    Ink(
+                      decoration: ShapeDecoration(
+                        color: PaletteColors.midGrey,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(10),
+                                bottomRight: Radius.circular(10))),
+                      ),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.add,
+                          color: PaletteColors.grey,
+                        ),
+                        constraints: BoxConstraints(
+                            minHeight: 28,
+                            minWidth: 28,
+                            maxHeight: 28,
+                            maxWidth: 28),
+                        iconSize: 16.0,
+                        padding: EdgeInsets.zero,
+                        onPressed: () {
+                          setState(() {
+                            if (nFrames >= 0 && nFrames  <= 75) {
+                              nFrames = nFrames + 25;
+                              SFrames = '$nFrames';
+                            }
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: height * 0.01,
+                ),
+                Row(
+                  children: [
+                    TextCustom(
+                      text: "Vidros e plásticos",
+                      size: 16.0,
+                      color: PaletteColors.grey,
+                      fontWeight: FontWeight.normal,
+                      textAlign: TextAlign.start,
+                    ),
+                    Spacer(),
+                    Ink(
+                      decoration: ShapeDecoration(
+                        color: PaletteColors.midGrey,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(10),
+                                bottomLeft: Radius.circular(10))),
+                      ),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.remove,
+                          color: PaletteColors.grey,
+                        ),
+                        constraints: BoxConstraints(
+                            minHeight: 28,
+                            minWidth: 28,
+                            maxHeight: 28,
+                            maxWidth: 28),
+                        iconSize: 16.0,
+                        padding: EdgeInsets.zero,
+                        onPressed: () {
+                          setState(() {
+                            if (nGlasses > 0) {
+                              nGlasses = nGlasses - 5;
+                              SGlasses = "$nGlasses";
+                            }
+                          });
+                        },
+                      ),
+                    ),
+                    Container(
+                        alignment: Alignment.center,
+                        width: width * 0.12,
+                        height: 30,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(2.0)),
+                        child: TextCustom(
+                          text: SGlasses,
+                          color: PaletteColors.grey,
+                          textAlign: TextAlign.center,
+                        )),
+                    Ink(
+                      decoration: ShapeDecoration(
+                        color: PaletteColors.midGrey,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(10),
+                                bottomRight: Radius.circular(10))),
+                      ),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.add,
+                          color: PaletteColors.grey,
+                        ),
+                        constraints: BoxConstraints(
+                            minHeight: 28,
+                            minWidth: 28,
+                            maxHeight: 28,
+                            maxWidth: 28),
+                        iconSize: 16.0,
+                        padding: EdgeInsets.zero,
+                        onPressed: () {
+                          setState(() {
+                            if (nGlasses >= 0 && nGlasses  <= 75) {
+                              nGlasses = nGlasses + 25;
+                              SGlasses = "$nGlasses";
+                            }
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: height * 0.01,
+                ),
+                Row(
+                  children: [
+                    Container(
+
+                      child: TextCustom(
+                        text: "Coberturas",
+                        size: 16.0,
+                        color: PaletteColors.grey,
+                        fontWeight: FontWeight.normal,
+                        textAlign: TextAlign.start,
+                      ),
+                    ),
+                    Spacer(),
+                    Ink(
+                      decoration: ShapeDecoration(
+                        color: PaletteColors.midGrey,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(10),
+                                bottomLeft: Radius.circular(10))),
+                      ),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.remove,
+                          color: PaletteColors.grey,
+                        ),
+                        constraints: BoxConstraints(
+                            minHeight: 28,
+                            minWidth: 28,
+                            maxHeight: 28,
+                            maxWidth: 28),
+                        iconSize: 16.0,
+                        padding: EdgeInsets.zero,
+                        onPressed: () {
+                          setState(() {
+                            if (nCeiling > 0) {
+                              nCeiling = nCeiling - 5;
+                              SCeiling = "$nCeiling";
+                            }
+                          });
+                        },
+                      ),
+                    ),
+                    Container(
+                        alignment: Alignment.center,
+                        width: width * 0.12,
+                        height: 30,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(2.0)),
+                        child: TextCustom(
+                          text: SCeiling,
+                          color: PaletteColors.grey,
+                          textAlign: TextAlign.center,
+                        )),
+                    Ink(
+                      decoration: ShapeDecoration(
+                        color: PaletteColors.midGrey,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(10),
+                                bottomRight: Radius.circular(10))),
+                      ),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.add,
+                          color: PaletteColors.grey,
+                        ),
+                        constraints: BoxConstraints(
+                            minHeight: 28,
+                            minWidth: 28,
+                            maxHeight: 28,
+                            maxWidth: 28),
+                        iconSize: 16.0,
+                        padding: EdgeInsets.zero,
+                        onPressed: () {
+                          setState(() {
+                            if (nCeiling >= 0 && nCeiling  <= 75) {
+                              nCeiling = nCeiling + 25;
+                              SCeiling = "$nCeiling";
+                            }
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: height * 0.01,
+                ),
+                Row(
+                  children: [
+                    TextCustom(
+                      text: "Impermeabilizações",
+                      size: 16.0,
+                      color: PaletteColors.grey,
+                      fontWeight: FontWeight.normal,
+                      textAlign: TextAlign.start,
+                    ),
+                    Spacer(),
+                    Ink(
+                      decoration: ShapeDecoration(
+                        color: PaletteColors.midGrey,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(10),
+                                bottomLeft: Radius.circular(10))),
+                      ),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.remove,
+                          color: PaletteColors.grey,
+                        ),
+                        constraints: BoxConstraints(
+                            minHeight: 28,
+                            minWidth: 28,
+                            maxHeight: 28,
+                            maxWidth: 28),
+                        iconSize: 16.0,
+                        padding: EdgeInsets.zero,
+                        onPressed: () {
+                          setState(() {
+                            if (nWaterProof > 0) {
+                              nWaterProof = nWaterProof - 5;
+                              SWaterProof = "$nWaterProof";
+                            }
+                          });
+                        },
+                      ),
+                    ),
+                    Container(
+                        alignment: Alignment.center,
+                        width: width * 0.12,
+                        height: 30,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(2.0)),
+                        child: TextCustom(
+                          text: SWaterProof,
+                          color: PaletteColors.grey,
+                          textAlign: TextAlign.center,
+                        )),
+                    Ink(
+                      decoration: ShapeDecoration(
+                        color: PaletteColors.midGrey,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(10),
+                                bottomRight: Radius.circular(10))),
+                      ),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.add,
+                          color: PaletteColors.grey,
+                        ),
+                        constraints: BoxConstraints(
+                            minHeight: 28,
+                            minWidth: 28,
+                            maxHeight: 28,
+                            maxWidth: 28),
+                        iconSize: 16.0,
+                        padding: EdgeInsets.zero,
+                        onPressed: () {
+                          setState(() {
+                            if (nWaterProof >= 0 && nWaterProof <= 75) {
+                              nWaterProof = nWaterProof + 25;
+                              SWaterProof = "$nWaterProof";
+                            }
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: height * 0.01,
+                ),
+                Row(
+                  children: [
+                    Container(
+                      width: width * 0.4,
+                      child: TextCustom(
+                        text: "Revestimentos Internos",
+                        size: 16.0,
+                        color: PaletteColors.grey,
+                        fontWeight: FontWeight.normal,
+                        textAlign: TextAlign.start,
+                      ),
+                    ),
+
+                    Spacer(),
+                    Ink(
+                      decoration: ShapeDecoration(
+                        color: PaletteColors.midGrey,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(10),
+                                bottomLeft: Radius.circular(10))),
+                      ),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.remove,
+                          color: PaletteColors.grey,
+                        ),
+                        constraints: BoxConstraints(
+                            minHeight: 28,
+                            minWidth: 28,
+                            maxHeight: 28,
+                            maxWidth: 28),
+                        iconSize: 16.0,
+                        padding: EdgeInsets.zero,
+                        onPressed: () {
+                          setState(() {
+                            if (nIntern > 0) {
+                              nIntern = nIntern - 5;
+                              SIntern = "$nIntern";
+                            }
+                          });
+                        },
+                      ),
+                    ),
+                    Container(
+                        alignment: Alignment.center,
+                        width: width * 0.12,
+                        height: 30,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(2.0)),
+                        child: TextCustom(
+                          text: SIntern,
+                          color: PaletteColors.grey,
+                          textAlign: TextAlign.center,
+                        )),
+                    Ink(
+                      decoration: ShapeDecoration(
+                        color: PaletteColors.midGrey,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(10),
+                                bottomRight: Radius.circular(10))),
+                      ),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.add,
+                          color: PaletteColors.grey,
+                        ),
+                        constraints: BoxConstraints(
+                            minHeight: 28,
+                            minWidth: 28,
+                            maxHeight: 28,
+                            maxWidth: 28),
+                        iconSize: 16.0,
+                        padding: EdgeInsets.zero,
+                        onPressed: () {
+                          setState(() {
+                            if (nIntern >= 0 && nIntern <= 75) {
+                              nIntern = nIntern + 25;
+                              SIntern = "$nIntern";
+                            }
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: height * 0.01,
+                ),
+                Row(
+                  children: [
+                    Container(
+
+                      child: TextCustom(
+                        text: "Forros",
+                        size: 16.0,
+                        color: PaletteColors.grey,
+                        fontWeight: FontWeight.normal,
+                        textAlign: TextAlign.start,
+                      ),
+                    ),
+                    Spacer(),
+                    Ink(
+                      decoration: ShapeDecoration(
+                        color: PaletteColors.midGrey,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(10),
+                                bottomLeft: Radius.circular(10))),
+                      ),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.remove,
+                          color: PaletteColors.grey,
+                        ),
+                        constraints: BoxConstraints(
+                            minHeight: 28,
+                            minWidth: 28,
+                            maxHeight: 28,
+                            maxWidth: 28),
+                        iconSize: 16.0,
+                        padding: EdgeInsets.zero,
+                        onPressed: () {
+                          setState(() {
+                            if (nLinings > 0) {
+                              nLinings = nLinings - 5;
+                              SLinings = "$nLinings";
+                            }
+                          });
+                        },
+                      ),
+                    ),
+                    Container(
+                        alignment: Alignment.center,
+                        width: width * 0.12,
+                        height: 30,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(2.0)),
+                        child: TextCustom(
+                          text: SLinings,
+                          color: PaletteColors.grey,
+                          textAlign: TextAlign.center,
+                        )),
+                    Ink(
+                      decoration: ShapeDecoration(
+                        color: PaletteColors.midGrey,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(10),
+                                bottomRight: Radius.circular(10))),
+                      ),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.add,
+                          color: PaletteColors.grey,
+                        ),
+                        constraints: BoxConstraints(
+                            minHeight: 28,
+                            minWidth: 28,
+                            maxHeight: 28,
+                            maxWidth: 28),
+                        iconSize: 16.0,
+                        padding: EdgeInsets.zero,
+                        onPressed: () {
+                          setState(() {
+                            if (nLinings >= 0 && nLinings <= 75) {
+                              nLinings = nLinings + 25;
+                              SLinings = "$nLinings";
+                            }
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: height * 0.01,
+                ),
+                Row(
+                  children: [
+                    Container(
+                      width: width * 0.4,
+                      child: TextCustom(
+                        text: "Revestimentos externos",
+                        size: 16.0,
+                        color: PaletteColors.grey,
+                        fontWeight: FontWeight.normal,
+                        textAlign: TextAlign.start,
+                      ),
+                    ),
+                    Spacer(),
+                    Ink(
+                      decoration: ShapeDecoration(
+                        color: PaletteColors.midGrey,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(10),
+                                bottomLeft: Radius.circular(10))),
+                      ),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.remove,
+                          color: PaletteColors.grey,
+                        ),
+                        constraints: BoxConstraints(
+                            minHeight: 28,
+                            minWidth: 28,
+                            maxHeight: 28,
+                            maxWidth: 28),
+                        iconSize: 16.0,
+                        padding: EdgeInsets.zero,
+                        onPressed: () {
+                          setState(() {
+                            if (nExtern > 0) {
+                              nExtern =
+                                  nExtern - 5;
+                              SExtern =
+                              "$nExtern";
+                            }
+                          });
+                        },
+                      ),
+                    ),
+                    Container(
+                        alignment: Alignment.center,
+                        width: width * 0.12,
+                        height: 30,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(2.0)),
+                        child: TextCustom(
+                          text: SExtern,
+                          color: PaletteColors.grey,
+                          textAlign: TextAlign.center,
+                        )),
+                    Ink(
+                      decoration: ShapeDecoration(
+                        color: PaletteColors.midGrey,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(10),
+                                bottomRight: Radius.circular(10))),
+                      ),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.add,
+                          color: PaletteColors.grey,
+                        ),
+                        constraints: BoxConstraints(
+                            minHeight: 28,
+                            minWidth: 28,
+                            maxHeight: 28,
+                            maxWidth: 28),
+                        iconSize: 16.0,
+                        padding: EdgeInsets.zero,
+                        onPressed: () {
+                          setState(() {
+                            if (nExtern >= 0 && nExtern <= 75) {
+                              nExtern =
+                                  nExtern + 25;
+                              SExtern =
+                              "$nExtern";
+                            }
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: height * 0.01,
+                ),
+                Row(
+                  children: [
+                    Container(
+                      width: width * 0.4,
+                      child: TextCustom(
+                        text: "Pintura",
+                        size: 16.0,
+                        color: PaletteColors.grey,
+                        fontWeight: FontWeight.normal,
+                        textAlign: TextAlign.start,
+                      ),
+                    ),
+                    Spacer(),
+                    Ink(
+                      decoration: ShapeDecoration(
+                        color: PaletteColors.midGrey,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(10),
+                                bottomLeft: Radius.circular(10))),
+                      ),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.remove,
+                          color: PaletteColors.grey,
+                        ),
+                        constraints: BoxConstraints(
+                            minHeight: 28,
+                            minWidth: 28,
+                            maxHeight: 28,
+                            maxWidth: 28),
+                        iconSize: 16.0,
+                        padding: EdgeInsets.zero,
+                        onPressed: () {
+                          setState(() {
+                            if (nPaint > 0) {
+                              nPaint = nPaint - 5;
+                              SPaint = "$nPaint";
+                            }
+                          });
+                        },
+                      ),
+                    ),
+                    Container(
+                        alignment: Alignment.center,
+                        width: width * 0.12,
+                        height: 30,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(2.0)),
+                        child: TextCustom(
+                          text: SPaint,
+                          color: PaletteColors.grey,
+                          textAlign: TextAlign.center,
+                        )),
+                    Ink(
+                      decoration: ShapeDecoration(
+                        color: PaletteColors.midGrey,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(10),
+                                bottomRight: Radius.circular(10))),
+                      ),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.add,
+                          color: PaletteColors.grey,
+                        ),
+                        constraints: BoxConstraints(
+                            minHeight: 28,
+                            minWidth: 28,
+                            maxHeight: 28,
+                            maxWidth: 28),
+                        iconSize: 16.0,
+                        padding: EdgeInsets.zero,
+                        onPressed: () {
+                          setState(() {
+                            if (nPaint >= 0 && nPaint  <= 75) {
+                              nPaint = nPaint + 25;
+                              SPaint = "$nPaint";
+                            }
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: height * 0.01,
+                ),
+                Row(
+                  children: [
+                    TextCustom(
+                      text: "Pisos",
+                      size: 16.0,
+                      color: PaletteColors.grey,
+                      fontWeight: FontWeight.normal,
+                      textAlign: TextAlign.start,
+                    ),
+                    Spacer(),
+                    Ink(
+                      decoration: ShapeDecoration(
+                        color: PaletteColors.midGrey,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(10),
+                                bottomLeft: Radius.circular(10))),
+                      ),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.remove,
+                          color: PaletteColors.grey,
+                        ),
+                        constraints: BoxConstraints(
+                            minHeight: 28,
+                            minWidth: 28,
+                            maxHeight: 28,
+                            maxWidth: 28),
+                        iconSize: 16.0,
+                        padding: EdgeInsets.zero,
+                        onPressed: () {
+                          setState(() {
+                            if (nFloors > 0) {
+                              nFloors = nFloors - 5;
+                              SFloors = "$nFloors";
+                            }
+                          });
+                        },
+                      ),
+                    ),
+                    Container(
+                        alignment: Alignment.center,
+                        width: width * 0.12,
+                        height: 30,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(2.0)),
+                        child: TextCustom(
+                          text: SFloors,
+                          color: PaletteColors.grey,
+                          textAlign: TextAlign.center,
+                        )),
+                    Ink(
+                      decoration: ShapeDecoration(
+                        color: PaletteColors.midGrey,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(10),
+                                bottomRight: Radius.circular(10))),
+                      ),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.add,
+                          color: PaletteColors.grey,
+                        ),
+                        constraints: BoxConstraints(
+                            minHeight: 28,
+                            minWidth: 28,
+                            maxHeight: 28,
+                            maxWidth: 28),
+                        iconSize: 16.0,
+                        padding: EdgeInsets.zero,
+                        onPressed: () {
+                          setState(() {
+                            if (nFloors >= 0 && nFloors <= 75) {
+                              nFloors = nFloors + 25;
+                              SFloors = "$nFloors";
+                            }
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: height * 0.01,
+                ),
+                Row(
+                  children: [
+                    TextCustom(
+                      text: "Acabamentos",
+                      size: 16.0,
+                      color: PaletteColors.grey,
+                      fontWeight: FontWeight.normal,
+                      textAlign: TextAlign.start,
+                    ),
+                    Spacer(),
+                    Ink(
+                      decoration: ShapeDecoration(
+                        color: PaletteColors.midGrey,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(10),
+                                bottomLeft: Radius.circular(10))),
+                      ),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.remove,
+                          color: PaletteColors.grey,
+                        ),
+                        constraints: BoxConstraints(
+                            minHeight: 28,
+                            minWidth: 28,
+                            maxHeight: 28,
+                            maxWidth: 28),
+                        iconSize: 16.0,
+                        padding: EdgeInsets.zero,
+                        onPressed: () {
+                          setState(() {
+                            if (nFinishes > 0) {
+                              nFinishes = nFinishes - 5;
+                              SFinishes = "$nFinishes";
+                            }
+                          });
+                        },
+                      ),
+                    ),
+                    Container(
+                        alignment: Alignment.center,
+                        width: width * 0.12,
+                        height: 30,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(2.0)),
+                        child: TextCustom(
+                          text: SFinishes,
+                          color: PaletteColors.grey,
+                          textAlign: TextAlign.center,
+                        )),
+                    Ink(
+                      decoration: ShapeDecoration(
+                        color: PaletteColors.midGrey,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(10),
+                                bottomRight: Radius.circular(10))),
+                      ),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.add,
+                          color: PaletteColors.grey,
+                        ),
+                        constraints: BoxConstraints(
+                            minHeight: 28,
+                            minWidth: 28,
+                            maxHeight: 28,
+                            maxWidth: 28),
+                        iconSize: 16.0,
+                        padding: EdgeInsets.zero,
+                        onPressed: () {
+                          setState(() {
+                            if (nFinishes >= 0 && nFinishes <= 75) {
+                              nFinishes = nFinishes + 25;
+                              SFinishes = "$nFinishes";
+                            }
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: height * 0.01,
+                ),
+                Row(
+                  children: [
+                    Container(
+                      width: width * 0.4,
+                      child: TextCustom(
+                        text: "Inst. elétricas e telefônicas",
+                        size: 16.0,
+                        color: PaletteColors.grey,
+                        fontWeight: FontWeight.normal,
+                        textAlign: TextAlign.start,
+                      ),
+                    ),
+                    Spacer(),
+                    Ink(
+                      decoration: ShapeDecoration(
+                        color: PaletteColors.midGrey,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(10),
+                                bottomLeft: Radius.circular(10))),
+                      ),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.remove,
+                          color: PaletteColors.grey,
+                        ),
+                        constraints: BoxConstraints(
+                            minHeight: 28,
+                            minWidth: 28,
+                            maxHeight: 28,
+                            maxWidth: 28),
+                        iconSize: 16.0,
+                        padding: EdgeInsets.zero,
+                        onPressed: () {
+                          setState(() {
+                            if (nEletric > 0) {
+                              nEletric = nEletric - 5;
+                              SEletric = "$nEletric";
+                            }
+                          });
+                        },
+                      ),
+                    ),
+                    Container(
+                        alignment: Alignment.center,
+                        width: width * 0.12,
+                        height: 30,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(2.0)),
+                        child: TextCustom(
+                          text: SEletric,
+                          color: PaletteColors.grey,
+                          textAlign: TextAlign.center,
+                        )),
+                    Ink(
+                      decoration: ShapeDecoration(
+                        color: PaletteColors.midGrey,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(10),
+                                bottomRight: Radius.circular(10))),
+                      ),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.add,
+                          color: PaletteColors.grey,
+                        ),
+                        constraints: BoxConstraints(
+                            minHeight: 28,
+                            minWidth: 28,
+                            maxHeight: 28,
+                            maxWidth: 28),
+                        iconSize: 16.0,
+                        padding: EdgeInsets.zero,
+                        onPressed: () {
+                          setState(() {
+                            if (nEletric >= 0 && nEletric <= 75) {
+                              nEletric = nEletric + 25;
+                              SEletric = "$nEletric";
+                            }
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: height * 0.01,
+                ),
+                Row(
+                  children: [
+                    Container(
+                      width: width * 0.4,
+                      child: TextCustom(
+                        text: "Inst. hidráulicas",
+                        size: 16.0,
+                        color: PaletteColors.grey,
+                        fontWeight: FontWeight.normal,
+                        textAlign: TextAlign.start,
+                      ),
+                    ),
+                    Spacer(),
+                    Ink(
+                      decoration: ShapeDecoration(
+                        color: PaletteColors.midGrey,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(10),
+                                bottomLeft: Radius.circular(10))),
+                      ),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.remove,
+                          color: PaletteColors.grey,
+                        ),
+                        constraints: BoxConstraints(
+                            minHeight: 28,
+                            minWidth: 28,
+                            maxHeight: 28,
+                            maxWidth: 28),
+                        iconSize: 16.0,
+                        padding: EdgeInsets.zero,
+                        onPressed: () {
+                          setState(() {
+                            if (nHidro > 0) {
+                              nHidro = nHidro - 5;
+                              SHidro = "$nHidro";
+                            }
+                          });
+                        },
+                      ),
+                    ),
+                    Container(
+                        alignment: Alignment.center,
+                        width: width * 0.12,
+                        height: 30,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(2.0)),
+                        child: TextCustom(
+                          text: SHidro,
+                          color: PaletteColors.grey,
+                          textAlign: TextAlign.center,
+                        )),
+                    Ink(
+                      decoration: ShapeDecoration(
+                        color: PaletteColors.midGrey,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(10),
+                                bottomRight: Radius.circular(10))),
+                      ),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.add,
+                          color: PaletteColors.grey,
+                        ),
+                        constraints: BoxConstraints(
+                            minHeight: 28,
+                            minWidth: 28,
+                            maxHeight: 28,
+                            maxWidth: 28),
+                        iconSize: 16.0,
+                        padding: EdgeInsets.zero,
+                        onPressed: () {
+                          setState(() {
+                            if (nHidro >= 0 && nHidro <= 75) {
+                              nHidro = nHidro + 25;
+                              SHidro = "$nHidro";
+                            }
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: height * 0.01,
+                ),
+                Row(
+                  children: [
+                    Container(
+                      width: width * 0.4,
+                      child: TextCustom(
+                        text: "Inst. esgoto e águas pluviais",
+                        size: 16.0,
+                        color: PaletteColors.grey,
+                        fontWeight: FontWeight.normal,
+                        textAlign: TextAlign.start,
+                      ),
+                    ),
+                    Spacer(),
+                    Ink(
+                      decoration: ShapeDecoration(
+                        color: PaletteColors.midGrey,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(10),
+                                bottomLeft: Radius.circular(10))),
+                      ),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.remove,
+                          color: PaletteColors.grey,
+                        ),
+                        constraints: BoxConstraints(
+                            minHeight: 28,
+                            minWidth: 28,
+                            maxHeight: 28,
+                            maxWidth: 28),
+                        iconSize: 16.0,
+                        padding: EdgeInsets.zero,
+                        onPressed: () {
+                          setState(() {
+                            if (nSewer > 0) {
+                              nSewer = nSewer - 5;
+                              SSewer = "$nSewer";
+                            }
+                          });
+                        },
+                      ),
+                    ),
+                    Container(
+                        alignment: Alignment.center,
+                        width: width * 0.12,
+                        height: 30,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(2.0)),
+                        child: TextCustom(
+                          text: SSewer,
+                          color: PaletteColors.grey,
+                          textAlign: TextAlign.center,
+                        )),
+                    Ink(
+                      decoration: ShapeDecoration(
+                        color: PaletteColors.midGrey,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(10),
+                                bottomRight: Radius.circular(10))),
+                      ),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.add,
+                          color: PaletteColors.grey,
+                        ),
+                        constraints: BoxConstraints(
+                            minHeight: 28,
+                            minWidth: 28,
+                            maxHeight: 28,
+                            maxWidth: 28),
+                        iconSize: 16.0,
+                        padding: EdgeInsets.zero,
+                        onPressed: () {
+                          setState(() {
+                            if (nSewer >= 0 && nSewer <= 75) {
+                              nSewer = nSewer + 25;
+                              SSewer = "$nSewer";
+                            }
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: height * 0.01,
+                ),
+                Row(
+                  children: [
+                    Container(
+
+                      child: TextCustom(
+                        text: "Louças e metais",
+                        size: 16.0,
+                        color: PaletteColors.grey,
+                        fontWeight: FontWeight.normal,
+                        textAlign: TextAlign.start,
+                      ),
+                    ),
+                    Spacer(),
+                    Ink(
+                      decoration: ShapeDecoration(
+                        color: PaletteColors.midGrey,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(10),
+                                bottomLeft: Radius.circular(10))),
+                      ),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.remove,
+                          color: PaletteColors.grey,
+                        ),
+                        constraints: BoxConstraints(
+                            minHeight: 28,
+                            minWidth: 28,
+                            maxHeight: 28,
+                            maxWidth: 28),
+                        iconSize: 16.0,
+                        padding: EdgeInsets.zero,
+                        onPressed: () {
+                          setState(() {
+                            if (nSlabs > 0) {
+                              nSlabs = nSlabs - 5;
+                              SSlabs = "$nSlabs";
+                            }
+                          });
+                        },
+                      ),
+                    ),
+                    Container(
+                        alignment: Alignment.center,
+                        width: width * 0.12,
+                        height: 30,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(2.0)),
+                        child: TextCustom(
+                          text: SSlabs,
+                          color: PaletteColors.grey,
+                          textAlign: TextAlign.center,
+                        )),
+                    Ink(
+                      decoration: ShapeDecoration(
+                        color: PaletteColors.midGrey,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(10),
+                                bottomRight: Radius.circular(10))),
+                      ),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.add,
+                          color: PaletteColors.grey,
+                        ),
+                        constraints: BoxConstraints(
+                            minHeight: 28,
+                            minWidth: 28,
+                            maxHeight: 28,
+                            maxWidth: 28),
+                        iconSize: 16.0,
+                        padding: EdgeInsets.zero,
+                        onPressed: () {
+                          setState(() {
+                            if (nSlabs >= 0 && nSlabs <= 75) {
+                              nSlabs = nSlabs + 25;
+                              SSlabs = "$nSlabs";
+                            }
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: height * 0.01,
+                ),
+                Row(
+                  children: [
+                    Container(
+
+                      child: TextCustom(
+                        text: "Complementos",
+                        size: 16.0,
+                        color: PaletteColors.grey,
+                        fontWeight: FontWeight.normal,
+                        textAlign: TextAlign.start,
+                      ),
+                    ),
+                    Spacer(),
+                    Ink(
+                      decoration: ShapeDecoration(
+                        color: PaletteColors.midGrey,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(10),
+                                bottomLeft: Radius.circular(10))),
+                      ),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.remove,
+                          color: PaletteColors.grey,
+                        ),
+                        constraints: BoxConstraints(
+                            minHeight: 28,
+                            minWidth: 28,
+                            maxHeight: 28,
+                            maxWidth: 28),
+                        iconSize: 16.0,
+                        padding: EdgeInsets.zero,
+                        onPressed: () {
+                          setState(() {
+                            if (nComplements > 0) {
+                              nComplements = nComplements - 5;
+                              SComplements = "$nComplements";
+                            }
+                          });
+                        },
+                      ),
+                    ),
+                    Container(
+                        alignment: Alignment.center,
+                        width: width * 0.12,
+                        height: 30,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(2.0)),
+                        child: TextCustom(
+                          text: SComplements,
+                          color: PaletteColors.grey,
+                          textAlign: TextAlign.center,
+                        )),
+                    Ink(
+                      decoration: ShapeDecoration(
+                        color: PaletteColors.midGrey,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(10),
+                                bottomRight: Radius.circular(10))),
+                      ),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.add,
+                          color: PaletteColors.grey,
+                        ),
+                        constraints: BoxConstraints(
+                            minHeight: 28,
+                            minWidth: 28,
+                            maxHeight: 28,
+                            maxWidth: 28),
+                        iconSize: 16.0,
+                        padding: EdgeInsets.zero,
+                        onPressed: () {
+                          setState(() {
+                            if (nComplements >= 0 && nComplements <= 75) {
+                              nComplements = nComplements + 25;
+                              SComplements = "$nComplements";
+                            }
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: height * 0.01,
+                ),
+                Row(
+                  children: [
+                    Container(
+
+                      child: TextCustom(
+                        text: "Outros serviços",
+                        size: 16.0,
+                        color: PaletteColors.grey,
+                        fontWeight: FontWeight.normal,
+                        textAlign: TextAlign.start,
+                      ),
+                    ),
+                    Spacer(),
+                    Ink(
+                      decoration: ShapeDecoration(
+                        color: PaletteColors.midGrey,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(10),
+                                bottomLeft: Radius.circular(10))),
+                      ),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.remove,
+                          color: PaletteColors.grey,
+                        ),
+                        constraints: BoxConstraints(
+                            minHeight: 28,
+                            minWidth: 28,
+                            maxHeight: 28,
+                            maxWidth: 28),
+                        iconSize: 16.0,
+                        padding: EdgeInsets.zero,
+                        onPressed: () {
+                          setState(() {
+                            if (nOthers > 0) {
+                              nOthers = nOthers - 5;
+                              SOthers = "$nOthers";
+                            }
+                          });
+                        },
+                      ),
+                    ),
+                    Container(
+                        alignment: Alignment.center,
+                        width: width * 0.12,
+                        height: 30,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(2.0)),
+                        child: TextCustom(
+                          text: SOthers,
+                          color: PaletteColors.grey,
+                          textAlign: TextAlign.center,
+                        )),
+                    Ink(
+                      decoration: ShapeDecoration(
+                        color: PaletteColors.midGrey,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(10),
+                                bottomRight: Radius.circular(10))),
+                      ),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.add,
+                          color: PaletteColors.grey,
+                        ),
+                        constraints: BoxConstraints(
+                            minHeight: 28,
+                            minWidth: 28,
+                            maxHeight: 28,
+                            maxWidth: 28),
+                        iconSize: 16.0,
+                        padding: EdgeInsets.zero,
+                        onPressed: () {
+                          setState(() {
+                            if (nOthers >= 0 &&  nOthers <= 75) {
+                              nOthers = nOthers + 25;
+                              SOthers = "$nOthers";
+                            }
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                Divider(
+                  thickness: 1.0,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextCustom(
+                      text: "Observações:",
+                      size: 16.0,
+                      color: PaletteColors.grey,
+                      fontWeight: FontWeight.bold,
+                      textAlign: TextAlign.start,
+                    ),
+                    Container(
+                      width: width * 0.9,
+                      height: height * 0.2,
+                      child: InputRegister(
+                          controller: _controllerObs,
+                          hint: ' ',
+                          fonts: 14.0,
+                          keyboardType: TextInputType.text,
+                          width: width * 0.9,
+                          sizeIcon: 0.0,
+                          icons: Icons.height,
+                          colorBorder: PaletteColors.greyInput,
+                          background: PaletteColors.greyInput),
+                    ),
+                    SizedBox(height: height * 0.1),
+                  ],
+                ),
+                Divider(
+                    thickness: 1.0
+                ),
+                Row(
+                  children: [
+                    Container(
+                      width: width * 0.35,
+                      child: ButtonCustom(
+                        widthCustom: 0.3,
+                        heightCustom: 0.070,
+                        onPressed: () =>
+
+                            Navigator.pop(context),
+                        text: "Voltar",
+                        size: 14.0,
+                        colorButton: PaletteColors.white,
+                        colorText: PaletteColors.primaryColor,
+                        colorBorder: PaletteColors.primaryColor,
+                      ),
+                    ),
+                    SizedBox(width: width * 0.15),
+                    Container(
+                      width: width * 0.35,
+                      child: ButtonCustom(
+                        widthCustom: 0.3,
+                        heightCustom: 0.070,
+                        onPressed: () => _tableConstruction(),
+                        text: "Concluir",
+                        size: 14.0,
+                        colorButton: PaletteColors.primaryColor,
+                        colorText: PaletteColors.white,
+                        colorBorder: PaletteColors.primaryColor,
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
           ),
-        ),
-      )
+        )
     );
   }
 
   Widget buildSingleCheckbox(CheckBoxModel checkBoxModel) => CheckboxListTile(
-        title: TextCustom(
-            text: checkBoxModel.title,
-            color: PaletteColors.grey,
-            fontWeight: FontWeight.normal,
-            size: 16.0),
-        value: checkBoxModel.value,
-        onChanged: (value) => setState(() => checkBoxModel.value = value!),
-        activeColor: PaletteColors.primaryColor,
-        checkColor: PaletteColors.white,
-      );
+    title: TextCustom(
+        text: checkBoxModel.title,
+        color: PaletteColors.grey,
+        fontWeight: FontWeight.normal,
+        size: 16.0),
+    value: checkBoxModel.value,
+    onChanged: (value) => setState(() => checkBoxModel.value = value!),
+    activeColor: PaletteColors.primaryColor,
+    checkColor: PaletteColors.white,
+  );
 }
