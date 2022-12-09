@@ -688,7 +688,7 @@ class _CheckListApto1State extends State<CheckListApto1> {
     CheckBoxModel(title: 'Rede de Água Pluvial'),
     CheckBoxModel(title: 'Rede de Esgoto'),
     CheckBoxModel(title: 'Fossa Séptica'),
-    CheckBoxModel(title: 'Semidouro'),
+    CheckBoxModel(title: 'Sumidouro'),
     CheckBoxModel(title: 'Cisterna'),
     CheckBoxModel(title: 'Outro:'),
   ];
@@ -3287,7 +3287,7 @@ class _CheckListApto1State extends State<CheckListApto1> {
                   controller: _controllerCondPrice,
                   hint: 'R\$ 000.00',
                   fonts: 14.0,
-                  keyboardType: TextInputType.text,
+                  keyboardType: TextInputType.number,
                   width: width * 0.5,
                   sizeIcon: 0.0,
                   icons: Icons.height,

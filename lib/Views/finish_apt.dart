@@ -88,6 +88,8 @@ class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
   String Obs= '';
   String complement= '';
   String path = '';
+  String contato = '';
+  String telefone = '';
   List imageList = [];
   List pathology = [];
   List paint = [];
@@ -348,6 +350,8 @@ class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
    }
     setState(() {
       age = data?["age"] ?? '';
+      contato = data?["contato"] ?? "";
+      telefone = data?["telefone"] ?? "";
       price = data?["price"] ?? '';
       sPathology = data?["Pathology"] ?? '';
       sType = data?["type"] ?? '';
@@ -432,8 +436,7 @@ class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
     final ttf = pdfLib.Font.ttf(font);
     pdf.addPage(
         pdfLib.MultiPage(
-            margin: pdfLib.EdgeInsets.all(2.0),
-            orientation: pdfLib.PageOrientation.landscape,
+            margin: pdfLib.EdgeInsets.all(6.0),
             build: (context) => [
               pdfLib.Container(
                   child: pdfLib.Text('Vistoria de Apartamento',
@@ -451,8 +454,11 @@ class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
                       crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
                       children: [
                         pdfLib.Row(
+                            mainAxisAlignment: pdfLib.MainAxisAlignment.start,
+                            crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
                             children: [
                               pdfLib.Container(
+
                                 child: pdfLib.Text(
                                   'Data:',
 
@@ -475,11 +481,13 @@ class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
                                 ),
                               ),
                             ]),
-                        pdfLib.Row(children: [
+                        pdfLib.Row(
+                            mainAxisAlignment: pdfLib.MainAxisAlignment.start,
+                            crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
+                            children: [
                           pdfLib.Container(
                             child: pdfLib.Text(
                               'Vistoriador:',
-
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
                                   fontSize: 8.0,
@@ -488,6 +496,7 @@ class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
                             ),
                           ),
                           pdfLib.Container(
+                              width:200,
                             child: pdfLib.Text(
                               ' $user',
 
@@ -499,11 +508,14 @@ class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
                             ),
                           ),
                         ]),
-                        pdfLib.Row(children: [
+                        pdfLib.Row(
+                            mainAxisAlignment: pdfLib.MainAxisAlignment.start,
+                            crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
+                            children: [
                           pdfLib.Container(
+
                             child: pdfLib.Text(
                               'Endereço:',
-
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
                                   fontSize: 8.0,
@@ -512,10 +524,12 @@ class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
                             ),
                           ),
                           pdfLib.Container(
+                            width: 200,
                             child: pdfLib.Text(
-                              ' $street, $number,$complement, $district - $city/$states - $cep',
+                              ' $street, $number,$complement,$district - $city/$states - $cep',
 
                               textAlign: pdfLib.TextAlign.left,
+                              maxLines: 2,
                               style: pdfLib.TextStyle(
                                   fontSize: 8.0,
                                   font: ttf,
@@ -525,6 +539,7 @@ class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
                         ]),
                         pdfLib.Row(children: [
                           pdfLib.Container(
+
                             child: pdfLib.Text(
                               'Idade:',
                               textAlign: pdfLib.TextAlign.left,
@@ -535,6 +550,7 @@ class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
                             ),
                           ),
                           pdfLib.Container(
+                            width:200,
                             child: pdfLib.Text(
                               ' $age',
                               textAlign: pdfLib.TextAlign.left,
@@ -547,6 +563,7 @@ class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
                         ]),
                         pdfLib.Row(children: [
                           pdfLib.Container(
+
                             child: pdfLib.Text(
                               'Valor:',
                               textAlign: pdfLib.TextAlign.left,
@@ -557,6 +574,7 @@ class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
                             ),
                           ),
                           pdfLib.Container(
+                            width:200,
                             child: pdfLib.Text(
                               ' $price',
                               textAlign: pdfLib.TextAlign.left,
@@ -579,6 +597,7 @@ class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
                             ),
                           ),
                           pdfLib.Container(
+                            width:200,
                             child: pdfLib.Text(
                               ' $Cod',
 
@@ -591,7 +610,7 @@ class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
                           ),
                         ])
                       ]),
-                  pdfLib.SizedBox(width: 50),
+                  pdfLib.SizedBox(width: 10),
                   pdfLib.Column(
                       mainAxisAlignment: pdfLib.MainAxisAlignment.start,
                       crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
@@ -600,7 +619,6 @@ class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
                           pdfLib.Container(
                             child: pdfLib.Text(
                               'Coordenadas:',
-
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
                                   fontSize: 8.0,
@@ -657,8 +675,57 @@ class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
                             ),
                           ),
                         ]),
+                        pdfLib.SizedBox(height: 10),
+                        pdfLib.Row(children: [
+                          pdfLib.Container(
+                            child: pdfLib.Text(
+                              'Contato:',
+
+                              textAlign: pdfLib.TextAlign.left,
+                              style: pdfLib.TextStyle(
+                                  fontSize: 09.0,
+                                  font: ttf,
+                                  fontWeight: pdfLib.FontWeight.bold),
+                            ),
+                          ),
+                          pdfLib.Container(
+                            child: pdfLib.Text(
+                              ' $contato',
+
+                              textAlign: pdfLib.TextAlign.left,
+                              style: pdfLib.TextStyle(
+                                  fontSize: 09.0,
+                                  font: ttf,
+                                  fontWeight: pdfLib.FontWeight.bold),
+                            ),
+                          ),
+                        ]),
+                        pdfLib.Row(children: [
+                          pdfLib.Container(
+                            child: pdfLib.Text(
+                              'Telefone:',
+
+                              textAlign: pdfLib.TextAlign.left,
+                              style: pdfLib.TextStyle(
+                                  fontSize: 09.0,
+                                  font: ttf,
+                                  fontWeight: pdfLib.FontWeight.bold),
+                            ),
+                          ),
+                          pdfLib.Container(
+                            child: pdfLib.Text(
+                              ' $telefone',
+
+                              textAlign: pdfLib.TextAlign.left,
+                              style: pdfLib.TextStyle(
+                                  fontSize: 09.0,
+                                  font: ttf,
+                                  fontWeight: pdfLib.FontWeight.bold),
+                            ),
+                          ),
+                        ]),
                       ]),
-                  pdfLib.SizedBox(width: 50),
+                  pdfLib.SizedBox(width: 10),
                   pdfLib.Column(
                       mainAxisAlignment: pdfLib.MainAxisAlignment.start,
                       crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
@@ -802,7 +869,7 @@ class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
                         pdfLib.Row(children: [
                           pdfLib.Container(
                             child: pdfLib.Text(
-                              'Telefone:',
+                              'Telefone Admin:',
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
                                   fontSize: 8.0,
@@ -824,31 +891,6 @@ class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
                         ]),
                       ]),
                   pdfLib.SizedBox(width: 50),
-                  pdfLib.Column(
-                      mainAxisAlignment: pdfLib.MainAxisAlignment.start,
-                      crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
-                      children: [
-                        pdfLib.Container(
-                          child: pdfLib.Text(
-                            'Observações:',
-                            textAlign: pdfLib.TextAlign.left,
-                            style: pdfLib.TextStyle(
-                                fontSize: 8.0,
-                                font: ttf,
-                                fontWeight: pdfLib.FontWeight.bold),
-                          ),
-                        ),
-                        pdfLib.Container(
-                          child: pdfLib.Text(
-                            '$Obs',
-                            textAlign: pdfLib.TextAlign.left,
-                            style: pdfLib.TextStyle(
-                                fontSize: 8.0,
-                                font: ttf,
-                                fontWeight: pdfLib.FontWeight.bold),
-                          ),
-                        ),
-                      ]),
                 ],
               ),
               pdfLib.Divider(),
@@ -1195,6 +1237,13 @@ class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
                         )
                       ]
                   ),
+
+                ],
+              ), pdfLib.Divider(),
+              pdfLib.Row(
+                mainAxisAlignment: pdfLib.MainAxisAlignment.start,
+                crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
+                children: [
                   pdfLib.Column(
                       mainAxisAlignment: pdfLib.MainAxisAlignment.start,
                       crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
@@ -1291,16 +1340,11 @@ class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
                         )
                       ]
                   ),
-                ],
-              ), pdfLib.Divider(),
-              pdfLib.Row(
-                mainAxisAlignment: pdfLib.MainAxisAlignment.start,
-                crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
-                children: [
                   pdfLib.Column(
                       mainAxisAlignment: pdfLib.MainAxisAlignment.start,
                       crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
                       children: [
+
                         pdfLib.Container(
                           width: 80,
                           child: pdfLib.Text(
@@ -1350,7 +1394,7 @@ class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
                       crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
                       children: [
                         pdfLib.Container(
-                          width: 80,
+                          width: 50,
                           child: pdfLib.Text(
                             'Piso',
                             textAlign: pdfLib.TextAlign.left,
@@ -1366,7 +1410,7 @@ class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
                             itemBuilder: (context,index){
                               return
                                 pdfLib.Container(
-                                    width: 80,
+                                    width: 50,
                                     child:
                                     pdfLib.Text(
                                       '${floor[index].toString()}',
@@ -1380,7 +1424,7 @@ class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
                             }
                         ),
                         pdfLib.Container(
-                          width: 80,
+                          width: 50,
                           child: pdfLib.Text(
                             sFloor,
                             textAlign: pdfLib.TextAlign.left,
@@ -1446,7 +1490,7 @@ class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
                       crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
                       children: [
                         pdfLib.Container(
-                          width: 80,
+                          width: 50,
                           child: pdfLib.Text(
                             'Bancada',
                             textAlign: pdfLib.TextAlign.left,
@@ -1462,7 +1506,7 @@ class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
                             itemBuilder: (context,index){
                               return
                                 pdfLib.Container(
-                                    width: 80,
+                                    width: 50,
                                     child:
                                     pdfLib.Text(
                                       '${balcony[index].toString()}',
@@ -1476,7 +1520,7 @@ class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
                             }
                         ),
                         pdfLib.Container(
-                          width: 80,
+                          width: 50,
                           child: pdfLib.Text(
                             sBalcony,
                             textAlign: pdfLib.TextAlign.left,
@@ -1585,150 +1629,7 @@ class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
                         )
                       ]
                   ),
-                  pdfLib.Column(
-                      mainAxisAlignment: pdfLib.MainAxisAlignment.start,
-                      crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
-                      children: [
-                        pdfLib.Container(
-                          width: 120,
-                          child: pdfLib.Text(
-                            'Revestimento do Banheiro',
-                            textAlign: pdfLib.TextAlign.left,
-                            style: pdfLib.TextStyle(
-                                fontSize: 8.0,
-                                font: ttf,
-                                fontWeight: pdfLib.FontWeight.bold
-                            ),
-                          ),
-                        ),
-                        pdfLib.ListView.builder(
-                            itemCount: bathroom.length,
-                            itemBuilder: (context,index){
-                              return
-                                pdfLib.Container(
-                                    width: 120,
-                                    child:
-                                    pdfLib.Text(
-                                      '${bathroom[index].toString()}',
-                                      textAlign: pdfLib.TextAlign.left,
-                                      style: pdfLib.TextStyle(
-                                          fontSize: 8.0,
-                                          font: ttf,
-                                          fontWeight: pdfLib.FontWeight.bold),
-                                    )
-                                );
-                            }
-                        ),
-                        pdfLib.Container(
-                          width: 120,
-                          child: pdfLib.Text(
-                            sBathroom,
-                            textAlign: pdfLib.TextAlign.left,
-                            style: pdfLib.TextStyle(
-                                fontSize: 8.0,
-                                font: ttf,
-                                fontWeight: pdfLib.FontWeight.normal
-                            ),
-                          ),
-                        )
-                      ]
-                  ),
-                  pdfLib.Column(
-                      mainAxisAlignment: pdfLib.MainAxisAlignment.start,
-                      crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
-                      children: [
-                        pdfLib.Container(
-                          width: 120,
-                          child: pdfLib.Text(
-                            'Revestimento do Tanque',
-                            textAlign: pdfLib.TextAlign.left,
-                            style: pdfLib.TextStyle(
-                                fontSize: 8.0,
-                                font: ttf,
-                                fontWeight: pdfLib.FontWeight.bold
-                            ),
-                          ),
-                        ),
-                        pdfLib.ListView.builder(
-                            itemCount: tank.length,
-                            itemBuilder: (context,index){
-                              return
-                                pdfLib.Container(
-                                    width: 120,
-                                    child:
-                                    pdfLib.Text(
-                                      '${tank[index].toString()}',
-                                      textAlign: pdfLib.TextAlign.left,
-                                      style: pdfLib.TextStyle(
-                                          fontSize: 8.0,
-                                          font: ttf,
-                                          fontWeight: pdfLib.FontWeight.bold),
-                                    )
-                                );
-                            }
-                        ),
-                        pdfLib.Container(
-                          width: 120,
-                          child: pdfLib.Text(
-                            sTank,
-                            textAlign: pdfLib.TextAlign.left,
-                            style: pdfLib.TextStyle(
-                                fontSize: 8.0,
-                                font: ttf,
-                                fontWeight: pdfLib.FontWeight.normal
-                            ),
-                          ),
-                        )
-                      ]
-                  ),
-                  pdfLib.Column(
-                      mainAxisAlignment: pdfLib.MainAxisAlignment.start,
-                      crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
-                      children: [
-                        pdfLib.Container(
-                          width: 70,
-                          child: pdfLib.Text(
-                            'Unidade',
-                            textAlign: pdfLib.TextAlign.left,
-                            style: pdfLib.TextStyle(
-                                fontSize: 8.0,
-                                font: ttf,
-                                fontWeight: pdfLib.FontWeight.bold
-                            ),
-                          ),
-                        ),
-                        pdfLib.ListView.builder(
-                            itemCount: unity.length,
-                            itemBuilder: (context,index){
-                              return
-                                pdfLib.Container(
-                                    width: 70,
-                                    child:
-                                    pdfLib.Text(
-                                      '${unity[index].toString()}',
-                                      textAlign: pdfLib.TextAlign.left,
-                                      style: pdfLib.TextStyle(
-                                          fontSize: 8.0,
-                                          font: ttf,
-                                          fontWeight: pdfLib.FontWeight.bold),
-                                    )
-                                );
-                            }
-                        ),
-                        pdfLib.Container(
-                          width: 70,
-                          child: pdfLib.Text(
-                            sUnity,
-                            textAlign: pdfLib.TextAlign.left,
-                            style: pdfLib.TextStyle(
-                                fontSize: 8.0,
-                                font: ttf,
-                                fontWeight: pdfLib.FontWeight.normal
-                            ),
-                          ),
-                        )
-                      ]
-                  ),
+
                 ],
               ),
               pdfLib.Divider(),
@@ -1737,6 +1638,150 @@ class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
                   crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
                   children:
                   [
+                    pdfLib.Column(
+                        mainAxisAlignment: pdfLib.MainAxisAlignment.start,
+                        crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
+                        children: [
+                          pdfLib.Container(
+                            width: 110,
+                            child: pdfLib.Text(
+                              'Revestimento do Banheiro',
+                              textAlign: pdfLib.TextAlign.left,
+                              style: pdfLib.TextStyle(
+                                  fontSize: 8.0,
+                                  font: ttf,
+                                  fontWeight: pdfLib.FontWeight.bold
+                              ),
+                            ),
+                          ),
+                          pdfLib.ListView.builder(
+                              itemCount: bathroom.length,
+                              itemBuilder: (context,index){
+                                return
+                                  pdfLib.Container(
+                                      width: 110,
+                                      child:
+                                      pdfLib.Text(
+                                        '${bathroom[index].toString()}',
+                                        textAlign: pdfLib.TextAlign.left,
+                                        style: pdfLib.TextStyle(
+                                            fontSize: 8.0,
+                                            font: ttf,
+                                            fontWeight: pdfLib.FontWeight.bold),
+                                      )
+                                  );
+                              }
+                          ),
+                          pdfLib.Container(
+                            width: 110,
+                            child: pdfLib.Text(
+                              sBathroom,
+                              textAlign: pdfLib.TextAlign.left,
+                              style: pdfLib.TextStyle(
+                                  fontSize: 8.0,
+                                  font: ttf,
+                                  fontWeight: pdfLib.FontWeight.normal
+                              ),
+                            ),
+                          )
+                        ]
+                    ),
+                    pdfLib.Column(
+                        mainAxisAlignment: pdfLib.MainAxisAlignment.start,
+                        crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
+                        children: [
+                          pdfLib.Container(
+                            width: 100,
+                            child: pdfLib.Text(
+                              'Revestimento do Tanque',
+                              textAlign: pdfLib.TextAlign.left,
+                              style: pdfLib.TextStyle(
+                                  fontSize: 8.0,
+                                  font: ttf,
+                                  fontWeight: pdfLib.FontWeight.bold
+                              ),
+                            ),
+                          ),
+                          pdfLib.ListView.builder(
+                              itemCount: tank.length,
+                              itemBuilder: (context,index){
+                                return
+                                  pdfLib.Container(
+                                      width: 100,
+                                      child:
+                                      pdfLib.Text(
+                                        '${tank[index].toString()}',
+                                        textAlign: pdfLib.TextAlign.left,
+                                        style: pdfLib.TextStyle(
+                                            fontSize: 8.0,
+                                            font: ttf,
+                                            fontWeight: pdfLib.FontWeight.bold),
+                                      )
+                                  );
+                              }
+                          ),
+                          pdfLib.Container(
+                            width: 100,
+                            child: pdfLib.Text(
+                              sTank,
+                              textAlign: pdfLib.TextAlign.left,
+                              style: pdfLib.TextStyle(
+                                  fontSize: 8.0,
+                                  font: ttf,
+                                  fontWeight: pdfLib.FontWeight.normal
+                              ),
+                            ),
+                          )
+                        ]
+                    ),
+                    pdfLib.Column(
+                        mainAxisAlignment: pdfLib.MainAxisAlignment.start,
+                        crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
+                        children: [
+                          pdfLib.Container(
+                            width: 80,
+                            child: pdfLib.Text(
+                              'Unidade',
+                              textAlign: pdfLib.TextAlign.left,
+                              style: pdfLib.TextStyle(
+                                  fontSize: 8.0,
+                                  font: ttf,
+                                  fontWeight: pdfLib.FontWeight.bold
+                              ),
+                            ),
+                          ),
+                          pdfLib.ListView.builder(
+                              itemCount: unity.length,
+                              itemBuilder: (context,index){
+                                return
+                                  pdfLib.Container(
+                                      width: 80,
+                                      child:
+                                      pdfLib.Text(
+                                        '${unity[index].toString()}',
+                                        textAlign: pdfLib.TextAlign.left,
+                                        style: pdfLib.TextStyle(
+                                            fontSize: 8.0,
+                                            font: ttf,
+                                            fontWeight: pdfLib.FontWeight.bold),
+                                      )
+                                  );
+                              }
+                          ),
+                          pdfLib.Container(
+                            width: 80,
+                            child: pdfLib.Text(
+                              sUnity,
+                              textAlign: pdfLib.TextAlign.left,
+                              style: pdfLib.TextStyle(
+                                  fontSize: 8.0,
+                                  font: ttf,
+                                  fontWeight: pdfLib.FontWeight.normal
+                              ),
+                            ),
+                          )
+                        ]
+                    ),
                     pdfLib.Column(
                         mainAxisAlignment: pdfLib.MainAxisAlignment.start,
                         crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
@@ -1833,7 +1878,6 @@ class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
                           )
                         ]
                     ),
-
                     pdfLib.Column(
                         mainAxisAlignment: pdfLib.MainAxisAlignment.start,
                         crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
@@ -1882,8 +1926,14 @@ class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
                           )
                         ]
                     ),
-
-                    pdfLib.Container(
+                  ]
+              ),
+              pdfLib.Divider(),
+              pdfLib.Row(
+                  mainAxisAlignment: pdfLib.MainAxisAlignment.start,
+                  crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
+                children: [
+                  pdfLib.Container(
                     child: pdfLib.Column(
                       children: [
                         pdfLib.Container(
@@ -1967,621 +2017,654 @@ class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
                       ],
                     ),
                   ),
-                    pdfLib.Container(
-                      child: pdfLib.Column(
-                        children: [
-                          pdfLib.Container(
-                            height: 15,
-                            child: pdfLib.Text(
-                              '',
-                              textAlign: pdfLib.TextAlign.left,
-                              style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
-                                  font: ttf,
-                                  fontWeight: pdfLib.FontWeight.bold
-                              ),
+                  pdfLib.Container(
+                    child: pdfLib.Column(
+                      children: [
+                        pdfLib.Container(
+                          height: 15,
+                          child: pdfLib.Text(
+                            '',
+                            textAlign: pdfLib.TextAlign.left,
+                            style: pdfLib.TextStyle(
+                                fontSize: 8.0,
+                                font: ttf,
+                                fontWeight: pdfLib.FontWeight.bold
                             ),
                           ),
-                          pdfLib.Container(
-                            height: 15,
-                            child: pdfLib.Text(
-                              '$SPavs',
-                              textAlign: pdfLib.TextAlign.left,
-                              style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
-                                  font: ttf,
-                                  fontWeight: pdfLib.FontWeight.bold
-                              ),
+                        ),
+                        pdfLib.Container(
+                          height: 15,
+                          child: pdfLib.Text(
+                            '$SPavs',
+                            textAlign: pdfLib.TextAlign.left,
+                            style: pdfLib.TextStyle(
+                                fontSize: 8.0,
+                                font: ttf,
+                                fontWeight: pdfLib.FontWeight.bold
                             ),
                           ),
-                          pdfLib.Container(
-                            height: 15,
-                            child: pdfLib.Text(
-                              '$SElevators',
-                              textAlign: pdfLib.TextAlign.left,
-                              style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
-                                  font: ttf,
-                                  fontWeight: pdfLib.FontWeight.bold
-                              ),
+                        ),
+                        pdfLib.Container(
+                          height: 15,
+                          child: pdfLib.Text(
+                            '$SElevators',
+                            textAlign: pdfLib.TextAlign.left,
+                            style: pdfLib.TextStyle(
+                                fontSize: 8.0,
+                                font: ttf,
+                                fontWeight: pdfLib.FontWeight.bold
                             ),
                           ),
-                          pdfLib.Container(
-                            height: 15,
-                            child: pdfLib.Text(
-                              '$SAge',
-                              textAlign: pdfLib.TextAlign.left,
-                              style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
-                                  font: ttf,
-                                  fontWeight: pdfLib.FontWeight.bold
-                              ),
+                        ),
+                        pdfLib.Container(
+                          height: 15,
+                          child: pdfLib.Text(
+                            '$SAge',
+                            textAlign: pdfLib.TextAlign.left,
+                            style: pdfLib.TextStyle(
+                                fontSize: 8.0,
+                                font: ttf,
+                                fontWeight: pdfLib.FontWeight.bold
                             ),
                           ),
-                          pdfLib.Container(
-                            height: 15,
-                            child: pdfLib.Text(
-                              '$SAptos',
-                              textAlign: pdfLib.TextAlign.left,
-                              style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
-                                  font: ttf,
-                                  fontWeight: pdfLib.FontWeight.bold
-                              ),
+                        ),
+                        pdfLib.Container(
+                          height: 15,
+                          child: pdfLib.Text(
+                            '$SAptos',
+                            textAlign: pdfLib.TextAlign.left,
+                            style: pdfLib.TextStyle(
+                                fontSize: 8.0,
+                                font: ttf,
+                                fontWeight: pdfLib.FontWeight.bold
                             ),
                           ),
-                          pdfLib.Container(
-                            height: 15,
-                            child: pdfLib.Text(
-                              '$SUnitys',
-                              textAlign: pdfLib.TextAlign.left,
-                              style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
-                                  font: ttf,
-                                  fontWeight: pdfLib.FontWeight.bold
-                              ),
+                        ),
+                        pdfLib.Container(
+                          height: 15,
+                          child: pdfLib.Text(
+                            '$SUnitys',
+                            textAlign: pdfLib.TextAlign.left,
+                            style: pdfLib.TextStyle(
+                                fontSize: 8.0,
+                                font: ttf,
+                                fontWeight: pdfLib.FontWeight.bold
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                    pdfLib.SizedBox(width: 20),
+                  ),
+                  pdfLib.SizedBox(width: 20),
+                  pdfLib.Column(
+                      mainAxisAlignment: pdfLib.MainAxisAlignment.start,
+                      crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
+                      children: [
+                        pdfLib.Container(
+                          width: 85,
+                          child: pdfLib.Text(
+                            'Vista Panorâmica',
+                            textAlign: pdfLib.TextAlign.left,
+                            style: pdfLib.TextStyle(
+                                fontSize: 8.0,
+                                font: ttf,
+                                fontWeight: pdfLib.FontWeight.bold
+                            ),
+                          ),
+                        ),
+                        pdfLib.ListView.builder(
+                            itemCount: view.length,
+                            itemBuilder: (context,index){
+                              return
+                                pdfLib.Container(
+                                    width: 85,
+                                    child:
+                                    pdfLib.Text(
+                                      '${view[index].toString()}',
+                                      textAlign: pdfLib.TextAlign.left,
+                                      style: pdfLib.TextStyle(
+                                          fontSize: 8.0,
+                                          font: ttf,
+                                          fontWeight: pdfLib.FontWeight.bold),
+                                    )
+                                );
+                            }
+                        ),
+                        pdfLib.Container(
+                          width: 85,
+                          child: pdfLib.Text(
+                            sView,
+                            textAlign: pdfLib.TextAlign.left,
+                            style: pdfLib.TextStyle(
+                                fontSize: 8.0,
+                                font: ttf,
+                                fontWeight: pdfLib.FontWeight.normal
+                            ),
+                          ),
+                        )
+                      ]
+                  ),
+                  pdfLib.Container(
+                    child: pdfLib.Column(
+                      children: [
+                        pdfLib.Container(
+                          width: 130,
+                          height: 15,
+                          child: pdfLib.Text(
+                            'Unidade',
+                            textAlign: pdfLib.TextAlign.left,
+                            style: pdfLib.TextStyle(
+                                fontSize: 8.0,
+                                font: ttf,
+                                fontWeight: pdfLib.FontWeight.bold
+                            ),
+                          ),
+                        ),
+                        pdfLib.Container(
+                          width: 130,
+                          height: 15,
+                          child: pdfLib.Text(
+                            'Quartos',
+                            textAlign: pdfLib.TextAlign.left,
+                            style: pdfLib.TextStyle(
+                                fontSize: 8.0,
+                                font: ttf,
+                                fontWeight: pdfLib.FontWeight.bold
+                            ),
+                          ),
+                        ),
+                        pdfLib.Container(
+                          width: 130,
+                          height: 15,
+                          child: pdfLib.Text(
+                            'Banheiros Sociais',
+                            textAlign: pdfLib.TextAlign.left,
+                            style: pdfLib.TextStyle(
+                                fontSize: 8.0,
+                                font: ttf,
+                                fontWeight: pdfLib.FontWeight.bold
+                            ),
+                          ),
+                        ),
+                        pdfLib.Container(
+                          width: 130,
+                          height: 15,
+                          child: pdfLib.Text(
+                            'Banheiros Privativos',
+                            textAlign: pdfLib.TextAlign.left,
+                            style: pdfLib.TextStyle(
+                                fontSize: 8.0,
+                                font: ttf,
+                                fontWeight: pdfLib.FontWeight.bold
+                            ),
+                          ),
+                        ),
+                        pdfLib.Container(
+                          width: 130,
+                          height: 15,
+                          child: pdfLib.Text(
+                            'Lavabos',
+                            textAlign: pdfLib.TextAlign.left,
+                            style: pdfLib.TextStyle(
+                                fontSize: 8.0,
+                                font: ttf,
+                                fontWeight: pdfLib.FontWeight.bold
+                            ),
+                          ),
+                        ),
+                        pdfLib.Container(
+                          width: 130,
+                          height: 15,
+                          child: pdfLib.Text(
+                            'Banheiros de Serviço',
+                            textAlign: pdfLib.TextAlign.left,
+                            style: pdfLib.TextStyle(
+                                fontSize: 8.0,
+                                font: ttf,
+                                fontWeight: pdfLib.FontWeight.bold
+                            ),
+                          ),
+                        ),
+                        pdfLib.Container(
+                          width: 130,
+                          height: 15,
+                          child: pdfLib.Text(
+                            'Quartos de Empregada',
+                            textAlign: pdfLib.TextAlign.left,
+                            style: pdfLib.TextStyle(
+                                fontSize: 8.0,
+                                font: ttf,
+                                fontWeight: pdfLib.FontWeight.bold
+                            ),
+                          ),
+                        ),
+                        pdfLib.Container(
+                          width: 130,
+                          height: 15,
+                          child: pdfLib.Text(
+                            'Varanda/Sacada',
+                            textAlign: pdfLib.TextAlign.left,
+                            style: pdfLib.TextStyle(
+                                fontSize: 8.0,
+                                font: ttf,
+                                fontWeight: pdfLib.FontWeight.bold
+                            ),
+                          ),
+                        ),
+                        pdfLib.Container(
+                          width: 130,
+                          height: 15,
+                          child: pdfLib.Text(
+                            'Número de armários completos',
+                            textAlign: pdfLib.TextAlign.left,
+                            style: pdfLib.TextStyle(
+                                fontSize: 8.0,
+                                font: ttf,
+                                fontWeight: pdfLib.FontWeight.bold
+                            ),
+                          ),
+                        ),
+                        pdfLib.Container(
+                          width: 130,
+                          height: 15,
+                          child: pdfLib.Text(
+                            'Cozinha',
+                            textAlign: pdfLib.TextAlign.left,
+                            style: pdfLib.TextStyle(
+                                fontSize: 8.0,
+                                font: ttf,
+                                fontWeight: pdfLib.FontWeight.bold
+                            ),
+                          ),
+                        ),
+                        pdfLib.Container(
+                          width: 130,
+                          height: 15,
+                          child: pdfLib.Text(
+                            'Sala',
+                            textAlign: pdfLib.TextAlign.left,
+                            style: pdfLib.TextStyle(
+                                fontSize: 8.0,
+                                font: ttf,
+                                fontWeight: pdfLib.FontWeight.bold
+                            ),
+                          ),
+                        ),
+                        pdfLib.Container(
+                          width: 130,
+                          height: 15,
+                          child: pdfLib.Text(
+                            'Área de Serviço Coberta',
+                            textAlign: pdfLib.TextAlign.left,
+                            style: pdfLib.TextStyle(
+                                fontSize: 8.0,
+                                font: ttf,
+                                fontWeight: pdfLib.FontWeight.bold
+                            ),
+                          ),
+                        ),
+                        pdfLib.Container(
+                          width: 130,
+                          height: 15,
+                          child: pdfLib.Text(
+                            'Área de Serviço Descoberta',
+                            textAlign: pdfLib.TextAlign.left,
+                            style: pdfLib.TextStyle(
+                                fontSize: 8.0,
+                                font: ttf,
+                                fontWeight: pdfLib.FontWeight.bold
+                            ),
+                          ),
+                        ),
+                        pdfLib.Container(
+                          width: 130,
+                          height: 15,
+                          child: pdfLib.Text(
+                            'Garagem Coberta',
+                            textAlign: pdfLib.TextAlign.left,
+                            style: pdfLib.TextStyle(
+                                fontSize: 8.0,
+                                font: ttf,
+                                fontWeight: pdfLib.FontWeight.bold
+                            ),
+                          ),
+                        ),
+                        pdfLib.Container(
+                          width: 130,
+                          height: 15,
+                          child: pdfLib.Text(
+                            'Garagem Descoberta',
+                            textAlign: pdfLib.TextAlign.left,
+                            style: pdfLib.TextStyle(
+                                fontSize: 8.0,
+                                font: ttf,
+                                fontWeight: pdfLib.FontWeight.bold
+                            ),
+                          ),
+                        ),
+                        pdfLib.Container(
+                          width: 130,
+                          height: 15,
+                          child: pdfLib.Text(
+                            'Ar condicionado',
+                            textAlign: pdfLib.TextAlign.left,
+                            style: pdfLib.TextStyle(
+                                fontSize: 8.0,
+                                font: ttf,
+                                fontWeight: pdfLib.FontWeight.bold
+                            ),
+                          ),
+                        ),
+                        pdfLib.Container(
+                          width: 130,
+                          height: 15,
+                          child: pdfLib.Text(
+                            'Piscina',
+                            textAlign: pdfLib.TextAlign.left,
+                            style: pdfLib.TextStyle(
+                                fontSize: 8.0,
+                                font: ttf,
+                                fontWeight: pdfLib.FontWeight.bold
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  pdfLib.Container(
+                    child: pdfLib.Column(
+                      children: [
+                        pdfLib.Container(
+                          height: 15,
+                          child: pdfLib.Text(
+                            '',
+                            textAlign: pdfLib.TextAlign.left,
+                            style: pdfLib.TextStyle(
+                                fontSize: 8.0,
+                                font: ttf,
+                                fontWeight: pdfLib.FontWeight.bold
+                            ),
+                          ),
+                        ),
+                        pdfLib.Container(
+                          height: 15,
+                          child: pdfLib.Text(
+                            '$SRoom',
+                            textAlign: pdfLib.TextAlign.left,
+                            style: pdfLib.TextStyle(
+                                fontSize: 8.0,
+                                font: ttf,
+                                fontWeight: pdfLib.FontWeight.bold
+                            ),
+                          ),
+                        ),
+                        pdfLib.Container(
+                          height: 15,
+                          child: pdfLib.Text(
+                            '$SSocialBathroom',
+                            textAlign: pdfLib.TextAlign.left,
+                            style: pdfLib.TextStyle(
+                                fontSize: 8.0,
+                                font: ttf,
+                                fontWeight: pdfLib.FontWeight.bold
+                            ),
+                          ),
+                        ),
+                        pdfLib.Container(
+                          height: 15,
+                          child: pdfLib.Text(
+                            '$SPrivateBathroom',
+                            textAlign: pdfLib.TextAlign.left,
+                            style: pdfLib.TextStyle(
+                                fontSize: 8.0,
+                                font: ttf,
+                                fontWeight: pdfLib.FontWeight.bold
+                            ),
+                          ),
+                        ),
+                        pdfLib.Container(
+                          height: 15,
+                          child: pdfLib.Text(
+                            '$SLav',
+                            textAlign: pdfLib.TextAlign.left,
+                            style: pdfLib.TextStyle(
+                                fontSize: 8.0,
+                                font: ttf,
+                                fontWeight: pdfLib.FontWeight.bold
+                            ),
+                          ),
+                        ),
+                        pdfLib.Container(
+                          height: 15,
+                          child: pdfLib.Text(
+                            '$SServiceBathroom',
+                            textAlign: pdfLib.TextAlign.left,
+                            style: pdfLib.TextStyle(
+                                fontSize: 8.0,
+                                font: ttf,
+                                fontWeight: pdfLib.FontWeight.bold
+                            ),
+                          ),
+                        ),
+                        pdfLib.Container(
+                          height: 15,
+                          child: pdfLib.Text(
+                            '$SMaidRoom',
+                            textAlign: pdfLib.TextAlign.left,
+                            style: pdfLib.TextStyle(
+                                fontSize: 8.0,
+                                font: ttf,
+                                fontWeight: pdfLib.FontWeight.bold
+                            ),
+                          ),
+                        ),
+                        pdfLib.Container(
+                          height: 15,
+                          child:pdfLib.Text(
+                            '$SBalcony',
+                            textAlign: pdfLib.TextAlign.left,
+                            style: pdfLib.TextStyle(
+                                fontSize: 8.0,
+                                font: ttf,
+                                fontWeight: pdfLib.FontWeight.bold
+                            ),
+                          ),
+                        ),
+                        pdfLib.Container(
+                          height: 15,
+                          child: pdfLib.Text(
+                            '$SCompleteCabinets',
+                            textAlign: pdfLib.TextAlign.left,
+                            style: pdfLib.TextStyle(
+                                fontSize: 8.0,
+                                font: ttf,
+                                fontWeight: pdfLib.FontWeight.bold
+                            ),
+                          ),
+                        ),
+                        pdfLib.Container(
+                          height: 15,
+                          child: pdfLib.Text(
+                            '$SKitchen',
+                            textAlign: pdfLib.TextAlign.left,
+                            style: pdfLib.TextStyle(
+                                fontSize: 8.0,
+                                font: ttf,
+                                fontWeight: pdfLib.FontWeight.bold
+                            ),
+                          ),
+                        ),
+                        pdfLib.Container(
+                          height: 15,
+                          child: pdfLib.Text(
+                            '$SRestRoom',
+                            textAlign: pdfLib.TextAlign.left,
+                            style: pdfLib.TextStyle(
+                                fontSize: 8.0,
+                                font: ttf,
+                                fontWeight: pdfLib.FontWeight.bold
+                            ),
+                          ),
+                        ),
+                        pdfLib.Container(
+                          height: 15,
+                          child: pdfLib.Text(
+                            '$SServiceAreaRoofed',
+                            textAlign: pdfLib.TextAlign.left,
+                            style: pdfLib.TextStyle(
+                                fontSize: 8.0,
+                                font: ttf,
+                                fontWeight: pdfLib.FontWeight.bold
+                            ),
+                          ),
+                        ),
+                        pdfLib.Container(
+                          height: 15,
+                          child: pdfLib.Text(
+                            '$SServiceAreaUnroofed',
+                            textAlign: pdfLib.TextAlign.left,
+                            style: pdfLib.TextStyle(
+                                fontSize: 8.0,
+                                font: ttf,
+                                fontWeight: pdfLib.FontWeight.bold
+                            ),
+                          ),
+                        ),
+                        pdfLib.Container(
+                          height: 15,
+                          child: pdfLib.Text(
+                            '$SOpenGarage',
+                            textAlign: pdfLib.TextAlign.left,
+                            style: pdfLib.TextStyle(
+                                fontSize: 8.0,
+                                font: ttf,
+                                fontWeight: pdfLib.FontWeight.bold
+                            ),
+                          ),
+                        ),
+                        pdfLib.Container(
+                          height: 15,
+                          child: pdfLib.Text(
+                            '$SClosedGarage',
+                            textAlign: pdfLib.TextAlign.left,
+                            style: pdfLib.TextStyle(
+                                fontSize: 8.0,
+                                font: ttf,
+                                fontWeight: pdfLib.FontWeight.bold
+                            ),
+                          ),
+                        ),
+                        pdfLib.Container(
+                          height: 15,
+                          child: pdfLib.Text(
+                            '$SAc',
+                            textAlign: pdfLib.TextAlign.left,
+                            style: pdfLib.TextStyle(
+                                fontSize: 8.0,
+                                font: ttf,
+                                fontWeight: pdfLib.FontWeight.bold
+                            ),
+                          ),
+                        ),
+                        pdfLib.Container(
+                          height: 15,
+                          child: pdfLib.Text(
+                            '$SPool',
+                            textAlign: pdfLib.TextAlign.left,
+                            style: pdfLib.TextStyle(
+                                fontSize: 8.0,
+                                font: ttf,
+                                fontWeight: pdfLib.FontWeight.bold
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  pdfLib.SizedBox(
+                      width: 20
+                  ),
+                  pdfLib.Column(
+                      mainAxisAlignment: pdfLib.MainAxisAlignment.start,
+                      crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
+                      children: [
+                        pdfLib.Container(
+                          width: 120,
+                          child: pdfLib.Text(
+                            'Condominio/Bloco',
+                            textAlign: pdfLib.TextAlign.left,
+                            style: pdfLib.TextStyle(
+                                fontSize: 8.0,
+                                font: ttf,
+                                fontWeight: pdfLib.FontWeight.bold
+                            ),
+                          ),
+                        ),
+                        pdfLib.ListView.builder(
+                            itemCount: block.length,
+                            itemBuilder: (context,index){
+                              return
+                                pdfLib.Container(
+                                    width: 120,
+                                    child:
+                                    pdfLib.Text(
+                                      '${block[index].toString()}',
+                                      textAlign: pdfLib.TextAlign.left,
+                                      style: pdfLib.TextStyle(
+                                          fontSize: 8.0,
+                                          font: ttf,
+                                          fontWeight: pdfLib.FontWeight.bold),
+                                    )
+                                );
+                            }
+                        ),
+                        pdfLib.Container(
+                          width: 120,
+                          child: pdfLib.Text(
+                            sBlock,
+                            textAlign: pdfLib.TextAlign.left,
+                            style: pdfLib.TextStyle(
+                                fontSize: 8.0,
+                                font: ttf,
+                                fontWeight: pdfLib.FontWeight.normal
+                            ),
+                          ),
+                        )
+                      ]
+                  ),
+                ]
+              ),
+              pdfLib.Divider(),
+              pdfLib.Row(
+                  mainAxisAlignment: pdfLib.MainAxisAlignment.start,
+                  crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
+                  children: [
                     pdfLib.Column(
-                        mainAxisAlignment: pdfLib.MainAxisAlignment.start,
-                        crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
                         children: [
                           pdfLib.Container(
-                            width: 85,
+                            width: 500,
                             child: pdfLib.Text(
-                              'Vista Panorâmica',
+                              'Observações:',
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
-                                  fontWeight: pdfLib.FontWeight.bold
-                              ),
-                            ),
-                          ),
-                          pdfLib.ListView.builder(
-                              itemCount: view.length,
-                              itemBuilder: (context,index){
-                                return
-                                  pdfLib.Container(
-                                      width: 85,
-                                      child:
-                                      pdfLib.Text(
-                                        '${view[index].toString()}',
-                                        textAlign: pdfLib.TextAlign.left,
-                                        style: pdfLib.TextStyle(
-                                            fontSize: 8.0,
-                                            font: ttf,
-                                            fontWeight: pdfLib.FontWeight.bold),
-                                      )
-                                  );
-                              }
-                          ),
-                          pdfLib.Container(
-                            width: 85,
-                            child: pdfLib.Text(
-                              sView,
-                              textAlign: pdfLib.TextAlign.left,
-                              style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
-                                  font: ttf,
-                                  fontWeight: pdfLib.FontWeight.normal
-                              ),
-                            ),
-                          )
-                        ]
-                    ),
-                    pdfLib.Container(
-                      child: pdfLib.Column(
-                        children: [
-                          pdfLib.Container(
-                            width: 130,
-                            height: 15,
-                            child: pdfLib.Text(
-                              'Unidade',
-                              textAlign: pdfLib.TextAlign.left,
-                              style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
-                                  font: ttf,
-                                  fontWeight: pdfLib.FontWeight.bold
-                              ),
+                                  fontWeight: pdfLib.FontWeight.bold),
                             ),
                           ),
                           pdfLib.Container(
-                            width: 130,
-                            height: 15,
+                            width:500,
                             child: pdfLib.Text(
-                              'Quartos',
+                              '$Obs',
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
-                                  fontWeight: pdfLib.FontWeight.bold
-                              ),
+                                  fontWeight: pdfLib.FontWeight.bold),
                             ),
                           ),
-                          pdfLib.Container(
-                            width: 130,
-                            height: 15,
-                            child: pdfLib.Text(
-                              'Banheiros Sociais',
-                              textAlign: pdfLib.TextAlign.left,
-                              style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
-                                  font: ttf,
-                                  fontWeight: pdfLib.FontWeight.bold
-                              ),
-                            ),
-                          ),
-                          pdfLib.Container(
-                            width: 130,
-                            height: 15,
-                            child: pdfLib.Text(
-                              'Banheiros Privativos',
-                              textAlign: pdfLib.TextAlign.left,
-                              style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
-                                  font: ttf,
-                                  fontWeight: pdfLib.FontWeight.bold
-                              ),
-                            ),
-                          ),
-                          pdfLib.Container(
-                            width: 130,
-                            height: 15,
-                            child: pdfLib.Text(
-                              'Lavabos',
-                              textAlign: pdfLib.TextAlign.left,
-                              style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
-                                  font: ttf,
-                                  fontWeight: pdfLib.FontWeight.bold
-                              ),
-                            ),
-                          ),
-                          pdfLib.Container(
-                            width: 130,
-                            height: 15,
-                            child: pdfLib.Text(
-                              'Banheiros de Serviço',
-                              textAlign: pdfLib.TextAlign.left,
-                              style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
-                                  font: ttf,
-                                  fontWeight: pdfLib.FontWeight.bold
-                              ),
-                            ),
-                          ),
-                          pdfLib.Container(
-                            width: 130,
-                            height: 15,
-                            child: pdfLib.Text(
-                              'Quartos de Empregada',
-                              textAlign: pdfLib.TextAlign.left,
-                              style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
-                                  font: ttf,
-                                  fontWeight: pdfLib.FontWeight.bold
-                              ),
-                            ),
-                          ),
-                          pdfLib.Container(
-                            width: 130,
-                            height: 15,
-                            child: pdfLib.Text(
-                              'Varanda/Sacada',
-                              textAlign: pdfLib.TextAlign.left,
-                              style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
-                                  font: ttf,
-                                  fontWeight: pdfLib.FontWeight.bold
-                              ),
-                            ),
-                          ),
-                          pdfLib.Container(
-                            width: 130,
-                            height: 15,
-                            child: pdfLib.Text(
-                              'Número de armários completos',
-                              textAlign: pdfLib.TextAlign.left,
-                              style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
-                                  font: ttf,
-                                  fontWeight: pdfLib.FontWeight.bold
-                              ),
-                            ),
-                          ),
-                          pdfLib.Container(
-                            width: 130,
-                            height: 15,
-                            child: pdfLib.Text(
-                              'Cozinha',
-                              textAlign: pdfLib.TextAlign.left,
-                              style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
-                                  font: ttf,
-                                  fontWeight: pdfLib.FontWeight.bold
-                              ),
-                            ),
-                          ),
-                          pdfLib.Container(
-                            width: 130,
-                            height: 15,
-                            child: pdfLib.Text(
-                              'Sala',
-                              textAlign: pdfLib.TextAlign.left,
-                              style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
-                                  font: ttf,
-                                  fontWeight: pdfLib.FontWeight.bold
-                              ),
-                            ),
-                          ),
-                          pdfLib.Container(
-                            width: 130,
-                            height: 15,
-                            child: pdfLib.Text(
-                              'Área de Serviço Coberta',
-                              textAlign: pdfLib.TextAlign.left,
-                              style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
-                                  font: ttf,
-                                  fontWeight: pdfLib.FontWeight.bold
-                              ),
-                            ),
-                          ),
-                          pdfLib.Container(
-                            width: 130,
-                            height: 15,
-                            child: pdfLib.Text(
-                              'Área de Serviço Descoberta',
-                              textAlign: pdfLib.TextAlign.left,
-                              style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
-                                  font: ttf,
-                                  fontWeight: pdfLib.FontWeight.bold
-                              ),
-                            ),
-                          ),
-                          pdfLib.Container(
-                            width: 130,
-                            height: 15,
-                            child: pdfLib.Text(
-                              'Garagem Coberta',
-                              textAlign: pdfLib.TextAlign.left,
-                              style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
-                                  font: ttf,
-                                  fontWeight: pdfLib.FontWeight.bold
-                              ),
-                            ),
-                          ),
-                          pdfLib.Container(
-                            width: 130,
-                            height: 15,
-                            child: pdfLib.Text(
-                              'Garagem Descoberta',
-                              textAlign: pdfLib.TextAlign.left,
-                              style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
-                                  font: ttf,
-                                  fontWeight: pdfLib.FontWeight.bold
-                              ),
-                            ),
-                          ),
-                          pdfLib.Container(
-                            width: 130,
-                            height: 15,
-                            child: pdfLib.Text(
-                              'Ar condicionado',
-                              textAlign: pdfLib.TextAlign.left,
-                              style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
-                                  font: ttf,
-                                  fontWeight: pdfLib.FontWeight.bold
-                              ),
-                            ),
-                          ),
-                          pdfLib.Container(
-                            width: 130,
-                            height: 15,
-                            child: pdfLib.Text(
-                              'Piscina',
-                              textAlign: pdfLib.TextAlign.left,
-                              style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
-                                  font: ttf,
-                                  fontWeight: pdfLib.FontWeight.bold
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    pdfLib.Container(
-                      child: pdfLib.Column(
-                        children: [
-                          pdfLib.Container(
-                            height: 15,
-                            child: pdfLib.Text(
-                              '',
-                              textAlign: pdfLib.TextAlign.left,
-                              style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
-                                  font: ttf,
-                                  fontWeight: pdfLib.FontWeight.bold
-                              ),
-                            ),
-                          ),
-                          pdfLib.Container(
-                            height: 15,
-                            child: pdfLib.Text(
-                              '$SRoom',
-                              textAlign: pdfLib.TextAlign.left,
-                              style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
-                                  font: ttf,
-                                  fontWeight: pdfLib.FontWeight.bold
-                              ),
-                            ),
-                          ),
-                          pdfLib.Container(
-                            height: 15,
-                            child: pdfLib.Text(
-                              '$SSocialBathroom',
-                              textAlign: pdfLib.TextAlign.left,
-                              style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
-                                  font: ttf,
-                                  fontWeight: pdfLib.FontWeight.bold
-                              ),
-                            ),
-                          ),
-                          pdfLib.Container(
-                            height: 15,
-                            child: pdfLib.Text(
-                              '$SPrivateBathroom',
-                              textAlign: pdfLib.TextAlign.left,
-                              style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
-                                  font: ttf,
-                                  fontWeight: pdfLib.FontWeight.bold
-                              ),
-                            ),
-                          ),
-                          pdfLib.Container(
-                            height: 15,
-                            child: pdfLib.Text(
-                              '$SLav',
-                              textAlign: pdfLib.TextAlign.left,
-                              style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
-                                  font: ttf,
-                                  fontWeight: pdfLib.FontWeight.bold
-                              ),
-                            ),
-                          ),
-                          pdfLib.Container(
-                            height: 15,
-                            child: pdfLib.Text(
-                              '$SServiceBathroom',
-                              textAlign: pdfLib.TextAlign.left,
-                              style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
-                                  font: ttf,
-                                  fontWeight: pdfLib.FontWeight.bold
-                              ),
-                            ),
-                          ),
-                          pdfLib.Container(
-                            height: 15,
-                            child: pdfLib.Text(
-                              '$SMaidRoom',
-                              textAlign: pdfLib.TextAlign.left,
-                              style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
-                                  font: ttf,
-                                  fontWeight: pdfLib.FontWeight.bold
-                              ),
-                            ),
-                          ),
-                          pdfLib.Container(
-                            height: 15,
-                            child:pdfLib.Text(
-                              '$SBalcony',
-                              textAlign: pdfLib.TextAlign.left,
-                              style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
-                                  font: ttf,
-                                  fontWeight: pdfLib.FontWeight.bold
-                              ),
-                            ),
-                          ),
-                          pdfLib.Container(
-                            height: 15,
-                            child: pdfLib.Text(
-                              '$SCompleteCabinets',
-                              textAlign: pdfLib.TextAlign.left,
-                              style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
-                                  font: ttf,
-                                  fontWeight: pdfLib.FontWeight.bold
-                              ),
-                            ),
-                          ),
-                          pdfLib.Container(
-                            height: 15,
-                            child: pdfLib.Text(
-                              '$SKitchen',
-                              textAlign: pdfLib.TextAlign.left,
-                              style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
-                                  font: ttf,
-                                  fontWeight: pdfLib.FontWeight.bold
-                              ),
-                            ),
-                          ),
-                          pdfLib.Container(
-                            height: 15,
-                            child: pdfLib.Text(
-                              '$SRestRoom',
-                              textAlign: pdfLib.TextAlign.left,
-                              style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
-                                  font: ttf,
-                                  fontWeight: pdfLib.FontWeight.bold
-                              ),
-                            ),
-                          ),
-                          pdfLib.Container(
-                            height: 15,
-                            child: pdfLib.Text(
-                              '$SServiceAreaRoofed',
-                              textAlign: pdfLib.TextAlign.left,
-                              style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
-                                  font: ttf,
-                                  fontWeight: pdfLib.FontWeight.bold
-                              ),
-                            ),
-                          ),
-                          pdfLib.Container(
-                            height: 15,
-                            child: pdfLib.Text(
-                              '$SServiceAreaUnroofed',
-                              textAlign: pdfLib.TextAlign.left,
-                              style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
-                                  font: ttf,
-                                  fontWeight: pdfLib.FontWeight.bold
-                              ),
-                            ),
-                          ),
-                          pdfLib.Container(
-                            height: 15,
-                            child: pdfLib.Text(
-                              '$SOpenGarage',
-                              textAlign: pdfLib.TextAlign.left,
-                              style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
-                                  font: ttf,
-                                  fontWeight: pdfLib.FontWeight.bold
-                              ),
-                            ),
-                          ),
-                          pdfLib.Container(
-                            height: 15,
-                            child: pdfLib.Text(
-                              '$SClosedGarage',
-                              textAlign: pdfLib.TextAlign.left,
-                              style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
-                                  font: ttf,
-                                  fontWeight: pdfLib.FontWeight.bold
-                              ),
-                            ),
-                          ),
-                          pdfLib.Container(
-                            height: 15,
-                            child: pdfLib.Text(
-                              '$SAc',
-                              textAlign: pdfLib.TextAlign.left,
-                              style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
-                                  font: ttf,
-                                  fontWeight: pdfLib.FontWeight.bold
-                              ),
-                            ),
-                          ),
-                          pdfLib.Container(
-                            height: 15,
-                            child: pdfLib.Text(
-                              '$SPool',
-                              textAlign: pdfLib.TextAlign.left,
-                              style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
-                                  font: ttf,
-                                  fontWeight: pdfLib.FontWeight.bold
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    pdfLib.SizedBox(
-                        width: 20
-                    ),
-                    pdfLib.Column(
-                        mainAxisAlignment: pdfLib.MainAxisAlignment.start,
-                        crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
-                        children: [
-                          pdfLib.Container(
-                            width: 120,
-                            child: pdfLib.Text(
-                              'Condominio/Bloco',
-                              textAlign: pdfLib.TextAlign.left,
-                              style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
-                                  font: ttf,
-                                  fontWeight: pdfLib.FontWeight.bold
-                              ),
-                            ),
-                          ),
-                          pdfLib.ListView.builder(
-                              itemCount: block.length,
-                              itemBuilder: (context,index){
-                                return
-                                  pdfLib.Container(
-                                      width: 120,
-                                      child:
-                                      pdfLib.Text(
-                                        '${block[index].toString()}',
-                                        textAlign: pdfLib.TextAlign.left,
-                                        style: pdfLib.TextStyle(
-                                            fontSize: 8.0,
-                                            font: ttf,
-                                            fontWeight: pdfLib.FontWeight.bold),
-                                      )
-                                  );
-                              }
-                          ),
-                          pdfLib.Container(
-                            width: 120,
-                            child: pdfLib.Text(
-                              sBlock,
-                              textAlign: pdfLib.TextAlign.left,
-                              style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
-                                  font: ttf,
-                                  fontWeight: pdfLib.FontWeight.normal
-                              ),
-                            ),
-                          )
-                        ]
-                    ),
+                        ]),
+
                   ]
               )
             ]));

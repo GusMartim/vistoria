@@ -177,6 +177,8 @@ class _ConstructionStepState extends State<ConstructionStep> {
   _tableConstruction() async{
     _constructionModel.services = SServices;
     _constructionModel.infra = SInfra;
+    _constructionModel.Contato = _controllerContato.text;
+    _constructionModel.Telefone = _controllerTelefoneContato.text;
     _constructionModel.supra = SSupra;
     _constructionModel.walls = SWalls;
     _constructionModel.frames = SFrames;

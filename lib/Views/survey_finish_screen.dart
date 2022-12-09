@@ -79,6 +79,8 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
   var AreaT = '';
   var Goal = '';
   var Origin = '';
+  var contato = '';
+  var telefone = '';
 
   List imageList = [];
   List pathology = [];
@@ -337,6 +339,8 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
    }
     setState(() {
       age = data?["age"] ?? "";
+      contato = data?["contato"] ?? "";
+      telefone = data?["telefone"] ?? "";
       price = data?["price"] ?? "";
       surveyType = data?["typesurvey"] ?? '';
       sPathology = data?["Pathology"] ?? "";
@@ -412,14 +416,13 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
     final ttf = pdfLib.Font.ttf(font);
     pdf.addPage(
         pdfLib.MultiPage(
-          margin: pdfLib.EdgeInsets.all(2.0),
-          orientation: pdfLib.PageOrientation.landscape,
+          margin: pdfLib.EdgeInsets.all(6.0),
         build: (context) => [
               pdfLib.Container(
                   child: pdfLib.Text('Vistoria de Casa',
                             textAlign: pdfLib.TextAlign.left,  
                                   style: pdfLib.TextStyle(
-                          fontSize: 10,
+                          fontSize: 16,
                           font: ttf,
                           fontWeight: pdfLib.FontWeight.bold))),
               pdfLib.Row(
@@ -438,7 +441,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                               
                             textAlign: pdfLib.TextAlign.left,  
                                   style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold),
                             ),
@@ -449,7 +452,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                               
                             textAlign: pdfLib.TextAlign.left,  
                                   style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold),
                             ),
@@ -459,10 +462,9 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                           pdfLib.Container(
                             child: pdfLib.Text(
                               'Vistoriador:',
-                              
                             textAlign: pdfLib.TextAlign.left,  
                                   style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold),
                             ),
@@ -473,36 +475,41 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                               
                             textAlign: pdfLib.TextAlign.left,  
                                   style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold),
                             ),
                           ),
                         ]),
-                        pdfLib.Row(children: [
-                          pdfLib.Container(
-                            child: pdfLib.Text(
-                              'Endereço:',
-                              
-                            textAlign: pdfLib.TextAlign.left,  
+                        pdfLib.Row(
+                            mainAxisAlignment: pdfLib.MainAxisAlignment.start,
+                            crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
+                            children: [
+                              pdfLib.Container(
+
+                                child: pdfLib.Text(
+                                  'Endereço:',
+                                  textAlign: pdfLib.TextAlign.left,
                                   style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
-                                  font: ttf,
-                                  fontWeight: pdfLib.FontWeight.bold),
-                            ),
-                          ),
-                          pdfLib.Container(
-                            child: pdfLib.Text(
-                              ' $street, $number,$complement, $district - $city/$states - $cep',
-                              
-                            textAlign: pdfLib.TextAlign.left,  
+                                      fontSize: 8.0,
+                                      font: ttf,
+                                      fontWeight: pdfLib.FontWeight.bold),
+                                ),
+                              ),
+                              pdfLib.Container(
+                                width: 200,
+                                child: pdfLib.Text(
+                                  ' $street, $number,$complement,$district - $city/$states - $cep',
+
+                                  textAlign: pdfLib.TextAlign.left,
+                                  maxLines: 2,
                                   style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
-                                  font: ttf,
-                                  fontWeight: pdfLib.FontWeight.bold),
-                            ),
-                          ),
-                        ]),
+                                      fontSize: 8.0,
+                                      font: ttf,
+                                      fontWeight: pdfLib.FontWeight.bold),
+                                ),
+                              ),
+                            ]),
                         pdfLib.Row(children: [
                           pdfLib.Container(
                             child: pdfLib.Text(
@@ -510,7 +517,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                               
                             textAlign: pdfLib.TextAlign.left,  
                                   style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold),
                             ),
@@ -521,7 +528,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                               
                             textAlign: pdfLib.TextAlign.left,  
                                   style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold),
                             ),
@@ -534,7 +541,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                               
                             textAlign: pdfLib.TextAlign.left,  
                                   style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold),
                             ),
@@ -545,7 +552,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                               
                             textAlign: pdfLib.TextAlign.left,  
                                   style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold),
                             ),
@@ -558,7 +565,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                               
                             textAlign: pdfLib.TextAlign.left,  
                                   style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold),
                             ),
@@ -569,7 +576,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                               
                             textAlign: pdfLib.TextAlign.left,  
                                   style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold),
                             ),
@@ -585,10 +592,9 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                           pdfLib.Container(
                             child: pdfLib.Text(
                               'Coordenadas:',
-                              
                             textAlign: pdfLib.TextAlign.left,  
                                   style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold),
                             ),
@@ -601,7 +607,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                               
                             textAlign: pdfLib.TextAlign.left,  
                                   style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold),
                             ),
@@ -612,7 +618,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                               
                             textAlign: pdfLib.TextAlign.left,  
                                   style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold),
                             ),
@@ -625,7 +631,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                               
                             textAlign: pdfLib.TextAlign.left,  
                                   style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold),
                             ),
@@ -636,14 +642,63 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                               
                             textAlign: pdfLib.TextAlign.left,  
                                   style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
+                                  font: ttf,
+                                  fontWeight: pdfLib.FontWeight.bold),
+                            ),
+                          ),
+                        ]),
+                        pdfLib.SizedBox(height: 10),
+                        pdfLib.Row(children: [
+                          pdfLib.Container(
+                            child: pdfLib.Text(
+                              'Contato:',
+
+                            textAlign: pdfLib.TextAlign.left,
+                                  style: pdfLib.TextStyle(
+                                  fontSize: 09.0,
+                                  font: ttf,
+                                  fontWeight: pdfLib.FontWeight.bold),
+                            ),
+                          ),
+                          pdfLib.Container(
+                            child: pdfLib.Text(
+                              ' $contato',
+
+                            textAlign: pdfLib.TextAlign.left,
+                                  style: pdfLib.TextStyle(
+                                  fontSize: 09.0,
+                                  font: ttf,
+                                  fontWeight: pdfLib.FontWeight.bold),
+                            ),
+                          ),
+                        ]),
+                        pdfLib.Row(children: [
+                          pdfLib.Container(
+                            child: pdfLib.Text(
+                              'Telefone:',
+
+                              textAlign: pdfLib.TextAlign.left,
+                              style: pdfLib.TextStyle(
+                                  fontSize: 09.0,
+                                  font: ttf,
+                                  fontWeight: pdfLib.FontWeight.bold),
+                            ),
+                          ),
+                          pdfLib.Container(
+                            child: pdfLib.Text(
+                              ' $telefone',
+
+                              textAlign: pdfLib.TextAlign.left,
+                              style: pdfLib.TextStyle(
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold),
                             ),
                           ),
                         ]),
                       ]),
-                  pdfLib.SizedBox(width: 50),
+                  pdfLib.SizedBox(width: 30),
                   pdfLib.Column(
                       mainAxisAlignment: pdfLib.MainAxisAlignment.start,
                       crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
@@ -655,7 +710,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                               
                             textAlign: pdfLib.TextAlign.left,  
                                   style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold),
                             ),
@@ -666,7 +721,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                               
                             textAlign: pdfLib.TextAlign.left,  
                                   style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold),
                             ),
@@ -679,7 +734,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                               
                             textAlign: pdfLib.TextAlign.left,  
                                   style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold),
                             ),
@@ -690,7 +745,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                               
                             textAlign: pdfLib.TextAlign.left,  
                                   style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold),
                             ),
@@ -703,7 +758,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                               
                             textAlign: pdfLib.TextAlign.left,  
                                   style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold),
                             ),
@@ -714,7 +769,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                               
                             textAlign: pdfLib.TextAlign.left,  
                                   style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold),
                             ),
@@ -727,7 +782,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                               
                             textAlign: pdfLib.TextAlign.left,  
                                   style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold),
                             ),
@@ -738,7 +793,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                               
                             textAlign: pdfLib.TextAlign.left,  
                                   style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold),
                             ),
@@ -751,7 +806,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                               
                             textAlign: pdfLib.TextAlign.left,  
                                   style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold),
                             ),
@@ -762,7 +817,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                               
                             textAlign: pdfLib.TextAlign.left,  
                                   style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold),
                             ),
@@ -775,7 +830,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                               
                             textAlign: pdfLib.TextAlign.left,  
                                   style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold),
                             ),
@@ -786,7 +841,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                               
                             textAlign: pdfLib.TextAlign.left,  
                                   style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold),
                             ),
@@ -794,31 +849,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                         ])
                       ]),
                   pdfLib.SizedBox(width: 50),
-                  pdfLib.Column(
-                      mainAxisAlignment: pdfLib.MainAxisAlignment.start,
-                      crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
-                      children: [
-                          pdfLib.Container(
-                            child: pdfLib.Text(
-                              'Observações:',
-                              textAlign: pdfLib.TextAlign.left,
-                              style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
-                                  font: ttf,
-                                  fontWeight: pdfLib.FontWeight.bold),
-                            ),
-                          ),
-                          pdfLib.Container(
-                            child: pdfLib.Text(
-                              '$obs',
-                              textAlign: pdfLib.TextAlign.left,
-                              style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
-                                  font: ttf,
-                                  fontWeight: pdfLib.FontWeight.bold),
-                            ),
-                          ),
-                      ]),
+
                 ],
               ),
               pdfLib.Divider(),
@@ -836,7 +867,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                               'Patologia',
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold
                               ),
@@ -853,7 +884,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                                         '${pathology[index].toString()}',
                                         textAlign: pdfLib.TextAlign.left,
                                         style: pdfLib.TextStyle(
-                                            fontSize: 8.0,
+                                            fontSize: 09.0,
                                             font: ttf,
                                             fontWeight: pdfLib.FontWeight.bold),
                                       )
@@ -866,7 +897,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                               sPathology,
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.normal
                               ),
@@ -884,7 +915,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                             'Tipo de Imóvel',
                             textAlign: pdfLib.TextAlign.left,
                             style: pdfLib.TextStyle(
-                                fontSize: 8.0,
+                                fontSize: 09.0,
                                 font: ttf,
                                 fontWeight: pdfLib.FontWeight.bold
                             ),
@@ -902,7 +933,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
 
                                       textAlign: pdfLib.TextAlign.left,
                                       style: pdfLib.TextStyle(
-                                          fontSize: 8.0,
+                                          fontSize: 09.0,
                                           font: ttf,
                                           fontWeight: pdfLib.FontWeight.bold),
                                     )
@@ -915,7 +946,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                             sType,
                             textAlign: pdfLib.TextAlign.left,
                             style: pdfLib.TextStyle(
-                                fontSize: 8.0,
+                                fontSize: 09.0,
                                 font: ttf,
                                 fontWeight: pdfLib.FontWeight.normal
                             ),
@@ -933,7 +964,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                             'Infraestrutura',
                             textAlign: pdfLib.TextAlign.left,
                             style: pdfLib.TextStyle(
-                                fontSize: 8.0,
+                                fontSize: 09.0,
                                 font: ttf,
                                 fontWeight: pdfLib.FontWeight.bold
                             ),
@@ -951,7 +982,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
 
                                       textAlign: pdfLib.TextAlign.left,
                                       style: pdfLib.TextStyle(
-                                          fontSize: 8.0,
+                                          fontSize: 09.0,
                                           font: ttf,
                                           fontWeight: pdfLib.FontWeight.bold),
                                     )
@@ -964,7 +995,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                             sInfra,
                             textAlign: pdfLib.TextAlign.left,
                             style: pdfLib.TextStyle(
-                                fontSize: 8.0,
+                                fontSize: 09.0,
                                 font: ttf,
                                 fontWeight: pdfLib.FontWeight.normal
                             ),
@@ -982,7 +1013,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                             'Situação',
                             textAlign: pdfLib.TextAlign.left,
                             style: pdfLib.TextStyle(
-                                fontSize: 8.0,
+                                fontSize: 09.0,
                                 font: ttf,
                                 fontWeight: pdfLib.FontWeight.bold
                             ),
@@ -1000,7 +1031,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
 
                                       textAlign: pdfLib.TextAlign.left,
                                       style: pdfLib.TextStyle(
-                                          fontSize: 8.0,
+                                          fontSize: 09.0,
                                           font: ttf,
                                           fontWeight: pdfLib.FontWeight.bold),
                                     )
@@ -1013,7 +1044,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                             sSituation,
                             textAlign: pdfLib.TextAlign.left,
                             style: pdfLib.TextStyle(
-                                fontSize: 8.0,
+                                fontSize: 09.0,
                                 font: ttf,
                                 fontWeight: pdfLib.FontWeight.normal
                             ),
@@ -1031,7 +1062,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                             'Cota/Greide',
                             textAlign: pdfLib.TextAlign.left,
                             style: pdfLib.TextStyle(
-                                fontSize: 8.0,
+                                fontSize: 09.0,
                                 font: ttf,
                                 fontWeight: pdfLib.FontWeight.bold
                             ),
@@ -1048,7 +1079,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                                       '${quota[index].toString()}',
                                       textAlign: pdfLib.TextAlign.left,
                                       style: pdfLib.TextStyle(
-                                          fontSize: 8.0,
+                                          fontSize: 09.0,
                                           font: ttf,
                                           fontWeight: pdfLib.FontWeight.bold),
                                     )
@@ -1061,7 +1092,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                             sQuota,
                             textAlign: pdfLib.TextAlign.left,
                             style: pdfLib.TextStyle(
-                                fontSize: 8.0,
+                                fontSize: 09.0,
                                 font: ttf,
                                 fontWeight: pdfLib.FontWeight.normal
                             ),
@@ -1079,7 +1110,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                             'Posição da Unidade',
                             textAlign: pdfLib.TextAlign.left,
                             style: pdfLib.TextStyle(
-                                fontSize: 8.0,
+                                fontSize: 09.0,
                                 font: ttf,
                                 fontWeight: pdfLib.FontWeight.bold
                             ),
@@ -1096,7 +1127,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                                       '${position[index].toString()}',
                                       textAlign: pdfLib.TextAlign.left,
                                       style: pdfLib.TextStyle(
-                                          fontSize: 8.0,
+                                          fontSize: 09.0,
                                           font: ttf,
                                           fontWeight: pdfLib.FontWeight.bold),
                                     )
@@ -1109,7 +1140,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                             sPosition,
                             textAlign: pdfLib.TextAlign.left,
                             style: pdfLib.TextStyle(
-                                fontSize: 8.0,
+                                fontSize: 09.0,
                                 font: ttf,
                                 fontWeight: pdfLib.FontWeight.normal
                             ),
@@ -1117,6 +1148,13 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                         )
                       ]
                   ),
+
+                ],
+              ), pdfLib.Divider(),
+              pdfLib.Row(
+                mainAxisAlignment: pdfLib.MainAxisAlignment.start,
+                crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
+                children: [
                   pdfLib.Column(
                       mainAxisAlignment: pdfLib.MainAxisAlignment.start,
                       crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
@@ -1127,7 +1165,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                             'Telhado',
                             textAlign: pdfLib.TextAlign.left,
                             style: pdfLib.TextStyle(
-                                fontSize: 8.0,
+                                fontSize: 09.0,
                                 font: ttf,
                                 fontWeight: pdfLib.FontWeight.bold
                             ),
@@ -1144,7 +1182,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                                       '${roof[index].toString()}',
                                       textAlign: pdfLib.TextAlign.left,
                                       style: pdfLib.TextStyle(
-                                          fontSize: 8.0,
+                                          fontSize: 09.0,
                                           font: ttf,
                                           fontWeight: pdfLib.FontWeight.bold),
                                     )
@@ -1157,7 +1195,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                             sRoof,
                             textAlign: pdfLib.TextAlign.left,
                             style: pdfLib.TextStyle(
-                                fontSize: 8.0,
+                                fontSize: 09.0,
                                 font: ttf,
                                 fontWeight: pdfLib.FontWeight.normal
                             ),
@@ -1175,7 +1213,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                             'Muro',
                             textAlign: pdfLib.TextAlign.left,
                             style: pdfLib.TextStyle(
-                                fontSize: 8.0,
+                                fontSize: 09.0,
                                 font: ttf,
                                 fontWeight: pdfLib.FontWeight.bold
                             ),
@@ -1192,7 +1230,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                                       '${wall[index].toString()}',
                                       textAlign: pdfLib.TextAlign.left,
                                       style: pdfLib.TextStyle(
-                                          fontSize: 8.0,
+                                          fontSize: 09.0,
                                           font: ttf,
                                           fontWeight: pdfLib.FontWeight.bold),
                                     )
@@ -1205,7 +1243,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                             sWall,
                             textAlign: pdfLib.TextAlign.left,
                             style: pdfLib.TextStyle(
-                                fontSize: 8.0,
+                                fontSize: 09.0,
                                 font: ttf,
                                 fontWeight: pdfLib.FontWeight.normal
                             ),
@@ -1223,7 +1261,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                             'Pintura Externa',
                             textAlign: pdfLib.TextAlign.left,
                             style: pdfLib.TextStyle(
-                                fontSize: 8.0,
+                                fontSize: 09.0,
                                 font: ttf,
                                 fontWeight: pdfLib.FontWeight.bold
                             ),
@@ -1240,7 +1278,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                                       '${paint[index].toString()}',
                                       textAlign: pdfLib.TextAlign.left,
                                       style: pdfLib.TextStyle(
-                                          fontSize: 8.0,
+                                          fontSize: 09.0,
                                           font: ttf,
                                           fontWeight: pdfLib.FontWeight.bold),
                                     )
@@ -1253,7 +1291,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                             sPaint,
                             textAlign: pdfLib.TextAlign.left,
                             style: pdfLib.TextStyle(
-                                fontSize: 8.0,
+                                fontSize: 09.0,
                                 font: ttf,
                                 fontWeight: pdfLib.FontWeight.normal
                             ),
@@ -1261,12 +1299,6 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                         )
                       ]
                   ),
-                ],
-              ), pdfLib.Divider(),
-              pdfLib.Row(
-                mainAxisAlignment: pdfLib.MainAxisAlignment.start,
-                crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
-                children: [
                   pdfLib.Column(
                       mainAxisAlignment: pdfLib.MainAxisAlignment.start,
                       crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
@@ -1277,7 +1309,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                             'Pintura Interna',
                             textAlign: pdfLib.TextAlign.left,
                             style: pdfLib.TextStyle(
-                                fontSize: 8.0,
+                                fontSize: 09.0,
                                 font: ttf,
                                 fontWeight: pdfLib.FontWeight.bold
                             ),
@@ -1294,7 +1326,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                                       '${internpaint[index].toString()}',
                                       textAlign: pdfLib.TextAlign.left,
                                       style: pdfLib.TextStyle(
-                                          fontSize: 8.0,
+                                          fontSize: 09.0,
                                           font: ttf,
                                           fontWeight: pdfLib.FontWeight.bold),
                                     )
@@ -1307,7 +1339,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                             sInternPaint,
                             textAlign: pdfLib.TextAlign.left,
                             style: pdfLib.TextStyle(
-                                fontSize: 8.0,
+                                fontSize: 09.0,
                                 font: ttf,
                                 fontWeight: pdfLib.FontWeight.normal
                             ),
@@ -1325,7 +1357,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                             'Portas Externas',
                             textAlign: pdfLib.TextAlign.left,
                             style: pdfLib.TextStyle(
-                                fontSize: 8.0,
+                                fontSize: 09.0,
                                 font: ttf,
                                 fontWeight: pdfLib.FontWeight.bold
                             ),
@@ -1342,7 +1374,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                                       '${extern[index].toString()}',
                                       textAlign: pdfLib.TextAlign.left,
                                       style: pdfLib.TextStyle(
-                                          fontSize: 8.0,
+                                          fontSize: 09.0,
                                           font: ttf,
                                           fontWeight: pdfLib.FontWeight.bold),
                                     )
@@ -1355,7 +1387,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                             sExtern,
                             textAlign: pdfLib.TextAlign.left,
                             style: pdfLib.TextStyle(
-                                fontSize: 8.0,
+                                fontSize: 09.0,
                                 font: ttf,
                                 fontWeight: pdfLib.FontWeight.normal
                             ),
@@ -1373,7 +1405,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                             'Portas Internas',
                             textAlign: pdfLib.TextAlign.left,
                             style: pdfLib.TextStyle(
-                                fontSize: 8.0,
+                                fontSize: 09.0,
                                 font: ttf,
                                 fontWeight: pdfLib.FontWeight.bold
                             ),
@@ -1390,7 +1422,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                                       '${intern[index].toString()}',
                                       textAlign: pdfLib.TextAlign.left,
                                       style: pdfLib.TextStyle(
-                                          fontSize: 8.0,
+                                          fontSize: 09.0,
                                           font: ttf,
                                           fontWeight: pdfLib.FontWeight.bold),
                                     )
@@ -1403,7 +1435,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                             sIntern,
                             textAlign: pdfLib.TextAlign.left,
                             style: pdfLib.TextStyle(
-                                fontSize: 8.0,
+                                fontSize: 09.0,
                                 font: ttf,
                                 fontWeight: pdfLib.FontWeight.normal
                             ),
@@ -1421,7 +1453,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                             'Piso',
                             textAlign: pdfLib.TextAlign.left,
                             style: pdfLib.TextStyle(
-                                fontSize: 8.0,
+                                fontSize: 09.0,
                                 font: ttf,
                                 fontWeight: pdfLib.FontWeight.bold
                             ),
@@ -1438,7 +1470,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                                       '${floor[index].toString()}',
                                       textAlign: pdfLib.TextAlign.left,
                                       style: pdfLib.TextStyle(
-                                          fontSize: 8.0,
+                                          fontSize: 09.0,
                                           font: ttf,
                                           fontWeight: pdfLib.FontWeight.bold),
                                     )
@@ -1451,7 +1483,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                             sFloor,
                             textAlign: pdfLib.TextAlign.left,
                             style: pdfLib.TextStyle(
-                                fontSize: 8.0,
+                                fontSize: 09.0,
                                 font: ttf,
                                 fontWeight: pdfLib.FontWeight.normal
                             ),
@@ -1469,7 +1501,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                             'Janelas',
                             textAlign: pdfLib.TextAlign.left,
                             style: pdfLib.TextStyle(
-                                fontSize: 8.0,
+                                fontSize: 09.0,
                                 font: ttf,
                                 fontWeight: pdfLib.FontWeight.bold
                             ),
@@ -1486,7 +1518,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                                       '${windows[index].toString()}',
                                       textAlign: pdfLib.TextAlign.left,
                                       style: pdfLib.TextStyle(
-                                          fontSize: 8.0,
+                                          fontSize: 09.0,
                                           font: ttf,
                                           fontWeight: pdfLib.FontWeight.bold),
                                     )
@@ -1499,7 +1531,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                             sWindows,
                             textAlign: pdfLib.TextAlign.left,
                             style: pdfLib.TextStyle(
-                                fontSize: 8.0,
+                                fontSize: 09.0,
                                 font: ttf,
                                 fontWeight: pdfLib.FontWeight.normal
                             ),
@@ -1507,6 +1539,16 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                         )
                       ]
                   ),
+
+
+
+                ],
+              ),
+              pdfLib.Divider(),
+              pdfLib.Row(
+                  mainAxisAlignment: pdfLib.MainAxisAlignment.start,
+                  crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
+                children: [
                   pdfLib.Column(
                       mainAxisAlignment: pdfLib.MainAxisAlignment.start,
                       crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
@@ -1517,7 +1559,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                             'Bancada',
                             textAlign: pdfLib.TextAlign.left,
                             style: pdfLib.TextStyle(
-                                fontSize: 8.0,
+                                fontSize: 09.0,
                                 font: ttf,
                                 fontWeight: pdfLib.FontWeight.bold
                             ),
@@ -1534,7 +1576,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                                       '${balcony[index].toString()}',
                                       textAlign: pdfLib.TextAlign.left,
                                       style: pdfLib.TextStyle(
-                                          fontSize: 8.0,
+                                          fontSize: 09.0,
                                           font: ttf,
                                           fontWeight: pdfLib.FontWeight.bold),
                                     )
@@ -1547,7 +1589,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                             sBalcony,
                             textAlign: pdfLib.TextAlign.left,
                             style: pdfLib.TextStyle(
-                                fontSize: 8.0,
+                                fontSize: 09.0,
                                 font: ttf,
                                 fontWeight: pdfLib.FontWeight.normal
                             ),
@@ -1565,7 +1607,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                             'Quadro Elétrico',
                             textAlign: pdfLib.TextAlign.left,
                             style: pdfLib.TextStyle(
-                                fontSize: 8.0,
+                                fontSize: 09.0,
                                 font: ttf,
                                 fontWeight: pdfLib.FontWeight.bold
                             ),
@@ -1582,7 +1624,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                                       '${switchboard[index].toString()}',
                                       textAlign: pdfLib.TextAlign.left,
                                       style: pdfLib.TextStyle(
-                                          fontSize: 8.0,
+                                          fontSize: 09.0,
                                           font: ttf,
                                           fontWeight: pdfLib.FontWeight.bold),
                                     )
@@ -1595,7 +1637,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                             sSwitchBoard,
                             textAlign: pdfLib.TextAlign.left,
                             style: pdfLib.TextStyle(
-                                fontSize: 8.0,
+                                fontSize: 09.0,
                                 font: ttf,
                                 fontWeight: pdfLib.FontWeight.normal
                             ),
@@ -1613,7 +1655,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                             'Revestimento da Cozinha',
                             textAlign: pdfLib.TextAlign.left,
                             style: pdfLib.TextStyle(
-                                fontSize: 8.0,
+                                fontSize: 09.0,
                                 font: ttf,
                                 fontWeight: pdfLib.FontWeight.bold
                             ),
@@ -1630,7 +1672,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                                       '${kitchen[index].toString()}',
                                       textAlign: pdfLib.TextAlign.left,
                                       style: pdfLib.TextStyle(
-                                          fontSize: 8.0,
+                                          fontSize: 09.0,
                                           font: ttf,
                                           fontWeight: pdfLib.FontWeight.bold),
                                     )
@@ -1643,7 +1685,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                             sKitchen,
                             textAlign: pdfLib.TextAlign.left,
                             style: pdfLib.TextStyle(
-                                fontSize: 8.0,
+                                fontSize: 09.0,
                                 font: ttf,
                                 fontWeight: pdfLib.FontWeight.normal
                             ),
@@ -1661,7 +1703,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                             'Revestimento do Banheiro',
                             textAlign: pdfLib.TextAlign.left,
                             style: pdfLib.TextStyle(
-                                fontSize: 8.0,
+                                fontSize: 09.0,
                                 font: ttf,
                                 fontWeight: pdfLib.FontWeight.bold
                             ),
@@ -1678,7 +1720,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                                       '${bathroom[index].toString()}',
                                       textAlign: pdfLib.TextAlign.left,
                                       style: pdfLib.TextStyle(
-                                          fontSize: 8.0,
+                                          fontSize: 09.0,
                                           font: ttf,
                                           fontWeight: pdfLib.FontWeight.bold),
                                     )
@@ -1691,7 +1733,55 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                             sBathroom,
                             textAlign: pdfLib.TextAlign.left,
                             style: pdfLib.TextStyle(
-                                fontSize: 8.0,
+                                fontSize: 09.0,
+                                font: ttf,
+                                fontWeight: pdfLib.FontWeight.normal
+                            ),
+                          ),
+                        )
+                      ]
+                  ),
+                  pdfLib.Column(
+                      mainAxisAlignment: pdfLib.MainAxisAlignment.start,
+                      crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
+                      children: [
+                        pdfLib.Container(
+                          width: 130,
+                          child: pdfLib.Text(
+                            'Revestimento do Tanque',
+                            textAlign: pdfLib.TextAlign.left,
+                            style: pdfLib.TextStyle(
+                                fontSize: 09.0,
+                                font: ttf,
+                                fontWeight: pdfLib.FontWeight.bold
+                            ),
+                          ),
+                        ),
+                        pdfLib.ListView.builder(
+                            itemCount: tank.length,
+                            itemBuilder: (context,index){
+                              return
+                                pdfLib.Container(
+                                    width: 130,
+                                    child:
+                                    pdfLib.Text(
+                                      '${tank[index].toString()}',
+                                      textAlign: pdfLib.TextAlign.left,
+                                      style: pdfLib.TextStyle(
+                                          fontSize: 09.0,
+                                          font: ttf,
+                                          fontWeight: pdfLib.FontWeight.bold),
+                                    )
+                                );
+                            }
+                        ),
+                        pdfLib.Container(
+                          width: 130,
+                          child: pdfLib.Text(
+                            sTank,
+                            textAlign: pdfLib.TextAlign.left,
+                            style: pdfLib.TextStyle(
+                                fontSize: 09.0,
                                 font: ttf,
                                 fontWeight: pdfLib.FontWeight.normal
                             ),
@@ -1700,7 +1790,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                       ]
                   ),
 
-                ],
+                ]
               ),
               pdfLib.Divider(),
               pdfLib.Row(
@@ -1708,65 +1798,18 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                 crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
                 children:
                   [
+
                     pdfLib.Column(
                         mainAxisAlignment: pdfLib.MainAxisAlignment.start,
                         crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
                         children: [
                           pdfLib.Container(
-                            width: 130,
-                            child: pdfLib.Text(
-                              'Revestimento do Tanque',
-                              textAlign: pdfLib.TextAlign.left,
-                              style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
-                                  font: ttf,
-                                  fontWeight: pdfLib.FontWeight.bold
-                              ),
-                            ),
-                          ),
-                          pdfLib.ListView.builder(
-                              itemCount: tank.length,
-                              itemBuilder: (context,index){
-                                return
-                                  pdfLib.Container(
-                                      width: 130,
-                                      child:
-                                      pdfLib.Text(
-                                        '${tank[index].toString()}',
-                                        textAlign: pdfLib.TextAlign.left,
-                                        style: pdfLib.TextStyle(
-                                            fontSize: 8.0,
-                                            font: ttf,
-                                            fontWeight: pdfLib.FontWeight.bold),
-                                      )
-                                  );
-                              }
-                          ),
-                          pdfLib.Container(
-                            width: 130,
-                            child: pdfLib.Text(
-                              sTank,
-                              textAlign: pdfLib.TextAlign.left,
-                              style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
-                                  font: ttf,
-                                  fontWeight: pdfLib.FontWeight.normal
-                              ),
-                            ),
-                          )
-                        ]
-                    ),
-                    pdfLib.Column(
-                        mainAxisAlignment: pdfLib.MainAxisAlignment.start,
-                        crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
-                        children: [
-                          pdfLib.Container(
-                            width: 120,
+                            width: 110,
                             child: pdfLib.Text(
                               'Padrão de Acabamento',
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold
                               ),
@@ -1777,13 +1820,13 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                               itemBuilder: (context,index){
                                 return
                                   pdfLib.Container(
-                                      width: 120,
+                                      width: 110,
                                       child:
                                       pdfLib.Text(
                                         '${pattern[index].toString()}',
                                         textAlign: pdfLib.TextAlign.left,
                                         style: pdfLib.TextStyle(
-                                            fontSize: 8.0,
+                                            fontSize: 09.0,
                                             font: ttf,
                                             fontWeight: pdfLib.FontWeight.bold),
                                       )
@@ -1791,12 +1834,12 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                               }
                           ),
                           pdfLib.Container(
-                            width: 120,
+                            width: 110,
                             child: pdfLib.Text(
                               sPattern,
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.normal
                               ),
@@ -1809,12 +1852,12 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                         crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
                         children: [
                           pdfLib.Container(
-                            width: 120,
+                            width: 110,
                             child: pdfLib.Text(
                               'Estado de Conservação',
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold
                               ),
@@ -1825,13 +1868,13 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                               itemBuilder: (context,index){
                                 return
                                   pdfLib.Container(
-                                      width: 120,
+                                      width: 110,
                                       child:
                                       pdfLib.Text(
                                         '${state[index].toString()}',
                                         textAlign: pdfLib.TextAlign.left,
                                         style: pdfLib.TextStyle(
-                                            fontSize: 8.0,
+                                            fontSize: 09.0,
                                             font: ttf,
                                             fontWeight: pdfLib.FontWeight.bold),
                                       )
@@ -1839,12 +1882,12 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                               }
                           ),
                           pdfLib.Container(
-                            width: 120,
+                            width: 110,
                             child: pdfLib.Text(
                               sState,
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.normal
                               ),
@@ -1863,7 +1906,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                               'Teto da Unidade',
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold
                               ),
@@ -1880,7 +1923,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                                         '${unityroof[index].toString()}',
                                         textAlign: pdfLib.TextAlign.left,
                                         style: pdfLib.TextStyle(
-                                            fontSize: 8.0,
+                                            fontSize: 09.0,
                                             font: ttf,
                                             fontWeight: pdfLib.FontWeight.bold),
                                       )
@@ -1893,7 +1936,56 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                               sUnityroof,
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
+                                  font: ttf,
+                                  fontWeight: pdfLib.FontWeight.normal
+                              ),
+                            ),
+                          )
+                        ]
+                    ),
+
+                    pdfLib.Column(
+                        mainAxisAlignment: pdfLib.MainAxisAlignment.start,
+                        crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
+                        children: [
+                          pdfLib.Container(
+                            width: 120,
+                            child: pdfLib.Text(
+                              'Condominio/Bloco',
+                              textAlign: pdfLib.TextAlign.left,
+                              style: pdfLib.TextStyle(
+                                  fontSize: 09.0,
+                                  font: ttf,
+                                  fontWeight: pdfLib.FontWeight.bold
+                              ),
+                            ),
+                          ),
+                          pdfLib.ListView.builder(
+                              itemCount: block.length,
+                              itemBuilder: (context,index){
+                                return
+                                  pdfLib.Container(
+                                      width: 120,
+                                      child:
+                                      pdfLib.Text(
+                                        '${block[index].toString()}',
+                                        textAlign: pdfLib.TextAlign.left,
+                                        style: pdfLib.TextStyle(
+                                            fontSize: 09.0,
+                                            font: ttf,
+                                            fontWeight: pdfLib.FontWeight.bold),
+                                      )
+                                  );
+                              }
+                          ),
+                          pdfLib.Container(
+                            width: 120,
+                            child: pdfLib.Text(
+                              sBlock,
+                              textAlign: pdfLib.TextAlign.left,
+                              style: pdfLib.TextStyle(
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.normal
                               ),
@@ -1905,221 +1997,221 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                       child: pdfLib.Column(
                         children: [
                           pdfLib.Container(
-                             width: 130,
+                            width: 130,
                             height: 15,
                             child: pdfLib.Text(
                               'Unidade',
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold
                               ),
                             ),
                           ),
                           pdfLib.Container(
-                              width: 130,
+                            width: 130,
                             height: 15,
                             child: pdfLib.Text(
                               'Quartos',
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold
                               ),
                             ),
                           ),
                           pdfLib.Container(
-                              width: 130,
+                            width: 130,
                             height: 15,
                             child: pdfLib.Text(
                               'Banheiros Sociais',
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold
                               ),
                             ),
                           ),
                           pdfLib.Container(
-                              width: 130,
+                            width: 130,
                             height: 15,
                             child: pdfLib.Text(
                               'Banheiros Privativos',
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold
                               ),
                             ),
                           ),
                           pdfLib.Container(
-                              width: 130,
+                            width: 130,
                             height: 15,
                             child: pdfLib.Text(
                               'Lavabos',
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold
                               ),
                             ),
                           ),
                           pdfLib.Container(
-                              width: 130,
+                            width: 130,
                             height: 15,
                             child: pdfLib.Text(
                               'Banheiros de Serviço',
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold
                               ),
                             ),
                           ),
                           pdfLib.Container(
-                              width: 130,
+                            width: 130,
                             height: 15,
                             child: pdfLib.Text(
                               'Quartos de Empregada',
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold
                               ),
                             ),
                           ),
                           pdfLib.Container(
-                              width: 130,
+                            width: 130,
                             height: 15,
                             child: pdfLib.Text(
                               'Varanda/Sacada',
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold
                               ),
                             ),
                           ),
                           pdfLib.Container(
-                              width: 130,
+                            width: 130,
                             height: 15,
                             child: pdfLib.Text(
                               'Número de armários completos',
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold
                               ),
                             ),
                           ),
                           pdfLib.Container(
-                              width: 130,
+                            width: 130,
                             height: 15,
                             child: pdfLib.Text(
                               'Cozinha',
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold
                               ),
                             ),
                           ),
                           pdfLib.Container(
-                              width: 130,
+                            width: 130,
                             height: 15,
                             child: pdfLib.Text(
                               'Sala',
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold
                               ),
                             ),
                           ),
                           pdfLib.Container(
-                              width: 130,
+                            width: 130,
                             height: 15,
                             child: pdfLib.Text(
                               'Área de Serviço Coberta',
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold
                               ),
                             ),
                           ),
                           pdfLib.Container(
-                              width: 130,
+                            width: 130,
                             height: 15,
                             child: pdfLib.Text(
                               'Área de Serviço Descoberta',
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold
                               ),
                             ),
                           ),
                           pdfLib.Container(
-                              width: 130,
+                            width: 130,
                             height: 15,
                             child: pdfLib.Text(
                               'Garagem Coberta',
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold
                               ),
                             ),
                           ),
                           pdfLib.Container(
-                              width: 130,
+                            width: 130,
                             height: 15,
                             child: pdfLib.Text(
                               'Garagem Descoberta',
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold
                               ),
                             ),
                           ),
                           pdfLib.Container(
-                              width: 130,
+                            width: 130,
                             height: 15,
                             child: pdfLib.Text(
                               'Ar condicionado',
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold
                               ),
                             ),
                           ),
                           pdfLib.Container(
-                              width: 130,
+                            width: 130,
                             height: 15,
                             child: pdfLib.Text(
                               'Piscina',
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold
                               ),
@@ -2137,7 +2229,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                               '',
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold
                               ),
@@ -2149,7 +2241,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                               '$SRoom',
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold
                               ),
@@ -2161,7 +2253,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                               '$SSocialBathroom',
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold
                               ),
@@ -2173,7 +2265,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                               '$SPrivateBathroom',
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold
                               ),
@@ -2185,7 +2277,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                               '$SLav',
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold
                               ),
@@ -2197,7 +2289,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                               '$SServiceBathroom',
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold
                               ),
@@ -2209,7 +2301,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                               '$SMaidRoom',
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold
                               ),
@@ -2221,7 +2313,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                               '$SBalcony',
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold
                               ),
@@ -2233,7 +2325,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                               '$SCompleteCabinets',
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold
                               ),
@@ -2245,7 +2337,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                               '$SKitchen',
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold
                               ),
@@ -2257,7 +2349,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                               '$SRestRoom',
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold
                               ),
@@ -2269,7 +2361,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                               '$SServiceAreaRoofed',
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold
                               ),
@@ -2281,7 +2373,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                               '$SServiceAreaUnroofed',
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold
                               ),
@@ -2293,7 +2385,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                               '$SOpenGarage',
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold
                               ),
@@ -2305,7 +2397,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                               '$SClosedGarage',
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold
                               ),
@@ -2317,7 +2409,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                               '$SAc',
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold
                               ),
@@ -2329,7 +2421,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                               '$SPool',
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold
                               ),
@@ -2338,59 +2430,40 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                         ],
                       ),
                     ),
-                    pdfLib.SizedBox(
-                      width: 20
-                    ),
-                    pdfLib.Column(
-                        mainAxisAlignment: pdfLib.MainAxisAlignment.start,
-                        crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
-                        children: [
-                          pdfLib.Container(
-                            width: 120,
-                            child: pdfLib.Text(
-                              'Condominio/Bloco',
-                              textAlign: pdfLib.TextAlign.left,
-                              style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
-                                  font: ttf,
-                                  fontWeight: pdfLib.FontWeight.bold
-                              ),
-                            ),
-                          ),
-                          pdfLib.ListView.builder(
-                              itemCount: block.length,
-                              itemBuilder: (context,index){
-                                return
-                                  pdfLib.Container(
-                                      width: 120,
-                                      child:
-                                      pdfLib.Text(
-                                        '${block[index].toString()}',
-                                        textAlign: pdfLib.TextAlign.left,
-                                        style: pdfLib.TextStyle(
-                                            fontSize: 8.0,
-                                            font: ttf,
-                                            fontWeight: pdfLib.FontWeight.bold),
-                                      )
-                                  );
-                              }
-                          ),
-                          pdfLib.Container(
-                            width: 120,
-                            child: pdfLib.Text(
-                              sBlock,
-                              textAlign: pdfLib.TextAlign.left,
-                              style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
-                                  font: ttf,
-                                  fontWeight: pdfLib.FontWeight.normal
-                              ),
-                            ),
-                          )
-                        ]
-                    ),
                   ]
-              )
+              ),
+          pdfLib.Row(
+              mainAxisAlignment: pdfLib.MainAxisAlignment.start,
+              crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
+            children: [
+              pdfLib.Column(
+                  children: [
+                    pdfLib.Container(
+                      width: 500,
+                      child: pdfLib.Text(
+                        'Observações:',
+                        textAlign: pdfLib.TextAlign.left,
+                        style: pdfLib.TextStyle(
+                            fontSize: 09.0,
+                            font: ttf,
+                            fontWeight: pdfLib.FontWeight.bold),
+                      ),
+                    ),
+                    pdfLib.Container(
+                      width:500,
+                      child: pdfLib.Text(
+                        '$obs',
+                        textAlign: pdfLib.TextAlign.left,
+                        style: pdfLib.TextStyle(
+                            fontSize: 09.0,
+                            font: ttf,
+                            fontWeight: pdfLib.FontWeight.bold),
+                      ),
+                    ),
+                  ]),
+
+            ]
+          )
             ]));
     final String dir = (await getApplicationDocumentsDirectory()).path;
     path = '$dir/Vistoria$surveyType.pdf';

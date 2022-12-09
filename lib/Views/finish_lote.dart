@@ -59,6 +59,8 @@ class _SurveyFinishScreenLoteState extends State<SurveyFinishScreenLote> {
   var sRatings= '';
   var sDensity= '';
   var sTransport= '';
+  var contato = '';
+  var telefone = '';
   List imageList = [];
   List terrainType = [];
   List terrainShape = [];
@@ -208,6 +210,8 @@ class _SurveyFinishScreenLoteState extends State<SurveyFinishScreenLote> {
 
     setState(() {
       age = data?["age"]??"";
+      contato = data?["contato"] ?? "";
+      telefone = data?["telefone"] ?? "";
       complement = data?["complement"]??"";
       price = data?["price"]??"";
       obs = data?["obs"]??"";
@@ -255,8 +259,7 @@ class _SurveyFinishScreenLoteState extends State<SurveyFinishScreenLote> {
     print(saveChecklist.length);
     int pag = 0;
     pdf.addPage(pdfLib.MultiPage(
-        margin: pdfLib.EdgeInsets.all(2.0),
-        orientation: pdfLib.PageOrientation.landscape,
+        margin: pdfLib.EdgeInsets.all(6.0),
         build: (context) => [
           pdfLib.Container(
               child: pdfLib.Text('Vistoria Lote',
@@ -489,6 +492,54 @@ class _SurveyFinishScreenLoteState extends State<SurveyFinishScreenLote> {
                         ),
                       ),
                     ]),
+                    pdfLib.Row(children: [
+                      pdfLib.Container(
+                        child: pdfLib.Text(
+                          'Contato:',
+
+                          textAlign: pdfLib.TextAlign.left,
+                          style: pdfLib.TextStyle(
+                              fontSize: 09.0,
+                              font: ttf,
+                              fontWeight: pdfLib.FontWeight.bold),
+                        ),
+                      ),
+                      pdfLib.Container(
+                        child: pdfLib.Text(
+                          ' $contato',
+
+                          textAlign: pdfLib.TextAlign.left,
+                          style: pdfLib.TextStyle(
+                              fontSize: 09.0,
+                              font: ttf,
+                              fontWeight: pdfLib.FontWeight.bold),
+                        ),
+                      ),
+                    ]),
+                    pdfLib.Row(children: [
+                      pdfLib.Container(
+                        child: pdfLib.Text(
+                          'Telefone:',
+
+                          textAlign: pdfLib.TextAlign.left,
+                          style: pdfLib.TextStyle(
+                              fontSize: 09.0,
+                              font: ttf,
+                              fontWeight: pdfLib.FontWeight.bold),
+                        ),
+                      ),
+                      pdfLib.Container(
+                        child: pdfLib.Text(
+                          ' $telefone',
+
+                          textAlign: pdfLib.TextAlign.left,
+                          style: pdfLib.TextStyle(
+                              fontSize: 09.0,
+                              font: ttf,
+                              fontWeight: pdfLib.FontWeight.bold),
+                        ),
+                      ),
+                    ]),
                   ]),
             ],
           ),
@@ -647,7 +698,7 @@ class _SurveyFinishScreenLoteState extends State<SurveyFinishScreenLote> {
                   crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
                   children: [
                     pdfLib.Container(
-                      width: 100,
+                      width: 115,
                       child: pdfLib.Text(
                         'Topografia',
                         textAlign: pdfLib.TextAlign.left,
@@ -663,7 +714,7 @@ class _SurveyFinishScreenLoteState extends State<SurveyFinishScreenLote> {
                         itemBuilder: (context,index){
                           return
                             pdfLib.Container(
-                                width: 100,
+                                width: 115,
                                 child:
                                 pdfLib.Text(
                                   '${topography[index].toString()}',
@@ -677,7 +728,7 @@ class _SurveyFinishScreenLoteState extends State<SurveyFinishScreenLote> {
                         }
                     ),
                     pdfLib.Container(
-                      width: 100,
+                      width: 115,
                       child: pdfLib.Text(
                         sTopography,
                         textAlign: pdfLib.TextAlign.left,
@@ -695,7 +746,7 @@ class _SurveyFinishScreenLoteState extends State<SurveyFinishScreenLote> {
                   crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
                   children: [
                     pdfLib.Container(
-                      width: 80,
+                      width: 115,
                       child: pdfLib.Text(
                         'Fechamento do Terreno',
                         textAlign: pdfLib.TextAlign.left,
@@ -711,7 +762,7 @@ class _SurveyFinishScreenLoteState extends State<SurveyFinishScreenLote> {
                         itemBuilder: (context,index){
                           return
                             pdfLib.Container(
-                                width: 80,
+                                width: 115,
                                 child:
                                 pdfLib.Text(
                                   '${terrainClosing[index].toString()}',
@@ -725,7 +776,7 @@ class _SurveyFinishScreenLoteState extends State<SurveyFinishScreenLote> {
                         }
                     ),
                     pdfLib.Container(
-                      width: 80,
+                      width: 115,
                       child: pdfLib.Text(
                         sClosing,
                         textAlign: pdfLib.TextAlign.left,
@@ -786,6 +837,14 @@ class _SurveyFinishScreenLoteState extends State<SurveyFinishScreenLote> {
                     )
                   ]
               ),
+
+            ],
+          ),
+          pdfLib.Divider(),
+          pdfLib.Row(
+            mainAxisAlignment: pdfLib.MainAxisAlignment.start,
+            crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
+            children: [
               pdfLib.Column(
                   mainAxisAlignment: pdfLib.MainAxisAlignment.start,
                   crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
@@ -834,14 +893,6 @@ class _SurveyFinishScreenLoteState extends State<SurveyFinishScreenLote> {
                     )
                   ]
               ),
-            ],
-          ),
-          pdfLib.Divider(),
-          pdfLib.Row(
-            mainAxisAlignment: pdfLib.MainAxisAlignment.start,
-            crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
-            children: [
-
               pdfLib.Column(
                   mainAxisAlignment: pdfLib.MainAxisAlignment.start,
                   crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
@@ -1034,6 +1085,56 @@ class _SurveyFinishScreenLoteState extends State<SurveyFinishScreenLote> {
                     )
                   ]
               ),
+
+            ],
+          ),
+          pdfLib.Divider(),
+          pdfLib.Row(
+            children: [
+              pdfLib.Column(
+                  mainAxisAlignment: pdfLib.MainAxisAlignment.start,
+                  crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
+                  children: [
+                    pdfLib.Container(
+
+                      child: pdfLib.Text(
+                        'Soluções de infra-estrutura disponíveis junto à unidade, serviços e equipamentos comunitários no entorno',
+                        textAlign: pdfLib.TextAlign.left,
+                        style: pdfLib.TextStyle(
+                            fontSize: 9.0,
+                            font: ttf,
+                            fontWeight: pdfLib.FontWeight.bold
+                        ),
+                      ),
+                    ),
+                    pdfLib.ListView.builder(
+                        itemCount: rates.length,
+                        itemBuilder: (context,index){
+                          return
+                            pdfLib.Container(
+                                width: 150,
+                                child:
+                                pdfLib.Text(
+                                  '${rates[index].toString()}',
+                                  textAlign: pdfLib.TextAlign.left,
+                                  style: pdfLib.TextStyle(
+                                      fontSize: 9.0,
+                                      font: ttf,
+                                      fontWeight: pdfLib.FontWeight.bold),
+                                )
+                            );
+                        }
+                    ),
+                  ]
+              ),
+
+            ]
+          ),
+          pdfLib.Divider(),
+          pdfLib.Row(
+              mainAxisAlignment: pdfLib.MainAxisAlignment.start,
+              crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
+            children: [
               pdfLib.Column(
                   mainAxisAlignment: pdfLib.MainAxisAlignment.start,
                   crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
@@ -1089,50 +1190,6 @@ class _SurveyFinishScreenLoteState extends State<SurveyFinishScreenLote> {
                       ),
                     ),
                   ]),
-
-
-            ],
-          ),
-          pdfLib.Divider(),
-          pdfLib.Row(
-            children: [
-              pdfLib.Column(
-                  mainAxisAlignment: pdfLib.MainAxisAlignment.start,
-                  crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
-                  children: [
-                    pdfLib.Container(
-
-                      child: pdfLib.Text(
-                        'Soluções de infra-estrutura disponíveis junto à unidade, serviços e equipamentos comunitários no entorno',
-                        textAlign: pdfLib.TextAlign.left,
-                        style: pdfLib.TextStyle(
-                            fontSize: 9.0,
-                            font: ttf,
-                            fontWeight: pdfLib.FontWeight.bold
-                        ),
-                      ),
-                    ),
-                    pdfLib.ListView.builder(
-                        itemCount: rates.length,
-                        itemBuilder: (context,index){
-                          return
-                            pdfLib.Container(
-                                width: 150,
-                                child:
-                                pdfLib.Text(
-                                  '${rates[index].toString()}',
-                                  textAlign: pdfLib.TextAlign.left,
-                                  style: pdfLib.TextStyle(
-                                      fontSize: 9.0,
-                                      font: ttf,
-                                      fontWeight: pdfLib.FontWeight.bold),
-                                )
-                            );
-                        }
-                    ),
-                  ]
-              ),
-
             ]
           )
 

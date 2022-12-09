@@ -531,7 +531,7 @@ class _CheckListDataState extends State<CheckListData> {
     CheckBoxModel(title: 'Rede de Água Pluvial'),
     CheckBoxModel(title: 'Rede de Esgoto'),
     CheckBoxModel(title: 'Fossa Séptica'),
-    CheckBoxModel(title: 'Semidouro'),
+    CheckBoxModel(title: 'Sumidouro'),
     CheckBoxModel(title: 'Cisterna'),
     CheckBoxModel(title: 'Outro:'),
   ];

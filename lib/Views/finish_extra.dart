@@ -276,8 +276,8 @@ class _SurveyFinishScreenExtraState extends State<SurveyFinishScreenExtra> {
       surveyType = data?["typesurvey"] ?? '';
       Goal = data?["Goal"] ?? '';
       Origin = data?["Origin"] ?? '';
-      phone = data?["phone"] ?? '';
-      contact = data?["contact"] ?? '';
+      phone = data?["telefone"] ?? '';
+      contact = data?["contato"] ?? '';
       complement = data?["complement"] ?? '';
     });
     _createPdf(context);
@@ -296,8 +296,7 @@ class _SurveyFinishScreenExtraState extends State<SurveyFinishScreenExtra> {
     print(saveChecklist.length);
     int pag = 0;
     pdf.addPage(pdfLib.MultiPage(
-        margin: pdfLib.EdgeInsets.all(2.0),
-        orientation: pdfLib.PageOrientation.landscape,
+        margin: pdfLib.EdgeInsets.all(6.0),
         build: (context) => [
           pdfLib.Container(
               child: pdfLib.Text(surveyType == 'Dados'?'Vistoria de Dados'
@@ -359,28 +358,35 @@ class _SurveyFinishScreenExtraState extends State<SurveyFinishScreenExtra> {
                         ),
                       ),
                     ]),
-                    pdfLib.Row(children: [
-                      pdfLib.Container(
-                        child: pdfLib.Text(
-                          'Endereço:',
-                          textAlign: pdfLib.TextAlign.left,
-                          style: pdfLib.TextStyle(
-                              fontSize: 8.0,
-                              font: ttf,
-                              fontWeight: pdfLib.FontWeight.bold),
-                        ),
-                      ),
-                      pdfLib.Container(
-                        child: pdfLib.Text(
-                          ' $street, $number,$complement, $district - $city/$states - $cep',
-                          textAlign: pdfLib.TextAlign.left,
-                          style: pdfLib.TextStyle(
-                              fontSize: 8.0,
-                              font: ttf,
-                              fontWeight: pdfLib.FontWeight.bold),
-                        ),
-                      ),
-                    ]),
+                    pdfLib.Row(
+                        mainAxisAlignment: pdfLib.MainAxisAlignment.start,
+                        crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
+                        children: [
+                          pdfLib.Container(
+
+                            child: pdfLib.Text(
+                              'Endereço:',
+                              textAlign: pdfLib.TextAlign.left,
+                              style: pdfLib.TextStyle(
+                                  fontSize: 8.0,
+                                  font: ttf,
+                                  fontWeight: pdfLib.FontWeight.bold),
+                            ),
+                          ),
+                          pdfLib.Container(
+                            width: 200,
+                            child: pdfLib.Text(
+                              ' $street, $number,$complement,$district - $city/$states - $cep',
+
+                              textAlign: pdfLib.TextAlign.left,
+                              maxLines: 2,
+                              style: pdfLib.TextStyle(
+                                  fontSize: 8.0,
+                                  font: ttf,
+                                  fontWeight: pdfLib.FontWeight.bold),
+                            ),
+                          ),
+                        ]),
                     pdfLib.Row(children: [
                       pdfLib.Container(
                         child: pdfLib.Text(
@@ -509,8 +515,9 @@ class _SurveyFinishScreenExtraState extends State<SurveyFinishScreenExtra> {
                         ),
                       ),
                     ]),
+
                   ]),
-              pdfLib.SizedBox(width: 50),
+              pdfLib.SizedBox(width: 10),
               pdfLib.Column(
                   mainAxisAlignment: pdfLib.MainAxisAlignment.start,
                   crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
@@ -713,7 +720,7 @@ class _SurveyFinishScreenExtraState extends State<SurveyFinishScreenExtra> {
                   crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
                   children: [
                     pdfLib.Container(
-                      width: 120,
+                      width: 100,
                       child: pdfLib.Text(
                         'Infraestrutura',
                         textAlign: pdfLib.TextAlign.left,
@@ -729,7 +736,7 @@ class _SurveyFinishScreenExtraState extends State<SurveyFinishScreenExtra> {
                         itemBuilder: (context,index){
                           return
                             pdfLib.Container(
-                                width: 120,
+                                width: 100,
                                 child:
                                 pdfLib.Text(
                                   '${infra[index].toString()}',
@@ -744,7 +751,7 @@ class _SurveyFinishScreenExtraState extends State<SurveyFinishScreenExtra> {
                         }
                     ),
                     pdfLib.Container(
-                      width: 120,
+                      width: 100,
                       child: pdfLib.Text(
                         sInfra,
                         textAlign: pdfLib.TextAlign.left,
@@ -1682,9 +1689,14 @@ class _SurveyFinishScreenExtraState extends State<SurveyFinishScreenExtra> {
                   ],
                 ),
               ),
-              pdfLib.SizedBox(
-                  width: 20
-              ),
+
+            ],
+          ),
+          pdfLib.Divider(),
+          pdfLib.Row(
+              mainAxisAlignment: pdfLib.MainAxisAlignment.start,
+              crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
+            children: [
               pdfLib.Column(
                   mainAxisAlignment: pdfLib.MainAxisAlignment.start,
                   crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
@@ -1710,10 +1722,8 @@ class _SurveyFinishScreenExtraState extends State<SurveyFinishScreenExtra> {
                       ),
                     ),
                   ]),
-
-
-            ],
-          ),
+            ]
+          )
         ]));
     pag = pag + lines;
 

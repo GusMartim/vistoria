@@ -803,7 +803,7 @@ class _CheckList1State extends State<CheckList1> {
     CheckBoxModel(title: 'Rede de Água Pluvial'),
     CheckBoxModel(title: 'Rede de Esgoto'),
     CheckBoxModel(title: 'Fossa Séptica'),
-    CheckBoxModel(title: 'Semidouro'),
+    CheckBoxModel(title: 'Sumidouro'),
     CheckBoxModel(title: 'Cisterna'),
     CheckBoxModel(title: 'Outro:'),
   ];
@@ -1115,7 +1115,7 @@ class _CheckList1State extends State<CheckList1> {
                       ],
                       icons: Icons.height,
                       sizeIcon: 0.0,
-                      width: width * 0.45,
+                      width: width * 0.46,
                       controller: _controllerPrice,
                       hint: 'R\$100.000.00',
                       fonts: 14.0,

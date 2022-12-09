@@ -28,6 +28,8 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
   String status = "survey";
   List imageList = [];
   var Cod = '';
+  var contato = '';
+  var telefone = '';
   var complement = '';
   var obs = '';
   var path = '';
@@ -74,6 +76,8 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
       date = data?["hourRequest"] ?? "";
       user = data?["userName"] ?? "";
       complement = data?["complement"] ?? "";
+      contato = data?["contato"] ?? "";
+      telefone = data?["telefone"] ?? "";
       obs = data?["obs"] ?? "";
       lat = data?["lat"] ?? "";
       lng = data?["lng"] ?? "";
@@ -120,8 +124,7 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
 
     int pag = 0;
     pdf.addPage(pdfLib.MultiPage(
-        margin: pdfLib.EdgeInsets.all(2.0),
-        orientation: pdfLib.PageOrientation.landscape,
+        margin: pdfLib.EdgeInsets.all(6.0),
         build: (context) => [
               pdfLib.Container(
                   child: pdfLib.Text('Vistoria de Obra',
@@ -182,28 +185,35 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
                             ),
                           ),
                         ]),
-                        pdfLib.Row(children: [
-                          pdfLib.Container(
-                            child: pdfLib.Text(
-                              'Endereço:',
-                              textAlign: pdfLib.TextAlign.left,
-                              style: pdfLib.TextStyle(
-                                  fontSize: 10.0,
-                                  font: ttf,
-                                  fontWeight: pdfLib.FontWeight.bold),
-                            ),
-                          ),
-                          pdfLib.Container(
-                            child: pdfLib.Text(
-                              ' $street, $number,$complement, $district - $city/$states - $cep',
-                              textAlign: pdfLib.TextAlign.left,
-                              style: pdfLib.TextStyle(
-                                  fontSize: 10.0,
-                                  font: ttf,
-                                  fontWeight: pdfLib.FontWeight.bold),
-                            ),
-                          ),
-                        ]),
+                        pdfLib.Row(
+                            mainAxisAlignment: pdfLib.MainAxisAlignment.start,
+                            crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
+                            children: [
+                              pdfLib.Container(
+
+                                child: pdfLib.Text(
+                                  'Endereço:',
+                                  textAlign: pdfLib.TextAlign.left,
+                                  style: pdfLib.TextStyle(
+                                      fontSize: 10.0,
+                                      font: ttf,
+                                      fontWeight: pdfLib.FontWeight.bold),
+                                ),
+                              ),
+                              pdfLib.Container(
+                                width: 200,
+                                child: pdfLib.Text(
+                                  ' $street, $number,$complement,$district - $city/$states - $cep',
+
+                                  textAlign: pdfLib.TextAlign.left,
+                                  maxLines: 2,
+                                  style: pdfLib.TextStyle(
+                                      fontSize: 10.0,
+                                      font: ttf,
+                                      fontWeight: pdfLib.FontWeight.bold),
+                                ),
+                              ),
+                            ]),
                         pdfLib.Row(children: [
                           pdfLib.Container(
                             child: pdfLib.Text(
@@ -288,32 +298,55 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
                             ),
                           ),
                         ]),
-                      ]),
-                  pdfLib.SizedBox(width: 50),
-                  pdfLib.Column(
-                      mainAxisAlignment: pdfLib.MainAxisAlignment.start,
-                      crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
-                      children: [
-                        pdfLib.Container(
-                          child: pdfLib.Text(
-                            'Observações:',
-                            textAlign: pdfLib.TextAlign.left,
-                            style: pdfLib.TextStyle(
-                                fontSize: 10.0,
-                                font: ttf,
-                                fontWeight: pdfLib.FontWeight.bold),
+                        pdfLib.SizedBox(height: 10),
+                        pdfLib.Row(children: [
+                          pdfLib.Container(
+                            child: pdfLib.Text(
+                              'Contato:',
+
+                              textAlign: pdfLib.TextAlign.left,
+                              style: pdfLib.TextStyle(
+                                  fontSize: 09.0,
+                                  font: ttf,
+                                  fontWeight: pdfLib.FontWeight.bold),
+                            ),
                           ),
-                        ),
-                        pdfLib.Container(
-                          child: pdfLib.Text(
-                            '$obs',
-                            textAlign: pdfLib.TextAlign.left,
-                            style: pdfLib.TextStyle(
-                                fontSize: 10.0,
-                                font: ttf,
-                                fontWeight: pdfLib.FontWeight.bold),
+                          pdfLib.Container(
+                            child: pdfLib.Text(
+                              ' $contato',
+
+                              textAlign: pdfLib.TextAlign.left,
+                              style: pdfLib.TextStyle(
+                                  fontSize: 09.0,
+                                  font: ttf,
+                                  fontWeight: pdfLib.FontWeight.bold),
+                            ),
                           ),
-                        ),
+                        ]),
+                        pdfLib.Row(children: [
+                          pdfLib.Container(
+                            child: pdfLib.Text(
+                              'Telefone:',
+
+                              textAlign: pdfLib.TextAlign.left,
+                              style: pdfLib.TextStyle(
+                                  fontSize: 09.0,
+                                  font: ttf,
+                                  fontWeight: pdfLib.FontWeight.bold),
+                            ),
+                          ),
+                          pdfLib.Container(
+                            child: pdfLib.Text(
+                              ' $telefone',
+
+                              textAlign: pdfLib.TextAlign.left,
+                              style: pdfLib.TextStyle(
+                                  fontSize: 09.0,
+                                  font: ttf,
+                                  fontWeight: pdfLib.FontWeight.bold),
+                            ),
+                          ),
+                        ]),
                       ]),
                 ],
               ),
@@ -866,7 +899,39 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
                       ),
                     ),
                   ]
-              )
+              ),
+          pdfLib.Divider(),
+          pdfLib.Row(
+              mainAxisAlignment: pdfLib.MainAxisAlignment.start,
+              crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
+            children: [
+              pdfLib.Column(
+                  mainAxisAlignment: pdfLib.MainAxisAlignment.start,
+                  crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
+                  children: [
+                    pdfLib.Container(
+                      child: pdfLib.Text(
+                        'Observações:',
+                        textAlign: pdfLib.TextAlign.left,
+                        style: pdfLib.TextStyle(
+                            fontSize: 10.0,
+                            font: ttf,
+                            fontWeight: pdfLib.FontWeight.bold),
+                      ),
+                    ),
+                    pdfLib.Container(
+                      child: pdfLib.Text(
+                        '$obs',
+                        textAlign: pdfLib.TextAlign.left,
+                        style: pdfLib.TextStyle(
+                            fontSize: 10.0,
+                            font: ttf,
+                            fontWeight: pdfLib.FontWeight.bold),
+                      ),
+                    ),
+                  ]),
+            ]
+          )
             ]));
     pag = pag + lines;
     final String dir = (await getApplicationDocumentsDirectory()).path;
