@@ -11,8 +11,6 @@ class UserModel{
   String category = '';
   bool status = false;
 
-
-
 Map<String,dynamic> toMap(){
   Map<String,dynamic> map = {
     "idUser"  : this.idUser,

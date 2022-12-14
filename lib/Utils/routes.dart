@@ -51,6 +51,9 @@ class Routes {
       case "/demanda":
         return MaterialPageRoute(
             builder: (_) =>DataRequest(id:  args as String)
+        );case "/request":
+        return MaterialPageRoute(
+            builder: (_) =>RequestScreen()
         );
       case "/check1":
         return MaterialPageRoute(

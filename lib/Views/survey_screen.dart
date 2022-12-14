@@ -490,7 +490,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
               Row(
                 children: [
                   SizedBox(width: width * 0.04),
-                  widget.text == 'Editar Vistoria'?Container(
+                  widget.text == 'Editar Vistoria' || widget.text == 'Vistoriar Demanda'?Container(
                     child: TextCustom(
                       text: selectedType,
                       size: 12.0,
@@ -862,21 +862,8 @@ class _SurveyscreenState extends State<Surveyscreen> {
               ),
               Divider(
                 color: PaletteColors.lightGrey,
-                thickness: 1,
+                thickness: 0,
               ),
-              Row(children: [
-                SizedBox(width: width * 0.04),
-                Container(
-                  child: TextCustom(
-                    text: "Coordenadas:",
-                    size: 12.0,
-                    color: PaletteColors.grey,
-                    fontWeight: FontWeight.bold,
-                    textAlign: TextAlign.center,
-                  ),
-                )
-
-              ],),
               Row(children: [
                 SizedBox(width: width * 0.04),
                 Container(
@@ -933,10 +920,6 @@ class _SurveyscreenState extends State<Surveyscreen> {
                 ),
 
               ],),
-              Divider(
-                color: PaletteColors.lightGrey,
-                thickness: 1,
-              ),
               /*
           Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -1127,12 +1110,9 @@ class _SurveyscreenState extends State<Surveyscreen> {
                 ],
               ),
               */
-              SizedBox(
-                height: 3.0,
-                width: 0.0,
-              ),
+
               Padding(
-                padding: const EdgeInsets.all(20.0),
+                padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: ButtonCustom(
                   widthCustom: 0.80,
                   heightCustom: 0.070,

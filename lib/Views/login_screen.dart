@@ -13,7 +13,31 @@ class _LoginScreenState extends State<LoginScreen> {
   final _controllerPassword = TextEditingController();
   bool visiblePassword = true;
   FirebaseAuth _auth = FirebaseAuth.instance;
+  FirebaseFirestore db = FirebaseFirestore.instance;
   String _error =  "";
+
+  _getData()async{
+    DocumentSnapshot snapshot=
+    await db.collection("users").doc(FirebaseAuth.instance.currentUser!.uid).get();
+    Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
+    setState(() {
+      var status = data?["status"]??false;
+      var active = status.toString();
+      print(status);
+      print(active);
+      if (status ==true) {
+        Navigator.popAndPushNamed(context, "/main");
+      }else{
+        setState(() {
+          _error = "Usuario Desativado,entre em contato com o administrador";
+          showSnackBar(context, _error, Colors.red);
+        });
+      }
+
+
+    });
+
+  }
 
   _signFirebase()async{
     if (_controllerEmail.text.isNotEmpty) {
@@ -26,7 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
             email: _controllerEmail.text.trim(),
             password: _controllerPassword.text.trim()
         ).then((auth)async{
-          Navigator.popAndPushNamed(context, "/main");
+          _getData();
         });
       }on FirebaseAuthException catch (e) {
         if(e.code =="unknown"){
@@ -63,7 +87,6 @@ class _LoginScreenState extends State<LoginScreen> {
       });
     }
   }
-
 
   @override
   Widget build(BuildContext context) {

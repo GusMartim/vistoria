@@ -2824,7 +2824,13 @@ class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
                 height: 20,
               ),
               imageList.length == 0
-                  ? Container()
+                  ? TextCustom(
+                text: "Não há imagens salvas",
+                size: 14.0,
+                color: PaletteColors.grey,
+                fontWeight: FontWeight.bold,
+                textAlign: TextAlign.center,
+              )
                   : TextCustom(
                 text: "Fotos:",
                 size: 16.0,
@@ -2832,11 +2838,7 @@ class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
                 fontWeight: FontWeight.bold,
                 textAlign: TextAlign.start,
               ),
-              SizedBox(
-                height: 16,
-              ),
-              loading == false
-                  ? Column(
+              imageList.length == 0?Container():Column(
                 children: [
                   Container(
                     width: width * 0.9,
@@ -2947,19 +2949,10 @@ class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
                     height: height * 0.01,
                   )
                 ],
-              )
-                  : Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  imageList.length == 0
-                      ? Container()
-                      : CircularProgressIndicator(
-                      color: PaletteColors.primaryColor),
-                ],
               ),
+
               SizedBox(
-                height: 10,
+                height: 100,
               ),
               Row(
                 children: [

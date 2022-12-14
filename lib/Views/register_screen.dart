@@ -57,6 +57,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool visiblePassword = true;
   bool visibleConfirmPassword = true;
   String _error = '';
+  bool status = true;
   var result;
   List<String> type = [
     'Pessoa Física',
@@ -101,6 +102,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   _userModel.password = _controllerPassword.text;
                   _userModel.confirmPassword = _controllerPasswordConfirm.text;
                   _userModel.region = selectedState!;
+                  _userModel.status = status;
                   _saveData(_userModel);
                 });
               } on FirebaseAuthException catch (e) {

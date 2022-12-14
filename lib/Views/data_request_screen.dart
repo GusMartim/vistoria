@@ -15,6 +15,7 @@ class _DataRequestState extends State<DataRequest> {
   String local = '';
   String district= '';
   String number = '';
+  String emissor = '';
   String states = '';
   String adress ='';
   String type ='';
@@ -59,6 +60,7 @@ class _DataRequestState extends State<DataRequest> {
     contato = data?["contato"]??'';
     city = data?["city"]??'';
     type = data?["typesurvey"]??'';
+    emissor = data?["emissor"]??'';
     if(data?["pdfs"] == null){
       pdfs = [];
     }else{
@@ -126,6 +128,45 @@ class _DataRequestState extends State<DataRequest> {
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    child: TextCustom(
+                      text: '''Emissor:''',
+                      color: PaletteColors.bgColor,
+                      fontWeight: FontWeight.bold,
+                      textAlign: TextAlign.start,
+                      size: 14.0,
+                      maxLines: 4,
+                    ),
+                  ),
+                  Container(
+                    width: width * 0.55,
+                    child: TextCustom(
+                      text: emissor,
+                      color: PaletteColors.bgColor,
+                      fontWeight: FontWeight.normal,
+                      textAlign: TextAlign.start,
+                      size: 14.0,
+                      maxLines: 4,
+                    ),
+                  ),
+                  // Container(
+                  //   alignment: Alignment.centerLeft,
+                  //   width: width * 0.7,
+                  //   child: TextCustom(
+                  //     text: '''$adress,$number,$district - $city/$states''',
+                  //     maxLines: 3,
+                  //     color: PaletteColors.bgColor,
+                  //     fontWeight: FontWeight.normal,
+                  //     textAlign: TextAlign.start,
+                  //     size: 12.0,
+                  //   ),
+                  // ),
+                ],
+              ),
               SizedBox(height: height * 0.03),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
