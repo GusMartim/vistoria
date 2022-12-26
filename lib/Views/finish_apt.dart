@@ -16,7 +16,12 @@ class SurveyFinishScreenApt extends StatefulWidget {
 }
 
 class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
+  var priceSurvey = '';
+  int contador = 0;
+  var plano = '';
+  var valor = '';
   String street = '';
+  String SDivisaoInterna = '';
   String Cod= '';
   String number= '';
   String district= '';
@@ -421,6 +426,7 @@ class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
       IPavs = data?["PavType"] ?? '';
       Final = data?["Goal"] ?? '';
       Origin = data?["Origin"] ?? '';
+      SDivisaoInterna = data?["divisaointerna"] ?? '';
       complement = data?["complement"] ?? '';
     });
     _createPdf(context);
@@ -428,9 +434,7 @@ class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
 
   FirebaseStorage storage = FirebaseStorage.instance;
   _createPdf(BuildContext context) async {
-    print('entrou');
-    print(order);
-    print(nsurvey);
+
     final pdfLib.Document pdf = pdfLib.Document(deflate: zlib.encode);
     final font = await rootBundle.load("assets/fonts/Nunito-Regular.ttf");
     final ttf = pdfLib.Font.ttf(font);
@@ -2368,6 +2372,33 @@ class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
                             ),
                           ),
                         ),
+                        pdfLib.Container(
+                          width: 130,
+                          height: 15,
+                          child: pdfLib.Text(
+                            'Outro:',
+                            textAlign: pdfLib.TextAlign.left,
+                            style: pdfLib.TextStyle(
+                                fontSize: 09.0,
+                                font: ttf,
+                                fontWeight: pdfLib.FontWeight.bold
+                            ),
+                          ),
+                        ),
+                        pdfLib.Container(
+                          width: 130,
+                          height: 15,
+                          child: pdfLib.Text(
+                            SDivisaoInterna,
+                            textAlign: pdfLib.TextAlign.left,
+                            maxLines: 5,
+                            style: pdfLib.TextStyle(
+                                fontSize: 09.0,
+                                font: ttf,
+                                fontWeight: pdfLib.FontWeight.bold
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -2728,25 +2759,51 @@ class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
   }
 
   _getUserNSurvey() async {
+    DocumentSnapshot link = await db.collection("link").doc("links").get();
+    Map<String, dynamic>? linkData = link.data() as Map<String, dynamic>?;
     DocumentSnapshot snapshot =
     await db.collection('users').doc(_auth.currentUser?.uid).get();
     Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
     setState(() {
       Nsurveys = data?["nsurveys"] ?? [];
+      priceSurvey = linkData?["Valor Vistoria"]?? '';
+      contador = data?["contadorVistorias"]??0;
+      plano = data?["plano"]?? '';
+      valor = data?["valor"]?? '';
     });
-    print(Nsurveys.length);
+
     setState(() {
+       double price = double.parse(valor.replaceAll("R\$",'').replaceAll(',','.'));
+       double surveyPrice =double.parse(priceSurvey.replaceAll("R\$",'').replaceAll(',','.'));
+       valor = "R\$ ${price + surveyPrice}";
       Nsurveys.add(order + 1);
     });
     await db.collection('users').doc(_auth.currentUser?.uid).update({
       "nsurveys": Nsurveys.toSet().toList(),
     });
+    Map<String, dynamic> mapVistorias = {
+      'contadorVistorias': contador+ 1
+    };
+
+    await db
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .set(mapVistorias,SetOptions(merge: true));
     _NSurveyValidation();
   }
 
   _NSurveyValidation() async {
-    print(order);
-    print(nsurvey);
+    if(plano == "Vistoriador"){
+      Map<String, dynamic> mapValor = {
+        'valor': valor
+      };
+      db
+          .collection('users')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .set(mapValor,SetOptions(merge: true));
+    }
+
+
 
     if (nsurvey == 0) {
       _orderModel.order = order + 1;

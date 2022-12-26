@@ -130,7 +130,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                               items.add(ListTileModel(
                                   text:
                                       '${item['adress']??''},${item['number']??''},${item['district']??''} -${item['city']??''}/${item['estado']??''}',
-                                  data: '${item['hourRequest']??''}',
+                                  data: '${item['hourRequest'].toDate()??''}',
                                   iconShow: false, pdfUrl: '${item['savedPdf']??''}'));
                               return ListTileCustom(
                                 text: items[index].text,

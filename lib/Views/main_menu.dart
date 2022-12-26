@@ -14,7 +14,24 @@ class MenuScreen extends StatefulWidget {
 class _MenuScreenState extends State<MenuScreen> {
   FirebaseFirestore db = FirebaseFirestore.instance;
   List list = [];
+  bool canSurvey = true;
+  var vencimento;
+  var dataPlano;
+  var plano;
+  var typePlan;
+  var contador;
+  var category;
+  var qtdSurveyIntermediario;
+  var qtdSurveyCompleto;
+
+  String? encodeQueryParameters(Map<String, String> params) {
+    return params.entries
+        .map((MapEntry<String, String> e) =>
+    '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
+        .join('&');
+  }
   _getList() async {
+
     var userDemandList = await db
         .collection("surveys")
         .where("status",isEqualTo: "demand")
@@ -27,11 +44,70 @@ class _MenuScreenState extends State<MenuScreen> {
 
 
   }
+  _getInfo()async {
+    DocumentSnapshot link = await db.collection("link").doc("links").get();
+    Map<String, dynamic>? linkData = link.data() as Map<String, dynamic>?;
+    DocumentSnapshot snapshot = await db
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+    Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
+    setState(() {
+      contador = data?["contadorVistorias"] ?? 0;
+      vencimento = data?['dataVencimento'];
+      dataPlano = data?['dataPlano'];
+      plano = data?['plano'] ?? "Basico";
+      typePlan = data?['planType'] ?? "Mensal";
+      category = data?['category'] ?? "Vistoriador";
+      qtdSurveyIntermediario = linkData?['Quantidade Vistoria Intermediario'];
+      qtdSurveyCompleto = linkData?['Quantidade Vistoria Completo'];
+    });
+    print(contador);
+    print(vencimento);
+    print(plano);
+    DateTime dateTime = vencimento.toDate();
+    DateTime planTime = dataPlano.toDate();
+    if (category != "Administrador") {
+      if (typePlan != "Anual"){
+
+        if (plano == "Completo" && contador > qtdSurveyCompleto) {
+          setState(() {
+            canSurvey = false;
+          });
+        }
+        if (plano == "Intermediario" && contador > qtdSurveyIntermediario) {
+          setState(() {
+            canSurvey = false;
+          });
+        }
+      }
+      if (dateTime
+          .difference(DateTime.now())
+          .inDays < 0) {
+        setState(() {
+          canSurvey = false;
+          plano = "Basico";
+        });
+        Map<String, dynamic> mapVistorias = {
+          'plano': plano
+        };
+        await db
+            .collection('users')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .set(mapVistorias, SetOptions(merge: true));
+      }
+    }
+  }
+
+
+
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _getList();
+    _getInfo();
   }
 
 
@@ -126,7 +202,7 @@ class _MenuScreenState extends State<MenuScreen> {
                           text: "Demandas",
                           icon: Icons.add_location_rounded,
                           screen: RequestScreen()),
-                      CustomCard(
+                      canSurvey == true?CustomCard(
                         text: "Nova Vistoria",
                         icon: Icons.list_rounded,
                         screen: Surveyscreen(
@@ -134,7 +210,46 @@ class _MenuScreenState extends State<MenuScreen> {
                             buttonText: 'Prosseguir',
                             id: ''),
 
-                      )
+                      ):Container(
+                        margin: EdgeInsets.all(8.0) ,
+                        height: height * 0.2,
+                        width: width * 0.4,
+                        child: GestureDetector(
+                          onTap: (){
+                            showSnackBar(context, 'seu plano chegou ao fim, re-contrate ou de um upgrade no nosso site', Colors.red);
+                          },
+                          child: Card(
+                            elevation: 4,
+                            color: PaletteColors.greyInput,
+                            shadowColor: PaletteColors.grey,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Icon(Icons.list_rounded, color: PaletteColors.lightGrey,
+                                  size: 40.0,),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    TextCustom(
+                                      text:'Nova Vistoria',
+                                      color: PaletteColors.grey,
+                                      size: 14.0,
+                                      fontWeight: FontWeight.bold,
+                                      textAlign: TextAlign.center,
+                                    )
+                                  ],
+                                )
+                              ],
+                            ),
+
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -165,11 +280,64 @@ class _MenuScreenState extends State<MenuScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      CustomCard(
-                        text: "Enviar Feedback",
-                        icon: Icons.comment_rounded,
-                        screen: FeedbackScreen(),
+                      Container(
+                          margin: EdgeInsets.all(8.0) ,
+                          height: height * 0.2,
+                          width: width * 0.4,
+
+                          child: GestureDetector(
+                            onTap: () async{
+                              Uri uri = Uri(
+                                scheme: 'mailto',
+                                path: 'teia.laudo@gmail.com',
+                                query: encodeQueryParameters(<String, String>{
+                                  'subject': 'Feedback Teia Vistoria',
+                                  'body' : 'Digite aqui sua mensagem para nós'
+                                }),
+                              );
+                              await launchUrl(uri,mode: LaunchMode.externalApplication);
+
+
+                            },
+                            child: Card(
+                              elevation: 4,
+                              color: PaletteColors.greyInput,
+                              shadowColor: PaletteColors.grey,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  Icon(Icons.message, color: PaletteColors.lightGrey,
+                                    size: 40.0,),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      TextCustom(
+                                        text:'Enviar Feedback',
+                                        color: PaletteColors.grey,
+                                        size: 14.0,
+                                        fontWeight: FontWeight.bold,
+                                        textAlign: TextAlign.center,
+                                      )
+                                    ],
+                                  )
+                                ],
+                              ),
+
+                            ),
+                          )
                       ),
+
+
+                      // CustomCard(
+                      //   text: "Enviar Feedback",
+                      //   icon: Icons.comment_rounded,
+                      //   screen: FeedbackScreen(),
+                      // ),
                       CustomCard(
                           text: "Profissionais",
                           icon: Icons.contact_mail,

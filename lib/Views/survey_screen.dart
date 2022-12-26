@@ -164,7 +164,6 @@ class _SurveyscreenState extends State<Surveyscreen> {
     _surveyModel.typesurvey = selectedType.toString();
     _surveyModel.userCode =_controllerUserCode.text;
     _surveyModel.cep = _controllerCEP.text;
-    _surveyModel.hourRequest = format.format(DateTime.now());
     _surveyModel.idUser = FirebaseAuth.instance.currentUser!.uid;
     _surveyModel.userName =FirebaseAuth.instance.currentUser?.displayName!;
     _surveyModel.lng = _controllerLat.text;

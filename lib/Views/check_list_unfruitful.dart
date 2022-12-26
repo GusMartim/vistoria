@@ -261,6 +261,7 @@ class _CheckListUnfruitfulState extends State<CheckListUnfruitful> {
     _dataModel.phone = _controllerPhone.text;
     _dataModel.completeAdress = _controllerAdress.text;
     _dataModel.contact = _controllerContact.text;
+    _dataModel.divisaointerna = _controllerDivisaoInterna.text;
 
     _saveData(_dataModel);
   }
@@ -367,6 +368,7 @@ class _CheckListUnfruitfulState extends State<CheckListUnfruitful> {
 
     setState(() {
       _controllerAge = TextEditingController(text: data?["age"]??'');
+      _controllerDivisaoInterna = TextEditingController(text:data?["divisaointerna"]??'');
       _controllerOpenArea = TextEditingController(text: data?["OpenArea"]??'');
       _controllerClosedArea = TextEditingController(text: data?["ClosedArea"]??'');
       _controllerTerrainArea =TextEditingController(text: data?["TerrainArea"]??'');
@@ -524,7 +526,7 @@ class _CheckListUnfruitfulState extends State<CheckListUnfruitful> {
     CheckBoxModel(title: 'Outro:'),
   ];
   TextEditingController _controllerInternPaint = TextEditingController();
-
+  TextEditingController _controllerDivisaoInterna = TextEditingController();
   final infra = [
     CheckBoxModel(title: 'Rede de Água'),
     CheckBoxModel(title: 'Iluminação Pública'),
@@ -1780,7 +1782,7 @@ class _CheckListUnfruitfulState extends State<CheckListUnfruitful> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     TextCustom(
-                      text: "Unidade",
+                      text: "Divisão Interna",
                       size: 16.0,
                       color: PaletteColors.grey,
                       fontWeight: FontWeight.bold,
@@ -3472,6 +3474,38 @@ class _CheckListUnfruitfulState extends State<CheckListUnfruitful> {
                         ),
                       ],
                     ),
+                    SizedBox(
+                      height: height * 0.015,
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                          width: width * 0.4,
+                          child: TextCustom(
+                              text: "Outro:",
+                              size: 14.0,
+                              color: PaletteColors.grey,
+                              fontWeight: FontWeight.normal),
+                        ),
+
+                      ],
+                    ),
+                    Row(children: [
+                      Container(
+                        width: width * 0.7,
+                        child: InputRegister(
+                          icons: Icons.height,
+                          sizeIcon: 0.0,
+                          width: width * 2.0,
+                          controller: _controllerDivisaoInterna,
+                          hint: '',
+                          fonts: 14.0,
+                          keyboardType: TextInputType.text,
+                          colorBorder: PaletteColors.greyInput,
+                          background: PaletteColors.greyInput,
+                        ),
+                      ),
+                    ]),
                     SizedBox(
                       height: height * 0.03,
                     ),

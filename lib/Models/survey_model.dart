@@ -12,7 +12,6 @@ class SurveyModel{
   String typesurvey = '';
   String lat = '';
   String lng = '';
-  String hourRequest = '';
   String idUser = '';
   String? userName = '';
   String userCode ='';
@@ -26,7 +25,7 @@ class SurveyModel{
 
 Map<String,dynamic> toMap(){
   Map<String,dynamic> map = {
-    "hourRequest": this.hourRequest,
+    "hourRequest": DateTime.now(),
     "savedPdf": this.pdf,
     "idUser"   : this.idUser,
     "userName"   : this.userName,

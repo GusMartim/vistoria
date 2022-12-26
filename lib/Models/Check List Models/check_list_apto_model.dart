@@ -59,12 +59,14 @@ class AptoModel{
   String subs = '';
   String blocks = '';
   String view = '';
+  String divisaointerna = '';
 
   AptoModel();
 
   Map<String,dynamic> toMap(){
     Map<String,dynamic> map = {
       "contato"    : this.Contato,
+      "divisaointerna"    : this.divisaointerna,
       "telefone"    : this.Telefone,
       "pavs": this.pavs,
       "subs": this.subs,

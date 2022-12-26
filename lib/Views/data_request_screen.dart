@@ -336,14 +336,14 @@ class _DataRequestState extends State<DataRequest> {
                         ),
                       ),
                       Container(
-
+                        width: width * 0.8,
                         child: TextCustom(
                           text: '''${_controllerObs.text}''',
                           color: PaletteColors.bgColor,
                           fontWeight: FontWeight.normal,
                           textAlign: TextAlign.start,
                           size: 14.0,
-                          maxLines: 2,
+                          maxLines: 10,
                         ),
                       ),
 

@@ -39,10 +39,12 @@ class DataModel{
   String phone = '';
   String completeAdress = '';
   String contact = '';
+  String divisaointerna = '';
   DataModel();
 
   Map<String,dynamic> toMap(){
     Map<String,dynamic> map = {
+      "divisaointerna": this.divisaointerna,
       "rooms": this.rooms,
       "socialbathrooms"   : this.socialbathrooms,
       "privatebathrooms"    : this.privatebathrooms,

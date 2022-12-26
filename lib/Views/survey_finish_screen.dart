@@ -20,6 +20,10 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
   var Cod = '';
   var path = '';
   var street = '';
+  var priceSurvey = '';
+  var valor = '';
+  int contador = 0;
+  var plano = '';
   var number = '';
   var complement = '';
   var district = '';
@@ -81,6 +85,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
   var Origin = '';
   var contato = '';
   var telefone = '';
+  var SDivisaoInterna = '';
 
   List imageList = [];
   List pathology = [];
@@ -118,6 +123,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
   OrderModel _orderModel = OrderModel();
   final Map<String, dynamic> data = HashMap();
   String status = "survey";
+  FirebaseStorage storage = FirebaseStorage.instance;
   _getData() async {
     DocumentSnapshot snapshot =
         await db.collection("surveys").doc(widget.idSurvey).get();
@@ -343,6 +349,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
       telefone = data?["telefone"] ?? "";
       price = data?["price"] ?? "";
       surveyType = data?["typesurvey"] ?? '';
+      SDivisaoInterna = data?["divisaointerna"] ?? "";
       sPathology = data?["Pathology"] ?? "";
       sType = data?["type"] ?? "";
       sInfra = data?["infra"] ?? "";
@@ -406,7 +413,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
     _createPdf(context);
   }
 
-  FirebaseStorage storage = FirebaseStorage.instance;
+
   _createPdf(BuildContext context) async {
     print('entrou');
     print(order);
@@ -2000,7 +2007,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                             width: 130,
                             height: 15,
                             child: pdfLib.Text(
-                              'Unidade',
+                              'Divisão Interna',
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
                                   fontSize: 09.0,
@@ -2210,6 +2217,33 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                             child: pdfLib.Text(
                               'Piscina',
                               textAlign: pdfLib.TextAlign.left,
+                              style: pdfLib.TextStyle(
+                                  fontSize: 09.0,
+                                  font: ttf,
+                                  fontWeight: pdfLib.FontWeight.bold
+                              ),
+                            ),
+                          ),
+                          pdfLib.Container(
+                            width: 130,
+                            height: 15,
+                            child: pdfLib.Text(
+                              'Outro:',
+                              textAlign: pdfLib.TextAlign.left,
+                              style: pdfLib.TextStyle(
+                                  fontSize: 09.0,
+                                  font: ttf,
+                                  fontWeight: pdfLib.FontWeight.bold
+                              ),
+                            ),
+                          ),
+                          pdfLib.Container(
+                            width: 130,
+                            height: 15,
+                            child: pdfLib.Text(
+                              SDivisaoInterna,
+                              textAlign: pdfLib.TextAlign.left,
+                              maxLines: 5,
                               style: pdfLib.TextStyle(
                                   fontSize: 09.0,
                                   font: ttf,
@@ -2527,25 +2561,51 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
   }
 
   _getUserNSurvey() async {
+    DocumentSnapshot link = await db.collection("link").doc("links").get();
+    Map<String, dynamic>? linkData = link.data() as Map<String, dynamic>?;
     DocumentSnapshot snapshot =
-        await db.collection('users').doc(_auth.currentUser?.uid).get();
+    await db.collection('users').doc(_auth.currentUser?.uid).get();
     Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
     setState(() {
       Nsurveys = data?["nsurveys"] ?? [];
+      priceSurvey = linkData?["Valor Vistoria"]?? '';
+      contador = data?["contadorVistorias"]?? 0;
+      plano = data?["plano"]?? '';
+      valor = data?["valor"]?? '';
     });
-    print(Nsurveys.length);
+
     setState(() {
+      double price = double.parse(valor.replaceAll("R\$",'').replaceAll(',','.'));
+      double surveyPrice =double.parse(priceSurvey.replaceAll("R\$",'').replaceAll(',','.'));
+      valor = "R\$ ${price + surveyPrice}";
       Nsurveys.add(order + 1);
     });
     await db.collection('users').doc(_auth.currentUser?.uid).update({
       "nsurveys": Nsurveys.toSet().toList(),
     });
+    Map<String, dynamic> mapVistorias = {
+      'contadorVistorias': contador+ 1
+    };
+
+    await db
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .set(mapVistorias,SetOptions(merge: true));
     _NSurveyValidation();
   }
 
   _NSurveyValidation() async {
-    print(order);
-    print(nsurvey);
+    if(plano == "Vistoriador"){
+      Map<String, dynamic> mapValor = {
+        'valor': valor
+      };
+      db
+          .collection('users')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .set(mapValor,SetOptions(merge: true));
+    }
+
+
 
     if (nsurvey == 0) {
       _orderModel.order = order + 1;
@@ -2560,7 +2620,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
       await db.collection('surveyNumber').doc('surveyNumber').set({
         'surveyNumber': _orderModel.order
       }, SetOptions(merge: true)).then(
-          (value) => Navigator.pushReplacementNamed(context, '/main'));
+              (value) => Navigator.pushReplacementNamed(context, '/main'));
     } else {
       Navigator.pushReplacementNamed(context, '/main');
     }

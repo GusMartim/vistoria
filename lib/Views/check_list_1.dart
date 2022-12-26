@@ -18,6 +18,7 @@ class CheckList1 extends StatefulWidget {
 class _CheckList1State extends State<CheckList1> {
   int nRoom = 0;
   String SRoom = '0';
+  TextEditingController _controllerDivisaoInterna = TextEditingController();
   TextEditingController _controllerRoom = TextEditingController();
   int nSocialBathroom = 0;
   String SSocialBathroom = '0';
@@ -292,6 +293,7 @@ class _CheckList1State extends State<CheckList1> {
       _controllerPosition = TextEditingController(text: data?["unPosition"]??'');
       _controllerRoof = TextEditingController(text: data?["roof"]??'');
       _controllerWall = TextEditingController(text: data?["wall"]??'');
+      _controllerDivisaoInterna = TextEditingController(text:data?["divisaointerna"]??'');
       _controllerInternPaint =
           TextEditingController(text: data?["internPaint"]??'');
       _controllerPaint = TextEditingController(text: data?["externPaint"]??'');
@@ -486,6 +488,7 @@ class _CheckList1State extends State<CheckList1> {
     _unityModel.Goal = selectedGoal.toString();
     _unityModel.Origin = selectedInfo.toString();
     _unityModel.rooms = _controllerRoom.text;
+    _unityModel.divisaointerna = _controllerDivisaoInterna.text;
     _unityModel.Contato = _controllerContato.text;
     _unityModel.Telefone = _controllerTelefoneContato.text;
     _unityModel.socialbathrooms = _controllerSocialBathroom.text;
@@ -2513,7 +2516,7 @@ class _CheckList1State extends State<CheckList1> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     TextCustom(
-                      text: "Unidade",
+                      text: "Divisão Interna",
                       size: 16.0,
                       color: PaletteColors.grey,
                       fontWeight: FontWeight.bold,
@@ -4206,6 +4209,38 @@ class _CheckList1State extends State<CheckList1> {
                       ],
                     ),
                     SizedBox(
+                      height: height * 0.015,
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                          width: width * 0.4,
+                          child: TextCustom(
+                              text: "Outro:",
+                              size: 14.0,
+                              color: PaletteColors.grey,
+                              fontWeight: FontWeight.normal),
+                        ),
+
+                      ],
+                    ),
+                    Row(children: [
+                      Container(
+                        width: width * 0.7,
+                        child: InputRegister(
+                          icons: Icons.height,
+                          sizeIcon: 0.0,
+                          width: width * 2.0,
+                          controller: _controllerDivisaoInterna,
+                          hint: '',
+                          fonts: 14.0,
+                          keyboardType: TextInputType.text,
+                          colorBorder: PaletteColors.greyInput,
+                          background: PaletteColors.greyInput,
+                        ),
+                      ),
+                    ]),
+                    SizedBox(
                       height: height * 0.03,
                     ),
                     Divider(
@@ -4318,6 +4353,7 @@ class _CheckList1State extends State<CheckList1> {
                     )
                   ],
                 ),
+
               ],
             ),
           ),

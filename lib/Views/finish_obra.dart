@@ -20,7 +20,9 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
   Uint8List? bytes;
   FirebaseFirestore db = FirebaseFirestore.instance;
   FirebaseAuth _auth = FirebaseAuth.instance;
+  var priceSurvey = '';
   int order = 0;
+  int contador = 0;
   int nsurvey = 0;
   List Nsurveys = [];
   OrderModel _orderModel = OrderModel();
@@ -28,6 +30,8 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
   String status = "survey";
   List imageList = [];
   var Cod = '';
+  var plano = '';
+  var valor = '';
   var contato = '';
   var telefone = '';
   var complement = '';
@@ -994,25 +998,51 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
   }
 
   _getUserNSurvey() async {
+    DocumentSnapshot link = await db.collection("link").doc("links").get();
+    Map<String, dynamic>? linkData = link.data() as Map<String, dynamic>?;
     DocumentSnapshot snapshot =
-        await db.collection('users').doc(_auth.currentUser?.uid).get();
+    await db.collection('users').doc(_auth.currentUser?.uid).get();
     Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
     setState(() {
       Nsurveys = data?["nsurveys"] ?? [];
+      priceSurvey = linkData?["Valor Vistoria"]?? '';
+      contador = data?["contadorVistorias"]?? 0;
+      plano = data?["plano"]?? '';
+      valor = data?["valor"]?? '';
     });
-    print(Nsurveys.length);
+
     setState(() {
+      double price = double.parse(valor.replaceAll("R\$",'').replaceAll(',','.'));
+      double surveyPrice =double.parse(priceSurvey.replaceAll("R\$",'').replaceAll(',','.'));
+      valor = "R\$ ${price + surveyPrice}";
       Nsurveys.add(order + 1);
     });
     await db.collection('users').doc(_auth.currentUser?.uid).update({
       "nsurveys": Nsurveys.toSet().toList(),
     });
+    Map<String, dynamic> mapVistorias = {
+      'contadorVistorias': contador+ 1
+    };
+
+    await db
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .set(mapVistorias,SetOptions(merge: true));
     _NSurveyValidation();
   }
 
   _NSurveyValidation() async {
-    print(order);
-    print(nsurvey);
+    if(plano == "Vistoriador"){
+      Map<String, dynamic> mapValor = {
+        'valor': valor
+      };
+      db
+          .collection('users')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .set(mapValor,SetOptions(merge: true));
+    }
+
+
 
     if (nsurvey == 0) {
       _orderModel.order = order + 1;
@@ -1027,7 +1057,7 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
       await db.collection('surveyNumber').doc('surveyNumber').set({
         'surveyNumber': _orderModel.order
       }, SetOptions(merge: true)).then(
-          (value) => Navigator.pushReplacementNamed(context, '/main'));
+              (value) => Navigator.pushReplacementNamed(context, '/main'));
     } else {
       Navigator.pushReplacementNamed(context, '/main');
     }

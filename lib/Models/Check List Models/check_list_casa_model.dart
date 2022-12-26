@@ -51,11 +51,13 @@ class UnityModel{
   String Goal = '';
   String pathology = '';
   String idSurvey = '';
+  String divisaointerna = '';
   UnityModel();
 
   Map<String,dynamic> toMap(){
     Map<String,dynamic> map = {
       "contato"    : this.Contato,
+      "divisaointerna"    : this.divisaointerna,
       "telefone"    : this.Telefone,
       "rooms": this.rooms,
       "socialbathrooms"   : this.socialbathrooms,

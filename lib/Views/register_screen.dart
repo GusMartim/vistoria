@@ -3,6 +3,7 @@ import 'package:vistoria/Widgets/inputPassword.dart';
 import 'package:vistoria/Widgets/inputRegister.dart';
 import 'package:vistoria/Widgets/snackBars.dart';
 import 'package:vistoria/Widgets/text_custom.dart';
+import 'package:emailjs/emailjs.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -57,6 +58,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool visiblePassword = true;
   bool visibleConfirmPassword = true;
   String _error = '';
+  String plano = 'Basico';
   bool status = true;
   var result;
   List<String> type = [
@@ -65,7 +67,32 @@ class _RegisterScreenState extends State<RegisterScreen> {
   ];
   String? selectedType = 'Pessoa Física';
 
+
+  sendEmailJS()async{
+    Map<String, dynamic> templateParams = {
+      'user_email': '${_controllerEmail.text!}',
+      'user_name': '${_controllerName.text!}',
+    };
+    try {
+      await EmailJS.send(
+        'service_n9xza0i',
+        'template_jlxyq7j',
+        templateParams,
+        const Options(
+          publicKey: 'xXhE660LFNXY-12OW',
+          privateKey: 'ju7WzM6BoZBwDMC6mPOCp',
+        ),
+      );
+      print('SUCCESS!');
+    } catch (error) {
+      print(error.toString());
+    }
+  }
+
+
+
   _saveData(UserModel userModel) {
+    sendEmailJS();
     db
         .collection('users')
         .doc(userModel.idUser)
@@ -103,6 +130,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   _userModel.confirmPassword = _controllerPasswordConfirm.text;
                   _userModel.region = selectedState!;
                   _userModel.status = status;
+
                   _saveData(_userModel);
                 });
               } on FirebaseAuthException catch (e) {

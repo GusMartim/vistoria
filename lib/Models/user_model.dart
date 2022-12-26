@@ -11,10 +11,13 @@ class UserModel{
   String category = '';
   bool status = false;
 
+
 Map<String,dynamic> toMap(){
   Map<String,dynamic> map = {
     "idUser"  : this.idUser,
     "userType"  : this.userType,
+    "contadorVistorias"  : 0,
+    "planType"  : "Mensal",
     "doc"  : this.doc,
     "name"    : this.name,
     "email"   : this.email,
@@ -24,6 +27,10 @@ Map<String,dynamic> toMap(){
     "region": this.region,
     "category": this.category,
     "status" : this.status,
+    "plano" : "Basico",
+    "dataPlano": DateTime.now(),
+    "dataVencimento": DateTime.now().add(const Duration(days: 30)),
+    "dataCadastro": DateTime.now(),
   };
   return map;
 

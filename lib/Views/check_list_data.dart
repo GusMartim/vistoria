@@ -14,6 +14,7 @@ class CheckListData extends StatefulWidget {
 class _CheckListDataState extends State<CheckListData> {
   int nRoom = 0;
   String SRoom = '0';
+  TextEditingController _controllerDivisaoInterna = TextEditingController();
   TextEditingController _controllerRoom = TextEditingController();
   int nSocialBathroom = 0;
   String SSocialBathroom = '0';
@@ -225,6 +226,7 @@ class _CheckListDataState extends State<CheckListData> {
     _dataModel.Goal = selectedGoal.toString();
     _dataModel.Origin = selectedInfo.toString();
     _dataModel.rooms = _controllerRoom.text;
+    _dataModel.divisaointerna = _controllerDivisaoInterna.text;
     _dataModel.socialbathrooms = _controllerSocialBathroom.text;
     _dataModel.privatebathrooms = _controllerPrivateBathroom.text;
     _dataModel.lavs = _controllerLavabos.text;
@@ -367,6 +369,7 @@ class _CheckListDataState extends State<CheckListData> {
     setState(() {
       _controllerAge = TextEditingController(text: data?["age"]??'');
       _controllerOpenArea = TextEditingController(text: data?["OpenArea"]??'');
+      _controllerDivisaoInterna = TextEditingController(text:data?["divisaointerna"]??'');
       _controllerClosedArea = TextEditingController(text: data?["ClosedArea"]??'');
       _controllerTerrainArea =TextEditingController(text: data?["TerrainArea"]??'');
       _controllerTotalArea =TextEditingController(text: data?["TotalArea"]??'');
@@ -1779,7 +1782,7 @@ class _CheckListDataState extends State<CheckListData> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     TextCustom(
-                      text: "Unidade",
+                      text: "Divisão Interna",
                       size: 16.0,
                       color: PaletteColors.grey,
                       fontWeight: FontWeight.bold,
@@ -3471,6 +3474,38 @@ class _CheckListDataState extends State<CheckListData> {
                         ),
                       ],
                     ),
+                    SizedBox(
+                      height: height * 0.015,
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                          width: width * 0.4,
+                          child: TextCustom(
+                              text: "Outro:",
+                              size: 14.0,
+                              color: PaletteColors.grey,
+                              fontWeight: FontWeight.normal),
+                        ),
+
+                      ],
+                    ),
+                    Row(children: [
+                      Container(
+                        width: width * 0.7,
+                        child: InputRegister(
+                          icons: Icons.height,
+                          sizeIcon: 0.0,
+                          width: width * 2.0,
+                          controller: _controllerDivisaoInterna,
+                          hint: '',
+                          fonts: 14.0,
+                          keyboardType: TextInputType.text,
+                          colorBorder: PaletteColors.greyInput,
+                          background: PaletteColors.greyInput,
+                        ),
+                      ),
+                    ]),
                     SizedBox(
                       height: height * 0.03,
                     ),
