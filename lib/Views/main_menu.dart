@@ -18,6 +18,7 @@ class _MenuScreenState extends State<MenuScreen> {
   var dataPlano;
   var plano;
   var typePlan;
+  var name;
   var contador;
   var category;
   var youtube;
@@ -60,6 +61,7 @@ class _MenuScreenState extends State<MenuScreen> {
       category = data?['category'] ?? "Vistoriador";
       qtdSurveyIntermediario = linkData?['Quantidade Vistoria Intermediario'];
       qtdSurveyCompleto = linkData?['Quantidade Vistoria Completo'];
+      name = data?["name"];
     });
     print(contador);
     print(vencimento);
@@ -188,9 +190,7 @@ class _MenuScreenState extends State<MenuScreen> {
                     horizontal: 30,
                   ),
                   child: TextCustom(
-                    text: FirebaseAuth.instance.currentUser != null?'Olá, ' +
-                        FirebaseAuth.instance.currentUser!.displayName! +
-                        '!':'Olá',
+                    text: 'Olá, $name',
                     size: 14.0,
                     color: PaletteColors.grey,
                     fontWeight: FontWeight.bold,
