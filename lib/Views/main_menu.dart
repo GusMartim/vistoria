@@ -1,6 +1,5 @@
 import 'package:url_launcher/url_launcher.dart';
 import 'package:vistoria/Views/profissinals_screen.dart';
-
 import '../Models/ErrorStringModel.dart';
 import '../Utils/exports.dart';
 
@@ -21,6 +20,7 @@ class _MenuScreenState extends State<MenuScreen> {
   var typePlan;
   var contador;
   var category;
+  var youtube;
   var qtdSurveyIntermediario;
   var qtdSurveyCompleto;
 
@@ -31,7 +31,6 @@ class _MenuScreenState extends State<MenuScreen> {
         .join('&');
   }
   _getList() async {
-
     var userDemandList = await db
         .collection("surveys")
         .where("status",isEqualTo: "demand")
@@ -39,7 +38,7 @@ class _MenuScreenState extends State<MenuScreen> {
         .where('notification',isEqualTo:'true')
         .get();
     setState(() {
-      list = userDemandList.docs;
+      list = userDemandList != null ?userDemandList.docs:list;
     });
 
 
@@ -69,7 +68,6 @@ class _MenuScreenState extends State<MenuScreen> {
     DateTime planTime = dataPlano.toDate();
     if (category != "Administrador") {
       if (typePlan != "Anual"){
-
         if (plano == "Completo" && contador > qtdSurveyCompleto) {
           setState(() {
             canSurvey = false;
@@ -99,7 +97,14 @@ class _MenuScreenState extends State<MenuScreen> {
     }
   }
 
-
+  _getLink()async{
+    DocumentSnapshot snapshot = await db.collection("link").doc('links').get();
+    Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
+    setState(() {
+      youtube = data?["Tutorial"];
+      print(youtube);
+    });
+  }
 
 
   @override
@@ -108,6 +113,7 @@ class _MenuScreenState extends State<MenuScreen> {
     super.initState();
     _getList();
     _getInfo();
+    _getLink();
   }
 
 
@@ -265,11 +271,49 @@ class _MenuScreenState extends State<MenuScreen> {
                           icon: Icons.window_outlined,
                           screen: HistoryScreen(),
                           ),
-                      CustomCard(
-                          text: "Tutorial",
-                          icon: Icons.branding_watermark_rounded,
-                          screen: TutorialScreen(),
-                          ),
+                  Container(
+                    margin: EdgeInsets.all(8.0) ,
+                    height: height * 0.2,
+                    width: width * 0.4,
+                    child: GestureDetector(
+                      onTap: () async{
+
+                        if(await canLaunchUrl(Uri.parse('$youtube'))){
+                          await launchUrl(Uri.parse('$youtube'),mode: LaunchMode.externalApplication);
+                        };
+                      },
+                      child: Card(
+                        elevation: 4,
+                        color: PaletteColors.greyInput,
+                        shadowColor: PaletteColors.grey,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Icon(Icons.screenshot_monitor, color: PaletteColors.lightGrey,
+                              size: 40.0,),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                TextCustom(
+                                  text:'Tutorial',
+                                  color: PaletteColors.grey,
+                                  size: 14.0,
+                                  fontWeight: FontWeight.bold,
+                                  textAlign: TextAlign.center,
+                                )
+                              ],
+                            )
+                          ],
+                        ),
+
+                      ),
+                    ),
+                  ),
                     ],
                   ),
                 ),

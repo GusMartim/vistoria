@@ -927,10 +927,12 @@ class _CheckList1State extends State<CheckList1> {
                         PaletteColors.primaryColor,
                         context, [
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(width: width * 0.03),
                           Container(
-                            width: width * 0.65,
+                            width: width * 0.5,
                             child: ButtonCustom(
                               widthCustom: 0.65,
                               heightCustom: 0.095,
@@ -946,12 +948,14 @@ class _CheckList1State extends State<CheckList1> {
                       ),
                       SizedBox(height: height * 0.055),
                       Padding(
-                        padding: const EdgeInsets.only(bottom: 75.0),
+                        padding: const EdgeInsets.only(bottom: 20.0),
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(width: width * 0.03),
                             Container(
-                              width: width * 0.65,
+                              width: width * 0.5,
                               child: ButtonCustom(
                                 widthCustom: 0.65,
                                 heightCustom: 0.095,

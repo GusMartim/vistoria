@@ -1,4 +1,5 @@
 import 'package:flutter_full_pdf_viewer/full_pdf_viewer_scaffold.dart';
+import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_extend/share_extend.dart';
 import 'package:vistoria/Models/order_model.dart';
@@ -59,7 +60,7 @@ class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
   String price= '';
   String lat= '';
   String lng= '';
-  String date= '';
+  var date;
   String user= '';
   String adress= '';
   String SRoom= '';
@@ -385,7 +386,7 @@ class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
       sUnPosition = data?["unPosition"] ?? '';
       sBlock = data?["block"] ?? '';
       Obs = data?["obs"] ?? '';
-      date = data?["hourRequest"] ?? '';
+      date = data?["hourRequest"].toDate() ?? DateTime.now();
       user = data?["userName"] ?? '';
       Cod = data?["userCode"] ?? '';
       lat = data?["lat"] ?? '';
@@ -475,7 +476,7 @@ class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
                               ),
                               pdfLib.Container(
                                 child: pdfLib.Text(
-                                  ' $date',
+                                  ' ${DateFormat('dd/MM/yyyy  HH:mm').format(date)}',
 
                                   textAlign: pdfLib.TextAlign.left,
                                   style: pdfLib.TextStyle(
@@ -2766,10 +2767,10 @@ class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
     Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
     setState(() {
       Nsurveys = data?["nsurveys"] ?? [];
-      priceSurvey = linkData?["Valor Vistoria"]?? '';
+      priceSurvey = linkData?["Valor Vistoria"]?? '0';
       contador = data?["contadorVistorias"]??0;
       plano = data?["plano"]?? '';
-      valor = data?["valor"]?? '';
+      valor = data?["valor"]?? '0';
     });
 
     setState(() {
@@ -2906,9 +2907,9 @@ class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
                         gridDelegate:
                         const SliverGridDelegateWithMaxCrossAxisExtent(
                             maxCrossAxisExtent: 120,
-                            mainAxisExtent: 160,
-                            mainAxisSpacing: 15,
-                            crossAxisSpacing: 15,
+                            mainAxisExtent: 200,
+                            mainAxisSpacing: 5,
+                            crossAxisSpacing: 5,
                             childAspectRatio: 1.0),
                         itemCount: imageList.length,
                         itemBuilder: (context, index) {
@@ -2957,13 +2958,16 @@ class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
                                                         .arrayRemove([
                                                       imageList[index]
                                                     ])
-                                                  }).then((value) =>
-                                                      Navigator.of(
-                                                          context)
-                                                          .pop());
-                                                  setState(() {
-                                                    imageList.remove(
-                                                        imageList[index]);
+                                                  }).then((value) {
+                                                    setState(() {
+                                                      imageList.remove(
+                                                          imageList[index]);
+                                                    });
+
+                                                    Navigator.of(
+                                                        context)
+                                                        .pop();
+
                                                   });
                                                 },
                                                 text: "Sim",

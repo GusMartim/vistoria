@@ -45,7 +45,7 @@ class _SurveyFinishScreenLoteState extends State<SurveyFinishScreenLote> {
   var price= '';
   var lat= '';
   var lng= '';
-  var date= '';
+  var date;
   var user= '';
   var adress= '';
   var factors= '';
@@ -219,7 +219,7 @@ class _SurveyFinishScreenLoteState extends State<SurveyFinishScreenLote> {
       complement = data?["complement"]??"";
       price = data?["price"]??"";
       obs = data?["obs"]??"";
-      date = data?["hourRequest"]??"";
+      date = data?["hourRequest"].toDate() ?? DateTime.now();
       user = data?["userName"]??"";
       lat = data?["lat"]??"";
       lng = data?["lng"]??"";
@@ -338,28 +338,6 @@ class _SurveyFinishScreenLoteState extends State<SurveyFinishScreenLote> {
                       pdfLib.Container(
                         child: pdfLib.Text(
                           ' $street, $number,$complement, $district - $city/$states - $cep',
-                          textAlign: pdfLib.TextAlign.left,
-                          style: pdfLib.TextStyle(
-                              fontSize: 9.0,
-                              font: ttf,
-                              fontWeight: pdfLib.FontWeight.bold),
-                        ),
-                      ),
-                    ]),
-                    pdfLib.Row(children: [
-                      pdfLib.Container(
-                        child: pdfLib.Text(
-                          'Idade:',
-                          textAlign: pdfLib.TextAlign.left,
-                          style: pdfLib.TextStyle(
-                              fontSize: 9.0,
-                              font: ttf,
-                              fontWeight: pdfLib.FontWeight.bold),
-                        ),
-                      ),
-                      pdfLib.Container(
-                        child: pdfLib.Text(
-                          ' $age',
                           textAlign: pdfLib.TextAlign.left,
                           style: pdfLib.TextStyle(
                               fontSize: 9.0,
@@ -1267,10 +1245,10 @@ class _SurveyFinishScreenLoteState extends State<SurveyFinishScreenLote> {
     Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
     setState(() {
       Nsurveys = data?["nsurveys"] ?? [];
-      priceSurvey = linkData?["Valor Vistoria"]?? '';
+      priceSurvey = linkData?["Valor Vistoria"]?? '0';
       contador = data?["contadorVistorias"]?? 0;
       plano = data?["plano"]?? '';
-      valor = data?["valor"]?? '';
+      valor = data?["valor"]?? '0';
     });
 
     setState(() {
@@ -1408,9 +1386,9 @@ class _SurveyFinishScreenLoteState extends State<SurveyFinishScreenLote> {
                         gridDelegate:
                         const SliverGridDelegateWithMaxCrossAxisExtent(
                             maxCrossAxisExtent: 120,
-                            mainAxisExtent: 160,
-                            mainAxisSpacing: 15,
-                            crossAxisSpacing: 15,
+                            mainAxisExtent: 200,
+                            mainAxisSpacing: 5,
+                            crossAxisSpacing: 5,
                             childAspectRatio: 1.0),
                         itemCount: imageList.length,
                         itemBuilder: (context, index) {
@@ -1459,13 +1437,16 @@ class _SurveyFinishScreenLoteState extends State<SurveyFinishScreenLote> {
                                                         .arrayRemove([
                                                       imageList[index]
                                                     ])
-                                                  }).then((value) =>
-                                                      Navigator.of(
-                                                          context)
-                                                          .pop());
-                                                  setState(() {
-                                                    imageList.remove(
-                                                        imageList[index]);
+                                                  }).then((value) {
+                                                    setState(() {
+                                                      imageList.remove(
+                                                          imageList[index]);
+                                                    });
+
+                                                    Navigator.of(
+                                                        context)
+                                                        .pop();
+
                                                   });
                                                 },
                                                 text: "Sim",

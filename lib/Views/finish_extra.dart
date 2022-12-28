@@ -69,7 +69,7 @@ class _SurveyFinishScreenExtraState extends State<SurveyFinishScreenExtra> {
   var price = '';
   var lat = '';
   var lng = '';
-  var date = '';
+  var date;
   var user = '';
   var adress = '';
   var SRoom = '';
@@ -246,7 +246,7 @@ class _SurveyFinishScreenExtraState extends State<SurveyFinishScreenExtra> {
       sUnityroof = data?["unRoof"] ?? "";
       sBlock = data?["block"] ?? "";
       obs = data?["obs"] ?? "";
-      date = data?["hourRequest"] ?? "";
+      date = data?["hourRequest"].toDate() ?? DateTime.now();
       user = data?["userName"] ?? "";
       lat = data?["lat"] ?? "";
       lng = data?["lng"] ?? "";
@@ -460,7 +460,7 @@ class _SurveyFinishScreenExtraState extends State<SurveyFinishScreenExtra> {
                       ),
                     ])
                   ]),
-              pdfLib.SizedBox(width: 50),
+              pdfLib.SizedBox(width: 25),
               pdfLib.Column(
                   mainAxisAlignment: pdfLib.MainAxisAlignment.start,
                   crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
@@ -616,13 +616,6 @@ class _SurveyFinishScreenExtraState extends State<SurveyFinishScreenExtra> {
                         ),
                       ),
                     ]),
-
-                  ]),
-              pdfLib.SizedBox(width: 50),
-              pdfLib.Column(
-                  mainAxisAlignment: pdfLib.MainAxisAlignment.start,
-                  crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
-                  children: [
                     pdfLib.Row(children: [
                       pdfLib.Container(
                         child: pdfLib.Text(
@@ -712,8 +705,9 @@ class _SurveyFinishScreenExtraState extends State<SurveyFinishScreenExtra> {
                       ),
                     ]),
 
-
                   ]),
+
+
             ],
           ),
           pdfLib.Divider(),
@@ -1825,10 +1819,10 @@ class _SurveyFinishScreenExtraState extends State<SurveyFinishScreenExtra> {
     Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
     setState(() {
       Nsurveys = data?["nsurveys"] ?? [];
-      priceSurvey = linkData?["Valor Vistoria"]?? '';
+      priceSurvey = linkData?["Valor Vistoria"]?? '0';
       contador = data?["contadorVistorias"]?? 0;
       plano = data?["plano"]?? '';
-      valor = data?["valor"]?? '';
+      valor = data?["valor"]?? '0';
     });
 
     setState(() {
@@ -1965,9 +1959,9 @@ class _SurveyFinishScreenExtraState extends State<SurveyFinishScreenExtra> {
                         gridDelegate:
                         const SliverGridDelegateWithMaxCrossAxisExtent(
                             maxCrossAxisExtent: 120,
-                            mainAxisExtent: 160,
-                            mainAxisSpacing: 15,
-                            crossAxisSpacing: 15,
+                            mainAxisExtent: 200,
+                            mainAxisSpacing: 5,
+                            crossAxisSpacing: 5,
                             childAspectRatio: 1.0),
                         itemCount: imageList.length,
                         itemBuilder: (context, index) {
@@ -2005,7 +1999,7 @@ class _SurveyFinishScreenExtraState extends State<SurveyFinishScreenExtra> {
                                             children: [
                                               SizedBox(width: width * 0.04),
                                               ButtonCustom(
-                                                widthCustom: 0.3,
+                                                widthCustom: 0.25,
                                                 heightCustom: 0.085,
                                                 onPressed: () {
                                                   db
@@ -2016,14 +2010,18 @@ class _SurveyFinishScreenExtraState extends State<SurveyFinishScreenExtra> {
                                                         .arrayRemove([
                                                       imageList[index]
                                                     ])
-                                                  }).then((value) =>
-                                                      Navigator.of(
-                                                          context)
-                                                          .pop());
-                                                  setState(() {
-                                                    imageList.remove(
-                                                        imageList[index]);
+                                                  }).then((value) {
+                                                    setState(() {
+                                                      imageList.remove(
+                                                          imageList[index]);
+                                                    });
+
+                                                    Navigator.of(
+                                                        context)
+                                                        .pop();
+
                                                   });
+
                                                 },
                                                 text: "Sim",
                                                 size: 14.0,
@@ -2034,9 +2032,9 @@ class _SurveyFinishScreenExtraState extends State<SurveyFinishScreenExtra> {
                                                 colorBorder: PaletteColors
                                                     .primaryColor,
                                               ),
-                                              SizedBox(width: width * 0.04),
+                                              SizedBox(width: width * 0.07),
                                               ButtonCustom(
-                                                widthCustom: 0.3,
+                                                widthCustom: 0.25,
                                                 heightCustom: 0.085,
                                                 onPressed: () =>
                                                     Navigator.of(context)

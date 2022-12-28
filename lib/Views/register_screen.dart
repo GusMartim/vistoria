@@ -96,7 +96,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     db
         .collection('users')
         .doc(userModel.idUser)
-        .set(_userModel.toMap())
+        .set(_userModel.toMap(),SetOptions(merge: true))
         .then((_) => Navigator.pushReplacementNamed(context, '/login'));
   }
 

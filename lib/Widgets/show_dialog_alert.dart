@@ -24,15 +24,19 @@ class ShowDialog extends StatelessWidget {
 
     return AlertDialog(
       title: Container(
-          width: width*0.2,
+          width: width*0.3,
+          height: height* 0.1,
           child: TextCustom(text: title,color: colorTextTitle,size: 18.0,fontWeight: FontWeight.bold,textAlign: TextAlign.center,maxLines: 2,)
       ),
       titleTextStyle: TextStyle(color: PaletteColors.primaryColor,fontSize: 18),
       content: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
               child:  Container(
-                width: width*0.25,
+                height: height* 0.01,
+                width: width*0.3,
                 child: TextCustom(
                   textAlign: TextAlign.center,
                   text: content,
@@ -43,7 +47,7 @@ class ShowDialog extends StatelessWidget {
         ],
       ),
       actions: listActions,
-      actionsPadding: EdgeInsets.only(right:8.0,left: 8.0,bottom: 24.0),
+      actionsPadding: EdgeInsets.only(right:15.0,left: 15.0,bottom: 10.0),
     );
   }
 }

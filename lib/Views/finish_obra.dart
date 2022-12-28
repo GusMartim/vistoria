@@ -67,7 +67,7 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
 
   var lat = '';
   var lng = '';
-  var date = '';
+  var date;
   var user = '';
   var adress = '';
   var pdforder;
@@ -77,7 +77,7 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
         await db.collection("surveys").doc(widget.idSurvey).get();
     Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
     setState(() {
-      date = data?["hourRequest"] ?? "";
+      date = data?["hourRequest"].toDate() ?? DateTime.now();
       user = data?["userName"] ?? "";
       complement = data?["complement"] ?? "";
       contato = data?["contato"] ?? "";
@@ -1005,10 +1005,10 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
     Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
     setState(() {
       Nsurveys = data?["nsurveys"] ?? [];
-      priceSurvey = linkData?["Valor Vistoria"]?? '';
+      priceSurvey = linkData?["Valor Vistoria"]?? '0';
       contador = data?["contadorVistorias"]?? 0;
       plano = data?["plano"]?? '';
-      valor = data?["valor"]?? '';
+      valor = data?["valor"]?? '0';
     });
 
     setState(() {
@@ -1148,9 +1148,9 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
                         gridDelegate:
                         const SliverGridDelegateWithMaxCrossAxisExtent(
                             maxCrossAxisExtent: 120,
-                            mainAxisExtent: 160,
-                            mainAxisSpacing: 15,
-                            crossAxisSpacing: 15,
+                            mainAxisExtent: 200,
+                            mainAxisSpacing: 5,
+                            crossAxisSpacing: 5,
                             childAspectRatio: 1.0),
                         itemCount: imageList.length,
                         itemBuilder: (context, index) {
@@ -1199,13 +1199,16 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
                                                         .arrayRemove([
                                                       imageList[index]
                                                     ])
-                                                  }).then((value) =>
-                                                      Navigator.of(
-                                                          context)
-                                                          .pop());
-                                                  setState(() {
-                                                    imageList.remove(
-                                                        imageList[index]);
+                                                  }).then((value) {
+                                                    setState(() {
+                                                      imageList.remove(
+                                                          imageList[index]);
+                                                    });
+
+                                                    Navigator.of(
+                                                        context)
+                                                        .pop();
+
                                                   });
                                                 },
                                                 text: "Sim",

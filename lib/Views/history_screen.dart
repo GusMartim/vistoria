@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:vistoria/Utils/exports.dart';
 import 'package:vistoria/Widgets/inputRegister.dart';
@@ -130,7 +131,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                               items.add(ListTileModel(
                                   text:
                                       '${item['adress']??''},${item['number']??''},${item['district']??''} -${item['city']??''}/${item['estado']??''}',
-                                  data: '${item['hourRequest'].toDate()??''}',
+                                  data: '${DateFormat('dd/MM/yyyy  HH:mm').format(item['hourRequest'].toDate().toLocal())??''}',
                                   iconShow: false, pdfUrl: '${item['savedPdf']??''}'));
                               return ListTileCustom(
                                 text: items[index].text,
@@ -169,7 +170,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                       items.add(ListTileModel(
                           text:
                           '${item['adress']},${item['number']},${item['district']} -${item['city']}/${item['estado']}',
-                          data: '${item['hourRequest']}',
+                          data: '${DateFormat('dd/MM/yyyy  HH:mm').format(item['hourRequest'].toDate().toLocal())??''}',
                           iconShow: false, pdfUrl: '${item['savedPdf']??''}'));
                       return Column(
                         children: [
@@ -187,7 +188,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                 }
                               });
                             },
-                            data: '${item['hourRequest']}',
+                            data: '${DateFormat('dd/MM/yyyy  HH:mm').format(item['hourRequest'].toDate().toLocal())??''}',
                             id: item['idSurvey'],
                             onTapPdf: () async {
                             if (items[index].pdfUrl != null) {
