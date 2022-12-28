@@ -35,7 +35,7 @@ class _MenuScreenState extends State<MenuScreen> {
     var userDemandList = await db
         .collection("surveys")
         .where("status",isEqualTo: "demand")
-        .where('userName',isEqualTo:FirebaseAuth.instance.currentUser!.displayName!)
+        .where('userName',isEqualTo:name)
         .where('notification',isEqualTo:'true')
         .get();
     setState(() {

@@ -1159,7 +1159,7 @@ class _CheckList1State extends State<CheckList1> {
                             sizeIcon: 0.0,
                             onchanged: (String value){
                               setState(() {
-                                if(_controllerOpenArea.text.isNotEmpty && _controllerClosedArea.text.isNotEmpty){
+                                if(_controllerOpenArea.text.isNotEmpty){
                                   int area = int.parse(_controllerOpenArea.text)+int.parse(value);
                                   _controllerTotalArea.text = '$area';
                                 }
@@ -1204,12 +1204,12 @@ class _CheckList1State extends State<CheckList1> {
                             icons: Icons.height,
                             onchanged: (String value){
                               setState(() {
-                                if(_controllerOpenArea.text.isNotEmpty && _controllerClosedArea.text.isNotEmpty){
+                                if(_controllerClosedArea.text.isNotEmpty){
                                   int area = int.parse(value)+int.parse(_controllerClosedArea.text);
                                   _controllerTotalArea.text = '$area';
                                 }
-
                               });
+
                             },
                             sizeIcon: 0.0,
                             width: width * 0.2,

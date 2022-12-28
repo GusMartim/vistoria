@@ -1,4 +1,5 @@
 import 'package:flutter_full_pdf_viewer/full_pdf_viewer_scaffold.dart';
+import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_extend/share_extend.dart';
 import 'package:vistoria/Models/order_model.dart';
@@ -69,7 +70,7 @@ class _SurveyFinishScreenExtraState extends State<SurveyFinishScreenExtra> {
   var price = '';
   var lat = '';
   var lng = '';
-  var date;
+  DateTime date = DateTime.now();
   var user = '';
   var adress = '';
   var SRoom = '';
@@ -333,7 +334,7 @@ class _SurveyFinishScreenExtraState extends State<SurveyFinishScreenExtra> {
                       ),
                       pdfLib.Container(
                         child: pdfLib.Text(
-                          ' $date',
+                          '${DateFormat('dd/MM/yyyy  HH:mm').format(date)}',
                           textAlign: pdfLib.TextAlign.left,
                           style: pdfLib.TextStyle(
                               fontSize: 8.0,

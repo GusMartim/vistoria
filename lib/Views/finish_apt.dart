@@ -60,7 +60,7 @@ class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
   String price= '';
   String lat= '';
   String lng= '';
-  var date;
+  DateTime date = DateTime.now();
   String user= '';
   String adress= '';
   String SRoom= '';

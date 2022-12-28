@@ -60,7 +60,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
   var lat = '';
   var lng = '';
   var surveyType = '';
-  var date;
+  DateTime date = DateTime.now();
   var user = '';
   var adress = '';
   var SRoom = '';

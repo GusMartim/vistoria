@@ -76,6 +76,8 @@ class _SurveyscreenState extends State<Surveyscreen> {
   double? h= 0;
   FirebaseFirestore db = FirebaseFirestore.instance;
   String _urlPhoto = '';
+  String name = '';
+  String idUser = '';
   String selectedText = 'Imagens';
   FirebaseStorage storage = FirebaseStorage.instance;
   SurveyModel _surveyModel = SurveyModel();
@@ -115,6 +117,17 @@ class _SurveyscreenState extends State<Surveyscreen> {
     setState(() {
       _controllerLat = TextEditingController(text:'$lat' );
       _controllerLng = TextEditingController(text:'$lon' );
+    });
+  }
+  _getUser()async{
+    DocumentSnapshot snapshot = await db
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+    Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
+    setState(() {
+      idUser = data?["idUser"];
+      name = data?["name"];
     });
   }
   _saveData(SurveyModel surveyModel) async {
@@ -164,8 +177,8 @@ class _SurveyscreenState extends State<Surveyscreen> {
     _surveyModel.typesurvey = selectedType.toString();
     _surveyModel.userCode =_controllerUserCode.text;
     _surveyModel.cep = _controllerCEP.text;
-    _surveyModel.idUser = FirebaseAuth.instance.currentUser!.uid;
-    _surveyModel.userName =FirebaseAuth.instance.currentUser?.displayName!;
+    _surveyModel.idUser = idUser;
+    _surveyModel.userName = name;
     _surveyModel.lng = _controllerLat.text;
     _surveyModel.lat = _controllerLng.text;
     _surveyModel.pdf = pdf;
@@ -316,6 +329,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
   @override
   void initState() {
     super.initState();
+    _getUser();
     if (widget.id == '') {
       _surveyModel = SurveyModel.createId();
       getOrder();
