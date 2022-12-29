@@ -74,12 +74,17 @@ class _CheckListApto1State extends State<CheckListApto1> {
   int nUnitys = 0;
   String SUnitys = '0';
   TextEditingController _controllerUnitys = TextEditingController();
+  TextEditingController _controllerPredio = TextEditingController();
   int nSubs = 0;
   String SSubs = '0';
   TextEditingController _controllerSubs = TextEditingController();
   int nBlocks = 0;
   String SBlocks = '0';
   TextEditingController _controllerBlocks = TextEditingController();
+  TextEditingController _controllerOpenArea = TextEditingController();
+  TextEditingController _controllerClosedArea = TextEditingController();
+  TextEditingController _controllerTerrainArea = TextEditingController();
+  TextEditingController _controllerTotalArea = TextEditingController();
   int order = 0;
   File? picture;
   String _urlPhoto = '';
@@ -226,6 +231,9 @@ class _CheckListApto1State extends State<CheckListApto1> {
     _aptoModel.Goal = selectedGoal.toString();
     _aptoModel.Origin = selectedInfo.toString();
     _aptoModel.PavType = selectedType.toString();
+    _aptoModel.TotalArea = _controllerTotalArea.text;
+    _aptoModel.OpenArea = _controllerOpenArea.text;
+    _aptoModel.ClosedArea = _controllerClosedArea.text;
     _aptoModel.TerrainArea = _controllerTerrainArea.text;
     _aptoModel.divisaointerna = _controllerDivisaoInterna.text;
     _aptoModel.Telefone = _controllerTelefoneContato.text;
@@ -253,6 +261,7 @@ class _CheckListApto1State extends State<CheckListApto1> {
     _aptoModel.unity = _controllerUnity.text;
     _aptoModel.view = _controllerView.text;
     _aptoModel.block = _controllerBlock.text;
+    _aptoModel.predio = _controllerPredio.text;
     _aptoModel.rooms = _controllerRoom.text;
     _aptoModel.socialbathrooms = _controllerSocialBathroom.text;
     _aptoModel.privatebathrooms = _controllerPrivateBathroom.text;
@@ -486,7 +495,6 @@ class _CheckListApto1State extends State<CheckListApto1> {
       _controllerTelefoneContato = TextEditingController(text: data?["telefone"]??'');
       _controllerDivisaoInterna = TextEditingController(text:data?["divisaointerna"]??'');
       _controllerAge = TextEditingController(text: data?["age"]??"");
-      _controllerTerrainArea =TextEditingController(text: data?["TerrainArea"]??"");
       _controllerPrice = TextEditingController(text: data?["price"]??"");
       _controllerPathology = TextEditingController(text: data?["Pathology"]??"");
       _controllerType = TextEditingController(text: data?["type"]??"");
@@ -515,7 +523,11 @@ class _CheckListApto1State extends State<CheckListApto1> {
       _controllerCondPrice = TextEditingController(text: data?["condprice"]??"");
       _controllerAdmin = TextEditingController(text: data?["admin"]??"");
       _controllerPhone = TextEditingController(text: data?["phone"]??"");
-
+      _controllerPredio = TextEditingController(text: data?["predio"]??"");
+      _controllerOpenArea = TextEditingController(text: data?["OpenArea"]??'');
+      _controllerClosedArea = TextEditingController(text: data?["ClosedArea"]??'');
+      _controllerTerrainArea =
+          TextEditingController(text: data?["TerrainArea"]??'');
       selectedGoal = data?["Goal"]??selectedGoal;
       selectedInfo = data?["Origin"]??selectedInfo;
       selectedType = data?["PavType"]??selectedType;
@@ -903,15 +915,13 @@ class _CheckListApto1State extends State<CheckListApto1> {
     CheckBoxModel(title: 'Outro:'),
   ];
   TextEditingController _controllerBlock = TextEditingController();
-
-  TextEditingController _controllerTerrainArea = TextEditingController();
   TextEditingController _controllerContato = TextEditingController();
   TextEditingController _controllerTelefoneContato = TextEditingController();
   List<String> goal = ['Venda', 'Aluguel'];
   String? selectedGoal = 'Venda';
   List<String> infoOrigin = ['Oferta de Mercado', 'Transação Efetuada'];
   String? selectedInfo = 'Oferta de Mercado';
-  List<String> pavType = ['SS+T+PAV', 'SS1+SS2+T+PAV', 'SS1+SS2+T+M+PAV'];
+  List<String> pavType = ['SS+T+PAV', 'SS1+SS2+T+PAV', 'SS1+SS2+T+M+PAV','T+PAV e Terreo'];
   String? selectedType = 'SS+T+PAV';
   List saveKitchen = [];
   List saveBathroom = [];
@@ -1198,6 +1208,7 @@ class _CheckListApto1State extends State<CheckListApto1> {
                 ),
               ]),
               SizedBox(height: height * 0.03),
+              SizedBox(height: height * 0.03),
               Row(
                 children: [
                   Column(
@@ -1207,7 +1218,99 @@ class _CheckListApto1State extends State<CheckListApto1> {
                     children: [
                       Row(
                         children: [
+                          Container(
+                            width: width * 0.8,
+                            child: TextCustom(
+                                text: "Área Coberta/Fechada",
+                                size: 14.0,
+                                color: PaletteColors.grey,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      Container(
+                        width: width * 0.8,
+                        child: InputRegister(
+                          icons: Icons.height,
+                          sizeIcon: 0.0,
+                          onchanged: (String value){
+                            setState(() {
+                              if(_controllerOpenArea.text.isNotEmpty){
+                                int area = int.parse(_controllerOpenArea.text)+int.parse(value);
+                                _controllerTotalArea.text = '$area';
+                              }
+                            });
+                          },
+                          width: width * 0.2,
+                          controller: _controllerClosedArea,
+                          hint: "   ",
+                          fonts: 14.0,
+                          keyboardType: TextInputType.number,
+                          colorBorder: PaletteColors.greyInput,
+                          background: PaletteColors.greyInput,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              SizedBox(height: height * 0.03),
+              Row(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            width: width * 0.8,
+                            child: TextCustom(
+                                text: "Área Coberta/Aberta",
+                                size: 14.0,
+                                color: PaletteColors.grey,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      Container(
+                        width: width * 0.8,
+                        child: InputRegister(
+                          icons: Icons.height,
+                          onchanged: (String value){
+                            setState(() {
+                              if(_controllerClosedArea.text.isNotEmpty){
+                                int area = int.parse(value)+int.parse(_controllerClosedArea.text);
+                                _controllerTotalArea.text = '$area';
+                              }
+                            });
 
+                          },
+                          sizeIcon: 0.0,
+                          width: width * 0.2,
+                          controller: _controllerOpenArea,
+                          hint: "   ",
+                          fonts: 14.0,
+                          keyboardType: TextInputType.number,
+                          colorBorder: PaletteColors.greyInput,
+                          background: PaletteColors.greyInput,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              SizedBox(height: height * 0.03),
+              Row(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Row(
+                        children: [
                           Container(
                             width: width * 0.8,
                             child: TextCustom(
@@ -1236,6 +1339,45 @@ class _CheckListApto1State extends State<CheckListApto1> {
                   ),
                 ],
               ),
+              SizedBox(height: height * 0.03),
+              Row(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            width: width * 0.8,
+                            child: TextCustom(
+                                text: "Área Total",
+                                size: 14.0,
+                                color: PaletteColors.grey,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      Container(
+                        width: width * 0.8,
+                        child: InputRegister(
+                          icons: Icons.height,
+                          sizeIcon: 0.0,
+                          width: width * 0.2,
+                          controller: _controllerTotalArea,
+                          hint: "   ",
+                          fonts: 14.0,
+                          keyboardType: TextInputType.number,
+                          colorBorder: PaletteColors.greyInput,
+                          background: PaletteColors.greyInput,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              SizedBox(height: height * 0.03),
               SizedBox(height: height * 0.03),
               Row(
                 children: [
@@ -3219,6 +3361,36 @@ class _CheckListApto1State extends State<CheckListApto1> {
                     ),
                   ),
                 ],
+              ),
+              Row(
+                  children: [
+                Container(
+                  width: width * 0.4,
+                  child: TextCustom(
+                      text: "Outro:",
+                      size: 14.0,
+                      color: PaletteColors.grey,
+                      fontWeight: FontWeight.normal),
+                )
+              ]),
+              Row(children: [
+                Container(
+                  width: width * 0.7,
+                  child: InputRegister(
+                    icons: Icons.height,
+                    sizeIcon: 0.0,
+                    width: width * 2.0,
+                    controller: _controllerPredio,
+                    hint: '',
+                    fonts: 14.0,
+                    keyboardType: TextInputType.text,
+                    colorBorder: PaletteColors.greyInput,
+                    background: PaletteColors.greyInput,
+                  ),
+                ),
+              ]),
+              SizedBox(
+                height: height * 0.03,
               ),
               SizedBox(
                 height: height * 0.03,

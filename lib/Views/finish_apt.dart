@@ -29,6 +29,10 @@ class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
   String city= '';
   String states= '';
   String surveyType= '';
+  var AreaC = '';
+  var AreaD = '';
+  var AreaT = '';
+  var STotal = '';
   String cep= '';
   String sPathology= '';
   String sType= '';
@@ -423,7 +427,10 @@ class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
       condPrice = data?["condprice"] ?? '';
       admin = data?["admin"] ?? '';
       phone = data?["phone"] ?? '';
-      Area = data?["TerrainArea"] ?? '';
+      AreaT = data?["TerrainArea"] ?? '';
+      AreaD = data?["OpenArea"] ?? '';
+      AreaC = data?["ClosedArea"] ?? '';
+      STotal = data?["TotalArea"] ?? '';
       IPavs = data?["PavType"] ?? '';
       Final = data?["Goal"] ?? '';
       Origin = data?["Origin"] ?? '';
@@ -738,20 +745,94 @@ class _SurveyFinishScreenAptState extends State<SurveyFinishScreenApt> {
                         pdfLib.Row(children: [
                           pdfLib.Container(
                             child: pdfLib.Text(
-                              'Área do Terreno/Testada:',
+                              'Área Coberta/Fechada:',
+
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold),
                             ),
                           ),
                           pdfLib.Container(
                             child: pdfLib.Text(
-                              ' $Area',
+                              ' $AreaC',
+
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
-                                  fontSize: 8.0,
+                                  fontSize: 09.0,
+                                  font: ttf,
+                                  fontWeight: pdfLib.FontWeight.bold),
+                            ),
+                          ),
+                        ]),
+                        pdfLib.Row(children: [
+                          pdfLib.Container(
+                            child: pdfLib.Text(
+                              'Área Coberta/Aberta:',
+
+                              textAlign: pdfLib.TextAlign.left,
+                              style: pdfLib.TextStyle(
+                                  fontSize: 09.0,
+                                  font: ttf,
+                                  fontWeight: pdfLib.FontWeight.bold),
+                            ),
+                          ),
+                          pdfLib.Container(
+                            child: pdfLib.Text(
+                              ' $AreaD',
+
+                              textAlign: pdfLib.TextAlign.left,
+                              style: pdfLib.TextStyle(
+                                  fontSize: 09.0,
+                                  font: ttf,
+                                  fontWeight: pdfLib.FontWeight.bold),
+                            ),
+                          ),
+                        ]),
+                        pdfLib.Row(children: [
+                          pdfLib.Container(
+                            child: pdfLib.Text(
+                              'Área do Terreno/Testada:',
+
+                              textAlign: pdfLib.TextAlign.left,
+                              style: pdfLib.TextStyle(
+                                  fontSize: 09.0,
+                                  font: ttf,
+                                  fontWeight: pdfLib.FontWeight.bold),
+                            ),
+                          ),
+                          pdfLib.Container(
+                            child: pdfLib.Text(
+                              ' $AreaT',
+
+                              textAlign: pdfLib.TextAlign.left,
+                              style: pdfLib.TextStyle(
+                                  fontSize: 09.0,
+                                  font: ttf,
+                                  fontWeight: pdfLib.FontWeight.bold),
+                            ),
+                          ),
+                        ]),
+                        pdfLib.Row(children: [
+                          pdfLib.Container(
+                            child: pdfLib.Text(
+                              'Área Total:',
+
+                              textAlign: pdfLib.TextAlign.left,
+                              style: pdfLib.TextStyle(
+                                  fontSize: 09.0,
+                                  font: ttf,
+                                  fontWeight: pdfLib.FontWeight.bold),
+                            ),
+                          ),
+                          pdfLib.Container(
+                            child: pdfLib.Text(
+                              '$STotal',
+
+                              textAlign: pdfLib.TextAlign.left,
+                              style: pdfLib.TextStyle(
+                                  fontSize: 09.0,
                                   font: ttf,
                                   fontWeight: pdfLib.FontWeight.bold),
                             ),

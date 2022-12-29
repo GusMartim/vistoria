@@ -30,6 +30,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
   var district = '';
   var city = '';
   var states = '';
+  var STotal = '';
   var cep = '';
   var sPathology = '';
   var sType = '';
@@ -379,6 +380,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
       user = data?["userName"] ?? "";
       lat = data?["lat"] ?? "";
       lng = data?["lng"] ?? "";
+      STotal = data?["TotalArea"] ?? "";
       SRoom = data?["rooms"] ?? "";
       SSocialBathroom = data?["socialbathrooms"] ?? "";
       SPrivateBathroom = data?["privatebathrooms"] ?? "";
@@ -407,7 +409,6 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
       AreaT = data?["TerrainArea"] ?? '';
       AreaD = data?["OpenArea"] ?? '';
       AreaC = data?["ClosedArea"] ?? '';
-
       Goal = data?["Goal"] ?? '';
       Origin = data?["Origin"] ?? '';
     });
@@ -797,7 +798,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                           ),
                           pdfLib.Container(
                             child: pdfLib.Text(
-                              '',
+                              '$STotal',
                               
                             textAlign: pdfLib.TextAlign.left,  
                                   style: pdfLib.TextStyle(

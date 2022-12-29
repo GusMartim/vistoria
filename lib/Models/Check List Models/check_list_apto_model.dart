@@ -51,6 +51,9 @@ class AptoModel{
   String unRoof = '';
   String block = '';
   String TerrainArea = '';
+  String ClosedArea = '';
+  String OpenArea = '';
+  String TotalArea =  '';
   String Origin = '';
   String Goal = '';
   String PavType = '';
@@ -58,6 +61,7 @@ class AptoModel{
   String unity = '';
   String subs = '';
   String blocks = '';
+  String predio = '';
   String view = '';
   String divisaointerna = '';
 
@@ -69,6 +73,7 @@ class AptoModel{
       "divisaointerna"    : this.divisaointerna,
       "telefone"    : this.Telefone,
       "pavs": this.pavs,
+      "predio": this.predio,
       "subs": this.subs,
       "blocks": this.blocks,
       "elevators"   : this.elevators,
@@ -122,6 +127,9 @@ class AptoModel{
       "view": this.view,
       "block": this.block,
       "TerrainArea" : this.TerrainArea,
+      "ClosedArea"  : this.ClosedArea,
+      "OpenArea"  : this.OpenArea,
+      "TotalArea" : this.TotalArea,
 
       "Origin" : this.Origin,
       "Goal" : this.Goal,
