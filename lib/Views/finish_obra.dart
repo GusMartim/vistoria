@@ -1,3 +1,4 @@
+import 'package:emailjs/emailjs.dart';
 import 'package:flutter_full_pdf_viewer/full_pdf_viewer_scaffold.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
@@ -65,7 +66,9 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
   var SSlabs = '';
   var SComplements = '';
   var SOthers = '';
-
+  var emissor = '';
+  var name = '';
+  var emailEmissor = '';
   var lat = '';
   var lng = '';
   DateTime date = DateTime.now();
@@ -195,7 +198,6 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
                             crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
                             children: [
                               pdfLib.Container(
-
                                 child: pdfLib.Text(
                                   'Endereço:',
                                   textAlign: pdfLib.TextAlign.left,
@@ -209,7 +211,6 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
                                 width: 200,
                                 child: pdfLib.Text(
                                   ' $street, $number,$complement,$district - $city/$states - $cep',
-
                                   textAlign: pdfLib.TextAlign.left,
                                   maxLines: 2,
                                   style: pdfLib.TextStyle(
@@ -308,7 +309,6 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
                           pdfLib.Container(
                             child: pdfLib.Text(
                               'Contato:',
-
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
                                   fontSize: 09.0,
@@ -319,7 +319,6 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
                           pdfLib.Container(
                             child: pdfLib.Text(
                               ' $contato',
-
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
                                   fontSize: 09.0,
@@ -332,7 +331,6 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
                           pdfLib.Container(
                             child: pdfLib.Text(
                               'Telefone:',
-
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
                                   fontSize: 09.0,
@@ -343,7 +341,6 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
                           pdfLib.Container(
                             child: pdfLib.Text(
                               ' $telefone',
-
                               textAlign: pdfLib.TextAlign.left,
                               style: pdfLib.TextStyle(
                                   fontSize: 09.0,
@@ -495,7 +492,6 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
                                   fontWeight: pdfLib.FontWeight.bold),
                             ),
                           ),
-
                         ],
                       ),
                     ),
@@ -515,7 +511,6 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
                             ),
                           ),
                           pdfLib.Container(
-
                             height: 25,
                             child: pdfLib.Text(
                               '$SServices',
@@ -527,7 +522,6 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
                             ),
                           ),
                           pdfLib.Container(
-
                             height: 25,
                             child: pdfLib.Text(
                               '$SInfra',
@@ -539,7 +533,6 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
                             ),
                           ),
                           pdfLib.Container(
-
                             height: 25,
                             child: pdfLib.Text(
                               '$SSupra',
@@ -551,7 +544,6 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
                             ),
                           ),
                           pdfLib.Container(
-
                             height: 25,
                             child: pdfLib.Text(
                               '$SWalls',
@@ -563,7 +555,6 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
                             ),
                           ),
                           pdfLib.Container(
-
                             height: 25,
                             child: pdfLib.Text(
                               '$SFrames',
@@ -575,7 +566,6 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
                             ),
                           ),
                           pdfLib.Container(
-
                             height: 25,
                             child: pdfLib.Text(
                               '$SGlasses',
@@ -587,7 +577,6 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
                             ),
                           ),
                           pdfLib.Container(
-
                             height: 25,
                             child: pdfLib.Text(
                               '$SCeiling',
@@ -599,7 +588,6 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
                             ),
                           ),
                           pdfLib.Container(
-
                             height: 25,
                             child: pdfLib.Text(
                               '$SWaterProof',
@@ -611,7 +599,6 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
                             ),
                           ),
                           pdfLib.Container(
-
                             height: 25,
                             child: pdfLib.Text(
                               '$SIntern',
@@ -633,7 +620,6 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
                                   fontWeight: pdfLib.FontWeight.bold),
                             ),
                           ),
-
                         ],
                       ),
                     ),
@@ -903,40 +889,38 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
                         ],
                       ),
                     ),
-                  ]
-              ),
-          pdfLib.Divider(),
-          pdfLib.Row(
-              mainAxisAlignment: pdfLib.MainAxisAlignment.start,
-              crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
-            children: [
-              pdfLib.Column(
+                  ]),
+              pdfLib.Divider(),
+              pdfLib.Row(
                   mainAxisAlignment: pdfLib.MainAxisAlignment.start,
                   crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
                   children: [
-                    pdfLib.Container(
-                      child: pdfLib.Text(
-                        'Observações:',
-                        textAlign: pdfLib.TextAlign.left,
-                        style: pdfLib.TextStyle(
-                            fontSize: 10.0,
-                            font: ttf,
-                            fontWeight: pdfLib.FontWeight.bold),
-                      ),
-                    ),
-                    pdfLib.Container(
-                      child: pdfLib.Text(
-                        '$obs',
-                        textAlign: pdfLib.TextAlign.left,
-                        style: pdfLib.TextStyle(
-                            fontSize: 10.0,
-                            font: ttf,
-                            fontWeight: pdfLib.FontWeight.bold),
-                      ),
-                    ),
-                  ]),
-            ]
-          )
+                    pdfLib.Column(
+                        mainAxisAlignment: pdfLib.MainAxisAlignment.start,
+                        crossAxisAlignment: pdfLib.CrossAxisAlignment.start,
+                        children: [
+                          pdfLib.Container(
+                            child: pdfLib.Text(
+                              'Observações:',
+                              textAlign: pdfLib.TextAlign.left,
+                              style: pdfLib.TextStyle(
+                                  fontSize: 10.0,
+                                  font: ttf,
+                                  fontWeight: pdfLib.FontWeight.bold),
+                            ),
+                          ),
+                          pdfLib.Container(
+                            child: pdfLib.Text(
+                              '$obs',
+                              textAlign: pdfLib.TextAlign.left,
+                              style: pdfLib.TextStyle(
+                                  fontSize: 10.0,
+                                  font: ttf,
+                                  fontWeight: pdfLib.FontWeight.bold),
+                            ),
+                          ),
+                        ]),
+                  ])
             ]));
     pag = pag + lines;
     final String dir = (await getApplicationDocumentsDirectory()).path;
@@ -946,8 +930,9 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
     Uint8List archive = await file.readAsBytes();
     if (archive!.isNotEmpty) {
       Reference pastaRaiz = storage.ref();
-      Reference arquivo =
-          pastaRaiz.child("surveys").child("Vistoria$surveyType" +"N_OS_$Cod" + ".pdf");
+      Reference arquivo = pastaRaiz
+          .child("surveys")
+          .child("Vistoria$surveyType" + "N_OS_$Cod" + ".pdf");
       await arquivo
           .putData(archive,
               SettableMetadata(contentType: 'application/octet-stream'))
@@ -964,20 +949,19 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
         });
       });
     }
-
   }
-
-
   getNSurvey() async {
     DocumentSnapshot snapshot =
         await db.collection('surveys').doc(widget.idSurvey).get();
     Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
     setState(() {
       nsurvey = data?["Nsurvey"] ?? 0;
+      status = data?["status"];
+      emailEmissor = data?["emailEmissor"] ?? '';
+      emissor = data?["emissor"] ?? '';
     });
     getOrder();
   }
-
   getOrder() async {
     DocumentSnapshot snapshot =
         await db.collection('surveyNumber').doc('surveyNumber').get();
@@ -985,82 +969,113 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
     setState(() {
       order = data?["surveyNumber"] ?? 0;
     });
-    _getStatus();
-  }
-
-  _getStatus() async {
-    _orderModel.status = status;
-    await db
-        .collection('surveys')
-        .doc(widget.idSurvey)
-        .update({'status': _orderModel.status});
 
     _getUserNSurvey();
   }
-
   _getUserNSurvey() async {
     DocumentSnapshot link = await db.collection("link").doc("links").get();
     Map<String, dynamic>? linkData = link.data() as Map<String, dynamic>?;
     DocumentSnapshot snapshot =
-    await db.collection('users').doc(_auth.currentUser?.uid).get();
+        await db.collection('users').doc(_auth.currentUser?.uid).get();
     Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
     setState(() {
       Nsurveys = data?["nsurveys"] ?? [];
-      priceSurvey = linkData?["Valor Vistoria"]?? '0';
-      contador = data?["contadorVistorias"]?? 0;
-      plano = data?["plano"]?? '';
-      valor = data?["valor"]?? '0';
+      priceSurvey = linkData?["Valor Vistoria"] ?? '0';
+      contador = data?["contadorVistorias"] ?? 0;
+      plano = data?["plano"] ?? '';
+      valor = data?["valor"] ?? '0';
+      name = data?["name"];
     });
 
     setState(() {
-      double price = double.parse(valor.replaceAll("R\$",'').replaceAll(',','.'));
-      double surveyPrice =double.parse(priceSurvey.replaceAll("R\$",'').replaceAll(',','.'));
+      double price =
+          double.parse(valor.replaceAll("R\$", '').replaceAll(',', '.'));
+      double surveyPrice =
+          double.parse(priceSurvey.replaceAll("R\$", '').replaceAll(',', '.'));
       valor = "R\$ ${price + surveyPrice}";
       Nsurveys.add(order + 1);
     });
     await db.collection('users').doc(_auth.currentUser?.uid).update({
       "nsurveys": Nsurveys.toSet().toList(),
     });
-    Map<String, dynamic> mapVistorias = {
-      'contadorVistorias': contador+ 1
-    };
+    Map<String, dynamic> mapVistorias = {'contadorVistorias': contador + 1};
 
     await db
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser!.uid)
-        .set(mapVistorias,SetOptions(merge: true));
-    _NSurveyValidation();
-  }
+        .set(mapVistorias, SetOptions(merge: true));
+    _getStatus();
 
-  _NSurveyValidation() async {
-    if(plano == "Vistoriador"){
-      Map<String, dynamic> mapValor = {
-        'valor': valor
-      };
+  }
+  _getStatus() async {
+    print(status);
+    print(emailEmissor);
+    if(status == "demand"){
+      await sendEmailJS();
+    }
+    _orderModel.status = 'survey';
+    await db
+        .collection('surveys')
+        .doc(widget.idSurvey)
+        .update({'status': _orderModel.status});
+
+    _NSurveyValidation();
+
+  }
+  _NSurveyValidation()  {
+    if (plano == "Vistoriador") {
+      Map<String, dynamic> mapValor = {'valor': valor};
       db
           .collection('users')
           .doc(FirebaseAuth.instance.currentUser!.uid)
-          .set(mapValor,SetOptions(merge: true));
+          .set(mapValor, SetOptions(merge: true));
     }
-
-
 
     if (nsurvey == 0) {
       _orderModel.order = order + 1;
       nsurvey = order;
       _orderModel.Nsurvey = nsurvey + 1;
 
-      await db
+      db
           .collection('surveys')
           .doc(widget.idSurvey)
           .set({'Nsurvey': _orderModel.Nsurvey}, SetOptions(merge: true));
 
-      await db.collection('surveyNumber').doc('surveyNumber').set({
+      db.collection('surveyNumber').doc('surveyNumber').set({
         'surveyNumber': _orderModel.order
       }, SetOptions(merge: true)).then(
-              (value) => Navigator.pushReplacementNamed(context, '/main'));
+              (value)=> Navigator.pushReplacementNamed(context, '/main'));
     } else {
       Navigator.pushReplacementNamed(context, '/main');
+
+    }
+  }
+
+  sendEmailJS() async {
+    print('entrou no send email');
+    Map<String, dynamic> templateParams = {
+      'user_email': '${emailEmissor}',
+      'email': '''Olá ${emissor},
+
+Sua demanda lançada para $name  foi finalizada.
+
+
+Agradecimentos,
+Equipe Teia.''',
+    };
+    try {
+      await EmailJS.send(
+        'service_n9xza0i',
+        'template_jlxyq7j',
+        templateParams,
+        const Options(
+          publicKey: 'xXhE660LFNXY-12OW',
+          privateKey: 'ju7WzM6BoZBwDMC6mPOCp',
+        ),
+      );
+      print('SUCCESS!');
+    } catch (error) {
+      print(error.toString());
     }
   }
 
@@ -1070,7 +1085,6 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
     super.initState();
     _dataImages();
     _getData();
-
   }
 
   bool loading = true;
@@ -1122,12 +1136,12 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
               ),
               imageList.length == 0
                   ? TextCustom(
-                text: "Não há imagens salvas",
-                size: 14.0,
-                color: PaletteColors.grey,
-                fontWeight: FontWeight.bold,
-                textAlign: TextAlign.center,
-              )
+                      text: "Não há imagens salvas",
+                      size: 14.0,
+                      color: PaletteColors.grey,
+                      fontWeight: FontWeight.bold,
+                      textAlign: TextAlign.center,
+                    )
                   : TextCustom(
                       text: "Fotos:",
                       size: 16.0,
@@ -1138,122 +1152,121 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
               SizedBox(
                 height: 16,
               ),
-              imageList.length == 0?Container():Column(
-                children: [
-                  Container(
-                    width: width * 0.9,
-                    child: GridView.builder(
-                        scrollDirection: Axis.vertical,
-                        physics: NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        gridDelegate:
-                        const SliverGridDelegateWithMaxCrossAxisExtent(
-                            maxCrossAxisExtent: 120,
-                            mainAxisExtent: 200,
-                            mainAxisSpacing: 5,
-                            crossAxisSpacing: 5,
-                            childAspectRatio: 1.0),
-                        itemCount: imageList.length,
-                        itemBuilder: (context, index) {
-                          return Container(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Ink(
-                                    decoration: ShapeDecoration(
-                                      color: PaletteColors.white,
-                                      shape: CircleBorder(),
-                                    ),
-                                    child: IconButton(
-                                      icon: Icon(
-                                        Icons.close,
-                                        color: Colors.red,
+              imageList.length == 0
+                  ? Container()
+                  : Column(
+                      children: [
+                        Container(
+                          width: width * 0.9,
+                          child: GridView.builder(
+                              scrollDirection: Axis.vertical,
+                              physics: NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              gridDelegate:
+                                  const SliverGridDelegateWithMaxCrossAxisExtent(
+                                      maxCrossAxisExtent: 120,
+                                      mainAxisExtent: 200,
+                                      mainAxisSpacing: 5,
+                                      crossAxisSpacing: 5,
+                                      childAspectRatio: 1.0),
+                              itemCount: imageList.length,
+                              itemBuilder: (context, index) {
+                                return Container(
+                                    child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Ink(
+                                      decoration: ShapeDecoration(
+                                        color: PaletteColors.white,
+                                        shape: CircleBorder(),
                                       ),
-                                      constraints: BoxConstraints(
-                                          minHeight: 14,
-                                          minWidth: 14,
-                                          maxHeight: 14,
-                                          maxWidth: 14),
-                                      iconSize: 14.0,
-                                      padding: EdgeInsets.zero,
-                                      onPressed: () {
-                                        AlertModel().alert(
-                                            'Deseja realmente apagar essa imagem?',
-                                            '',
-                                            PaletteColors.primaryColor,
-                                            PaletteColors.grey,
-                                            context, [
-                                          Row(
-                                            crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                            children: [
-                                              SizedBox(width: width * 0.04),
-                                              ButtonCustom(
-                                                widthCustom: 0.3,
-                                                heightCustom: 0.085,
-                                                onPressed: () {
-                                                  db
-                                                      .collection('surveys')
-                                                      .doc(widget.idSurvey)
-                                                      .update({
-                                                    'photoUrl': FieldValue
-                                                        .arrayRemove([
-                                                      imageList[index]
-                                                    ])
-                                                  }).then((value) {
-                                                    setState(() {
-                                                      imageList.remove(
-                                                          imageList[index]);
+                                      child: IconButton(
+                                        icon: Icon(
+                                          Icons.close,
+                                          color: Colors.red,
+                                        ),
+                                        constraints: BoxConstraints(
+                                            minHeight: 14,
+                                            minWidth: 14,
+                                            maxHeight: 14,
+                                            maxWidth: 14),
+                                        iconSize: 14.0,
+                                        padding: EdgeInsets.zero,
+                                        onPressed: () {
+                                          AlertModel().alert(
+                                              'Deseja realmente apagar essa imagem?',
+                                              '',
+                                              PaletteColors.primaryColor,
+                                              PaletteColors.grey,
+                                              context, [
+                                            Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                SizedBox(width: width * 0.04),
+                                                ButtonCustom(
+                                                  widthCustom: 0.3,
+                                                  heightCustom: 0.085,
+                                                  onPressed: () {
+                                                    db
+                                                        .collection('surveys')
+                                                        .doc(widget.idSurvey)
+                                                        .update({
+                                                      'photoUrl': FieldValue
+                                                          .arrayRemove([
+                                                        imageList[index]
+                                                      ])
+                                                    }).then((value) {
+                                                      setState(() {
+                                                        imageList.remove(
+                                                            imageList[index]);
+                                                      });
+
+                                                      Navigator.of(context)
+                                                          .pop();
                                                     });
-
-                                                    Navigator.of(
-                                                        context)
-                                                        .pop();
-
-                                                  });
-                                                },
-                                                text: "Sim",
-                                                size: 14.0,
-                                                colorButton: PaletteColors
-                                                    .primaryColor,
-                                                colorText:
-                                                PaletteColors.white,
-                                                colorBorder: PaletteColors
-                                                    .primaryColor,
-                                              ),
-                                              SizedBox(width: width * 0.04),
-                                              ButtonCustom(
-                                                widthCustom: 0.3,
-                                                heightCustom: 0.085,
-                                                onPressed: () =>
-                                                    Navigator.of(context)
-                                                        .pop(),
-                                                text: "Não",
-                                                size: 14.0,
-                                                colorButton:
-                                                PaletteColors.white,
-                                                colorText: PaletteColors
-                                                    .primaryColor,
-                                                colorBorder: PaletteColors
-                                                    .primaryColor,
-                                              ),
-                                            ],
-                                          ),
-                                        ]);
-                                      },
+                                                  },
+                                                  text: "Sim",
+                                                  size: 14.0,
+                                                  colorButton: PaletteColors
+                                                      .primaryColor,
+                                                  colorText:
+                                                      PaletteColors.white,
+                                                  colorBorder: PaletteColors
+                                                      .primaryColor,
+                                                ),
+                                                SizedBox(width: width * 0.04),
+                                                ButtonCustom(
+                                                  widthCustom: 0.3,
+                                                  heightCustom: 0.085,
+                                                  onPressed: () =>
+                                                      Navigator.of(context)
+                                                          .pop(),
+                                                  text: "Não",
+                                                  size: 14.0,
+                                                  colorButton:
+                                                      PaletteColors.white,
+                                                  colorText: PaletteColors
+                                                      .primaryColor,
+                                                  colorBorder: PaletteColors
+                                                      .primaryColor,
+                                                ),
+                                              ],
+                                            ),
+                                          ]);
+                                        },
+                                      ),
                                     ),
-                                  ),
-                                  Image.network('${imageList[index]}'),
-                                ],
-                              ));
-                        }),
-                  ),
-                  SizedBox(
-                    height: height * 0.01,
-                  )
-                ],
-              ),
-
+                                    Image.network('${imageList[index]}'),
+                                  ],
+                                ));
+                              }),
+                        ),
+                        SizedBox(
+                          height: height * 0.01,
+                        )
+                      ],
+                    ),
               SizedBox(
                 height: 100,
               ),
@@ -1277,7 +1290,9 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
                       iconSize: 32.0,
                       padding: EdgeInsets.zero,
                       onPressed: () => Navigator.push(
-                          context,MaterialPageRoute(builder: (context) => PDFScreen(path))),
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => PDFScreen(path))),
                     ),
                   ),
                   SizedBox(

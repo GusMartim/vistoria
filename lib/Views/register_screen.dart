@@ -54,7 +54,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
   FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseFirestore db = FirebaseFirestore.instance;
   UserModel _userModel = UserModel();
-
+  List list = [];
+  List cpfs = [];
+  List phones = [];
   bool visiblePassword = true;
   bool visibleConfirmPassword = true;
   String _error = '';
@@ -69,9 +71,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
 
   sendEmailJS()async{
-    Map<String, dynamic> templateParams = {
+    Map<String, dynamic> templateParams ={
       'user_email': '${_controllerEmail.text!}',
-      'user_name': '${_controllerName.text!}',
+      'email': '''Olá ${_controllerName.text!},
+
+Seu cadastro no Teia Vistoria foi concluido com sucesso.
+
+Acesse Também https://vistoria-ce14e.firebaseapp.com
+
+Agradecimentos,
+Equipe Teia.''',
+
     };
     try {
       await EmailJS.send(
@@ -89,7 +99,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
     }
   }
 
+  _getUserList()async {
+    var userSurveysList = await db
+        .collection("users")
+        .get();
+    setState(() {
+      list = userSurveysList.docs;
+    });
+    for(int i = 0; i <list.length; i++){
+      DocumentSnapshot item = list[i];
+      cpfs.add("${item["doc"]}");
+      phones.add("${item["phone"]}");
 
+    }
+    print(phones);
+    print(cpfs);
+  }
 
   _saveData(UserModel userModel) {
     sendEmailJS();
@@ -101,66 +126,83 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   _createUser() async {
-    if (_controllerDoc.text.length>=13) {
+
+    if (_controllerDoc.text.length==14 ||_controllerDoc.text.length==18) {
       if (_controllerName.text.isNotEmpty) {
         if (_controllerEmail.text.isNotEmpty) {
           if (_controllerPhone.text.length>=14) {
             if (_controllerPassword.text == _controllerPasswordConfirm.text &&
                 _controllerPassword.text.isNotEmpty) {
-              setState(() {
-                _error = '';
-              });
-
-              try {
-                await _auth
-                    .createUserWithEmailAndPassword(
+              if (!cpfs.contains(_controllerDoc.text)) {
+                if (!phones.contains(_controllerPhone.text)){
+                  setState(() {
+                    _error = '';
+                  });
+                  try {
+                    await _auth
+                        .createUserWithEmailAndPassword(
                         email: _controllerEmail.text,
                         password: _controllerPassword.text)
-                    .then((auth) async {
-                  User user = FirebaseAuth.instance.currentUser!;
-                  user.updateDisplayName(_controllerName.text);
-                  _userModel.userType = selectedType.toString();
-                  _userModel.category = category;
-                  _userModel.doc = _controllerDoc.text;
-                  _userModel.idUser = user.uid;
-                  _userModel.name = _controllerName.text;
-                  _userModel.phone = _controllerPhone.text;
-                  _userModel.email = _controllerEmail.text;
-                  _userModel.password = _controllerPassword.text;
-                  _userModel.confirmPassword = _controllerPasswordConfirm.text;
-                  _userModel.region = selectedState!;
-                  _userModel.status = status;
+                        .then((auth) async {
+                      User user = FirebaseAuth.instance.currentUser!;
+                      user.updateDisplayName(_controllerName.text);
+                      _userModel.userType = selectedType.toString();
+                      _userModel.category = category;
+                      _userModel.doc = _controllerDoc.text;
+                      _userModel.idUser = user.uid;
+                      _userModel.name = _controllerName.text;
+                      _userModel.phone = _controllerPhone.text;
+                      _userModel.email = _controllerEmail.text;
+                      _userModel.password = _controllerPassword.text;
+                      _userModel.confirmPassword =
+                          _controllerPasswordConfirm.text;
+                      _userModel.region = selectedState!;
+                      _userModel.status = status;
 
-                  _saveData(_userModel);
-                });
-              } on FirebaseAuthException catch (e) {
-                if (e.code == "weak-password") {
+                      _saveData(_userModel);
+                    });
+                  } on FirebaseAuthException catch (e) {
+                    if (e.code == "weak-password") {
+                      setState(() {
+                        _error = "Digite uma senha mais forte!";
+                        showSnackBar(context, _error, Colors.red);
+                      });
+                    } else if (e.code == "unknown") {
+                      setState(() {
+                        _error = "A senha está vazia";
+                        showSnackBar(context, _error, Colors.red);
+                      });
+                    } else if (e.code == "invalid-email") {
+                      setState(() {
+                        _error = "Digite um e-mail válido";
+                        showSnackBar(context, _error, Colors.red);
+                      });
+                    } else if (e.code == "email-already-in-use") {
+                      setState(() {
+                        _error = "Esse e-mail já está cadastrado!";
+                        showSnackBar(context, _error, Colors.red);
+                      });
+                    } else {
+                      setState(() {
+                        _error = e.code;
+                      });
+                    }
+                  }
+                }else{
                   setState(() {
-                    _error = "Digite uma senha mais forte!";
+                    _error = 'Numero de telefone já cadastrado';
                     showSnackBar(context, _error,Colors.red);
-                  });
-                } else if (e.code == "unknown") {
-                  setState(() {
-                    _error = "A senha está vazia";
-                    showSnackBar(context, _error,Colors.red);
-                  });
-                } else if (e.code == "invalid-email") {
-                  setState(() {
-                    _error = "Digite um e-mail válido";
-                    showSnackBar(context, _error,Colors.red);
-                  });
-                } else if (e.code == "email-already-in-use") {
-                  setState(() {
-                    _error = "Esse e-mail já está cadastrado!";
-                    showSnackBar(context, _error,Colors.red);
-                  });
-                } else {
-                  setState(() {
-                    _error = e.code;
                   });
                 }
               }
-            } else {
+            else{
+                setState(() {
+                  _error = 'Documento já registrado no sistema';
+                  showSnackBar(context, _error,Colors.red);
+
+                });
+            }
+            }else {
               setState(() {
                 _error = 'Senhas diferentes';
                 showSnackBar(context, _error,Colors.red);
@@ -190,6 +232,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
         showSnackBar(context, _error,Colors.red);
       });
     }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _getUserList();
   }
 
   @override

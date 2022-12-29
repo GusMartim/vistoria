@@ -1,3 +1,4 @@
+import 'package:emailjs/emailjs.dart';
 import 'package:flutter_full_pdf_viewer/full_pdf_viewer_scaffold.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
@@ -22,6 +23,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
   var path = '';
   var street = '';
   var priceSurvey = '';
+
   var valor = '';
   int contador = 0;
   var plano = '';
@@ -88,7 +90,9 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
   var contato = '';
   var telefone = '';
   var SDivisaoInterna = '';
-
+  var emissor = '';
+  var name = '';
+  var emailEmissor = '';
   List imageList = [];
   List pathology = [];
   List paint = [];
@@ -376,7 +380,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
       sUnityroof = data?["unRoof"] ?? "";
       sBlock = data?["block"] ?? "";
       obs = data?["obs"] ?? "";
-      date = data?["hourRequest"] ?? DateTime.now();
+      date = data?["hourRequest"].toDate()?? DateTime.now();
       user = data?["userName"] ?? "";
       lat = data?["lat"] ?? "";
       lng = data?["lng"] ?? "";
@@ -2531,37 +2535,28 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
 
   }
 
-
   getNSurvey() async {
     DocumentSnapshot snapshot =
-        await db.collection('surveys').doc(widget.idSurvey).get();
+    await db.collection('surveys').doc(widget.idSurvey).get();
     Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
     setState(() {
       nsurvey = data?["Nsurvey"] ?? 0;
+      status = data?["status"];
+      emailEmissor = data?["emailEmissor"] ?? '';
+      emissor = data?["emissor"] ?? '';
     });
     getOrder();
   }
-
   getOrder() async {
     DocumentSnapshot snapshot =
-        await db.collection('surveyNumber').doc('surveyNumber').get();
+    await db.collection('surveyNumber').doc('surveyNumber').get();
     Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
     setState(() {
       order = data?["surveyNumber"] ?? 0;
     });
-    _getStatus();
-  }
-
-  _getStatus() async {
-    _orderModel.status = status;
-    await db
-        .collection('surveys')
-        .doc(widget.idSurvey)
-        .update({'status': _orderModel.status});
 
     _getUserNSurvey();
   }
-
   _getUserNSurvey() async {
     DocumentSnapshot link = await db.collection("link").doc("links").get();
     Map<String, dynamic>? linkData = link.data() as Map<String, dynamic>?;
@@ -2570,64 +2565,104 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
     Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
     setState(() {
       Nsurveys = data?["nsurveys"] ?? [];
-      priceSurvey = linkData?["Valor Vistoria"]?? '0';
-      contador = data?["contadorVistorias"]?? 0;
-      plano = data?["plano"]?? '';
-      valor = data?["valor"]?? '0';
+      priceSurvey = linkData?["Valor Vistoria"] ?? '0';
+      contador = data?["contadorVistorias"] ?? 0;
+      plano = data?["plano"] ?? '';
+      valor = data?["valor"] ?? '0';
+      name = data?["name"];
     });
 
     setState(() {
-      double price = double.parse(valor.replaceAll("R\$",'').replaceAll(',','.'));
-      double surveyPrice =double.parse(priceSurvey.replaceAll("R\$",'').replaceAll(',','.'));
+      double price =
+      double.parse(valor.replaceAll("R\$", '').replaceAll(',', '.'));
+      double surveyPrice =
+      double.parse(priceSurvey.replaceAll("R\$", '').replaceAll(',', '.'));
       valor = "R\$ ${price + surveyPrice}";
       Nsurveys.add(order + 1);
     });
     await db.collection('users').doc(_auth.currentUser?.uid).update({
       "nsurveys": Nsurveys.toSet().toList(),
     });
-    Map<String, dynamic> mapVistorias = {
-      'contadorVistorias': contador+ 1
-    };
+    Map<String, dynamic> mapVistorias = {'contadorVistorias': contador + 1};
 
     await db
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser!.uid)
-        .set(mapVistorias,SetOptions(merge: true));
-    _NSurveyValidation();
-  }
+        .set(mapVistorias, SetOptions(merge: true));
+    _getStatus();
 
-  _NSurveyValidation() async {
-    if(plano == "Vistoriador"){
-      Map<String, dynamic> mapValor = {
-        'valor': valor
-      };
+  }
+  _getStatus() async {
+    print(status);
+    print(emailEmissor);
+    if(status == "demand"){
+      await sendEmailJS();
+    }
+    _orderModel.status = 'survey';
+    await db
+        .collection('surveys')
+        .doc(widget.idSurvey)
+        .update({'status': _orderModel.status});
+
+    _NSurveyValidation();
+
+  }
+  _NSurveyValidation()  {
+    if (plano == "Vistoriador") {
+      Map<String, dynamic> mapValor = {'valor': valor};
       db
           .collection('users')
           .doc(FirebaseAuth.instance.currentUser!.uid)
-          .set(mapValor,SetOptions(merge: true));
+          .set(mapValor, SetOptions(merge: true));
     }
-
-
 
     if (nsurvey == 0) {
       _orderModel.order = order + 1;
       nsurvey = order;
       _orderModel.Nsurvey = nsurvey + 1;
 
-      await db
+       db
           .collection('surveys')
           .doc(widget.idSurvey)
           .set({'Nsurvey': _orderModel.Nsurvey}, SetOptions(merge: true));
 
-      await db.collection('surveyNumber').doc('surveyNumber').set({
+       db.collection('surveyNumber').doc('surveyNumber').set({
         'surveyNumber': _orderModel.order
       }, SetOptions(merge: true)).then(
-              (value) => Navigator.pushReplacementNamed(context, '/main'));
+              (value)=> Navigator.pushReplacementNamed(context, '/main'));
     } else {
       Navigator.pushReplacementNamed(context, '/main');
+
     }
   }
+  sendEmailJS() async {
+    print('entrou no send email');
+      Map<String, dynamic> templateParams = {
+        'user_email': emailEmissor,
+        'email': '''Olá ${emissor},
 
+Sua demanda lançada para $name  foi finalizada.
+
+
+Agradecimentos,
+Equipe Teia.''',
+      };
+      try {
+        await EmailJS.send(
+          'service_n9xza0i',
+          'template_jlxyq7j',
+          templateParams,
+          const Options(
+            publicKey: 'xXhE660LFNXY-12OW',
+            privateKey: 'ju7WzM6BoZBwDMC6mPOCp',
+          ),
+        );
+        print('SUCCESS!');
+      } catch (error) {
+        print(error.toString());
+      }
+
+  }
   @override
   void initState() {
     // TODO: implement initState

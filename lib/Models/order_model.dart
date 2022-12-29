@@ -1,7 +1,7 @@
 class OrderModel{
   int order = 0;
   int Nsurvey = 0;
-  String status= '';
+  String status= 'survey';
 
 
 
