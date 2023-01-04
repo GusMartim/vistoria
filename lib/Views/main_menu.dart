@@ -107,12 +107,14 @@ class _MenuScreenState extends State<MenuScreen> {
           if (plano == "Completo" && contador > qtdSurveyCompleto) {
             setState(() {
               canSurvey = false;
+              showSnackBar(context, 'Você atingiu o limite de vistorias mensal', Colors.red);
             });
           }
           if (plano == "Intermediario" && contador > qtdSurveyIntermediario) {
             setState(() {
               canSurvey = false;
             });
+            showSnackBar(context, 'Você atingiu o limite de vistorias mensal', Colors.red);
           }
         }
         if (dateTime
@@ -122,6 +124,7 @@ class _MenuScreenState extends State<MenuScreen> {
             canSurvey = false;
             plano = "Basico";
           });
+          showSnackBar(context, 'Seu plano expirou', Colors.red);
           Map<String, dynamic> mapVistorias = {
             'plano': plano
           };
@@ -132,7 +135,12 @@ class _MenuScreenState extends State<MenuScreen> {
         }
       }
     }else{
-
+      if(plano == "Vistoriador"){
+        setState(() {
+          canSurvey = false;
+        });
+        showSnackBar(context, 'Seu plano não pode realizar vistorias offline', Colors.red);
+      }
       _prefService.readCacheContador('Order').then((value) {
         print(value);
 
