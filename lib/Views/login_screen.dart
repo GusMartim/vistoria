@@ -68,6 +68,11 @@ class _LoginScreenState extends State<LoginScreen> {
             _error = "Digite um e-mail válido!";
             showSnackBar(context, _error,Colors.red);
           });
+        }else if(e.code =="network-request-failed"){
+          setState(() {
+            _error = "Sem conexão de internet!";
+            showSnackBar(context, _error,Colors.red);
+          });
         }else if(e.code =="user-not-found"){
           setState(() {
             _error = "Usuario inválido!";

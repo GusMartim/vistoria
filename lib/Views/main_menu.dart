@@ -132,9 +132,7 @@ class _MenuScreenState extends State<MenuScreen> {
         }
       }
     }else{
-      if(plano == "Vistoriador"){
-        showSnackBar(context, 'Seu plano não pode realizar vistorias offline', Colors.red);
-      }
+
       _prefService.readCacheContador('Order').then((value) {
         print(value);
 
