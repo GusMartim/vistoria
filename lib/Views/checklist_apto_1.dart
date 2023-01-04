@@ -220,12 +220,23 @@ class _CheckListApto1State extends State<CheckListApto1> {
     });
   }
   _saveApto(AptoModel aptoModel) async {
-    db
-        .collection('surveys')
-        .doc(widget.idSurvey)
-        .update(aptoModel.toMap())
-        .then((_) => Navigator.pushNamed(context, '/finishedAPT',
-            arguments: widget.idSurvey));
+    bool result = await InternetConnectionChecker().hasConnection;
+    if(result == true) {
+      db
+          .collection('surveys')
+          .doc(widget.idSurvey)
+          .update(aptoModel.toMap())
+          .then((_) => Navigator.pushNamed(context, '/finishedAPT',
+          arguments: widget.idSurvey));
+    }else{
+      db
+          .collection('surveys')
+          .doc(widget.idSurvey)
+          .update(aptoModel.toMap());
+            Navigator.pushNamed(context, '/finishedAPT',
+          arguments: widget.idSurvey);
+    }
+
   }
   _AptoTable() async {
     _aptoModel.Goal = selectedGoal.toString();

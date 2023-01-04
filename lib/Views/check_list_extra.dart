@@ -3,15 +3,15 @@ import 'package:vistoria/Utils/exports.dart';
 
 import '../Models/Check List Models/check_list_data_model.dart';
 
-class CheckListData extends StatefulWidget {
+class CheckListExtra extends StatefulWidget {
   final String idSurvey;
-  CheckListData({required this.idSurvey});
+  CheckListExtra({required this.idSurvey});
 
   @override
-  State<CheckListData> createState() => _CheckListDataState();
+  State<CheckListExtra> createState() => _CheckListExtraState();
 }
 
-class _CheckListDataState extends State<CheckListData> {
+class _CheckListExtraState extends State<CheckListExtra> {
   int nRoom = 0;
   String SRoom = '0';
   TextEditingController _controllerDivisaoInterna = TextEditingController();
@@ -214,12 +214,23 @@ class _CheckListDataState extends State<CheckListData> {
   }
 
   _saveData(DataModel dataModel) async {
-    db
-        .collection('surveys')
-        .doc(widget.idSurvey)
-        .update(dataModel.toMap())
-        .then((_) => Navigator.pushNamed(context, '/finishedExtra',
-            arguments: widget.idSurvey));
+    bool result = await InternetConnectionChecker().hasConnection;
+    if(result == true) {
+      db
+          .collection('surveys')
+          .doc(widget.idSurvey)
+          .update(dataModel.toMap())
+          .then((_) => Navigator.pushNamed(context, '/finishedExtra',
+          arguments: widget.idSurvey));
+    }else{
+      db
+          .collection('surveys')
+          .doc(widget.idSurvey)
+          .update(dataModel.toMap());
+      Navigator.pushNamed(context, '/finishedExtra',
+          arguments: widget.idSurvey);
+    }
+
   }
 
   _UnitysTable() async {

@@ -1,4 +1,5 @@
 import '../Utils/exports.dart';
+
 import '../Widgets/snackBars.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -11,6 +12,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _controllerEmail = TextEditingController();
   final _controllerPassword = TextEditingController();
+
   bool visiblePassword = true;
   FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseFirestore db = FirebaseFirestore.instance;
@@ -22,11 +24,14 @@ class _LoginScreenState extends State<LoginScreen> {
     Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
     setState(() {
       var status = data?["status"]??false;
+
       var active = status.toString();
+
       print(status);
       print(active);
       if (status ==true) {
         Navigator.popAndPushNamed(context, "/main");
+
       }else{
         setState(() {
           _error = "Usuario Desativado,entre em contato com o administrador";
@@ -199,25 +204,21 @@ class _LoginScreenState extends State<LoginScreen> {
                     onTap: (){
                       AlertModel().alert(
                           'Resetar senha',
-                          'Insira o e-mail para resetar a senha',
+                          'Insira abaixo o email para resetar',
                           PaletteColors.primaryColor,
                           PaletteColors.grey,
                           context,[
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Row(
-
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                SizedBox(width: width * 0.04),
                                 Container(
-
-                                  width: width * 0.65,
-
+                                  width: width * 0.5,
                                   child: TextFormField(
                                     controller: _controllerEmail,
-
                                     keyboardType: TextInputType.text,
                                     textAlignVertical: TextAlignVertical.bottom,
                                     style: TextStyle(
@@ -225,7 +226,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ),
                                     decoration: InputDecoration(
                                       border: InputBorder.none,
-                                      hintText: 'E-mail',
+                                      hintText: 'Insira aqui seu E-mail',
                                       hintStyle: TextStyle(
                                         color: PaletteColors.lightGrey,
                                         fontSize: 16.0
@@ -245,7 +246,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     width: width * 0.6,
                                     child: ButtonCustom(
                                       widthCustom: 0.5,
-                                      heightCustom: 0.085,
+                                      heightCustom: 0.075,
                                       onPressed: () {
                                         _auth
                                             .sendPasswordResetEmail(email: _controllerEmail.text)

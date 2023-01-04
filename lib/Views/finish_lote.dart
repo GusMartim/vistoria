@@ -23,8 +23,12 @@ class _SurveyFinishScreenLoteState extends State<SurveyFinishScreenLote> {
   FirebaseFirestore db = FirebaseFirestore.instance;
   FirebaseAuth _auth = FirebaseAuth.instance;
   int order = 0;
+  final PrefService _prefService = PrefService();
   int nsurvey = 0;
   int contador = 0;
+  String offOrder= '';
+  String offContador = '';
+  List <String> offNSurvey = [];
   var priceSurvey = '';
   var path = '';
   List Nsurveys = [];
@@ -1159,7 +1163,7 @@ class _SurveyFinishScreenLoteState extends State<SurveyFinishScreenLote> {
       double surveyPrice =
       double.parse(priceSurvey.replaceAll("R\$", '').replaceAll(',', '.'));
       valor = "R\$ ${price + surveyPrice}";
-      Nsurveys.add(order + 1);
+      Nsurveys.add('${order + 1}');
     });
     await db.collection('users').doc(_auth.currentUser?.uid).update({
       "nsurveys": Nsurveys.toSet().toList(),
@@ -1188,32 +1192,103 @@ class _SurveyFinishScreenLoteState extends State<SurveyFinishScreenLote> {
     _NSurveyValidation();
 
   }
-  _NSurveyValidation()  {
-    if (plano == "Vistoriador") {
-      Map<String, dynamic> mapValor = {'valor': valor};
-      db
-          .collection('users')
-          .doc(FirebaseAuth.instance.currentUser!.uid)
-          .set(mapValor, SetOptions(merge: true));
-    }
+  _NSurveyValidation() async{
+    print("entrou");
+    bool result = await InternetConnectionChecker().hasConnection;
+    if(result == true) {
+      if (plano == "Vistoriador") {
+        Map<String, dynamic> mapValor = {'valor': valor};
+        db
+            .collection('users')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .set(mapValor, SetOptions(merge: true));
+      }
+      if (nsurvey == 0) {
+        _orderModel.order = order + 1;
+        nsurvey = order;
+        _orderModel.Nsurvey = nsurvey + 1;
 
-    if (nsurvey == 0) {
-      _orderModel.order = order + 1;
-      nsurvey = order;
-      _orderModel.Nsurvey = nsurvey + 1;
+        db
+            .collection('surveys')
+            .doc(widget.idSurvey)
+            .set({'Nsurvey': _orderModel.Nsurvey}, SetOptions(merge: true));
 
-      db
-          .collection('surveys')
-          .doc(widget.idSurvey)
-          .set({'Nsurvey': _orderModel.Nsurvey}, SetOptions(merge: true));
+        db.collection('surveyNumber').doc('surveyNumber').set({
+          'surveyNumber': _orderModel.order
+        }, SetOptions(merge: true)).then(
+                (value)=> Navigator.pushReplacementNamed(context, '/main'));
+      } else {
+        Navigator.pushReplacementNamed(context, '/main');
 
-      db.collection('surveyNumber').doc('surveyNumber').set({
-        'surveyNumber': _orderModel.order
-      }, SetOptions(merge: true)).then(
-              (value)=> Navigator.pushReplacementNamed(context, '/main'));
-    } else {
-      Navigator.pushReplacementNamed(context, '/main');
+      }
+    }else{
+      if (plano == "Vistoriador") {
+        showSnackBar(context, 'Seu plano não pode realizar vistorias offline', Colors.red);
+        Navigator.pushReplacementNamed(context, '/main');
+      }else{
+        print("entrou no offline");
+        setState(() {
+          _prefService.readCacheTipo('tipo').then((value) {
+            setState(() {
+              plano = value;
+            });
+          });
+          offNSurvey.add('${int.parse(offOrder) + 1}');
+          print(offNSurvey);
+          _orderModel.order = int.parse(offOrder) +1;
+          _orderModel.status = 'survey';
+          _orderModel.Nsurvey = int.parse(offOrder) +1;
+        });
 
+        db
+            .collection('surveys')
+            .doc(widget.idSurvey)
+            .update({'status': _orderModel.status});
+
+
+        Map<String, dynamic> mapVistorias = {'contadorVistorias': int.parse(offContador) + 1};
+
+        db.collection('users').doc(_auth.currentUser?.uid).set({
+          "nsurveys": offNSurvey.toSet().toList(),
+        },SetOptions(merge:true));
+
+
+        db
+            .collection('users')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .set(mapVistorias, SetOptions(merge: true));
+
+
+        db.collection('surveyNumber').doc('surveyNumber').set({
+          'surveyNumber': _orderModel.order
+        }, SetOptions(merge: true));
+
+        db
+            .collection('surveys')
+            .doc(widget.idSurvey)
+            .set({'Nsurvey': _orderModel.Nsurvey}, SetOptions(merge: true));
+
+
+
+
+        _prefService.removeCacheOrder('Order');
+        _prefService.removeCacheNSurvey('NSurvey');
+        _prefService.removeCacheContador('contador');
+        List<String> offNSurveys = [];
+        for(int i = 0; i <offNSurvey.length; i++){
+          offNSurveys.add(offNSurvey[i]);
+        }
+        _prefService.createCacheNSurvey(offNSurveys);
+        String offNewContador = "${int.parse(offContador) + 1}";
+        _prefService.createCacheContador(offNewContador);
+        String offNewOrder = "${int.parse(offOrder) + 1}";
+        _prefService.createCacheOrder(offNewOrder);
+
+
+
+        print("passou do surveyNumber");
+        Navigator.pushReplacementNamed(context, '/main');
+      }
     }
   }
 
@@ -1250,6 +1325,21 @@ Equipe Teia.''',
     super.initState();
     _dataImages();
     _getData();
+    _prefService.readCacheContador('Order').then((value) {
+      print(value);
+      offOrder = value ;
+      print(offOrder);
+    });
+    _prefService.readCacheNSurvey('NSurvey').then((value) {
+      print(value);
+      offNSurvey =value;
+      print(offOrder);
+    });
+    _prefService.readCacheContador('contador').then((value) {
+      print(value);
+      offContador= value;
+      print(offOrder);
+    });
   }
 
   bool loading = true;
@@ -1475,7 +1565,16 @@ Equipe Teia.''',
                 child: ButtonCustom(
                   widthCustom: 0.8,
                   heightCustom: 0.070,
-                  onPressed: () => getNSurvey(),
+                  onPressed: () async {
+                    bool result = await InternetConnectionChecker().hasConnection;
+                    if(result == true) {
+                      print("com internet");
+                      getNSurvey();
+                    }else{
+                      print("sem internet");
+                      _NSurveyValidation();
+                    }
+                  },
                   text: "Finalizar",
                   size: 14.0,
                   colorButton: PaletteColors.primaryColor,

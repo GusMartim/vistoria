@@ -9,6 +9,8 @@ import 'package:vistoria/Utils/exports.dart';
 import 'package:vistoria/Widgets/text_custom.dart';
 import 'package:pdf/widgets.dart' as pdfLib;
 
+
+
 class SurveyFinishScreen extends StatefulWidget {
   final String idSurvey;
 
@@ -23,7 +25,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
   var path = '';
   var street = '';
   var priceSurvey = '';
-
+  final PrefService _prefService = PrefService();
   var valor = '';
   int contador = 0;
   var plano = '';
@@ -58,6 +60,9 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
   var sUnityroof = '';
   var sBlock = '';
   var obs = '';
+  var offOrder;
+  var offContador;
+  List <String> offNSurvey = [];
   var age = '';
   var price = '';
   var lat = '';
@@ -131,293 +136,299 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
   String status = "survey";
   FirebaseStorage storage = FirebaseStorage.instance;
   _getData() async {
-    DocumentSnapshot snapshot =
-        await db.collection("surveys").doc(widget.idSurvey).get();
-    Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
+    bool result = await InternetConnectionChecker().hasConnection;
+    if(result == true) {
+      DocumentSnapshot snapshot =
+      await db.collection("surveys").doc(widget.idSurvey).get();
+      Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
 
-    setState(() {
-      saveChecklist = data?["checklist"];
-      print('pegou o checklist');
-      print(saveChecklist.length);
-    });
-   if(saveChecklist.length != 0 ){
-     pathology.clear();
-     for (int i = 0; i <= 5; i++) {
-       var splitted = saveChecklist[i].replaceAll("1", '').split('#');
-       var title = splitted[0];
-       var check = splitted[1];
-       if (check == 'true') {
-         pathology.add(title);
-       }
-     }
-     type.clear();
-     for (int i = 6; i <= 9; i++) {
-       var splitted = saveChecklist[i].replaceAll("2", '').split('#');
-       var title = splitted[0];
-       var check = splitted[1];
-       if (check == 'true') {
-         type.add(title);
-       }
-     }
-     infra.clear();
-     for (int i = 10; i <= 18; i++) {
-       var splitted = saveChecklist[i].replaceAll("3", '').split('#');
-       var title = splitted[0];
-       var check = splitted[1];
-       if (check == 'true') {
-         infra.add(title);
-       }
-     }
-     situation.clear();
-     for (int i = 19; i <= 22; i++) {
-       var splitted = saveChecklist[i].replaceAll("4", '').split('#');
-       var title = splitted[0];
-       var check = splitted[1];
-       if (check == 'true') {
-         situation.add(title);
-       }
-     }
-     quota.clear();
-     for (int i = 23; i <= 26; i++) {
-       var splitted = saveChecklist[i].replaceAll("5", '').split('#');
-       var title = splitted[0];
-       var check = splitted[1];
-       if (check == 'true') {
-         quota.add(title);
-       }
-     }
-     position.clear();
-     for (int i = 27; i <= 32; i++) {
-       var splitted = saveChecklist[i].replaceAll("6", '').split('#');
-       var title = splitted[0];
-       var check = splitted[1];
-       if (check == 'true') {
-         position.add(title);
-       }
-     }
-     roof.clear();
-     for (int i = 33; i <= 37; i++) {
-       var splitted = saveChecklist[i].replaceAll("7", '').split('#');
-       var title = splitted[0];
-       var check = splitted[1];
-       if (check == 'true') {
-         roof.add(title);
-       }
-     }
-     wall.clear();
-     for (int i = 38; i <= 41; i++) {
-       var splitted = saveChecklist[i].replaceAll("8", '').split('#');
-       var title = splitted[0];
-       var check = splitted[1];
-       if (check == 'true') {
-         wall.add(title);
-       }
-     }
-     paint.clear();
-     for (int i = 42; i <= 47; i++) {
-       var splitted = saveChecklist[i].replaceAll("9", '').split('#');
-       var title = splitted[0];
-       var check = splitted[1];
-       if (check == 'true') {
-         paint.add(title);
-       }
-     }
-     internpaint.clear();
-     for (int i = 48; i <= 53; i++) {
-       var splitted = saveChecklist[i].replaceAll("10", '').split('#');
-       var title = splitted[0];
-       var check = splitted[1];
-       if (check == 'true') {
-         internpaint.add(title);
-       }
-     }
-     extern.clear();
-     for (int i = 54; i <= 57; i++) {
-       var splitted = saveChecklist[i].replaceAll("11", '').split('#');
-       var title = splitted[0];
-       var check = splitted[1];
-       if (check == 'true') {
-         extern.add(title);
-       }
-     }
-     intern.clear();
-     for (int i = 58; i <= 61; i++) {
-       var splitted = saveChecklist[i].replaceAll("12", '').split('#');
-       var title = splitted[0];
-       var check = splitted[1];
-       if (check == 'true') {
-         intern.add(title);
-       }
-     }
-     floor.clear();
-     for (int i = 62; i <= 65; i++) {
-       var splitted = saveChecklist[i].replaceAll("13", '').split('#');
-       var title = splitted[0];
-       var check = splitted[1];
-       if (check == 'true') {
-         floor.add(title);
-       }
-     }
-     windows.clear();
-     for (int i = 66; i <= 69; i++) {
-       var splitted = saveChecklist[i].replaceAll("14", '').split('#');
-       var title = splitted[0];
-       var check = splitted[1];
-       if (check == 'true') {
-         windows.add(title);
-       }
-     }
-     balcony.clear();
-     for (int i = 70; i <= 74; i++) {
-       var splitted = saveChecklist[i].replaceAll("15", '').split('#');
-       var title = splitted[0];
-       var check = splitted[1];
-       if (check == 'true') {
-         balcony.add(title);
-       }
-     }
-     switchboard.clear();
-     for (int i = 75; i <= 80; i++) {
-       var splitted = saveChecklist[i].replaceAll("16", '').split('#');
-       var title = splitted[0];
-       var check = splitted[1];
-       if (check == 'true') {
-         switchboard.add(title);
-       }
-     }
-     kitchen.clear();
-     for (int i = 81; i <= 86; i++) {
-       var splitted = saveChecklist[i].replaceAll("17", '').split('#');
-       var title = splitted[0];
-       var check = splitted[1];
-       if (check == 'true') {
-         kitchen.add(title);
-       }
-     }
-     bathroom.clear();
-     for (int i = 87; i <= 92; i++) {
-       var splitted = saveChecklist[i].replaceAll("18", '').split('#');
-       var title = splitted[0];
-       var check = splitted[1];
-       if (check == 'true') {
-         bathroom.add(title);
-       }
-     }
-     tank.clear();
-     for (int i = 93; i <= 98; i++) {
-       var splitted = saveChecklist[i].replaceAll("19", '').split('#');
-       var title = splitted[0];
-       var check = splitted[1];
-       if (check == 'true') {
-         tank.add(title);
-       }
-     }
-     pattern.clear();
-     for (int i = 99; i <= 106; i++) {
-       var splitted = saveChecklist[i].replaceAll("20", '').split('#');
-       var title = splitted[0];
-       var check = splitted[1];
-       if (check == 'true') {
-         pattern.add(title);
-       }
-     }
-     state.clear();
-     for (int i = 107; i <= 113; i++) {
-       var splitted = saveChecklist[i].replaceAll("21", '').split('#');
-       var title = splitted[0];
-       var check = splitted[1];
-       if (check == 'true') {
-         state.add(title);
-       }
-     }
-     unityroof.clear();
-     for (int i = 114; i <= 119; i++) {
-       var splitted = saveChecklist[i].replaceAll("22", '').split('#');
-       var title = splitted[0];
-       var check = splitted[1];
-       if (check == 'true') {
-         unityroof.add(title);
-       }
-     }
-     block.clear();
-     for (int i = 120; i <= 134; i++) {
-       var splitted = saveChecklist[i].replaceAll("23", '').split('#');
-       var title = splitted[0];
-       var check = splitted[1];
-       if (check == 'true') {
-         block.add(title);
-       }
-     }
-   }
-    setState(() {
-      age = data?["age"] ?? "";
-      contato = data?["contato"] ?? "";
-      telefone = data?["telefone"] ?? "";
-      price = data?["price"] ?? "";
-      surveyType = data?["typesurvey"] ?? '';
-      SDivisaoInterna = data?["divisaointerna"] ?? "";
-      sPathology = data?["Pathology"] ?? "";
-      sType = data?["type"] ?? "";
-      sInfra = data?["infra"] ?? "";
-      sSituation = data?["situation"] ?? "";
-      sQuota = data?["quota"] ?? "";
-      sPosition = data?["unPosition"] ?? "";
-      sRoof = data?["roof"] ?? "";
-      sWall = data?["wall"] ?? "";
-      sInternPaint = data?["internPaint"] ?? "";
-      sPaint = data?["externPaint"] ?? "";
-      sExtern = data?["externDoors"] ?? "";
-      sFloor = data?["floor"] ?? "";
-      sIntern = data?["internDoors"] ?? "";
-      sWindows = data?["windowns"] ?? "";
-      sBalcony = data?["balcony"] ?? "";
-      sSwitchBoard = data?["switchboard"] ?? "";
-      sKitchen = data?["kitchen"] ?? "";
-      sBathroom = data?["bathroom"] ?? "";
-      sTank = data?["tank"] ?? "";
-      sPattern = data?["pattern"] ?? "";
-      sState = data?["state"] ?? "";
-      sUnityroof = data?["unRoof"] ?? "";
-      sBlock = data?["block"] ?? "";
-      obs = data?["obs"] ?? "";
-      date = data?["hourRequest"].toDate()?? DateTime.now();
-      user = data?["userName"] ?? "";
-      lat = data?["lat"] ?? "";
-      lng = data?["lng"] ?? "";
-      STotal = data?["TotalArea"] ?? "";
-      SRoom = data?["rooms"] ?? "";
-      SSocialBathroom = data?["socialbathrooms"] ?? "";
-      SPrivateBathroom = data?["privatebathrooms"] ?? "";
-      SLav = data?["lavs"] ?? "";
-      SServiceBathroom = data?["servicebathrooms"] ?? "";
-      SMaidRoom = data?["maidrooms"] ?? "";
-      SBalcony = data?["balconys"] ?? "";
-      SCompleteCabinets = data?["completecontainers"] ?? "";
-      SKitchen = data?["kitchens"] ?? "";
-      SRestRoom = data?["restrooms"] ?? "";
-      SServiceAreaRoofed = data?["servicearearoofed"] ?? "";
-      SServiceAreaUnroofed = data?["serviceareaunroofed"] ?? "";
-      SClosedGarage = data?["garageroofed"] ?? "";
-      SOpenGarage = data?["garageunroofed"] ?? "";
-      SAc = data?["acs"];
-      SPool = data?["pools"];
-      street = data?["adress"] ?? "";
-      complement = data?["complement"] ?? "";
-      number = data?["number"] ?? "";
-      district = data?["district"] ?? "";
-      city = data?["city"] ?? "";
-      states = data?["estado"] ?? "";
-      cep = data?["cep"] ?? "";
-      imageList = data?["photoUrl"] ?? [];
-      Cod = data?["userCode"] ?? '';
-      AreaT = data?["TerrainArea"] ?? '';
-      AreaD = data?["OpenArea"] ?? '';
-      AreaC = data?["ClosedArea"] ?? '';
-      Goal = data?["Goal"] ?? '';
-      Origin = data?["Origin"] ?? '';
-    });
+      setState(() {
+        saveChecklist = data?["checklist"];
+        print('pegou o checklist');
+        print(saveChecklist.length);
+      });
+      if(saveChecklist.length != 0 ){
+        pathology.clear();
+        for (int i = 0; i <= 5; i++) {
+          var splitted = saveChecklist[i].replaceAll("1", '').split('#');
+          var title = splitted[0];
+          var check = splitted[1];
+          if (check == 'true') {
+            pathology.add(title);
+          }
+        }
+        type.clear();
+        for (int i = 6; i <= 9; i++) {
+          var splitted = saveChecklist[i].replaceAll("2", '').split('#');
+          var title = splitted[0];
+          var check = splitted[1];
+          if (check == 'true') {
+            type.add(title);
+          }
+        }
+        infra.clear();
+        for (int i = 10; i <= 18; i++) {
+          var splitted = saveChecklist[i].replaceAll("3", '').split('#');
+          var title = splitted[0];
+          var check = splitted[1];
+          if (check == 'true') {
+            infra.add(title);
+          }
+        }
+        situation.clear();
+        for (int i = 19; i <= 22; i++) {
+          var splitted = saveChecklist[i].replaceAll("4", '').split('#');
+          var title = splitted[0];
+          var check = splitted[1];
+          if (check == 'true') {
+            situation.add(title);
+          }
+        }
+        quota.clear();
+        for (int i = 23; i <= 26; i++) {
+          var splitted = saveChecklist[i].replaceAll("5", '').split('#');
+          var title = splitted[0];
+          var check = splitted[1];
+          if (check == 'true') {
+            quota.add(title);
+          }
+        }
+        position.clear();
+        for (int i = 27; i <= 32; i++) {
+          var splitted = saveChecklist[i].replaceAll("6", '').split('#');
+          var title = splitted[0];
+          var check = splitted[1];
+          if (check == 'true') {
+            position.add(title);
+          }
+        }
+        roof.clear();
+        for (int i = 33; i <= 37; i++) {
+          var splitted = saveChecklist[i].replaceAll("7", '').split('#');
+          var title = splitted[0];
+          var check = splitted[1];
+          if (check == 'true') {
+            roof.add(title);
+          }
+        }
+        wall.clear();
+        for (int i = 38; i <= 41; i++) {
+          var splitted = saveChecklist[i].replaceAll("8", '').split('#');
+          var title = splitted[0];
+          var check = splitted[1];
+          if (check == 'true') {
+            wall.add(title);
+          }
+        }
+        paint.clear();
+        for (int i = 42; i <= 47; i++) {
+          var splitted = saveChecklist[i].replaceAll("9", '').split('#');
+          var title = splitted[0];
+          var check = splitted[1];
+          if (check == 'true') {
+            paint.add(title);
+          }
+        }
+        internpaint.clear();
+        for (int i = 48; i <= 53; i++) {
+          var splitted = saveChecklist[i].replaceAll("10", '').split('#');
+          var title = splitted[0];
+          var check = splitted[1];
+          if (check == 'true') {
+            internpaint.add(title);
+          }
+        }
+        extern.clear();
+        for (int i = 54; i <= 57; i++) {
+          var splitted = saveChecklist[i].replaceAll("11", '').split('#');
+          var title = splitted[0];
+          var check = splitted[1];
+          if (check == 'true') {
+            extern.add(title);
+          }
+        }
+        intern.clear();
+        for (int i = 58; i <= 61; i++) {
+          var splitted = saveChecklist[i].replaceAll("12", '').split('#');
+          var title = splitted[0];
+          var check = splitted[1];
+          if (check == 'true') {
+            intern.add(title);
+          }
+        }
+        floor.clear();
+        for (int i = 62; i <= 65; i++) {
+          var splitted = saveChecklist[i].replaceAll("13", '').split('#');
+          var title = splitted[0];
+          var check = splitted[1];
+          if (check == 'true') {
+            floor.add(title);
+          }
+        }
+        windows.clear();
+        for (int i = 66; i <= 69; i++) {
+          var splitted = saveChecklist[i].replaceAll("14", '').split('#');
+          var title = splitted[0];
+          var check = splitted[1];
+          if (check == 'true') {
+            windows.add(title);
+          }
+        }
+        balcony.clear();
+        for (int i = 70; i <= 74; i++) {
+          var splitted = saveChecklist[i].replaceAll("15", '').split('#');
+          var title = splitted[0];
+          var check = splitted[1];
+          if (check == 'true') {
+            balcony.add(title);
+          }
+        }
+        switchboard.clear();
+        for (int i = 75; i <= 80; i++) {
+          var splitted = saveChecklist[i].replaceAll("16", '').split('#');
+          var title = splitted[0];
+          var check = splitted[1];
+          if (check == 'true') {
+            switchboard.add(title);
+          }
+        }
+        kitchen.clear();
+        for (int i = 81; i <= 86; i++) {
+          var splitted = saveChecklist[i].replaceAll("17", '').split('#');
+          var title = splitted[0];
+          var check = splitted[1];
+          if (check == 'true') {
+            kitchen.add(title);
+          }
+        }
+        bathroom.clear();
+        for (int i = 87; i <= 92; i++) {
+          var splitted = saveChecklist[i].replaceAll("18", '').split('#');
+          var title = splitted[0];
+          var check = splitted[1];
+          if (check == 'true') {
+            bathroom.add(title);
+          }
+        }
+        tank.clear();
+        for (int i = 93; i <= 98; i++) {
+          var splitted = saveChecklist[i].replaceAll("19", '').split('#');
+          var title = splitted[0];
+          var check = splitted[1];
+          if (check == 'true') {
+            tank.add(title);
+          }
+        }
+        pattern.clear();
+        for (int i = 99; i <= 106; i++) {
+          var splitted = saveChecklist[i].replaceAll("20", '').split('#');
+          var title = splitted[0];
+          var check = splitted[1];
+          if (check == 'true') {
+            pattern.add(title);
+          }
+        }
+        state.clear();
+        for (int i = 107; i <= 113; i++) {
+          var splitted = saveChecklist[i].replaceAll("21", '').split('#');
+          var title = splitted[0];
+          var check = splitted[1];
+          if (check == 'true') {
+            state.add(title);
+          }
+        }
+        unityroof.clear();
+        for (int i = 114; i <= 119; i++) {
+          var splitted = saveChecklist[i].replaceAll("22", '').split('#');
+          var title = splitted[0];
+          var check = splitted[1];
+          if (check == 'true') {
+            unityroof.add(title);
+          }
+        }
+        block.clear();
+        for (int i = 120; i <= 134; i++) {
+          var splitted = saveChecklist[i].replaceAll("23", '').split('#');
+          var title = splitted[0];
+          var check = splitted[1];
+          if (check == 'true') {
+            block.add(title);
+          }
+        }
+      }
+      setState(() {
+        age = data?["age"] ?? "";
+        contato = data?["contato"] ?? "";
+        telefone = data?["telefone"] ?? "";
+        price = data?["price"] ?? "";
+        surveyType = data?["typesurvey"] ?? '';
+        SDivisaoInterna = data?["divisaointerna"] ?? "";
+        sPathology = data?["Pathology"] ?? "";
+        sType = data?["type"] ?? "";
+        sInfra = data?["infra"] ?? "";
+        sSituation = data?["situation"] ?? "";
+        sQuota = data?["quota"] ?? "";
+        sPosition = data?["unPosition"] ?? "";
+        sRoof = data?["roof"] ?? "";
+        sWall = data?["wall"] ?? "";
+        sInternPaint = data?["internPaint"] ?? "";
+        sPaint = data?["externPaint"] ?? "";
+        sExtern = data?["externDoors"] ?? "";
+        sFloor = data?["floor"] ?? "";
+        sIntern = data?["internDoors"] ?? "";
+        sWindows = data?["windowns"] ?? "";
+        sBalcony = data?["balcony"] ?? "";
+        sSwitchBoard = data?["switchboard"] ?? "";
+        sKitchen = data?["kitchen"] ?? "";
+        sBathroom = data?["bathroom"] ?? "";
+        sTank = data?["tank"] ?? "";
+        sPattern = data?["pattern"] ?? "";
+        sState = data?["state"] ?? "";
+        sUnityroof = data?["unRoof"] ?? "";
+        sBlock = data?["block"] ?? "";
+        obs = data?["obs"] ?? "";
+        date = data?["hourRequest"].toDate()?? DateTime.now();
+        user = data?["userName"] ?? "";
+        lat = data?["lat"] ?? "";
+        lng = data?["lng"] ?? "";
+        STotal = data?["TotalArea"] ?? "";
+        SRoom = data?["rooms"] ?? "";
+        SSocialBathroom = data?["socialbathrooms"] ?? "";
+        SPrivateBathroom = data?["privatebathrooms"] ?? "";
+        SLav = data?["lavs"] ?? "";
+        SServiceBathroom = data?["servicebathrooms"] ?? "";
+        SMaidRoom = data?["maidrooms"] ?? "";
+        SBalcony = data?["balconys"] ?? "";
+        SCompleteCabinets = data?["completecontainers"] ?? "";
+        SKitchen = data?["kitchens"] ?? "";
+        SRestRoom = data?["restrooms"] ?? "";
+        SServiceAreaRoofed = data?["servicearearoofed"] ?? "";
+        SServiceAreaUnroofed = data?["serviceareaunroofed"] ?? "";
+        SClosedGarage = data?["garageroofed"] ?? "";
+        SOpenGarage = data?["garageunroofed"] ?? "";
+        SAc = data?["acs"];
+        SPool = data?["pools"];
+        street = data?["adress"] ?? "";
+        complement = data?["complement"] ?? "";
+        number = data?["number"] ?? "";
+        district = data?["district"] ?? "";
+        city = data?["city"] ?? "";
+        states = data?["estado"] ?? "";
+        cep = data?["cep"] ?? "";
+        imageList = data?["photoUrl"] ?? [];
+        Cod = data?["userCode"] ?? '';
+        AreaT = data?["TerrainArea"] ?? '';
+        AreaD = data?["OpenArea"] ?? '';
+        AreaC = data?["ClosedArea"] ?? '';
+        Goal = data?["Goal"] ?? '';
+        Origin = data?["Origin"] ?? '';
+      });
+    } else {
+
+      }
     _createPdf(context);
-  }
+    }
+
 
 
   _createPdf(BuildContext context) async {
@@ -461,7 +472,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
                           ),
                           pdfLib.Container(
                             child: pdfLib.Text(
-                              '${DateFormat('dd/MM/yyyy  HH:mm').format(date)}}',
+                              '${DateFormat('dd/MM/yyyy  HH:mm').format(date)}',
                               
                             textAlign: pdfLib.TextAlign.left,  
                                   style: pdfLib.TextStyle(
@@ -2548,13 +2559,13 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
     getOrder();
   }
   getOrder() async {
+
     DocumentSnapshot snapshot =
     await db.collection('surveyNumber').doc('surveyNumber').get();
     Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
     setState(() {
       order = data?["surveyNumber"] ?? 0;
     });
-
     _getUserNSurvey();
   }
   _getUserNSurvey() async {
@@ -2578,7 +2589,7 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
       double surveyPrice =
       double.parse(priceSurvey.replaceAll("R\$", '').replaceAll(',', '.'));
       valor = "R\$ ${price + surveyPrice}";
-      Nsurveys.add(order + 1);
+      Nsurveys.add('${order + 1}');
     });
     await db.collection('users').doc(_auth.currentUser?.uid).update({
       "nsurveys": Nsurveys.toSet().toList(),
@@ -2593,8 +2604,6 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
 
   }
   _getStatus() async {
-    print(status);
-    print(emailEmissor);
     if(status == "demand"){
       await sendEmailJS();
     }
@@ -2607,32 +2616,103 @@ class _SurveyFinishScreenState extends State<SurveyFinishScreen> {
     _NSurveyValidation();
 
   }
-  _NSurveyValidation()  {
-    if (plano == "Vistoriador") {
-      Map<String, dynamic> mapValor = {'valor': valor};
-      db
-          .collection('users')
-          .doc(FirebaseAuth.instance.currentUser!.uid)
-          .set(mapValor, SetOptions(merge: true));
-    }
+  _NSurveyValidation() async{
+    print("entrou");
+    bool result = await InternetConnectionChecker().hasConnection;
+    if(result == true) {
+      if (plano == "Vistoriador") {
+        Map<String, dynamic> mapValor = {'valor': valor};
+        db
+            .collection('users')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .set(mapValor, SetOptions(merge: true));
+      }
+      if (nsurvey == 0) {
+        _orderModel.order = order + 1;
+        nsurvey = order;
+        _orderModel.Nsurvey = nsurvey + 1;
 
-    if (nsurvey == 0) {
-      _orderModel.order = order + 1;
-      nsurvey = order;
-      _orderModel.Nsurvey = nsurvey + 1;
+        db
+            .collection('surveys')
+            .doc(widget.idSurvey)
+            .set({'Nsurvey': _orderModel.Nsurvey}, SetOptions(merge: true));
 
-       db
-          .collection('surveys')
-          .doc(widget.idSurvey)
-          .set({'Nsurvey': _orderModel.Nsurvey}, SetOptions(merge: true));
+        db.collection('surveyNumber').doc('surveyNumber').set({
+          'surveyNumber': _orderModel.order
+        }, SetOptions(merge: true)).then(
+                (value)=> Navigator.pushReplacementNamed(context, '/main'));
+      } else {
+        Navigator.pushReplacementNamed(context, '/main');
 
-       db.collection('surveyNumber').doc('surveyNumber').set({
-        'surveyNumber': _orderModel.order
-      }, SetOptions(merge: true)).then(
-              (value)=> Navigator.pushReplacementNamed(context, '/main'));
-    } else {
-      Navigator.pushReplacementNamed(context, '/main');
+      }
+    }else{
+      if (plano == "Vistoriador") {
+        showSnackBar(context, 'Seu plano não pode realizar vistorias offline', Colors.red);
+        Navigator.pushReplacementNamed(context, '/main');
+      }else{
+        print("entrou no offline");
+        setState(() {
+          _prefService.readCacheTipo('tipo').then((value) {
+            setState(() {
+              plano = value;
+            });
+          });
+          offNSurvey.add('${int.parse(offOrder) + 1}');
+          print(offNSurvey);
+          _orderModel.order = int.parse(offOrder) +1;
+          _orderModel.status = 'survey';
+          _orderModel.Nsurvey = int.parse(offOrder) +1;
+        });
 
+        db
+            .collection('surveys')
+            .doc(widget.idSurvey)
+            .update({'status': _orderModel.status});
+
+
+        Map<String, dynamic> mapVistorias = {'contadorVistorias': int.parse(offContador) + 1};
+
+        db.collection('users').doc(_auth.currentUser?.uid).set({
+          "nsurveys": offNSurvey.toSet().toList(),
+        },SetOptions(merge:true));
+
+
+        db
+            .collection('users')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .set(mapVistorias, SetOptions(merge: true));
+
+
+        db.collection('surveyNumber').doc('surveyNumber').set({
+          'surveyNumber': _orderModel.order
+        }, SetOptions(merge: true));
+
+        db
+            .collection('surveys')
+            .doc(widget.idSurvey)
+            .set({'Nsurvey': _orderModel.Nsurvey}, SetOptions(merge: true));
+
+
+
+
+        _prefService.removeCacheOrder('Order');
+        _prefService.removeCacheNSurvey('NSurvey');
+        _prefService.removeCacheContador('contador');
+        List<String> offNSurveys = [];
+        for(int i = 0; i <offNSurvey.length; i++){
+          offNSurveys.add(offNSurvey[i]);
+        }
+        _prefService.createCacheNSurvey(offNSurveys);
+        String offNewContador = "${int.parse(offContador) + 1}";
+        _prefService.createCacheContador(offNewContador);
+        String offNewOrder = "${int.parse(offOrder) + 1}";
+        _prefService.createCacheOrder(offNewOrder);
+
+
+
+        print("passou do surveyNumber");
+        Navigator.pushReplacementNamed(context, '/main');
+      }
     }
   }
   sendEmailJS() async {
@@ -2669,21 +2749,40 @@ Equipe Teia.''',
     super.initState();
     _dataImages();
     _getData();
+    _prefService.readCacheContador('Order').then((value) {
+      print(value);
+      offOrder = value ;
+      print(offOrder);
+    });
+    _prefService.readCacheNSurvey('NSurvey').then((value) {
+      print(value);
+      offNSurvey =value;
+      print(offOrder);
+    });
+    _prefService.readCacheContador('contador').then((value) {
+      print(value);
+      offContador= value;
+      print(offOrder);
+    });
 
   }
 
   bool loading = true;
   _dataImages() async {
-    DocumentSnapshot snapshot =
-        await db.collection("surveys").doc(widget.idSurvey).get();
-    Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
-    setState(() {
-      imageList = data?["photoUrl"]??[];
-    });
+    bool result = await InternetConnectionChecker().hasConnection;
+    if(result == true) {
+      DocumentSnapshot snapshot =
+      await db.collection("surveys").doc(widget.idSurvey).get();
+      Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
+      setState(() {
+        imageList = data?["photoUrl"]??[];
+      });
 
-    setState(() {
-      loading = false;
-    });
+      setState(() {
+        loading = false;
+      });
+    }
+
   }
 
   @override
@@ -2901,7 +3000,16 @@ Equipe Teia.''',
                 child: ButtonCustom(
                   widthCustom: 0.8,
                   heightCustom: 0.070,
-                  onPressed: () => getNSurvey(),
+                  onPressed: () async {
+                    bool result = await InternetConnectionChecker().hasConnection;
+                    if(result == true) {
+                      print("com internet");
+                      getNSurvey();
+                    }else{
+                      print("sem internet");
+                      _NSurveyValidation();
+                    }
+                  },
                   text: "Finalizar",
                   size: 14.0,
                   colorButton: PaletteColors.primaryColor,

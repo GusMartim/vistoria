@@ -1,9 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 export 'dart:async';
 export 'dart:io';
 export 'dart:convert';
 export 'dart:collection';
-
-
+export 'package:internet_connection_checker/internet_connection_checker.dart';
 export 'package:geolocator/geolocator.dart';
 export 'package:flutter/services.dart';
 export 'package:flutter/material.dart';
@@ -47,7 +48,7 @@ export '../Widgets/checkbox_ratings/checkbox_water.dart';
 
 export '../Utils/colors.dart';
 export '../Utils/routes.dart';
-
+export  '../Utils/sharedPref.dart';
 
 
 export '../Models/alert_model.dart';

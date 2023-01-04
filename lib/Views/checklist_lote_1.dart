@@ -248,13 +248,25 @@ class _CheckListLote1State extends State<CheckListLote1> {
   }
 
   _saveLote(LoteModel loteModel) async {
-    db
-        .collection('surveys')
-        .doc(widget.idSurvey)
-        .update(loteModel.toMap())
-        .then((_) =>
-        Navigator.pushNamed(context, '/finishedLote',
-            arguments: widget.idSurvey));
+    bool result = await InternetConnectionChecker().hasConnection;
+    if(result == true) {
+      db
+          .collection('surveys')
+          .doc(widget.idSurvey)
+          .update(loteModel.toMap())
+          .then((_) =>
+          Navigator.pushNamed(context, '/finishedLote',
+              arguments: widget.idSurvey));
+    }else{
+      db
+          .collection('surveys')
+          .doc(widget.idSurvey)
+          .update(loteModel.toMap());
+
+      Navigator.pushNamed(context, '/finishedLote',
+          arguments: widget.idSurvey);
+    }
+
   }
 
   _LoteTable() async {

@@ -26,6 +26,9 @@ class _SurveyscreenState extends State<Surveyscreen> {
   TextEditingController _controllerUserCode = TextEditingController();
   String pdf = '';
   var controllerSurveyCode = TextEditingController();
+  var offName;
+  var offIdUser;
+  final PrefService _prefService = PrefService();
   Map<String, dynamic>? data;
   String Status= '';
   int order = 0;
@@ -120,53 +123,102 @@ class _SurveyscreenState extends State<Surveyscreen> {
     });
   }
   _getUser()async{
-    DocumentSnapshot snapshot = await db
-        .collection('users')
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .get();
-    Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
-    setState(() {
-      idUser = data?["idUser"];
-      name = data?["name"];
-    });
+    bool result = await InternetConnectionChecker().hasConnection;
+    if(result == true) {
+      print("offline getUser entrou");
+      DocumentSnapshot snapshot = await db
+          .collection('users')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .get();
+      Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
+      setState(() {
+        idUser = data?["idUser"];
+        name = data?["name"];
+      });
+    }else{
+      print("offline");
+    }
+
   }
   _saveData(SurveyModel surveyModel) async {
-    db
-        .collection('surveys')
-        .doc(widget.id != "" ? widget.id : _surveyModel.idSurvey)
-        .set(surveyModel.toMap(), SetOptions(merge: true))
-        .then((_) =>
-        _surveyType(widget.id != "" ? widget.id : _surveyModel.idSurvey));
+    print("offline SaveData Entrou");
+    bool result = await InternetConnectionChecker().hasConnection;
+    if(result == true) {
+      db
+          .collection('surveys')
+          .doc(widget.id != "" ? widget.id : _surveyModel.idSurvey)
+          .set(surveyModel.toMap(), SetOptions(merge: true))
+          .then((_) =>
+          _surveyType(widget.id != "" ? widget.id : _surveyModel.idSurvey));
+    } else {
+      db
+          .collection('surveys')
+          .doc(widget.id != "" ? widget.id : _surveyModel.idSurvey)
+          .set(surveyModel.toMap(), SetOptions(merge: true));
+
+      _surveyType(widget.id != "" ? widget.id : _surveyModel.idSurvey);
+    }
+
+
   }
   getNSurvey()async{
-    DocumentSnapshot snapshot = await db
-        .collection('surveys')
-        .doc(widget.id)
-        .get();
-    Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
-    setState(() {
-      nsurvey = data?["Nsurvey"] ?? 0;
-      title = '$nsurvey';
-    });
+    bool result = await InternetConnectionChecker().hasConnection;
+    if(result == true) {
+      print("offline getNSurvey entrou");
+      DocumentSnapshot snapshot = await db
+          .collection('surveys')
+          .doc(widget.id)
+          .get();
+      Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
+      setState(() {
+        nsurvey = data?["Nsurvey"] ?? 0;
+        title = '$nsurvey';
+      });
+
+    }else{
+      setState(() {
+        nsurvey = order;
+        title = '$nsurvey';
+      });
+    }
 
   }
   getOrder()async{
-    DocumentSnapshot snapshot = await db
-        .collection('surveyNumber')
-        .doc('surveyNumber')
-        .get();
-    Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
-    setState(() {
-      order = data?["surveyNumber"] ?? 0;
-      title = '${order + 1}';
-      if(widget.text =='Vistoriar Demanda'){
-        nsurvey = order;
-      }
+    bool result = await InternetConnectionChecker().hasConnection;
+    if(result == true) {
+      print("offline getNSurvey entrou");
+      DocumentSnapshot snapshot = await db
+          .collection('surveyNumber')
+          .doc('surveyNumber')
+          .get();
+      Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
+      setState(() {
+        order = data?["surveyNumber"] ?? 0;
+        title = '${order + 1}';
+        if(widget.text =='Vistoriar Demanda'){
+          nsurvey = order;
+        }
+      });
+    }else{
+      print("entrou no get order");
+      setState(() {
+        _prefService.readCacheOrder('Order').then((value) {
+          order = int.parse(value);
+          print(order);
+          title = '${order + 1}';
+        });
 
-    });
+        if(widget.text =='Vistoriar Demanda'){
+          nsurvey = order;
+        }
+
+      });
+    }
+
 
   }
   _createTable() async {
+    print("entrou createTable offline");
     _surveyModel.adress = _controllerAdress.text;
     _surveyModel.adress = _controllerAdress.text;
     _surveyModel.number = _controllerNumber.text;
@@ -177,8 +229,15 @@ class _SurveyscreenState extends State<Surveyscreen> {
     _surveyModel.typesurvey = selectedType.toString();
     _surveyModel.userCode =_controllerUserCode.text;
     _surveyModel.cep = _controllerCEP.text;
-    _surveyModel.idUser = idUser;
-    _surveyModel.userName = name;
+    bool result = await InternetConnectionChecker().hasConnection;
+    if(result == true) {
+      _surveyModel.idUser = idUser;
+      _surveyModel.userName = name;
+    }else{
+      _surveyModel.idUser = offIdUser;
+      _surveyModel.userName = offName;
+    }
+
     _surveyModel.lng = _controllerLat.text;
     _surveyModel.lat = _controllerLng.text;
     _surveyModel.pdf = pdf;
@@ -303,7 +362,6 @@ class _SurveyscreenState extends State<Surveyscreen> {
       Future.delayed(const Duration(seconds: 5));
     });
   }
-
   _getData() async {
     DocumentSnapshot snapshot =
     await db.collection("surveys").doc(widget.id).get();
@@ -326,22 +384,30 @@ class _SurveyscreenState extends State<Surveyscreen> {
     });
 
   }
+
   @override
-  void initState() {
+  void initState(){
     super.initState();
-    _getUser();
+    _prefService.readCacheContador('Order').then((value) => print(value));
+    _prefService.readCacheNome('nome').then((value) => offName=value);
+    _prefService.readCacheIdUser('idUser').then((value) => offIdUser =value);
+      _getUser();
+      if (widget.text == 'Editar Vistoria') {
+        getNSurvey();
+        _getData();
+      }
+      if(widget.text == 'Vistoriar Demanda'){
+        getOrder();
+        _getData();
+      }
+
     if (widget.id == '') {
       _surveyModel = SurveyModel.createId();
       getOrder();
     }
-    if (widget.text == 'Editar Vistoria') {
-      getNSurvey();
-      _getData();
-    }
-    if(widget.text == 'Vistoriar Demanda'){
-      getOrder();
-      _getData();
-    }
+
+
+
   }
 
   @override
@@ -1149,23 +1215,21 @@ class _SurveyscreenState extends State<Surveyscreen> {
   }
 
   void _surveyType(String id) {
-    if (selectedType == type[0]) {
+    if (selectedType == 'Casa') {
       Navigator.pushNamed(context, '/check1', arguments: id);
     }
-    if (selectedType == type[1]) {
+    if (selectedType == 'Apartamento') {
       Navigator.pushNamed(context, '/checkapto1', arguments: id);
     }
-    if (selectedType == type[2]) {
+    if (selectedType == 'Lote') {
       Navigator.pushNamed(context, '/checklote1', arguments: id);
     }
-    if (selectedType == type[3]) {
+    if (selectedType == 'Obra') {
       Navigator.pushNamed(context, '/construction', arguments: id);
     }
-    if (selectedType == type[4]) {
-      Navigator.restorablePushNamed(context, '/data', arguments: id);
+    if (selectedType == 'Dados' || selectedType == 'Infrutifera') {
+      Navigator.restorablePushNamed(context, '/extra', arguments: id);
     }
-    if (selectedType == type[5]) {
-      Navigator.pushNamed(context, '/inviability', arguments: id);
-    }
+
   }
 }

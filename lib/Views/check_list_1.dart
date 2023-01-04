@@ -476,68 +476,80 @@ class _CheckList1State extends State<CheckList1> {
   }
 
   _saveUnitys(UnityModel unityModel) async {
-    db
-        .collection('surveys')
-        .doc(widget.idSurvey)
-        .update(unityModel.toMap())
-        .then((_) => Navigator.pushNamed(context, '/finished',
-            arguments: widget.idSurvey));
+    bool result = await InternetConnectionChecker().hasConnection;
+    if(result == true) {
+      db
+          .collection('surveys')
+          .doc(widget.idSurvey)
+          .update(unityModel.toMap())
+          .then((_) => Navigator.pushNamed(context, '/finished',
+          arguments: widget.idSurvey));
+    }else{
+      db
+          .collection('surveys')
+          .doc(widget.idSurvey)
+          .update(unityModel.toMap());
+      Navigator.pushNamed(context, '/finished',
+          arguments: widget.idSurvey);
+    }
+
   }
 
-  _UnitysTable() async {
-    _unityModel.Goal = selectedGoal.toString();
-    _unityModel.Origin = selectedInfo.toString();
-    _unityModel.rooms = _controllerRoom.text;
-    _unityModel.divisaointerna = _controllerDivisaoInterna.text;
-    _unityModel.Contato = _controllerContato.text;
-    _unityModel.Telefone = _controllerTelefoneContato.text;
-    _unityModel.socialbathrooms = _controllerSocialBathroom.text;
-    _unityModel.privatebathrooms = _controllerPrivateBathroom.text;
-    _unityModel.lavs = _controllerLavabos.text;
-    _unityModel.servicebathrooms = _controllerServiceBathroom.text;
-    _unityModel.maidrooms = _controllerMaidRoom.text;
-    _unityModel.balconys = _controllerBalconys.text;
-    _unityModel.completecontainers = _controllerCompleteCabinets.text;
-    _unityModel.kitchens = _controllerKitchens.text;
-    _unityModel.restrooms = _controllerRestRoom.text;
-    _unityModel.servicearearoofed = _controllerServiceAreaRoofed.text;
-    _unityModel.serviceareaunroofed = _controllerServiceAreaUnRoofed.text;
-    _unityModel.garageroofed = _controllerClosedGarage.text;
-    _unityModel.garageunroofed = _controllerOpenGarage.text;
-    _unityModel.acs = _controllerSac.text;
-    _unityModel.pools = _controllerPool.text;
-    _unityModel.age = _controllerAge.text;
-    _unityModel.price = _controllerPrice.text;
-    _unityModel.obs = _controllerObs.text;
-    _unityModel.TotalArea = _controllerTotalArea.text;
-    _unityModel.OpenArea = _controllerOpenArea.text;
-    _unityModel.ClosedArea = _controllerClosedArea.text;
-    _unityModel.TerrainArea = _controllerTerrainArea.text;
-    _unityModel.type = _controllerType.text;
-    _unityModel.infra = _controllerInfra.text;
-    _unityModel.situation = _controllerSituation.text;
-    _unityModel.quota = _controllerQuota.text;
-    _unityModel.unPosition = _controllerPosition.text;
-    _unityModel.roof = _controllerRoof.text;
-    _unityModel.wall = _controllerWall.text;
-    _unityModel.internPaint = _controllerInternPaint.text;
-    _unityModel.externPaint = _controllerPaint.text;
-    _unityModel.externDoors = _controllerExtern.text;
-    _unityModel.floor = _controllerFloor.text;
-    _unityModel.internDoors = _controllerIntern.text;
-    _unityModel.windowns = _controllerWindows.text;
-    _unityModel.balcony = _controllerBalcony.text;
-    _unityModel.switchboard = _controllerSwitchBoard.text;
-    _unityModel.kitchen = _controllerKitchen.text;
-    _unityModel.bathroom = _controllerBathroom.text;
-    _unityModel.tank = _controllerTank.text;
-    _unityModel.pattern = _controllerPattern.text;
-    _unityModel.stateList = _controllerState.text;
-    _unityModel.unRoof = _controllerUnityRoof.text;
-    _unityModel.block = _controllerBlock.text;
-    _unityModel.pathology = _controllerPathology.text;
-    _unityModel.idSurvey = widget.idSurvey;
-
+  _UnitysTable(){
+   setState(() {
+     _unityModel.Goal = selectedGoal.toString();
+     _unityModel.Origin = selectedInfo.toString();
+     _unityModel.rooms = _controllerRoom.text;
+     _unityModel.divisaointerna = _controllerDivisaoInterna.text;
+     _unityModel.Contato = _controllerContato.text;
+     _unityModel.Telefone = _controllerTelefoneContato.text;
+     _unityModel.socialbathrooms = _controllerSocialBathroom.text;
+     _unityModel.privatebathrooms = _controllerPrivateBathroom.text;
+     _unityModel.lavs = _controllerLavabos.text;
+     _unityModel.servicebathrooms = _controllerServiceBathroom.text;
+     _unityModel.maidrooms = _controllerMaidRoom.text;
+     _unityModel.balconys = _controllerBalconys.text;
+     _unityModel.completecontainers = _controllerCompleteCabinets.text;
+     _unityModel.kitchens = _controllerKitchens.text;
+     _unityModel.restrooms = _controllerRestRoom.text;
+     _unityModel.servicearearoofed = _controllerServiceAreaRoofed.text;
+     _unityModel.serviceareaunroofed = _controllerServiceAreaUnRoofed.text;
+     _unityModel.garageroofed = _controllerClosedGarage.text;
+     _unityModel.garageunroofed = _controllerOpenGarage.text;
+     _unityModel.acs = _controllerSac.text;
+     _unityModel.pools = _controllerPool.text;
+     _unityModel.age = _controllerAge.text;
+     _unityModel.price = _controllerPrice.text;
+     _unityModel.obs = _controllerObs.text;
+     _unityModel.TotalArea = _controllerTotalArea.text;
+     _unityModel.OpenArea = _controllerOpenArea.text;
+     _unityModel.ClosedArea = _controllerClosedArea.text;
+     _unityModel.TerrainArea = _controllerTerrainArea.text;
+     _unityModel.type = _controllerType.text;
+     _unityModel.infra = _controllerInfra.text;
+     _unityModel.situation = _controllerSituation.text;
+     _unityModel.quota = _controllerQuota.text;
+     _unityModel.unPosition = _controllerPosition.text;
+     _unityModel.roof = _controllerRoof.text;
+     _unityModel.wall = _controllerWall.text;
+     _unityModel.internPaint = _controllerInternPaint.text;
+     _unityModel.externPaint = _controllerPaint.text;
+     _unityModel.externDoors = _controllerExtern.text;
+     _unityModel.floor = _controllerFloor.text;
+     _unityModel.internDoors = _controllerIntern.text;
+     _unityModel.windowns = _controllerWindows.text;
+     _unityModel.balcony = _controllerBalcony.text;
+     _unityModel.switchboard = _controllerSwitchBoard.text;
+     _unityModel.kitchen = _controllerKitchen.text;
+     _unityModel.bathroom = _controllerBathroom.text;
+     _unityModel.tank = _controllerTank.text;
+     _unityModel.pattern = _controllerPattern.text;
+     _unityModel.stateList = _controllerState.text;
+     _unityModel.unRoof = _controllerUnityRoof.text;
+     _unityModel.block = _controllerBlock.text;
+     _unityModel.pathology = _controllerPathology.text;
+     _unityModel.idSurvey = widget.idSurvey;
+   });
     _saveUnitys(_unityModel);
   }
 
@@ -550,7 +562,6 @@ class _CheckList1State extends State<CheckList1> {
     for (var i = 0; i < type.length; i++) {
       saveChecklist.add(type[i].title + '2' + '#' + type[i].value.toString());
     }
-
     for (var i = 0; i < infra.length; i++) {
       saveChecklist.add(infra[i].title + '3' + '#' + infra[i].value.toString());
     }
@@ -558,7 +569,6 @@ class _CheckList1State extends State<CheckList1> {
       saveChecklist
           .add(situation[i].title + '4' + '#' + situation[i].value.toString());
     }
-
     for (var i = 0; i < quota.length; i++) {
       saveChecklist.add(quota[i].title + '5' + '#' + quota[i].value.toString());
     }
@@ -566,15 +576,12 @@ class _CheckList1State extends State<CheckList1> {
       saveChecklist
           .add(position[i].title + '6' + '#' + position[i].value.toString());
     }
-
     for (var i = 0; i < roof.length; i++) {
       saveChecklist.add(roof[i].title + '7' + '#' + roof[i].value.toString());
     }
-
     for (var i = 0; i < wall.length; i++) {
       saveChecklist.add(wall[i].title + '8' + '#' + wall[i].value.toString());
     }
-
     for (var i = 0; i < paint.length; i++) {
       saveChecklist.add(paint[i].title + '9' + '#' + paint[i].value.toString());
     }
@@ -610,26 +617,21 @@ class _CheckList1State extends State<CheckList1> {
       saveChecklist
           .add(kitchen[i].title + '17' + '#' + kitchen[i].value.toString());
     }
-
     for (var i = 0; i < bathroom.length; i++) {
       saveChecklist
           .add(bathroom[i].title + '18' + '#' + bathroom[i].value.toString());
     }
-
     for (var i = 0; i < tank.length; i++) {
       saveChecklist.add(tank[i].title + '19' + '#' + tank[i].value.toString());
     }
-
     for (var i = 0; i < pattern.length; i++) {
       saveChecklist
           .add(pattern[i].title + '20' + '#' + pattern[i].value.toString());
     }
-
     for (var i = 0; i < state.length; i++) {
       saveChecklist
           .add(state[i].title + '21' + '#' + state[i].value.toString());
     }
-
     for (var i = 0; i < unityroof.length; i++) {
       saveChecklist
           .add(unityroof[i].title + '22' + '#' + unityroof[i].value.toString());
@@ -638,10 +640,9 @@ class _CheckList1State extends State<CheckList1> {
       saveChecklist
           .add(block[i].title + '23' + '#' + block[i].value.toString());
     }
-
-    db.collection('surveys').doc(widget.idSurvey).update({
+    db.collection('surveys').doc(widget.idSurvey).set({
       "checklist": saveChecklist.toSet().toList(),
-    });
+    },SetOptions(merge: true));
     _UnitysTable();
   }
 

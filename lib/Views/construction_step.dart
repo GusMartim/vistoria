@@ -168,11 +168,22 @@ class _ConstructionStepState extends State<ConstructionStep> {
   }
 
   _saveConstruction(ConstructionModel constructionModel) async{
-    db
-        .collection('surveys')
-        .doc(widget.idSurvey)
-        .update(constructionModel.toMap())
-        .then((_) => Navigator.pushNamed(context, '/finishedObra',arguments: widget.idSurvey));
+    bool result = await InternetConnectionChecker().hasConnection;
+    if(result == true) {
+      db
+          .collection('surveys')
+          .doc(widget.idSurvey)
+          .update(constructionModel.toMap())
+          .then((_) => Navigator.pushNamed(context, '/finishedObra',arguments: widget.idSurvey));
+    }else{
+      db
+          .collection('surveys')
+          .doc(widget.idSurvey)
+          .update(constructionModel.toMap());
+
+      Navigator.pushNamed(context, '/finishedObra',arguments: widget.idSurvey);
+    }
+
   }
   _tableConstruction() async{
     _constructionModel.services = SServices;

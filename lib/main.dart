@@ -8,10 +8,10 @@ import 'package:intl/intl.dart';
 void main ()async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
   String route = '/splash';
   initializeDateFormatting();
   Intl.defaultLocale = 'pt_BR';
-
 
   runApp(MaterialApp(
 

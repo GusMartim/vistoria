@@ -2,6 +2,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:vistoria/Views/profissinals_screen.dart';
 import '../Models/ErrorStringModel.dart';
 import '../Utils/exports.dart';
+import '../Utils/sharedPref.dart';
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({Key? key}) : super(key: key);
@@ -13,12 +14,17 @@ class MenuScreen extends StatefulWidget {
 class _MenuScreenState extends State<MenuScreen> {
   FirebaseFirestore db = FirebaseFirestore.instance;
   List list = [];
+  final PrefService _prefService = PrefService();
   bool canSurvey = true;
   var vencimento;
   var dataPlano;
+  var order;
   var plano;
   var typePlan;
-  var name;
+  var name = '';
+  var idUser = '';
+  List <String> NSurvey = [];
+  List nsurveys = [];
   var contador;
   var category;
   var youtube;
@@ -44,59 +50,110 @@ class _MenuScreenState extends State<MenuScreen> {
 
 
   }
-  _getInfo()async {
-    DocumentSnapshot link = await db.collection("link").doc("links").get();
-    Map<String, dynamic>? linkData = link.data() as Map<String, dynamic>?;
-    DocumentSnapshot snapshot = await db
-        .collection('users')
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .get();
+  getOrder() async {
+    ("entrou offline 1");
+    DocumentSnapshot snapshot =
+    await db.collection('surveyNumber').doc('surveyNumber').get();
     Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
     setState(() {
-      contador = data?["contadorVistorias"] ?? 0;
-      vencimento = data?['dataVencimento'];
-      dataPlano = data?['dataPlano'];
-      plano = data?['plano'] ?? "Basico";
-      typePlan = data?['planType'] ?? "Mensal";
-      category = data?['category'] ?? "Vistoriador";
-      qtdSurveyIntermediario = linkData?['Quantidade Vistoria Intermediario'];
-      qtdSurveyCompleto = linkData?['Quantidade Vistoria Completo'];
-      name = data?["name"];
+      order = data?["surveyNumber"] ?? 0;
+      _prefService.createCacheOrder(order.toString());
     });
-    print(contador);
-    print(vencimento);
-    print(plano);
-    DateTime dateTime = vencimento.toDate();
-    DateTime planTime = dataPlano.toDate();
-    if (category != "Administrador") {
-      if (typePlan != "Anual"){
-        if (plano == "Completo" && contador > qtdSurveyCompleto) {
+  }
+  _getInfo()async {
+    bool result = await InternetConnectionChecker().hasConnection;
+    if(result == true) {
+      DocumentSnapshot link = await db.collection("link").doc("links").get();
+      Map<String, dynamic>? linkData = link.data() as Map<String, dynamic>?;
+      DocumentSnapshot snapshot = await db
+          .collection('users')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .get();
+      Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
+      setState(() {
+        contador = data?["contadorVistorias"] ?? 0;
+        vencimento = data?['dataVencimento'];
+        nsurveys = data?['nsurveys']??[];
+        dataPlano = data?['dataPlano'];
+        plano = data?['plano'] ?? "Basico";
+        typePlan = data?['planType'] ?? "Mensal";
+        category = data?['category'] ?? "Vistoriador";
+        qtdSurveyIntermediario = linkData?['Quantidade Vistoria Intermediario'];
+        qtdSurveyCompleto = linkData?['Quantidade Vistoria Completo'];
+        name = data?["name"];
+        idUser = data?["idUser"];
+        print(nsurveys);
+        print(NSurvey);
+        _prefService.createCacheContador(contador.toString());
+
+        _prefService.createCacheTipo(plano);
+        for(int i = 0;i < nsurveys.length; i++){
+          NSurvey.add(nsurveys[i].toString());
+        }
+        _prefService.createCacheNSurvey(NSurvey);
+        _prefService.createCacheNome(name);
+        _prefService.createCacheIdUser(idUser);
+
+      });
+
+      print(category);
+      print(order);
+      print(contador);
+
+      DateTime dateTime = vencimento.toDate();
+      DateTime planTime = dataPlano.toDate();
+      if (category != "Administrador") {
+        if (typePlan != "Anual"){
+          if (plano == "Completo" && contador > qtdSurveyCompleto) {
+            setState(() {
+              canSurvey = false;
+            });
+          }
+          if (plano == "Intermediario" && contador > qtdSurveyIntermediario) {
+            setState(() {
+              canSurvey = false;
+            });
+          }
+        }
+        if (dateTime
+            .difference(DateTime.now())
+            .inDays < 0) {
           setState(() {
             canSurvey = false;
+            plano = "Basico";
           });
-        }
-        if (plano == "Intermediario" && contador > qtdSurveyIntermediario) {
-          setState(() {
-            canSurvey = false;
-          });
+          Map<String, dynamic> mapVistorias = {
+            'plano': plano
+          };
+          await db
+              .collection('users')
+              .doc(FirebaseAuth.instance.currentUser!.uid)
+              .set(mapVistorias, SetOptions(merge: true));
         }
       }
-      if (dateTime
-          .difference(DateTime.now())
-          .inDays < 0) {
-        setState(() {
-          canSurvey = false;
-          plano = "Basico";
-        });
-        Map<String, dynamic> mapVistorias = {
-          'plano': plano
-        };
-        await db
-            .collection('users')
-            .doc(FirebaseAuth.instance.currentUser!.uid)
-            .set(mapVistorias, SetOptions(merge: true));
+    }else{
+      if(plano == "Vistoriador"){
+        showSnackBar(context, 'Seu plano não pode realizar vistorias offline', Colors.red);
       }
+      _prefService.readCacheContador('Order').then((value) {
+        print(value);
+
+      });
+      _prefService.readCacheNSurvey('NSurvey').then((value) {
+        print(value);
+
+      });
+      _prefService.readCacheContador('contador').then((value) {
+        print(value);
+
+      });
+      _prefService.readCacheNome('nome').then((value) {
+        print(value);
+        name = value;
+
+      });
     }
+
   }
 
   _getLink()async{
@@ -113,6 +170,7 @@ class _MenuScreenState extends State<MenuScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    getOrder();
     _getList();
     _getInfo();
     _getLink();

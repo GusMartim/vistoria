@@ -24,7 +24,7 @@ class ShowDialog extends StatelessWidget {
 
     return AlertDialog(
       title: Container(
-          width: width*0.3,
+          width: width*0.5,
           height: height* 0.1,
           child: TextCustom(text: title,color: colorTextTitle,size: 18.0,fontWeight: FontWeight.bold,textAlign: TextAlign.center,maxLines: 2,)
       ),
@@ -35,8 +35,8 @@ class ShowDialog extends StatelessWidget {
         children: [
           Expanded(
               child:  Container(
-                height: height* 0.01,
-                width: width*0.3,
+                height: height* 0.025,
+                width: width*0.5,
                 child: TextCustom(
                   textAlign: TextAlign.center,
                   text: content,
