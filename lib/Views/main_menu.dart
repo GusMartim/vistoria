@@ -16,6 +16,7 @@ class _MenuScreenState extends State<MenuScreen> {
   List list = [];
   final PrefService _prefService = PrefService();
   bool canSurvey = true;
+  var controller = StreamController<QuerySnapshot>.broadcast();
   var vencimento;
   var dataPlano;
   var order;
@@ -46,6 +47,18 @@ class _MenuScreenState extends State<MenuScreen> {
         .get();
     setState(() {
       list = userDemandList != null ?userDemandList.docs:list;
+    });
+  }
+  _getListStream() async {
+    final stream = db
+        .collection("surveys")
+        .where("userName",isEqualTo: name)
+        .where("status",isEqualTo: "demand")
+        .where('notification',isEqualTo:'true')
+        .orderBy('hourRequest', descending: true).snapshots();
+
+    stream.listen((demandas){
+      controller.add(demandas);
     });
   }
   getOrder() async {
@@ -132,6 +145,8 @@ class _MenuScreenState extends State<MenuScreen> {
               .set(mapVistorias, SetOptions(merge: true));
         }
       }
+
+      _getListStream();
       _getList();
     }else{
       if(plano == "Vistoriador"){
@@ -176,7 +191,6 @@ class _MenuScreenState extends State<MenuScreen> {
     // TODO: implement initState
     super.initState();
     getOrder();
-
     _getInfo();
     _getLink();
   }
@@ -215,36 +229,44 @@ class _MenuScreenState extends State<MenuScreen> {
                 list.length!= 0?Container(
                   width: width * 1.2,
                   height: height * 0.08,
-                  child: ListView.builder(
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: list.length,
-                      itemBuilder: (context,index){
-                      DocumentSnapshot demandNotification = list[index];
-                      String emissor = ErrorStringModel(demandNotification,'emissor');
-                      String id = ErrorStringModel(demandNotification, 'idSurvey');
-                      return  Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: GestureDetector(
-                          onTap: (){
-                            db.collection("surveys").doc(id).set({'notification': 'false'}, SetOptions(merge: true))
-                            .then((value) => _getList().then((value) => Navigator.pushNamed(context, '/demanda',arguments: id)));
-                          },
-                          child: Container(
-                          decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: PaletteColors.primaryColor),
-                            child: TextCustom(
-                              text: 'Você tem uma nova demanda criada por $emissor, clique aqui',
-                              size: 12.0,
-                              color: PaletteColors.white,
-                              fontWeight: FontWeight.bold,
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
+                  child: StreamBuilder(
+                    stream: controller.stream,
+                    builder: (context,snapshot){
+                      return Container(
+                        child: ListView.builder(
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: list.length,
+                            itemBuilder: (context,index){
+                              DocumentSnapshot demandNotification = list[index];
+                              String emissor = ErrorStringModel(demandNotification,'emissor');
+                              String id = ErrorStringModel(demandNotification, 'idSurvey');
+                              return  Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: GestureDetector(
+                                  onTap: (){
+                                    db.collection("surveys").doc(id).set({'notification': 'false'}, SetOptions(merge: true))
+                                        .then((value) => _getList().then((value) => Navigator.pushNamed(context, '/demanda',arguments: id)));
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(5),
+                                        color: PaletteColors.primaryColor),
+                                    child: TextCustom(
+                                      text: 'Você tem uma nova demanda criada por $emissor, clique aqui',
+                                      size: 12.0,
+                                      color: PaletteColors.white,
+                                      fontWeight: FontWeight.bold,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }),
                       );
-                      }),
+                    },
+
+                  ),
                 ):Container(),
 
                 Padding(
