@@ -47,8 +47,6 @@ class _MenuScreenState extends State<MenuScreen> {
     setState(() {
       list = userDemandList != null ?userDemandList.docs:list;
     });
-
-
   }
   getOrder() async {
     ("entrou offline 1");
@@ -134,6 +132,7 @@ class _MenuScreenState extends State<MenuScreen> {
               .set(mapVistorias, SetOptions(merge: true));
         }
       }
+      _getList();
     }else{
       if(plano == "Vistoriador"){
         setState(() {
@@ -177,7 +176,7 @@ class _MenuScreenState extends State<MenuScreen> {
     // TODO: implement initState
     super.initState();
     getOrder();
-    _getList();
+
     _getInfo();
     _getLink();
   }
