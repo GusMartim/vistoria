@@ -226,48 +226,66 @@ class _MenuScreenState extends State<MenuScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [
-                list.length!= 0?Container(
+             Container(
                   width: width * 1.2,
                   height: height * 0.08,
-                  child: StreamBuilder(
+                  child: StreamBuilder<QuerySnapshot>(
                     stream: controller.stream,
                     builder: (context,snapshot){
-                      return Container(
-                        child: ListView.builder(
-                            physics: NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: list.length,
-                            itemBuilder: (context,index){
-                              DocumentSnapshot demandNotification = list[index];
-                              String emissor = ErrorStringModel(demandNotification,'emissor');
-                              String id = ErrorStringModel(demandNotification, 'idSurvey');
-                              return  Padding(
-                                padding: const EdgeInsets.all(4.0),
-                                child: GestureDetector(
-                                  onTap: (){
-                                    db.collection("surveys").doc(id).set({'notification': 'false'}, SetOptions(merge: true))
-                                        .then((value) => _getList().then((value) => Navigator.pushNamed(context, '/demanda',arguments: id)));
-                                  },
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(5),
-                                        color: PaletteColors.primaryColor),
-                                    child: TextCustom(
-                                      text: 'Você tem uma nova demanda criada por $emissor, clique aqui',
-                                      size: 12.0,
-                                      color: PaletteColors.white,
-                                      fontWeight: FontWeight.bold,
-                                      textAlign: TextAlign.center,
+
+                      QuerySnapshot? querySnapshot = snapshot.data;
+
+                      if(querySnapshot == null){
+                      return Container();
+                      }else {
+                        return Container(
+                          child: ListView.builder(
+                              physics: NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: snapshot.hasError ? 0 : querySnapshot
+                                  ?.docs.length,
+                              itemBuilder: (context, index) {
+                                List <DocumentSnapshot> doc = querySnapshot!
+                                    .docs.toList() ?? [];
+                                DocumentSnapshot demandNotification = doc[index];
+                                String emissor = ErrorStringModel(
+                                    demandNotification, 'emissor');
+                                String id = ErrorStringModel(
+                                    demandNotification, 'idSurvey');
+                                return Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      db.collection("surveys").doc(id).set(
+                                          {'notification': 'false'},
+                                          SetOptions(merge: true))
+                                          .then((value) =>
+                                          _getList().then((value) =>
+                                              Navigator.pushNamed(
+                                                  context, '/demanda',
+                                                  arguments: id)));
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(
+                                              5),
+                                          color: PaletteColors.primaryColor),
+                                      child: TextCustom(
+                                        text: 'Você tem uma nova demanda criada por $emissor, clique aqui',
+                                        size: 12.0,
+                                        color: PaletteColors.white,
+                                        fontWeight: FontWeight.bold,
+                                        textAlign: TextAlign.center,
+                                      ),
                                     ),
                                   ),
-                                ),
-                              );
-                            }),
-                      );
+                                );
+                              }),
+                        );
+                      }
                     },
-
                   ),
-                ):Container(),
+                ),
 
                 Padding(
                   padding: const EdgeInsets.symmetric(

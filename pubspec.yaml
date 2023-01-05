@@ -1,20 +1,13 @@
 name: vistoria
 description: A new Flutter project.
-
-
 publish_to: 'none'
-
-
 version: 1.0.0+1
-
 environment:
   sdk: ">=2.17.6 <3.0.0"
-
 
 dependencies:
   flutter:
     sdk: flutter
-
 
   permission_handler: ^10.2.0
   cupertino_icons: ^1.0.2
@@ -42,25 +35,18 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-
   flutter_lints: ^2.0.0
-
-
 
 flutter_icons:
   android: true
   image_path: "assets/image/logo_light.png"
 
-
 flutter:
 
   uses-material-design: true
 
-
   assets:
    - assets/image/
-
-
 
   fonts:
      - family: Nunito
