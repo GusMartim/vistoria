@@ -32,8 +32,8 @@ class CustomCard extends StatelessWidget {
             horizontal: horizontal,
         ),*/
         margin: EdgeInsets.all(8.0) ,
-        height: height * 0.2,
-        width: width * 0.4,
+        height: height * 0.15,
+        width: width * 0.35,
 
         child: GestureDetector(
           onTap: () => Navigator.push(context,
@@ -48,28 +48,20 @@ class CustomCard extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12.0),
             ),
-
-
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-
-
-
-
                 Icon(icon, color: PaletteColors.lightGrey,
                   size: 40.0,),
-
-
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     TextCustom(
                       text:text,
                       color: PaletteColors.grey,
-                      size: 14.0,
+                      size: 12.0,
                       fontWeight: FontWeight.bold,
                       textAlign: TextAlign.center,
                     )
@@ -77,7 +69,6 @@ class CustomCard extends StatelessWidget {
                 )
               ],
             ),
-
           ),
         )
     );

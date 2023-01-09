@@ -78,23 +78,20 @@ class _MenuScreenState extends State<MenuScreen> {
       Map<String, dynamic>? linkData = link.data() as Map<String, dynamic>?;
       DocumentSnapshot snapshot = await db
           .collection('users')
-          .doc(FirebaseAuth.instance.currentUser!.uid)
-          .get();
+          .doc(FirebaseAuth.instance.currentUser!.uid).get();
       Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
       setState(() {
         contador = data?["contadorVistorias"] ?? 0;
         vencimento = data?['dataVencimento'];
         nsurveys = data?['nsurveys']??[];
         dataPlano = data?['dataPlano'];
-        plano = data?['plano'] ?? "Basico";
+        plano = data?['plano'] ?? "Vistoriador";
         typePlan = data?['planType'] ?? "Mensal";
         category = data?['category'] ?? "Vistoriador";
         qtdSurveyIntermediario = linkData?['Quantidade Vistoria Intermediario'];
         qtdSurveyCompleto = linkData?['Quantidade Vistoria Completo'];
         name = data?["name"];
         idUser = data?["idUser"];
-        print(nsurveys);
-        print(NSurvey);
         _prefService.createCacheContador(contador.toString());
 
         _prefService.createCacheTipo(plano);
@@ -107,33 +104,26 @@ class _MenuScreenState extends State<MenuScreen> {
 
       });
 
-      print(category);
-      print(order);
-      print(contador);
-
       DateTime dateTime = vencimento.toDate();
       DateTime planTime = dataPlano.toDate();
       if (category != "Administrador") {
-        if (typePlan != "Anual"){
-          if (plano == "Completo" && contador > qtdSurveyCompleto) {
+          if (plano == "Proprietario" && contador > qtdSurveyCompleto) {
             setState(() {
               canSurvey = false;
               showSnackBar(context, 'Você atingiu o limite de vistorias mensal', Colors.red);
             });
           }
-          if (plano == "Intermediario" && contador > qtdSurveyIntermediario) {
+          if (plano == "Vistoriador" && contador > qtdSurveyIntermediario) {
             setState(() {
               canSurvey = false;
             });
             showSnackBar(context, 'Você atingiu o limite de vistorias mensal', Colors.red);
           }
-        }
-        if (dateTime
-            .difference(DateTime.now())
+        if (dateTime.difference(DateTime.now())
             .inDays < 0) {
           setState(() {
             canSurvey = false;
-            plano = "Basico";
+            plano = "Vistoriador";
           });
           showSnackBar(context, 'Seu plano expirou', Colors.red);
           Map<String, dynamic> mapVistorias = {
@@ -188,13 +178,11 @@ class _MenuScreenState extends State<MenuScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getOrder();
     _getInfo();
     _getLink();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -203,6 +191,48 @@ class _MenuScreenState extends State<MenuScreen> {
 
     return Scaffold(
       backgroundColor: PaletteColors.white,
+      bottomSheet:  Container(
+        height: 50,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(width: width * 0.04),
+            Container(
+                alignment: Alignment.centerRight,
+                child: IconButton(
+                  icon: Icon(Icons.whatsapp_rounded,color: PaletteColors.primaryColor,size: 30),
+                  onPressed: () async{
+                    await launchUrl(Uri.parse('https://wa.me/5562996116494/'),mode: LaunchMode.externalApplication);
+                  },
+                )),
+            GestureDetector(
+              onTap: ()async {
+                await launchUrl(Uri.parse('https://wa.me/5562996116494/'),mode: LaunchMode.externalApplication);
+              },
+              child: Container(
+                height: height * 0.06,
+                alignment: Alignment.bottomCenter,
+                child: TextCustom(
+                  text: 'Consultoria',
+                  size: 12.0,
+                  color: PaletteColors.grey,
+                  fontWeight: FontWeight.bold,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+            Spacer(),
+            Container(
+                alignment: Alignment.centerRight,
+                child: IconButton(
+                  icon: Icon(Icons.logout,color: PaletteColors.primaryColor,size: 30),
+                  onPressed: ()=>FirebaseAuth.instance.signOut().then((value) =>
+                      Navigator.pushReplacementNamed(context, '/login')),
+                )),
+          ],
+        ),
+      ),
       appBar: AppBar(
           backgroundColor: Colors.white,
           elevation: 0,
@@ -218,7 +248,6 @@ class _MenuScreenState extends State<MenuScreen> {
             ],
           )),
       body: SingleChildScrollView(
-        physics: NeverScrollableScrollPhysics(),
         child: Padding(
           padding: const EdgeInsets.all(2.5),
           child: Column(
@@ -294,7 +323,7 @@ class _MenuScreenState extends State<MenuScreen> {
                   ),
                   child: TextCustom(
                     text: 'Olá, $name',
-                    size: 14.0,
+                    size: 16.0,
                     color: PaletteColors.grey,
                     fontWeight: FontWeight.bold,
                     textAlign: TextAlign.start,
@@ -347,7 +376,7 @@ class _MenuScreenState extends State<MenuScreen> {
                                     TextCustom(
                                       text:'Nova Vistoria',
                                       color: PaletteColors.grey,
-                                      size: 14.0,
+                                      size: 12.0,
                                       fontWeight: FontWeight.bold,
                                       textAlign: TextAlign.center,
                                     )
@@ -376,8 +405,8 @@ class _MenuScreenState extends State<MenuScreen> {
                           ),
                   Container(
                     margin: EdgeInsets.all(8.0) ,
-                    height: height * 0.2,
-                    width: width * 0.4,
+                    height: height * 0.15,
+                    width: width * 0.35,
                     child: GestureDetector(
                       onTap: () async{
 
@@ -405,7 +434,7 @@ class _MenuScreenState extends State<MenuScreen> {
                                 TextCustom(
                                   text:'Tutorial',
                                   color: PaletteColors.grey,
-                                  size: 14.0,
+                                  size: 12.0,
                                   fontWeight: FontWeight.bold,
                                   textAlign: TextAlign.center,
                                 )
@@ -429,9 +458,8 @@ class _MenuScreenState extends State<MenuScreen> {
                     children: [
                       Container(
                           margin: EdgeInsets.all(8.0) ,
-                          height: height * 0.2,
-                          width: width * 0.4,
-
+                          height: height * 0.15,
+                          width: width * 0.35,
                           child: GestureDetector(
                             onTap: () async{
                               Uri uri = Uri(
@@ -443,8 +471,6 @@ class _MenuScreenState extends State<MenuScreen> {
                                 }),
                               );
                               await launchUrl(uri,mode: LaunchMode.externalApplication);
-
-
                             },
                             child: Card(
                               elevation: 4,
@@ -466,7 +492,7 @@ class _MenuScreenState extends State<MenuScreen> {
                                       TextCustom(
                                         text:'Enviar Feedback',
                                         color: PaletteColors.grey,
-                                        size: 14.0,
+                                        size: 12.0,
                                         fontWeight: FontWeight.bold,
                                         textAlign: TextAlign.center,
                                       )
@@ -493,50 +519,7 @@ class _MenuScreenState extends State<MenuScreen> {
                     ],
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(width: width * 0.04),
-                    Container(
-                        alignment: Alignment.centerRight,
-                        child: IconButton(
-                          icon: Icon(Icons.whatsapp_rounded,color: PaletteColors.primaryColor,size: 30),
-                          onPressed: () async{
-                            await launchUrl(Uri.parse('https://wa.me/5562996116494/'),mode: LaunchMode.externalApplication);
-                          },
-                        )),
-                    GestureDetector(
-                      onTap: ()async {
-                        await launchUrl(Uri.parse('https://wa.me/5562996116494/'),mode: LaunchMode.externalApplication);
-                      },
-                      child: Container(
-
-                        height: height * 0.06,
-                        alignment: Alignment.bottomCenter,
-                        child: TextCustom(
-                          text: 'Consultoria',
-                          size: 12.0,
-                          color: PaletteColors.grey,
-                          fontWeight: FontWeight.bold,
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ),
-                    Spacer(),
-                    Container(
-                        alignment: Alignment.centerRight,
-
-                        child: IconButton(
-                          icon: Icon(Icons.logout,color: PaletteColors.primaryColor,size: 30),
-                          onPressed: ()=>FirebaseAuth.instance.signOut().then((value) =>
-                              Navigator.pushReplacementNamed(context, '/login')),
-                        )),
-                  ],
-                ),
-
                 SizedBox(height: height * 0.01,)
-
               ]),
         ),
       ),

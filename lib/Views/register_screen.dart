@@ -60,7 +60,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool visiblePassword = true;
   bool visibleConfirmPassword = true;
   String _error = '';
-  String plano = 'Intermediario';
+  String plano = 'Vistoriador';
   bool status = true;
   var result;
   List<String> type = [
@@ -68,7 +68,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     'Pessoa Jurídica',
   ];
   String? selectedType = 'Pessoa Física';
-
 
   sendEmailJS()async{
     Map<String, dynamic> templateParams ={

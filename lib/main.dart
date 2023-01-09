@@ -1,5 +1,6 @@
 //--no-sound-null-safety
 //flutter run --no-sound-null-safety
+//flutter build apk --release --no-sound-null-safety
 import 'package:vistoria/Utils/exports.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';

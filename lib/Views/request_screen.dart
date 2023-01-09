@@ -55,9 +55,6 @@ class _RequestScreenState extends State<RequestScreen> {
     setState(() {
       list = demandList.docs;
       print(_auth.currentUser?.displayName);
-      print(list.length);
-
-
     });
     resultSearchList();
     return"complete";

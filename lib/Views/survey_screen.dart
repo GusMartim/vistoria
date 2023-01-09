@@ -269,7 +269,6 @@ class _SurveyscreenState extends State<Surveyscreen> {
       print('Error : $e');
     }
   }
-
   Future _savePhotoCamera() async {
     try {
       final image = await ImagePicker().pickImage(
@@ -292,8 +291,6 @@ class _SurveyscreenState extends State<Surveyscreen> {
   }
   Future _uploadImage() async {
     Uint8List? archive = await picture?.readAsBytes();
-
-
     Reference pastaRaiz = storage.ref();
     Reference arquivo = pastaRaiz
         .child("surveys")
@@ -341,10 +338,7 @@ class _SurveyscreenState extends State<Surveyscreen> {
               .set(dateUpdate, SetOptions(merge: true));
         });
       });
-
-
     }
-
   }
 
   _urlImageFirestore(String url) {
@@ -405,9 +399,6 @@ class _SurveyscreenState extends State<Surveyscreen> {
       _surveyModel = SurveyModel.createId();
       getOrder();
     }
-
-
-
   }
 
   @override

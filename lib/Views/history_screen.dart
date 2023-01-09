@@ -3,7 +3,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:vistoria/Utils/exports.dart';
 import 'package:vistoria/Widgets/inputRegister.dart';
 import 'package:vistoria/Widgets/text_custom.dart';
-
+import '../Models/ErrorStringModel.dart';
 import '../Models/search_model_adress.dart';
 
 class HistoryScreen extends StatefulWidget {
@@ -20,7 +20,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
   FirebaseAuth _auth = FirebaseAuth.instance;
   List<ListTileModel> items = [];
   TextEditingController _controllerSearch = TextEditingController();
-
 
   search(){
     resultSearchList();
@@ -48,7 +47,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
   _getList() async {
     var historyList = await db
         .collection("surveys")
-        .where("idUser",isEqualTo: _auth.currentUser?.uid)
         .where("status",isEqualTo: "survey")
         .orderBy('Nsurvey', descending: true)
         .get();
@@ -61,7 +59,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
   _getListStream() async {
     final stream = db
         .collection("surveys")
-        .where("idUser",isEqualTo: _auth.currentUser?.uid)
         .where("status",isEqualTo: "survey")
         .orderBy('hourRequest', descending: true).snapshots();
     stream.listen((history){
@@ -124,16 +121,14 @@ class _HistoryScreenState extends State<HistoryScreen> {
                       return list.length!= 0 ?Container(
                         height: height ,
                         child: ListView.builder(
-                            
                             itemCount: list.length,
                             itemBuilder: (context, index) {
                               DocumentSnapshot item = list[index];
-                              items.add(ListTileModel(
-                                  text:
-                                      '${item['adress']??''},${item['number']??''},${item['district']??''} -${item['city']??''}/${item['estado']??''}',
-                                  data: '${DateFormat('dd/MM/yyyy  HH:mm').format(item['hourRequest'].toDate().toLocal())??''}',
-                                  iconShow: false, pdfUrl: '${item['savedPdf']??''}'));
-                              return ListTileCustom(
+                                items.add(ListTileModel(
+                                    text:'${item['adress']??''},${item['number']??''},${item['district']??''} -${item['city']??''}/${item['estado']??''}',
+                                    data: '${DateFormat('dd/MM/yyyy  HH:mm').format(item['hourRequest'].toDate().toLocal())??''}',
+                                    iconShow: false, pdfUrl: '${item['savedPdf']??''}'));
+                              return ErrorStringModel(item,'emailEmissor') == _auth.currentUser?.email || ErrorStringModel(item,'idUser') == _auth.currentUser?.uid? ListTileCustom(
                                 text: items[index].text,
                                 showIcons: items[index].iconShow,
                                 onTap: () {
@@ -156,7 +151,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                     showSnackBar(context, 'Não há documento salvo',Colors.red);
                                   }
                                 },
-                              );
+                              ):Container();
                             }),
                       ):Container();
                     }),

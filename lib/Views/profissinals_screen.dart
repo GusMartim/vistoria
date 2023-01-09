@@ -1,8 +1,8 @@
-import 'package:url_launcher/url_launcher.dart';
 import 'package:vistoria/Utils/exports.dart';
 import 'package:vistoria/Widgets/text_custom.dart';
 
 import '../Models/ErrorStringModel.dart';
+import '../Models/error_bool_model.dart';
 import '../Models/search_model_state.dart';
 
 class ProfissionalScreen extends StatefulWidget {
@@ -202,8 +202,17 @@ class _ProfissionalScreenState extends State<ProfissionalScreen> {
                   ],
                 ),
                 SizedBox(height: height * 0.02),
-                resultList.length == 0? Container():Container(
-
+                resultList.length == 0? Container(
+                  alignment: Alignment.center,
+                  width:width,
+                  child:TextCustom(
+                    text: 'Nenhum profissional\n cadastrado desse estado',
+                    size: 14.0,
+                    color: PaletteColors.bgColor,
+                    fontWeight: FontWeight.bold,
+                    textAlign: TextAlign.center,
+                  ),
+                ):Container(
                   width: width ,
                   child: ListView.builder(
                     physics: NeverScrollableScrollPhysics(),
@@ -214,7 +223,8 @@ class _ProfissionalScreenState extends State<ProfissionalScreen> {
                       String name = ErrorStringModel(UserSurvey, 'name');
                       String phone = ErrorStringModel(UserSurvey, 'phone');
                       String states = ErrorStringModel(UserSurvey, 'region');
-                      return Container(
+                      bool checkHall = ErrorBoolModel(UserSurvey, 'checkHall');
+                      return checkHall?Container(
                         child: ListTile(
                           title: Column(
                             children: [
@@ -303,13 +313,10 @@ class _ProfissionalScreenState extends State<ProfissionalScreen> {
                         //   },
                         //
                         // ),
-                      );
+                      ):Container();
                     },
-
-
                   ),
                 ),
-
               ],
             ),
           ),
