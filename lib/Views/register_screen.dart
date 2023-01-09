@@ -60,7 +60,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool visiblePassword = true;
   bool visibleConfirmPassword = true;
   String _error = '';
-  String plano = 'Basico';
+  String plano = 'Intermediario';
   bool status = true;
   var result;
   List<String> type = [
@@ -154,8 +154,7 @@ Equipe Teia.''',
                       _userModel.phone = _controllerPhone.text;
                       _userModel.email = _controllerEmail.text;
                       _userModel.password = _controllerPassword.text;
-                      _userModel.confirmPassword =
-                          _controllerPasswordConfirm.text;
+                      _userModel.confirmPassword =_controllerPasswordConfirm.text;
                       _userModel.region = selectedState!;
                       _userModel.status = status;
 

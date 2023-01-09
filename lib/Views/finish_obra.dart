@@ -954,9 +954,8 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
       });
     }
   }
-  getNSurvey() async {
-    DocumentSnapshot snapshot =
-        await db.collection('surveys').doc(widget.idSurvey).get();
+  getNSurvey(String screen) async {
+    DocumentSnapshot snapshot = await db.collection('surveys').doc(widget.idSurvey).get();
     Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
     setState(() {
       nsurvey = data?["Nsurvey"] ?? 0;
@@ -964,9 +963,9 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
       emailEmissor = data?["emailEmissor"] ?? '';
       emissor = data?["emissor"] ?? '';
     });
-    getOrder();
+    getOrder(screen);
   }
-  getOrder() async {
+  getOrder(String screen) async {
     DocumentSnapshot snapshot =
         await db.collection('surveyNumber').doc('surveyNumber').get();
     Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
@@ -974,9 +973,9 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
       order = data?["surveyNumber"] ?? 0;
     });
 
-    _getUserNSurvey();
+    _getUserNSurvey(screen);
   }
-  _getUserNSurvey() async {
+  _getUserNSurvey(String screen) async {
     DocumentSnapshot link = await db.collection("link").doc("links").get();
     Map<String, dynamic>? linkData = link.data() as Map<String, dynamic>?;
     DocumentSnapshot snapshot =
@@ -992,10 +991,8 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
     });
 
     setState(() {
-      double price =
-          double.parse(valor.replaceAll("R\$", '').replaceAll(',', '.'));
-      double surveyPrice =
-          double.parse(priceSurvey.replaceAll("R\$", '').replaceAll(',', '.'));
+      double price =double.parse(valor.replaceAll("R\$", '').replaceAll(',', '.'));
+      double surveyPrice =double.parse(priceSurvey.replaceAll("R\$", '').replaceAll(',', '.'));
       valor = "R\$ ${price + surveyPrice}";
       Nsurveys.add('${order + 1}');
     });
@@ -1008,10 +1005,9 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .set(mapVistorias, SetOptions(merge: true));
-    _getStatus();
-
+    _getStatus(screen);
   }
-  _getStatus() async {
+  _getStatus(String screen) async {
     print(status);
     print(emailEmissor);
     if(status == "demand"){
@@ -1022,11 +1018,9 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
         .collection('surveys')
         .doc(widget.idSurvey)
         .update({'status': _orderModel.status});
-
-    _NSurveyValidation();
-
+    _NSurveyValidation(screen);
   }
-  _NSurveyValidation() async{
+  _NSurveyValidation(String screen) async{
     print("entrou");
     bool result = await InternetConnectionChecker().hasConnection;
     if(result == true) {
@@ -1049,10 +1043,14 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
 
         db.collection('surveyNumber').doc('surveyNumber').set({
           'surveyNumber': _orderModel.order
-        }, SetOptions(merge: true)).then(
-                (value)=> Navigator.pushReplacementNamed(context, '/main'));
+        }, SetOptions(merge: true)).then((value)=>
+        screen=='home'?
+        Navigator.pushReplacementNamed(context, '/main'):
+        Navigator.push(context,MaterialPageRoute(builder: (context) => PDFScreen(path))));
       } else {
-        Navigator.pushReplacementNamed(context, '/main');
+        screen=='home'?
+        Navigator.pushReplacementNamed(context, '/main'):
+        Navigator.push(context,MaterialPageRoute(builder: (context) => PDFScreen(path)));
 
       }
     }else{
@@ -1086,7 +1084,6 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
           "nsurveys": offNSurvey.toSet().toList(),
         },SetOptions(merge:true));
 
-
         db
             .collection('users')
             .doc(FirebaseAuth.instance.currentUser!.uid)
@@ -1102,9 +1099,6 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
             .doc(widget.idSurvey)
             .set({'Nsurvey': _orderModel.Nsurvey}, SetOptions(merge: true));
 
-
-
-
         _prefService.removeCacheOrder('Order');
         _prefService.removeCacheNSurvey('NSurvey');
         _prefService.removeCacheContador('contador');
@@ -1117,11 +1111,9 @@ class _SurveyFinishScreenObraState extends State<SurveyFinishScreenObra> {
         _prefService.createCacheContador(offNewContador);
         String offNewOrder = "${int.parse(offOrder) + 1}";
         _prefService.createCacheOrder(offNewOrder);
-
-
-
-        print("passou do surveyNumber");
-        Navigator.pushReplacementNamed(context, '/main');
+        screen=='home'?
+        Navigator.pushReplacementNamed(context, '/main'):
+        Navigator.push(context,MaterialPageRoute(builder: (context) => PDFScreen(path)));
       }
     }
   }
@@ -1226,7 +1218,7 @@ Equipe Teia.''',
               ),
               imageList.length == 0
                   ? TextCustom(
-                      text: "Não há imagens salvas",
+                      text: "Não há imagens salvas,\n ou caso tenha salva, aguarde alguns instantes o carregamento ",
                       size: 14.0,
                       color: PaletteColors.grey,
                       fontWeight: FontWeight.bold,
@@ -1244,158 +1236,177 @@ Equipe Teia.''',
               ),
               imageList.length == 0
                   ? Container()
-                  : Column(
-                      children: [
-                        Container(
-                          width: width * 0.9,
-                          child: GridView.builder(
-                              scrollDirection: Axis.vertical,
-                              physics: NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              gridDelegate:
-                                  const SliverGridDelegateWithMaxCrossAxisExtent(
-                                      maxCrossAxisExtent: 120,
-                                      mainAxisExtent: 200,
-                                      mainAxisSpacing: 5,
-                                      crossAxisSpacing: 5,
-                                      childAspectRatio: 1.0),
-                              itemCount: imageList.length,
-                              itemBuilder: (context, index) {
-                                return Container(
-                                    child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Ink(
-                                      decoration: ShapeDecoration(
-                                        color: PaletteColors.white,
-                                        shape: CircleBorder(),
-                                      ),
-                                      child: IconButton(
-                                        icon: Icon(
-                                          Icons.close,
-                                          color: Colors.red,
-                                        ),
-                                        constraints: BoxConstraints(
-                                            minHeight: 14,
-                                            minWidth: 14,
-                                            maxHeight: 14,
-                                            maxWidth: 14),
-                                        iconSize: 14.0,
-                                        padding: EdgeInsets.zero,
-                                        onPressed: () {
-                                          AlertModel().alert(
-                                              'Deseja realmente apagar essa imagem?',
-                                              '',
-                                              PaletteColors.primaryColor,
-                                              PaletteColors.grey,
-                                              context, [
-                                            Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                SizedBox(width: width * 0.04),
-                                                ButtonCustom(
-                                                  widthCustom: 0.3,
-                                                  heightCustom: 0.085,
-                                                  onPressed: () {
-                                                    db
-                                                        .collection('surveys')
-                                                        .doc(widget.idSurvey)
-                                                        .update({
-                                                      'photoUrl': FieldValue
-                                                          .arrayRemove([
-                                                        imageList[index]
-                                                      ])
-                                                    }).then((value) {
-                                                      setState(() {
-                                                        imageList.remove(
-                                                            imageList[index]);
-                                                      });
+                  :  Container(
+                width: width * 0.9,
+                height: height*0.3,
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: imageList.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Ink(
+                                decoration: ShapeDecoration(
+                                  color: PaletteColors.white,
+                                  shape: CircleBorder(),
+                                ),
+                                child: IconButton(
+                                  icon: Icon(
+                                    Icons.close,
+                                    color: Colors.red,
+                                  ),
+                                  constraints: BoxConstraints(
+                                      minHeight: 14,
+                                      minWidth: 14,
+                                      maxHeight: 14,
+                                      maxWidth: 14),
+                                  iconSize: 14.0,
+                                  padding: EdgeInsets.zero,
+                                  onPressed: () {
+                                    AlertModel().alert(
+                                        'Deseja realmente apagar essa imagem?',
+                                        '',
+                                        PaletteColors.primaryColor,
+                                        PaletteColors.grey,
+                                        context, [
+                                      Row(
+                                        crossAxisAlignment:CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          SizedBox(width: width * 0.04),
+                                          ButtonCustom(
+                                            widthCustom: 0.25,
+                                            heightCustom: 0.085,
+                                            onPressed: () {
+                                              db
+                                                  .collection('surveys')
+                                                  .doc(widget.idSurvey)
+                                                  .update({
+                                                'photoUrl': FieldValue
+                                                    .arrayRemove([
+                                                  imageList[index]
+                                                ])
+                                              }).then((value) {
+                                                setState(() {
+                                                  imageList.remove(
+                                                      imageList[index]);
+                                                });
 
-                                                      Navigator.of(context)
-                                                          .pop();
-                                                    });
-                                                  },
-                                                  text: "Sim",
-                                                  size: 14.0,
-                                                  colorButton: PaletteColors
-                                                      .primaryColor,
-                                                  colorText:
-                                                      PaletteColors.white,
-                                                  colorBorder: PaletteColors
-                                                      .primaryColor,
-                                                ),
-                                                SizedBox(width: width * 0.04),
-                                                ButtonCustom(
-                                                  widthCustom: 0.3,
-                                                  heightCustom: 0.085,
-                                                  onPressed: () =>
-                                                      Navigator.of(context)
-                                                          .pop(),
-                                                  text: "Não",
-                                                  size: 14.0,
-                                                  colorButton:
-                                                      PaletteColors.white,
-                                                  colorText: PaletteColors
-                                                      .primaryColor,
-                                                  colorBorder: PaletteColors
-                                                      .primaryColor,
-                                                ),
-                                              ],
-                                            ),
-                                          ]);
-                                        },
+                                                Navigator.of(context)
+                                                    .pop();
+                                              });
+                                            },
+                                            text: "Sim",
+                                            size: 14.0,
+                                            colorButton: PaletteColors
+                                                .primaryColor,
+                                            colorText:
+                                            PaletteColors.white,
+                                            colorBorder: PaletteColors
+                                                .primaryColor,
+                                          ),
+                                          ButtonCustom(
+                                            widthCustom: 0.25,
+                                            heightCustom: 0.085,
+                                            onPressed: () =>
+                                                Navigator.of(context)
+                                                    .pop(),
+                                            text: "Não",
+                                            size: 14.0,
+                                            colorButton:
+                                            PaletteColors.white,
+                                            colorText: PaletteColors
+                                                .primaryColor,
+                                            colorBorder: PaletteColors
+                                                .primaryColor,
+                                          ),
+                                          SizedBox(width: width * 0.04),
+                                        ],
                                       ),
-                                    ),
-                                    Image.network('${imageList[index]}'),
-                                  ],
-                                ));
-                              }),
-                        ),
-                        SizedBox(
-                          height: height * 0.01,
-                        )
-                      ],
-                    ),
-              SizedBox(
-                height: 100,
+                                    ]);
+                                  },
+                                ),
+                              ),
+                              Container(
+                                width: width*0.5,
+                                height: height*0.2,
+                                child: Image.network(
+                                  '${imageList[index]}',
+                                  loadingBuilder: (BuildContext context, Widget child,
+                                      ImageChunkEvent? loadingProgress) {
+                                    if (loadingProgress == null) return child;
+                                    return Center(
+                                      child: CircularProgressIndicator(
+                                        value: loadingProgress.expectedTotalBytes != null
+                                            ? loadingProgress.cumulativeBytesLoaded /
+                                            loadingProgress.expectedTotalBytes!
+                                            : null,
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          ));
+                    }),
+
               ),
-              Row(
-                children: [
-                  Ink(
-                    decoration: ShapeDecoration(
-                      color: PaletteColors.greyInput,
-                      shape: CircleBorder(),
-                    ),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.sim_card_download,
-                        color: PaletteColors.primaryColor,
+              InkWell(
+                onTap: ()async{
+                  bool result = await InternetConnectionChecker().hasConnection;
+                  if(result == true) {
+                    print("com internet");
+                    getNSurvey('pdf');
+                  }else{
+                    print("sem internet");
+                    _NSurveyValidation('pdf');
+                  }
+                },
+                child: Row(
+                  children: [
+                    Ink(
+                      decoration: ShapeDecoration(
+                        color: PaletteColors.greyInput,
+                        shape: CircleBorder(),
                       ),
-                      constraints: BoxConstraints(
-                          minHeight: 46,
-                          minWidth: 46,
-                          maxHeight: 46,
-                          maxWidth: 46),
-                      iconSize: 32.0,
-                      padding: EdgeInsets.zero,
-                      onPressed: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => PDFScreen(path))),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.sim_card_download,
+                          color: PaletteColors.primaryColor,
+                        ),
+                        constraints: BoxConstraints(
+                            minHeight: 46,
+                            minWidth: 46,
+                            maxHeight: 46,
+                            maxWidth: 46),
+                        iconSize: 32.0,
+                        padding: EdgeInsets.zero,
+                        onPressed: ()async{
+                            bool result = await InternetConnectionChecker().hasConnection;
+                            if(result == true) {
+                              print("com internet");
+                              getNSurvey('pdf');
+                            }else{
+                              print("sem internet");
+                              _NSurveyValidation('pdf');
+                            }
+                        },
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  TextCustom(
-                    text: "Salvar Documento",
-                    size: 16.0,
-                    color: PaletteColors.grey,
-                    fontWeight: FontWeight.normal,
-                    textAlign: TextAlign.start,
-                  ),
-                ],
+                    SizedBox(
+                      width: 10,
+                    ),
+                    TextCustom(
+                      text: "Salvar Documento",
+                      size: 16.0,
+                      color: PaletteColors.grey,
+                      fontWeight: FontWeight.normal,
+                      textAlign: TextAlign.start,
+                    ),
+                  ],
+                ),
               ),
               SizedBox(height: 40),
               Padding(
@@ -1407,10 +1418,10 @@ Equipe Teia.''',
                     bool result = await InternetConnectionChecker().hasConnection;
                     if(result == true) {
                       print("com internet");
-                      getNSurvey();
+                      getNSurvey('home');
                     }else{
                       print("sem internet");
-                      _NSurveyValidation();
+                      _NSurveyValidation('home');
                     }
                   },
                   text: "Finalizar",
